@@ -1,51 +1,111 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Monitor, Speaker, Projector, Camera, Gamepad, Eye } from "lucide-react";
+import { ArrowRight, Monitor, Speaker, Projector, Camera, Gamepad, Eye, Zap, Palette, Users } from "lucide-react";
 
 const RentalEquipmentSection = () => {
-  const equipmentCategories = [
+  const [showAll, setShowAll] = useState(false);
+
+  const equipmentItems = [
     {
-      icon: <Monitor className="h-8 w-8" />,
-      title: "Экраны и дисплеи",
-      items: ["Кинетический экран", "Матричный экран", "Прозрачный экран", "Информационные панели", "Прозрачные телевизоры", "Винтовые прозрачные экраны"],
-      gradient: "from-primary/20 to-primary/5",
+      id: 1,
+      title: "Кинетический экран",
+      description: "Динамичные 3D поверхности",
+      icon: <Monitor className="h-6 w-6" />,
+      gradient: "from-blue-600/80 to-cyan-600/80",
+      size: "large" // 2 колонки
+    },
+    {
+      id: 2,
+      title: "Матричный экран",
+      description: "Гибкие LED матрицы",
+      icon: <Monitor className="h-6 w-6" />,
+      gradient: "from-purple-600/80 to-pink-600/80",
+      size: "medium"
+    },
+    {
+      id: 3,
+      title: "Безмембранный звук",
+      description: "Чистое звучание без искажений",
+      icon: <Speaker className="h-6 w-6" />,
+      gradient: "from-green-600/80 to-teal-600/80",
+      size: "medium"
+    },
+    {
+      id: 4,
+      title: "Прозрачный экран",
+      description: "Полупрозрачные дисплеи",
+      icon: <Eye className="h-6 w-6" />,
+      gradient: "from-indigo-600/80 to-blue-600/80",
+      size: "medium"
+    },
+    {
+      id: 5,
+      title: "ГОБО проектора",
+      description: "Проекция логотипов и узоров",
+      icon: <Projector className="h-6 w-6" />,
+      gradient: "from-orange-600/80 to-red-600/80",
+      size: "large" // 2 колонки
+    },
+    {
+      id: 6,
+      title: "VR кинотеатр",
+      description: "Погружение в виртуальность",
+      icon: <Gamepad className="h-6 w-6" />,
+      gradient: "from-yellow-600/80 to-orange-600/80",
+      size: "medium"
+    },
+    {
+      id: 7,
+      title: "Зонированный звук",
+      description: "Направленные аудиопотоки",
+      icon: <Speaker className="h-6 w-6" />,
+      gradient: "from-teal-600/80 to-green-600/80",
+      size: "medium"
+    },
+    {
+      id: 8,
+      title: "Голографические вентиляторы",
+      description: "3D голограммы в воздухе",
+      icon: <Zap className="h-6 w-6" />,
+      gradient: "from-pink-600/80 to-purple-600/80",
+      size: "medium"
+    },
+    {
+      id: 9,
+      title: "Интерактивные панели",
+      description: "Сенсорные мультимедиа решения",
+      icon: <Monitor className="h-6 w-6" />,
+      gradient: "from-cyan-600/80 to-blue-600/80",
+      size: "medium"
+    },
+    // Скрытые элементы
+    {
+      id: 10,
+      title: "Информационные панели",
+      description: "Цифровые вывески",
+      icon: <Monitor className="h-6 w-6" />,
+      gradient: "from-gray-600/80 to-slate-600/80",
+      size: "medium"
+    },
+    {
+      id: 11,
+      title: "Винтовые прозрачные экраны",
+      description: "Изогнутые прозрачные поверхности",
+      icon: <Eye className="h-6 w-6" />,
+      gradient: "from-violet-600/80 to-indigo-600/80",
       size: "large"
     },
     {
-      icon: <Projector className="h-8 w-8" />,
-      title: "Проекционное оборудование",
-      items: ["Проектора (от 10000 люмен)", "Проекционные сетки", "ГОБО проектора", "Голографические вентиляторы"],
-      gradient: "from-accent/20 to-accent/5",
+      id: 12,
+      title: "Очки дополненной реальности",
+      description: "AR технологии",
+      icon: <Eye className="h-6 w-6" />,
+      gradient: "from-emerald-600/80 to-teal-600/80",
       size: "medium"
-    },
-    {
-      icon: <Speaker className="h-8 w-8" />,
-      title: "Звуковые решения",
-      items: ["Безмембранный звук", "Зонированный звук", "Профессиональные аудиосистемы"],
-      gradient: "from-success/20 to-success/5",
-      size: "medium"
-    },
-    {
-      icon: <Eye className="h-8 w-8" />,
-      title: "AR/VR технологии",
-      items: ["Очки дополненной реальности", "VR кинотеатр", "Интерактивные инсталляции"],
-      gradient: "from-purple-500/20 to-purple-500/5",
-      size: "medium"
-    },
-    {
-      icon: <Gamepad className="h-8 w-8" />,
-      title: "Интерактивные решения",
-      items: ["Игры на базе Kinect", "Мультимедийные витрины", "Интерактивные панели"],
-      gradient: "from-orange-500/20 to-orange-500/5",
-      size: "medium"
-    },
-    {
-      icon: <Camera className="h-8 w-8" />,
-      title: "Световые эффекты",
-      items: ["Гибкий неон", "Светодиодные струны", "Профессиональное освещение"],
-      gradient: "from-teal-500/20 to-teal-500/5",
-      size: "large"
     }
   ];
+
+  const visibleItems = showAll ? equipmentItems : equipmentItems.slice(0, 9);
 
   return (
     <section id="rental-equipment" className="py-20 bg-muted/30">
@@ -59,48 +119,71 @@ const RentalEquipmentSection = () => {
           </p>
         </div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {equipmentCategories.map((category, index) => (
-            <div
-              key={index}
-              className={`bento-item bg-gradient-to-br ${category.gradient} border border-border/50 group cursor-pointer
-                ${category.size === 'large' ? 'md:col-span-2' : ''}
-                ${index === 0 ? 'lg:col-span-2' : ''}
-                ${index === 5 ? 'lg:col-span-2' : ''}
-              `}
-            >
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 p-3 bg-white/10 rounded-lg">
-                  <div className="text-primary">
-                    {category.icon}
+        {/* Асимметричная Бенто сетка */}
+        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+          {visibleItems.map((item, index) => {
+            // Определяем размеры для асимметричного расположения
+            let colSpan = "col-span-1 md:col-span-1 lg:col-span-2";
+            
+            if (item.size === "large") {
+              colSpan = "col-span-1 md:col-span-2 lg:col-span-2";
+            }
+            
+            // Специальные размеры для создания асимметрии
+            if (index === 0) colSpan = "col-span-1 md:col-span-2 lg:col-span-2"; // Большой первый блок
+            if (index === 4) colSpan = "col-span-1 md:col-span-2 lg:col-span-2"; // Большой пятый блок
+            
+            return (
+              <div
+                key={item.id}
+                className={`${colSpan} group cursor-pointer relative overflow-hidden rounded-2xl bg-gradient-to-br ${item.gradient} 
+                  hover:scale-[1.02] transition-all duration-300 min-h-[180px] flex flex-col justify-between p-6`}
+              >
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
+                
+                <div className="relative z-10">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="p-2 bg-white/20 rounded-lg text-white">
+                      {item.icon}
+                    </div>
+                    <h3 className="text-lg md:text-xl font-bold text-white">
+                      {item.title}
+                    </h3>
                   </div>
+                  <p className="text-white/80 text-sm mb-4">
+                    {item.description}
+                  </p>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-foreground mb-3">
-                    {category.title}
-                  </h3>
-                  <ul className="space-y-2 mb-6">
-                    {category.items.map((item, itemIndex) => (
-                      <li key={itemIndex} className="flex items-center text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                
+                <div className="relative z-10">
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 group-hover:scale-105 transition-all duration-300"
                   >
                     Узнать цены
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
+        {/* Кнопка "Посмотреть все" */}
+        {!showAll && (
+          <div className="text-center mb-12">
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => setShowAll(true)}
+              className="group"
+            >
+              Посмотреть все решения
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
+        )}
 
         {/* CTA Section */}
         <div className="text-center">
