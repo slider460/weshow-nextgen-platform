@@ -47,29 +47,28 @@ const ContactFormSection = () => {
   };
 
   return (
-    <section id="contacts" className="py-20 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-slate-50">
+      <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
             Свяжитесь с нами
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Готовы обсудить ваш проект? Оставьте заявку, и наш эксперт свяжется с вами 
             для бесплатной консультации
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Form */}
-          <div className="bg-card p-8 rounded-2xl shadow-sm border border-border">
-            <h3 className="text-2xl font-semibold text-foreground mb-6">
+          <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-200">
+            <h3 className="text-2xl font-semibold text-slate-900 mb-6">
               Получить консультацию
             </h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="name">Имя *</Label>
+                  <Label htmlFor="name" className="text-slate-700">Имя *</Label>
                   <Input
                     id="name"
                     value={formData.name}
@@ -80,7 +79,7 @@ const ContactFormSection = () => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="phone">Телефон *</Label>
+                  <Label htmlFor="phone" className="text-slate-700">Телефон *</Label>
                   <Input
                     id="phone"
                     type="tel"
@@ -95,7 +94,7 @@ const ContactFormSection = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="email">Email *</Label>
+                  <Label htmlFor="email" className="text-slate-700">Email *</Label>
                   <Input
                     id="email"
                     type="email"
@@ -107,7 +106,7 @@ const ContactFormSection = () => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="company">Компания</Label>
+                  <Label htmlFor="company" className="text-slate-700">Компания</Label>
                   <Input
                     id="company"
                     value={formData.company}
@@ -119,7 +118,7 @@ const ContactFormSection = () => {
               </div>
               
               <div>
-                <Label htmlFor="service">Интересующая услуга</Label>
+                <Label htmlFor="service" className="text-slate-700">Интересующая услуга</Label>
                 <Select value={formData.service} onValueChange={(value) => handleInputChange("service", value)}>
                   <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Выберите услугу" />
@@ -136,7 +135,7 @@ const ContactFormSection = () => {
               </div>
               
               <div>
-                <Label htmlFor="message">Описание проекта</Label>
+                <Label htmlFor="message" className="text-slate-700">Описание проекта</Label>
                 <Textarea
                   id="message"
                   value={formData.message}
@@ -147,18 +146,17 @@ const ContactFormSection = () => {
                 />
               </div>
               
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-slate-600">
                 Нажимая кнопку "Отправить заявку", вы соглашаетесь с{" "}
-                <a href="/privacy" className="text-primary hover:underline">
+                <a href="/privacy" className="text-blue-500 hover:underline">
                   политикой конфиденциальности
                 </a>
               </div>
               
               <Button 
                 type="submit" 
-                variant="hero" 
                 size="lg" 
-                className="w-full"
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Отправляем..." : "Отправить заявку"}
@@ -166,42 +164,41 @@ const ContactFormSection = () => {
             </form>
           </div>
 
-          {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-2xl font-semibold text-foreground mb-6">
+              <h3 className="text-2xl font-semibold text-slate-900 mb-6">
                 Контактная информация
               </h3>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <div className="flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-lg flex-shrink-0">
+                  <div className="flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex-shrink-0">
                     <Phone className="h-6 w-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-1">Телефон</h4>
-                    <p className="text-muted-foreground">+7 (495) 123-45-67</p>
-                    <p className="text-muted-foreground">+7 (800) 555-55-55</p>
+                    <h4 className="font-semibold text-slate-900 mb-1">Телефон</h4>
+                    <p className="text-slate-600">+7 (495) 123-45-67</p>
+                    <p className="text-slate-600">+7 (800) 555-55-55</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-4">
-                  <div className="flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-lg flex-shrink-0">
+                  <div className="flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex-shrink-0">
                     <Mail className="h-6 w-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-1">Email</h4>
-                    <p className="text-muted-foreground">info@weshow.ru</p>
-                    <p className="text-muted-foreground">sales@weshow.ru</p>
+                    <h4 className="font-semibold text-slate-900 mb-1">Email</h4>
+                    <p className="text-slate-600">info@weshow.ru</p>
+                    <p className="text-slate-600">sales@weshow.ru</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-4">
-                  <div className="flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-lg flex-shrink-0">
+                  <div className="flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex-shrink-0">
                     <MapPin className="h-6 w-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-1">Адрес</h4>
-                    <p className="text-muted-foreground">
+                    <h4 className="font-semibold text-slate-900 mb-1">Адрес</h4>
+                    <p className="text-slate-600">
                       г. Москва, ул. Тверская, д. 123<br />
                       БЦ "Технопарк", офис 456
                     </p>
@@ -209,12 +206,12 @@ const ContactFormSection = () => {
                 </div>
                 
                 <div className="flex items-start space-x-4">
-                  <div className="flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-lg flex-shrink-0">
+                  <div className="flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex-shrink-0">
                     <Clock className="h-6 w-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-1">Время работы</h4>
-                    <p className="text-muted-foreground">
+                    <h4 className="font-semibold text-slate-900 mb-1">Время работы</h4>
+                    <p className="text-slate-600">
                       Пн-Пт: 9:00 - 18:00<br />
                       Техподдержка: 24/7
                     </p>
@@ -223,25 +220,23 @@ const ContactFormSection = () => {
               </div>
             </div>
 
-            {/* Quick Actions */}
-            <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-6 border border-primary/10">
-              <h4 className="font-semibold text-foreground mb-4">Нужна срочная помощь?</h4>
+            <div className="gradient-card-blue rounded-3xl p-6">
+              <h4 className="font-semibold text-white mb-4">Нужна срочная помощь?</h4>
               <div className="space-y-3">
-                <Button variant="outline" className="w-full justify-start">
+                <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
                   <Phone className="mr-2 h-4 w-4" />
                   Заказать обратный звонок
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
                   <Mail className="mr-2 h-4 w-4" />
                   Написать в Telegram
                 </Button>
               </div>
             </div>
 
-            {/* Response Time */}
-            <div className="text-center p-6 bg-success/10 rounded-xl border border-success/20">
-              <div className="text-2xl font-bold text-success mb-2">≤ 30 минут</div>
-              <div className="text-sm text-muted-foreground">
+            <div className="text-center p-6 gradient-card-cyan rounded-3xl">
+              <div className="text-2xl font-bold text-white mb-2">≤ 30 минут</div>
+              <div className="text-sm text-white/90">
                 Среднее время ответа на заявки<br />
                 в рабочее время
               </div>

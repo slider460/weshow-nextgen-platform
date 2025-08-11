@@ -4,129 +4,129 @@ import { ArrowRight, Building, Users, Trophy, Globe, Presentation, Store, Constr
 const ComplexSolutionsSection = () => {
   const solutions = [
     {
-      icon: <Users className="h-6 w-6" />,
+      icon: <Users className="h-8 w-8" />,
       title: "Частные мероприятия",
       description: "Свадьбы, дни рождения, корпоративы",
-      features: ["Световое оформление", "Звуковое сопровождение", "Фото/видео"]
+      features: ["Световое оформление", "Звуковое сопровождение", "Фото/видео"],
+      gradient: "gradient-card-purple"
     },
     {
-      icon: <Presentation className="h-6 w-6" />,
+      icon: <Presentation className="h-8 w-8" />,
       title: "Презентации/конференции/форумы",
       description: "Профессиональное техническое обеспечение",
-      features: ["Проекция", "Синхронный перевод", "Стриминг"]
+      features: ["Проекция", "Синхронный перевод", "Стриминг"],
+      gradient: "gradient-card-blue"
     },
     {
-      icon: <Store className="h-6 w-6" />,
+      icon: <Store className="h-8 w-8" />,
       title: "Выставочные стенды",
       description: "Мультимедийное оформление стендов",
-      features: ["Интерактивные панели", "LED-экраны", "Презентации"]
+      features: ["Интерактивные панели", "LED-экраны", "Презентации"],
+      gradient: "gradient-card-cyan"
     },
     {
-      icon: <Trophy className="h-6 w-6" />,
+      icon: <Trophy className="h-8 w-8" />,
       title: "Спортивные мероприятия",
       description: "Техническое сопровождение соревнований",
-      features: ["Табло", "Звуковое сопровождение", "Видеоповторы"]
+      features: ["Табло", "Звуковое сопровождение", "Видеоповторы"],
+      gradient: "gradient-card-dark"
     },
     {
-      icon: <Building className="h-6 w-6" />,
+      icon: <Building className="h-8 w-8" />,
       title: "Корпоративные мероприятия",
       description: "Комплексные решения для бизнеса",
-      features: ["Брендинг", "Презентации", "Развлечения"]
+      features: ["Брендинг", "Презентации", "Развлечения"],
+      gradient: "gradient-card-purple"
     },
     {
-      icon: <Video className="h-6 w-6" />,
+      icon: <Video className="h-8 w-8" />,
       title: "Online мероприятия",
       description: "Цифровые события и стриминг",
-      features: ["Многокамерная съемка", "Стриминг", "Интерактив"]
+      features: ["Многокамерная съемка", "Стриминг", "Интерактив"],
+      gradient: "gradient-card-blue"
     },
     {
-      icon: <Globe className="h-6 w-6" />,
+      icon: <Globe className="h-8 w-8" />,
       title: "Презентации спортивных объектов",
       description: "Техническое оснащение спортивных арен",
-      features: ["Видеокубы", "Медиафасады", "Системы управления"]
+      features: ["Видеокубы", "Медиафасады", "Системы управления"],
+      gradient: "gradient-card-cyan"
     },
     {
-      icon: <Store className="h-6 w-6" />,
+      icon: <Store className="h-8 w-8" />,
       title: "Презентации ТРЦ",
       description: "Мультимедийные решения для торговых центров",
-      features: ["Навигация", "Реклама", "Интерактивные зоны"]
+      features: ["Навигация", "Реклама", "Интерактивные зоны"],
+      gradient: "gradient-card-dark"
     },
     {
-      icon: <Construction className="h-6 w-6" />,
+      icon: <Construction className="h-8 w-8" />,
       title: "Презентации строительных объектов",
       description: "Визуализация проектов недвижимости",
-      features: ["3D-туры", "Интерактивные макеты", "VR-презентации"]
+      features: ["3D-туры", "Интерактивные макеты", "VR-презентации"],
+      gradient: "gradient-card-purple"
     }
   ];
 
   return (
-    <section id="complex-solutions" className="py-20 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 bg-slate-50">
+      <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
             Комплексные решения для различных задач
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Индивидуальный подход к каждому типу мероприятий и проектов
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {solutions.map((solution, index) => (
-            <div
-              key={index}
-              className="bg-card border border-border p-6 rounded-xl hover:shadow-lg transition-all duration-300 group cursor-pointer"
-            >
-              <div className="flex items-center mb-4">
-                <div className="flex items-center justify-center w-10 h-10 bg-primary/10 text-primary rounded-lg mr-3">
-                  {solution.icon}
-                </div>
-                <h3 className="text-lg font-semibold text-foreground">
-                  {solution.title}
-                </h3>
+            <div key={index} className={`${solution.gradient} rounded-3xl p-8 hover:scale-105 transition-all duration-300`}>
+              <div className="text-white mb-6">
+                {solution.icon}
               </div>
               
-              <p className="text-muted-foreground mb-4">
+              <h3 className="text-2xl font-bold text-white mb-4">
+                {solution.title}
+              </h3>
+              
+              <p className="text-white/90 text-sm leading-relaxed mb-6">
                 {solution.description}
               </p>
               
-              <ul className="space-y-2 mb-4">
+              <ul className="space-y-2 mb-8">
                 {solution.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
+                  <li key={featureIndex} className="flex items-center text-sm text-white/80">
+                    <div className="w-1.5 h-1.5 bg-white rounded-full mr-3" />
                     {feature}
                   </li>
                 ))}
               </ul>
               
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-              >
+              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20">
                 Узнать больше
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           ))}
         </div>
 
-        {/* CTA Section */}
         <div className="text-center">
-          <div className="bg-muted/30 rounded-2xl p-8 border border-border">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
+          <div className="bg-white rounded-3xl p-12 border border-slate-200 shadow-lg">
+            <h3 className="text-3xl font-bold text-slate-900 mb-4">
               Обсудим ваш проект?
             </h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
               Расскажите о ваших задачах, и мы предложим оптимальное решение
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="hero" size="lg">
+              <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4">
                 Обсудить проект
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" className="px-8 py-4 border-slate-300 text-slate-700 hover:bg-slate-100">
                 Посмотреть кейсы
-                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </div>
