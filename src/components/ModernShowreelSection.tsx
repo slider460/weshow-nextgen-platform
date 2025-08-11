@@ -1,10 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { Play, MapPin, Calendar, ArrowRight, Phone } from "lucide-react";
-
 const ModernShowreelSection = () => {
-  return (
-    <section className="py-20 bg-white">
+  return <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           
@@ -25,7 +22,7 @@ const ModernShowreelSection = () => {
               </div>
               <div>
                 <h4 className="font-semibold text-slate-900 mb-1">Адрес</h4>
-                <p className="text-slate-600">Москва, ул. Примерная, 123</p>
+                <p className="text-slate-600">Москва, ул. Б. Набережная, 12</p>
               </div>
             </div>
             
@@ -82,8 +79,6 @@ const ModernShowreelSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ModernShowreelSection;
