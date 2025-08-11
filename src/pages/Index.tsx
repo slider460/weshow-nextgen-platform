@@ -17,8 +17,8 @@ const Index = () => {
     <div className="min-h-screen">
       <Header />
       <main>
-        <BentoGridSection />
         <HeroSection />
+        <BentoGridSection />
         <ServicesSection />
         <PortfolioSection />
         <AboutSection />
