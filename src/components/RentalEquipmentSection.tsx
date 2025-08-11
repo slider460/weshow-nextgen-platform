@@ -8,87 +8,129 @@ const RentalEquipmentSection = () => {
   const equipmentItems = [
     {
       id: 1,
-      title: "3D проекционные экраны",
-      description: "Динамичные 3D поверхности",
+      title: "Кинетический экран",
+      description: "Движущиеся интерактивные поверхности",
       icon: <Monitor className="h-8 w-8" />,
       gradient: "gradient-card-purple"
     },
     {
       id: 2,
-      title: "Гибкие LED экраны",
-      description: "Гибкие LED матрицы",
+      title: "Матричный экран",
+      description: "Многосегментные LED дисплеи",
       icon: <Monitor className="h-8 w-8" />,
       gradient: "gradient-card-blue"
     },
     {
       id: 3,
-      title: "Звуковые системы высокого качества",
-      description: "Чистое звучание без искажений",
-      icon: <Speaker className="h-8 w-8" />,
+      title: "Прозрачный экран",
+      description: "Полупрозрачные дисплеи",
+      icon: <Eye className="h-8 w-8" />,
       gradient: "gradient-card-cyan"
     },
     {
       id: 4,
-      title: "Прозрачные дисплеи",
-      description: "Полупрозрачные дисплеи",
-      icon: <Eye className="h-8 w-8" />,
+      title: "Информационные панели",
+      description: "Цифровые вывески",
+      icon: <Monitor className="h-8 w-8" />,
       gradient: "gradient-card-dark"
     },
     {
       id: 5,
-      title: "Гобо проекторы",
-      description: "Проекция логотипов и узоров",
+      title: "Проектора (от 10000 люмен)",
+      description: "Высокояркостная проекция",
       icon: <Projector className="h-8 w-8" />,
       gradient: "gradient-card-purple"
     },
     {
       id: 6,
-      title: "VR очки",
-      description: "Погружение в виртуальность",
-      icon: <Gamepad className="h-8 w-8" />,
+      title: "Гибкий неон",
+      description: "Эластичная LED подсветка",
+      icon: <Zap className="h-8 w-8" />,
       gradient: "gradient-card-blue"
     },
     {
       id: 7,
-      title: "Направленные звуковые системы",
-      description: "Направленные аудиопотоки",
-      icon: <Speaker className="h-8 w-8" />,
+      title: "Проекционные сетки",
+      description: "Специальные поверхности для проекции",
+      icon: <Projector className="h-8 w-8" />,
       gradient: "gradient-card-cyan"
     },
     {
       id: 8,
-      title: "Голографические проекторы",
+      title: "Голографические вентиляторы",
       description: "3D голограммы в воздухе",
       icon: <Zap className="h-8 w-8" />,
       gradient: "gradient-card-dark"
     },
     {
       id: 9,
-      title: "Интерактивные панели",
-      description: "Сенсорные мультимедиа решения",
-      icon: <Monitor className="h-8 w-8" />,
+      title: "Очки дополненной реальности",
+      description: "AR технологии",
+      icon: <Eye className="h-8 w-8" />,
       gradient: "gradient-card-purple"
     },
     {
       id: 10,
-      title: "Информационные панели",
-      description: "Цифровые вывески",
-      icon: <Monitor className="h-8 w-8" />,
+      title: "Игры на базе Kinect",
+      description: "Интерактивные игровые решения",
+      icon: <Gamepad className="h-8 w-8" />,
       gradient: "gradient-card-blue"
     },
     {
       id: 11,
+      title: "VR кинотеатр",
+      description: "Виртуальная реальность для просмотра",
+      icon: <Gamepad className="h-8 w-8" />,
+      gradient: "gradient-card-cyan"
+    },
+    {
+      id: 12,
+      title: "Прозрачные телевизоры",
+      description: "Прозрачные дисплеи высокого разрешения",
+      icon: <Eye className="h-8 w-8" />,
+      gradient: "gradient-card-dark"
+    },
+    {
+      id: 13,
+      title: "Мультимедийные витрины",
+      description: "Интерактивные торговые решения",
+      icon: <Monitor className="h-8 w-8" />,
+      gradient: "gradient-card-purple"
+    },
+    {
+      id: 14,
+      title: "Светодиодные струны",
+      description: "Декоративная LED подсветка",
+      icon: <Zap className="h-8 w-8" />,
+      gradient: "gradient-card-blue"
+    },
+    {
+      id: 15,
       title: "Винтовые прозрачные экраны",
       description: "Изогнутые прозрачные поверхности",
       icon: <Eye className="h-8 w-8" />,
       gradient: "gradient-card-cyan"
     },
     {
-      id: 12,
-      title: "Очки дополненной реальности",
-      description: "AR технологии",
-      icon: <Eye className="h-8 w-8" />,
+      id: 16,
+      title: "ГОБО проектора",
+      description: "Проекция логотипов и узоров",
+      icon: <Projector className="h-8 w-8" />,
       gradient: "gradient-card-dark"
+    },
+    {
+      id: 17,
+      title: "Безмембранный звук",
+      description: "Инновационные аудио технологии",
+      icon: <Speaker className="h-8 w-8" />,
+      gradient: "gradient-card-purple"
+    },
+    {
+      id: 18,
+      title: "Зонированный звук",
+      description: "Направленные аудиопотоки",
+      icon: <Speaker className="h-8 w-8" />,
+      gradient: "gradient-card-blue"
     }
   ];
 
