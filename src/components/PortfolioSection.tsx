@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import officeBuilding from "@/assets/office-building.jpg";
 import teamWork from "@/assets/team-work.jpg";
+import vdnhStand from "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png";
 const PortfolioSection = () => {
   const projects = [{
     title: "Мультимедийная инсталляция для банка ВТБ",
@@ -19,6 +20,14 @@ const PortfolioSection = () => {
     image: teamWork,
     results: ["5000+ участников", "100% выполнение технических требований"],
     tech: ["Проекционный маппинг", "Синхронизация звука", "Интерактивное управление"]
+  }, {
+    title: "Стенд Самарской области на выставке-форуме «Россия»",
+    client: "ВДНХ",
+    date: "2024",
+    description: "Интерактивный мультимедийный стенд с цифровыми решениями для представления региона",
+    image: vdnhStand,
+    results: ["Более 10,000 посетителей", "Интерактивное взаимодействие с контентом"],
+    tech: ["Интерактивные дисплеи", "Мультимедийный контент", "Система презентаций"]
   }];
   return <section id="projects" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
