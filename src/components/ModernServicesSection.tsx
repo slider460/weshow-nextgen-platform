@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Monitor, Code, Settings, Calendar, Palette, Store } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ModernServicesSection = () => {
   const services = [
@@ -84,9 +85,11 @@ const ModernServicesSection = () => {
                 ))}
               </ul>
               
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                Узнать больше
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <Link to={`/services/${index === 0 ? 'multimedia' : index === 1 ? 'development' : index === 2 ? 'support' : index === 3 ? 'events' : index === 4 ? 'branding' : 'equipment'}`}>
+                  Узнать больше
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
             </div>
           ))}

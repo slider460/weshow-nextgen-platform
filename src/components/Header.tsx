@@ -88,7 +88,7 @@ const Header = () => {
                 )}
               </div>
               
-              <Link to="/about" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
+              <Link to="/team" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
                 Команда
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
               </Link>
@@ -155,7 +155,7 @@ const Header = () => {
                 Услуги
               </Link>
               <Link 
-                to="/about" 
+                to="/team" 
                 className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
                 onClick={toggleMenu}
               >
