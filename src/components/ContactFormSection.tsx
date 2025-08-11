@@ -221,7 +221,7 @@ const ContactFormSection = () => {
               </div>
             </div>
 
-            <div className="gradient-card-blue rounded-3xl p-6">
+            <div className="gradient-card-dark rounded-3xl p-6">
               <h4 className="font-semibold text-white mb-4">Нужна срочная помощь?</h4>
               <div className="space-y-3">
                 <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
@@ -235,7 +235,7 @@ const ContactFormSection = () => {
               </div>
             </div>
 
-            <div className="text-center p-6 gradient-card-cyan rounded-3xl">
+            <div className="text-center p-6 gradient-card-purple rounded-3xl">
               <div className="text-2xl font-bold text-white mb-2">≤ 30 минут</div>
               <div className="text-sm text-white/90">
                 Среднее время ответа на заявки<br />

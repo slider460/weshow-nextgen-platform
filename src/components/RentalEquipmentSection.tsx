@@ -144,19 +144,19 @@ const RentalEquipmentSection = () => {
         </div>
 
         <div className="text-center">
-          <div className="bg-slate-50 rounded-3xl p-12 border border-slate-200">
-            <h3 className="text-3xl font-bold text-slate-900 mb-4">
+          <div className="gradient-card-cyan rounded-3xl p-12">
+            <h3 className="text-3xl font-bold text-white mb-4">
               Нужна помощь с выбором оборудования?
             </h3>
-            <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
               Наши эксперты помогут подобрать оптимальный комплект оборудования под ваши задачи и бюджет
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="hero">
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20">
                 Получить консультацию
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20">
                 Каталог оборудования
               </Button>
             </div>
