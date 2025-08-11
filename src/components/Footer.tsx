@@ -144,27 +144,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Quick Contact CTAs */}
-        <div className="pb-8">
-          <div className="bg-slate-50 rounded-3xl p-8 border border-slate-200">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div>
-                <h4 className="text-lg font-semibold mb-1 text-slate-900">Готовы начать проект?</h4>
-                <p className="text-slate-600 text-sm">
-                  Свяжитесь с нами для бесплатной консультации
-                </p>
-              </div>
-              <div className="flex gap-3">
-                <Button variant="default" size="sm">
-                  Заказать звонок
-                </Button>
-                <Button variant="outline" size="sm">
-                  Написать нам
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </footer>
   );

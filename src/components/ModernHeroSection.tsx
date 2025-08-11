@@ -27,14 +27,10 @@ const ModernHeroSection = () => {
                 </p>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex justify-start">
                 <Button size="lg" variant="default" className="px-8 py-4 text-lg">
                   Получить консультацию
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
-                  <Play className="mr-2 h-5 w-5" />
-                  Смотреть шоурил
                 </Button>
               </div>
             </div>
