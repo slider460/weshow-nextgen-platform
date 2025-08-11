@@ -27,28 +27,28 @@ const ServicesSection = () => {
     title: "Интеграция мультимедиа",
     description: "Комплексная интеграция AV-систем и мультимедийных решений",
     features: ["Системы управления", "Автоматизация", "Интеграция оборудования"],
-    gradient: "from-purple-500/20 to-purple-500/5",
+    gradient: "from-accent/20 to-accent/5",
     size: "medium"
   }, {
     icon: <Palette className="h-8 w-8" />,
     title: "Брендинг мероприятий",
     description: "Создание уникального визуального образа для ваших событий",
     features: ["Концепция дизайна", "Брендированный контент", "Фирменный стиль"],
-    gradient: "from-orange-500/20 to-orange-500/5",
+    gradient: "from-success/20 to-success/5",
     size: "medium"
   }, {
     icon: <Settings className="h-8 w-8" />,
     title: "Проектирование пространств",
     description: "Дизайн и планирование мультимедийных пространств",
     features: ["Архитектурная визуализация", "Планирование инсталляций", "3D-моделирование"],
-    gradient: "from-teal-500/20 to-teal-500/5",
+    gradient: "from-accent/20 to-accent/5",
     size: "large"
   }, {
     icon: <ShoppingCart className="h-8 w-8" />,
     title: "Продажа мультимедийного оборудования",
     description: "Поставка и продажа профессионального мультимедийного оборудования",
     features: ["LED-панели и экраны", "Проекционное оборудование", "Звуковые системы"],
-    gradient: "from-blue-500/20 to-blue-500/5",
+    gradient: "from-primary/20 to-primary/5",
     size: "medium"
   }];
   return <section id="services" className="py-20 bg-background">

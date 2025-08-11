@@ -15,7 +15,7 @@ const BentoGridSection = () => {
       subtitle: "",
       buttonText: "Подробнее",
       size: "large", // занимает 2 колонки
-      gradient: "from-blue-600/80 to-purple-600/80",
+      gradient: "from-primary/20 to-primary/5",
       image: "/src/assets/office-building.jpg",
       action: () => console.log("Navigate to equipment rental")
     },
@@ -25,7 +25,7 @@ const BentoGridSection = () => {
       subtitle: "",
       buttonText: "play",
       size: "medium",
-      gradient: "from-red-600/80 to-orange-600/80",
+      gradient: "from-accent/20 to-accent/5",
       image: "/src/assets/team-work.jpg",
       action: () => setIsVideoModalOpen(true)
     },
@@ -35,7 +35,7 @@ const BentoGridSection = () => {
       subtitle: "",
       buttonText: "Посмотреть",
       size: "medium",
-      gradient: "from-green-600/80 to-teal-600/80",
+      gradient: "from-success/20 to-success/5",
       image: "/src/assets/hero-bg.jpg",
       action: () => console.log("Navigate to Samsung case")
     },
@@ -45,7 +45,7 @@ const BentoGridSection = () => {
       subtitle: "Посмотрите наши решения вживую!",
       buttonText: "Подробнее",
       size: "large", // занимает 2 колонки
-      gradient: "from-purple-600/80 to-pink-600/80",
+      gradient: "from-primary/20 to-primary/5",
       image: "/src/assets/office-building.jpg",
       action: () => console.log("Navigate to showroom")
     },
@@ -55,7 +55,7 @@ const BentoGridSection = () => {
       subtitle: "",
       buttonText: "Посмотреть",
       size: "medium",
-      gradient: "from-yellow-600/80 to-orange-600/80",
+      gradient: "from-accent/20 to-accent/5",
       image: "/src/assets/team-work.jpg",
       action: () => console.log("Navigate to Samara exhibition")
     },
@@ -65,7 +65,7 @@ const BentoGridSection = () => {
       subtitle: "на выставке-форуме \"России\"",
       buttonText: "Посмотреть",
       size: "medium",
-      gradient: "from-indigo-600/80 to-blue-600/80",
+      gradient: "from-primary/20 to-primary/5",
       image: "/src/assets/hero-bg.jpg",
       action: () => console.log("Navigate to VDNH case")
     }

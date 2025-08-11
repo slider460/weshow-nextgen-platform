@@ -73,11 +73,11 @@ const SocialProofSection = () => {
   const getIcon = (type: string) => {
     switch (type) {
       case "award":
-        return <Award className="h-6 w-6 text-yellow-500" />;
+        return <Award className="h-6 w-6 text-success" />;
       case "certificate":
-        return <Award className="h-6 w-6 text-blue-500" />;
+        return <Award className="h-6 w-6 text-primary" />;
       default:
-        return <FileText className="h-6 w-6 text-green-500" />;
+        return <FileText className="h-6 w-6 text-accent" />;
     }
   };
 

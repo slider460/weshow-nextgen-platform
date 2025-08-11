@@ -40,7 +40,7 @@ const HeroSection = () => {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3">
             Комплексные
-            <span className="text-accent block">мультимедийные решения</span>
+            <span className="text-white block">мультимедийные решения</span>
             для вашего бизнеса
           </h1>
           

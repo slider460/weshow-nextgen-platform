@@ -11,7 +11,7 @@ const RentalEquipmentSection = () => {
       title: "Кинетический экран",
       description: "Динамичные 3D поверхности",
       icon: <Monitor className="h-6 w-6" />,
-      gradient: "from-blue-600/80 to-cyan-600/80",
+      gradient: "from-primary/20 to-primary/5",
       size: "large" // 2 колонки
     },
     {
@@ -19,7 +19,7 @@ const RentalEquipmentSection = () => {
       title: "Матричный экран",
       description: "Гибкие LED матрицы",
       icon: <Monitor className="h-6 w-6" />,
-      gradient: "from-purple-600/80 to-pink-600/80",
+      gradient: "from-accent/20 to-accent/5",
       size: "medium"
     },
     {
@@ -27,7 +27,7 @@ const RentalEquipmentSection = () => {
       title: "Безмембранный звук",
       description: "Чистое звучание без искажений",
       icon: <Speaker className="h-6 w-6" />,
-      gradient: "from-green-600/80 to-teal-600/80",
+      gradient: "from-success/20 to-success/5",
       size: "medium"
     },
     {
@@ -35,7 +35,7 @@ const RentalEquipmentSection = () => {
       title: "Прозрачный экран",
       description: "Полупрозрачные дисплеи",
       icon: <Eye className="h-6 w-6" />,
-      gradient: "from-indigo-600/80 to-blue-600/80",
+      gradient: "from-primary/20 to-primary/5",
       size: "medium"
     },
     {
@@ -43,7 +43,7 @@ const RentalEquipmentSection = () => {
       title: "ГОБО проектора",
       description: "Проекция логотипов и узоров",
       icon: <Projector className="h-6 w-6" />,
-      gradient: "from-orange-600/80 to-red-600/80",
+      gradient: "from-accent/20 to-accent/5",
       size: "large" // 2 колонки
     },
     {
@@ -51,7 +51,7 @@ const RentalEquipmentSection = () => {
       title: "VR кинотеатр",
       description: "Погружение в виртуальность",
       icon: <Gamepad className="h-6 w-6" />,
-      gradient: "from-yellow-600/80 to-orange-600/80",
+      gradient: "from-success/20 to-success/5",
       size: "medium"
     },
     {
@@ -59,7 +59,7 @@ const RentalEquipmentSection = () => {
       title: "Зонированный звук",
       description: "Направленные аудиопотоки",
       icon: <Speaker className="h-6 w-6" />,
-      gradient: "from-teal-600/80 to-green-600/80",
+      gradient: "from-primary/20 to-primary/5",
       size: "medium"
     },
     {
@@ -67,7 +67,7 @@ const RentalEquipmentSection = () => {
       title: "Голографические вентиляторы",
       description: "3D голограммы в воздухе",
       icon: <Zap className="h-6 w-6" />,
-      gradient: "from-pink-600/80 to-purple-600/80",
+      gradient: "from-accent/20 to-accent/5",
       size: "medium"
     },
     {
@@ -75,7 +75,7 @@ const RentalEquipmentSection = () => {
       title: "Интерактивные панели",
       description: "Сенсорные мультимедиа решения",
       icon: <Monitor className="h-6 w-6" />,
-      gradient: "from-cyan-600/80 to-blue-600/80",
+      gradient: "from-success/20 to-success/5",
       size: "medium"
     },
     // Скрытые элементы
@@ -84,7 +84,7 @@ const RentalEquipmentSection = () => {
       title: "Информационные панели",
       description: "Цифровые вывески",
       icon: <Monitor className="h-6 w-6" />,
-      gradient: "from-gray-600/80 to-slate-600/80",
+      gradient: "from-muted/50 to-muted/20",
       size: "medium"
     },
     {
@@ -92,7 +92,7 @@ const RentalEquipmentSection = () => {
       title: "Винтовые прозрачные экраны",
       description: "Изогнутые прозрачные поверхности",
       icon: <Eye className="h-6 w-6" />,
-      gradient: "from-violet-600/80 to-indigo-600/80",
+      gradient: "from-primary/20 to-primary/5",
       size: "large"
     },
     {
@@ -100,7 +100,7 @@ const RentalEquipmentSection = () => {
       title: "Очки дополненной реальности",
       description: "AR технологии",
       icon: <Eye className="h-6 w-6" />,
-      gradient: "from-emerald-600/80 to-teal-600/80",
+      gradient: "from-success/20 to-success/5",
       size: "medium"
     }
   ];
