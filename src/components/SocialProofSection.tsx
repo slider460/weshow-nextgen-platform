@@ -105,21 +105,22 @@ const SocialProofSection = () => {
           </h2>
           
           <div className="relative max-w-4xl mx-auto">
-            <div className="relative overflow-hidden rounded-3xl bg-slate-50">
+            <div className="relative overflow-hidden rounded-3xl">
               <div 
                 className="flex transition-transform duration-500 ease-in-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {documents.map((doc, index) => (
-                  <div key={doc.id} className="w-full flex-shrink-0 p-4">
-                    <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-lg">
+                  <div key={doc.id} className="w-full flex-shrink-0">
+                    <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-lg mx-2">
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                         <div className="order-2 lg:order-1">
                           <div className="relative group">
                             <img 
                               src={doc.image} 
                               alt={doc.title}
-                              className="w-full h-64 lg:h-80 object-cover rounded-2xl shadow-lg group-hover:shadow-xl transition-shadow duration-300 bg-slate-100"
+                              className="w-full h-64 lg:h-80 object-cover rounded-2xl shadow-lg group-hover:shadow-xl transition-shadow duration-300"
+                              style={{ backgroundColor: '#f1f5f9' }}
                             />
                           </div>
                         </div>
