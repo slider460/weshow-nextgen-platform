@@ -31,16 +31,31 @@ const Header = () => {
                   Услуги
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
-                {isServicesOpen && <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-lg border border-border z-50">
+                {isServicesOpen && <div className="absolute top-full left-0 mt-1 w-80 bg-white rounded-lg shadow-lg border border-border z-50">
                     <div className="py-2">
-                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                         Мультимедийные решения
-                       </a>
                        <a href="#rental-equipment" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                         Аренда оборудования
+                         Аренда и продажа мультимедийных решений
                        </a>
                        <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                         Разработка ПО
+                         Разработка уникального ПО и игр
+                       </a>
+                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Разработка и адаптация контента
+                       </a>
+                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Техническое сопровождение
+                       </a>
+                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Интеграция мультимедии
+                       </a>
+                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Брендинг мероприятий
+                       </a>
+                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Проектирование пространств
+                       </a>
+                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Проектирование временных и постоянных инсталляций
                        </a>
                        <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
                          3D маппинг шоу
