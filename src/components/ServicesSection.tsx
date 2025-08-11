@@ -62,7 +62,7 @@ const ServicesSection = () => {
 
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {services.map((service, index) => <div key={index} className={`bento-item bg-gradient-to-br ${service.gradient} border border-border/50 group cursor-pointer
+          {services.map((service, index) => <div key={index} className={`bg-card/50 backdrop-blur-sm rounded-3xl p-8 border border-border/50 group cursor-pointer transition-all duration-300 hover:border-primary/20 hover:shadow-xl hover:scale-105
                 ${service.size === 'large' ? 'md:col-span-2' : service.size === 'medium' ? 'md:col-span-1' : ''}
                 ${index === 0 ? 'lg:col-span-2' : ''}
                 ${index === 5 ? 'lg:col-span-2' : ''}

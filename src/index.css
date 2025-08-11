@@ -8,49 +8,49 @@ Modern, professional, tech-forward aesthetic with enhanced visual elements
 
 @layer base {
   :root {
-    /* Enhanced Base Colors - Premium Tech Palette */
-    --background: 0 0% 99%;
-    --foreground: 220 20% 12%;
+    /* Apple-inspired design system colors */
+    --background: 255 255 255;
+    --foreground: 29 29 31;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 12%;
+    --card: 255 255 255;
+    --card-foreground: 29 29 31;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 12%;
+    --popover: 255 255 255;
+    --popover-foreground: 29 29 31;
 
-    /* Premium Primary - Deep Tech Blue with variations */
-    --primary: 220 90% 22%;
-    --primary-foreground: 0 0% 98%;
-    --primary-light: 220 85% 35%;
-    --primary-glow: 220 85% 45%;
+    /* Apple-inspired Primary - System Blue */
+    --primary: 0 122 255;
+    --primary-foreground: 255 255 255;
+    --primary-light: 64 156 255;
+    --primary-glow: 0 122 255;
 
-    /* Enhanced Secondary - Sophisticated Gray */
-    --secondary: 220 12% 95%;
-    --secondary-foreground: 220 20% 12%;
+    /* Apple-inspired Secondary */
+    --secondary: 245 245 247;
+    --secondary-foreground: 29 29 31;
 
-    /* Refined Muted Tones */
-    --muted: 220 10% 96%;
-    --muted-foreground: 220 15% 50%;
+    /* Apple Muted Tones */
+    --muted: 245 245 247;
+    --muted-foreground: 99 99 102;
 
-    /* Premium Accent - Vibrant Cyan with depth */
-    --accent: 190 95% 40%;
-    --accent-foreground: 0 0% 98%;
-    --accent-light: 190 90% 50%;
+    /* Apple Orange */
+    --accent: 255 149 0;
+    --accent-foreground: 255 255 255;
+    --accent-light: 255 179 64;
 
-    /* Enhanced Success - Modern Green */
-    --success: 140 80% 42%;
-    --success-foreground: 0 0% 98%;
+    /* Apple Green */
+    --success: 52 199 89;
+    --success-foreground: 255 255 255;
 
-    /* Premium Warning & Error */
-    --warning: 38 92% 50%;
-    --warning-foreground: 220 20% 12%;
-    --destructive: 0 90% 55%;
-    --destructive-foreground: 0 0% 98%;
+    /* Apple Warning & Error */
+    --warning: 255 149 0;
+    --warning-foreground: 29 29 31;
+    --destructive: 255 59 48;
+    --destructive-foreground: 255 255 255;
 
-    /* Enhanced Borders & Inputs */
-    --border: 220 20% 88%;
-    --input: 220 15% 92%;
-    --ring: 220 90% 45%;
+    /* Apple Borders & Inputs */
+    --border: 209 209 214;
+    --input: 245 245 247;
+    --ring: 0 122 255;
 
     /* Premium Gradients - Multi-layered */
     --gradient-primary: linear-gradient(135deg, hsl(220 90% 22%), hsl(220 85% 32%));

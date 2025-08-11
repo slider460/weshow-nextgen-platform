@@ -19,9 +19,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'],
-				mono: ['JetBrains Mono', 'monospace'],
-				display: ['Inter', 'sans-serif'],
+				sans: ['SF Pro Display', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+				mono: ['SF Mono', 'JetBrains Mono', 'Monaco', 'monospace'],
+				display: ['SF Pro Display', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
 			},
 			fontSize: {
 				'xs': ['0.75rem', { lineHeight: '1rem' }],

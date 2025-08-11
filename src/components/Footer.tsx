@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 
 const Footer = () => {
@@ -73,29 +74,29 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-6">Компания</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#about" className="text-primary-foreground/80 hover:text-white transition-colors">
+                <Link to="/about" className="text-primary-foreground/80 hover:text-white transition-colors">
                   О компании
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#projects" className="text-primary-foreground/80 hover:text-white transition-colors">
+                <Link to="/portfolio" className="text-primary-foreground/80 hover:text-white transition-colors">
                   Портфолио
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#blog" className="text-primary-foreground/80 hover:text-white transition-colors">
-                  Блог
-                </a>
+                <Link to="/services" className="text-primary-foreground/80 hover:text-white transition-colors">
+                  Услуги
+                </Link>
               </li>
               <li>
-                <a href="#careers" className="text-primary-foreground/80 hover:text-white transition-colors">
-                  Карьера
-                </a>
+                <Link to="/about" className="text-primary-foreground/80 hover:text-white transition-colors">
+                  Команда
+                </Link>
               </li>
               <li>
-                <a href="#contact" className="text-primary-foreground/80 hover:text-white transition-colors">
+                <Link to="/contact" className="text-primary-foreground/80 hover:text-white transition-colors">
                   Контакты
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -130,12 +131,12 @@ const Footer = () => {
               © 2024 WESHOW. Все права защищены.
             </div>
             <div className="flex space-x-6 text-sm">
-              <a href="/privacy" className="text-primary-foreground/80 hover:text-white transition-colors">
+              <Link to="/privacy" className="text-primary-foreground/80 hover:text-white transition-colors">
                 Политика конфиденциальности
-              </a>
-              <a href="/terms" className="text-primary-foreground/80 hover:text-white transition-colors">
+              </Link>
+              <Link to="/terms" className="text-primary-foreground/80 hover:text-white transition-colors">
                 Условия использования
-              </a>
+              </Link>
               <a href="/sitemap" className="text-primary-foreground/80 hover:text-white transition-colors">
                 Карта сайта
               </a>

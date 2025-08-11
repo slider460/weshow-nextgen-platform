@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
 import ProjectOrderModal from "./ProjectOrderModal";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,20 +13,20 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">W</span>
               </div>
               <span className="text-xl font-bold text-foreground">WESHOW</span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <a href="#about" className="text-foreground hover:text-primary transition-colors">
+              <Link to="/about" className="text-foreground hover:text-primary transition-colors">
                 О компании
-              </a>
+              </Link>
               
               {/* Services Dropdown */}
               <div className="relative" onMouseEnter={() => setIsServicesOpen(true)} onMouseLeave={() => setIsServicesOpen(false)}>
@@ -35,14 +36,14 @@ const Header = () => {
                 </button>
                 {isServicesOpen && <div className="absolute top-full left-0 mt-1 w-80 bg-white rounded-lg shadow-lg border border-border z-50">
                     <div className="py-2">
-                       <a href="#rental-equipment" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                         Аренда и продажа мультимедийных решений
+                       <Link to="/services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Все услуги
+                       </Link>
+                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Мультимедийные решения
                        </a>
                        <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                         Разработка уникального ПО и игр
-                       </a>
-                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                         Разработка и адаптация контента
+                         Разработка ПО и игр
                        </a>
                        <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
                          Техническое сопровождение
@@ -53,28 +54,19 @@ const Header = () => {
                        <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
                          Брендинг мероприятий
                        </a>
-                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                         Проектирование пространств
-                       </a>
-                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                         Проектирование временных и постоянных инсталляций
-                       </a>
-                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                         3D маппинг шоу
-                       </a>
                     </div>
                   </div>}
               </div>
               
-               <a href="#showreel" className="text-foreground hover:text-primary transition-colors">
+                <Link to="/about" className="text-foreground hover:text-primary transition-colors">
                 Команда
-              </a>
-              <a href="#projects" className="text-foreground hover:text-primary transition-colors">
-                Проекты
-              </a>
-              <a href="#contacts" className="text-foreground hover:text-primary transition-colors">
-                Контакты
-              </a>
+               </Link>
+               <Link to="/portfolio" className="text-foreground hover:text-primary transition-colors">
+                 Проекты
+               </Link>
+               <Link to="/contact" className="text-foreground hover:text-primary transition-colors">
+                 Контакты
+               </Link>
               
               <div className="hidden lg:flex items-center space-x-6 text-sm text-muted-foreground">
                 <a href="tel:+74951234567" className="hover:text-primary transition-colors">+7 (495) 580- 75-37</a>
@@ -104,21 +96,21 @@ const Header = () => {
         {/* Mobile menu */}
         {isMenuOpen && <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background border-t border-border">
-              <a href="#about" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
+              <Link to="/about" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
                 О компании
-              </a>
-              <a href="#services" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
+              </Link>
+              <Link to="/services" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
                 Услуги
-              </a>
-              <a href="#showreel" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
+              </Link>
+              <Link to="/about" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
                 Команда
-              </a>
-              <a href="#projects" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
+              </Link>
+              <Link to="/portfolio" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
                 Проекты
-              </a>
-              <a href="#contacts" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
+              </Link>
+              <Link to="/contact" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
                 Контакты
-              </a>
+              </Link>
               <div className="pt-4 pb-2 border-t border-border mt-4">
                 <div className="px-3 py-2 text-sm text-muted-foreground">
                   <div>+7 (495) 123-45-67</div>
