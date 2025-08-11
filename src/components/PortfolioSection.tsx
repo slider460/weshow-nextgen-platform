@@ -90,28 +90,6 @@ const PortfolioSection = () => {
             </div>)}
         </div>
 
-        {/* Additional Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {[{
-          title: "Оснащение конференц-зала Газпрома",
-          type: "Аудиовизуальные системы"
-        }, {
-          title: "LED-экраны для торгового центра",
-          type: "Цифровые технологии"
-        }, {
-          title: "Звуковая система для стадиона",
-          type: "Профессиональный звук"
-        }].map((item, index) => <div key={index} className="bg-card p-6 rounded-lg border border-border hover:border-primary/30 transition-colors group cursor-pointer">
-              <h4 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                {item.title}
-              </h4>
-              <p className="text-sm text-muted-foreground mb-4">{item.type}</p>
-              <Button variant="ghost" size="sm" className="p-0 h-auto">
-                Смотреть кейс
-                <ArrowRight className="ml-1 h-3 w-3" />
-              </Button>
-            </div>)}
-        </div>
 
         {/* CTA */}
         <div className="text-center">
