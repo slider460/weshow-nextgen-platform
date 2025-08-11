@@ -37,7 +37,7 @@ const Header = () => {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
                 </button>
                 {isServicesOpen && (
-                  <div className="absolute top-full left-0 mt-3 w-80 bg-background/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-border/50 z-50 overflow-hidden">
+                  <div className="absolute top-full left-0 mt-3 w-80 bg-background border border-border/50 rounded-2xl shadow-2xl z-[9999] overflow-hidden">
                     <div className="p-3">
                        <Link to="/services" className="flex items-center px-4 py-3 text-sm text-foreground hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200 font-medium">
                          <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
