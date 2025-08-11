@@ -6,9 +6,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
-
 const ContactFormSection = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -18,19 +19,16 @@ const ContactFormSection = () => {
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
     toast({
       title: "Заявка отправлена!",
-      description: "Мы свяжемся с вами в течение 30 минут.",
+      description: "Мы свяжемся с вами в течение 30 минут."
     });
-    
     setFormData({
       name: "",
       phone: "",
@@ -41,13 +39,13 @@ const ContactFormSection = () => {
     });
     setIsSubmitting(false);
   };
-
   const handleInputChange = (name: string, value: string) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
-
-  return (
-    <section className="py-20 bg-slate-50">
+  return <section className="py-20 bg-slate-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
@@ -69,57 +67,28 @@ const ContactFormSection = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="name" className="text-slate-700">Имя *</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                    placeholder="Ваше имя"
-                    required
-                    className="mt-1"
-                  />
+                  <Input id="name" value={formData.name} onChange={e => handleInputChange("name", e.target.value)} placeholder="Ваше имя" required className="mt-1" />
                 </div>
                 <div>
                   <Label htmlFor="phone" className="text-slate-700">Телефон *</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    placeholder="+7 (000) 000-00-00"
-                    required
-                    className="mt-1"
-                  />
+                  <Input id="phone" type="tel" value={formData.phone} onChange={e => handleInputChange("phone", e.target.value)} placeholder="+7 (000) 000-00-00" required className="mt-1" />
                 </div>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="email" className="text-slate-700">Email *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    placeholder="your@email.com"
-                    required
-                    className="mt-1"
-                  />
+                  <Input id="email" type="email" value={formData.email} onChange={e => handleInputChange("email", e.target.value)} placeholder="your@email.com" required className="mt-1" />
                 </div>
                 <div>
                   <Label htmlFor="company" className="text-slate-700">Компания</Label>
-                  <Input
-                    id="company"
-                    value={formData.company}
-                    onChange={(e) => handleInputChange("company", e.target.value)}
-                    placeholder="Название компании"
-                    className="mt-1"
-                  />
+                  <Input id="company" value={formData.company} onChange={e => handleInputChange("company", e.target.value)} placeholder="Название компании" className="mt-1" />
                 </div>
               </div>
               
               <div>
                 <Label htmlFor="service" className="text-slate-700">Интересующая услуга</Label>
-                <Select value={formData.service} onValueChange={(value) => handleInputChange("service", value)}>
+                <Select value={formData.service} onValueChange={value => handleInputChange("service", value)}>
                   <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Выберите услугу" />
                   </SelectTrigger>
@@ -136,14 +105,7 @@ const ContactFormSection = () => {
               
               <div>
                 <Label htmlFor="message" className="text-slate-700">Описание проекта</Label>
-                <Textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(e) => handleInputChange("message", e.target.value)}
-                  placeholder="Расскажите подробнее о ваших задачах и требованиях..."
-                  rows={4}
-                  className="mt-1"
-                />
+                <Textarea id="message" value={formData.message} onChange={e => handleInputChange("message", e.target.value)} placeholder="Расскажите подробнее о ваших задачах и требованиях..." rows={4} className="mt-1" />
               </div>
               
               <div className="text-sm text-slate-600">
@@ -153,13 +115,7 @@ const ContactFormSection = () => {
                 </a>
               </div>
               
-              <Button 
-                type="submit" 
-                size="lg" 
-                className="w-full"
-                variant="default"
-                disabled={isSubmitting}
-              >
+              <Button type="submit" size="lg" className="w-full" variant="default" disabled={isSubmitting}>
                 {isSubmitting ? "Отправляем..." : "Отправить заявку"}
               </Button>
             </form>
@@ -177,7 +133,8 @@ const ContactFormSection = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-1">Телефон</h4>
-                    <p className="text-slate-600">+7 (495) 580-75-37</p>
+                    <p className="text-slate-600">+7 (495) 123-45-67</p>
+                    <p className="text-slate-600">+7 (800) 555-55-55</p>
                   </div>
                 </div>
                 
@@ -197,7 +154,8 @@ const ContactFormSection = () => {
                     <MapPin className="h-6 w-6" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-900 mb-1">Адрес</h4>
+                    <h4 className="font-semibold text-slate-900 mb-1">г. Москва, ул. Рочдельская, д. 14А
+                  </h4>
                     <p className="text-slate-600">
                       г. Москва, ул. Тверская, д. 123<br />
                       БЦ "Технопарк", офис 456
@@ -212,7 +170,7 @@ const ContactFormSection = () => {
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-1">Время работы</h4>
                     <p className="text-slate-600">
-                      Пн-Пт: 9:00 - 21:00<br />
+                      Пн-Пт: 9:00 - 18:00<br />
                       Техподдержка: 24/7
                     </p>
                   </div>
@@ -244,8 +202,6 @@ const ContactFormSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ContactFormSection;
