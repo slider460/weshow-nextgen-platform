@@ -2,10 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
-
 const Footer = () => {
-  return (
-    <footer className="bg-white border-t border-slate-200">
+  return <footer className="bg-white border-t border-slate-200">
       <div className="container mx-auto px-4">
         {/* Main Footer Content */}
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -24,7 +22,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-blue-500" />
-                <span className="text-slate-700">+7 (495) 123-45-67</span>
+                <span className="text-slate-700">+7 (495) 580-75-37</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-blue-500" />
@@ -32,7 +30,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-blue-500" />
-                <span className="text-slate-700">г. Москва, ул. Тверская, д. 123</span>
+                <span className="text-slate-700">г. Москва, ул. Рочдельская, д. 14А</span>
               </div>
             </div>
           </div>
@@ -112,11 +110,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex w-full lg:w-auto max-w-md">
-              <Input
-                type="email"
-                placeholder="Ваш email"
-                className="bg-white border-slate-300 text-slate-900 placeholder:text-slate-500 focus:border-blue-500"
-              />
+              <Input type="email" placeholder="Ваш email" className="bg-white border-slate-300 text-slate-900 placeholder:text-slate-500 focus:border-blue-500" />
               <Button variant="default" className="ml-2 flex-shrink-0">
                 <ArrowRight className="h-4 w-4" />
               </Button>
@@ -145,8 +139,6 @@ const Footer = () => {
         </div>
 
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
