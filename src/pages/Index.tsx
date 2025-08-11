@@ -4,6 +4,11 @@ import ModernHeroSection from "@/components/ModernHeroSection";
 import ModernServicesSection from "@/components/ModernServicesSection";
 import ModernPortfolioSection from "@/components/ModernPortfolioSection";
 import ModernShowreelSection from "@/components/ModernShowreelSection";
+import ComplexSolutionsSection from "@/components/ComplexSolutionsSection";
+import RentalEquipmentSection from "@/components/RentalEquipmentSection";
+import WorkProcessSection from "@/components/WorkProcessSection";
+import SocialProofSection from "@/components/SocialProofSection";
+import ContactFormSection from "@/components/ContactFormSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -14,7 +19,12 @@ const Index = () => {
         <ModernHeroSection />
         <ModernServicesSection />
         <ModernPortfolioSection />
+        <ComplexSolutionsSection />
+        <RentalEquipmentSection />
+        <WorkProcessSection />
+        <SocialProofSection />
         <ModernShowreelSection />
+        <ContactFormSection />
       </main>
       <Footer />
     </div>

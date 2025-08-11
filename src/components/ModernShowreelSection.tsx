@@ -78,7 +78,7 @@ const ModernShowreelSection = () => {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              <div className="clean-card">
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                 <h4 className="font-semibold text-slate-900 mb-2">
                   Демонстрационная зона
                 </h4>
@@ -86,7 +86,7 @@ const ModernShowreelSection = () => {
                   LED-экраны, проекторы, интерактивные панели
                 </p>
               </div>
-              <div className="clean-card">
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
                 <h4 className="font-semibold text-slate-900 mb-2">
                   VR/AR зона
                 </h4>
