@@ -1,10 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   ReactFlow,
-  Controls,
   Background,
-  useNodesState,
-  useEdgesState,
   MarkerType,
   BackgroundVariant,
 } from '@xyflow/react';
@@ -163,8 +160,6 @@ const WorkflowRoadmapSection = () => {
     },
   ];
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   return (
     <section className="py-20 bg-slate-50">
@@ -180,23 +175,23 @@ const WorkflowRoadmapSection = () => {
 
         <div className="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden" style={{ height: '700px' }}>
           <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
+            nodes={initialNodes}
+            edges={initialEdges}
             nodeTypes={nodeTypes}
             fitView
             attributionPosition="bottom-left"
             proOptions={{ hideAttribution: true }}
             style={{ backgroundColor: '#f8fafc' }}
-            minZoom={0.3}
-            maxZoom={1.2}
             defaultViewport={{ x: 50, y: 50, zoom: 0.7 }}
+            nodesDraggable={false}
+            nodesConnectable={false}
+            elementsSelectable={false}
+            panOnDrag={false}
+            zoomOnScroll={false}
+            zoomOnPinch={false}
+            zoomOnDoubleClick={false}
+            preventScrolling={true}
           >
-            <Controls 
-              className="bg-white border border-slate-200 rounded-xl shadow-lg"
-              showInteractive={false}
-            />
             <Background 
               variant={BackgroundVariant.Dots}
               gap={20}
