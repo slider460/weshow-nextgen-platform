@@ -57,7 +57,7 @@ const ModernHeroSection = () => {
                     качественный монтаж и техническое сопровождение.
                   </p>
                 </div>
-                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20">
+                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10">
                   Подробнее
                 </Button>
               </div>
@@ -80,7 +80,7 @@ const ModernHeroSection = () => {
                   на выставке-форуме<br />
                   «Россия»
                 </p>
-                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 mt-auto">
+                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10 mt-auto">
                   посмотреть
                 </Button>
               </div>
@@ -91,7 +91,7 @@ const ModernHeroSection = () => {
                 <p className="text-white/90 text-sm mb-4">
                   Особенный новый год Samsung
                 </p>
-                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 mt-auto">
+                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10 mt-auto">
                   посмотреть
                 </Button>
               </div>

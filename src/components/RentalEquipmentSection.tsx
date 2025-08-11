@@ -121,7 +121,7 @@ const RentalEquipmentSection = () => {
                 {item.description}
               </p>
               
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20">
+              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
                 Подробнее
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -152,11 +152,11 @@ const RentalEquipmentSection = () => {
               Наши эксперты помогут подобрать оптимальный комплект оборудования под ваши задачи и бюджет
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20">
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
                 Получить консультацию
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20">
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
                 Каталог оборудования
               </Button>
             </div>
