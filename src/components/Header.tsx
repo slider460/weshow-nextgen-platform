@@ -7,6 +7,20 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  
+  let hoverTimeout: NodeJS.Timeout;
+  
+  const handleServicesEnter = () => {
+    clearTimeout(hoverTimeout);
+    setIsServicesOpen(true);
+  };
+  
+  const handleServicesLeave = () => {
+    hoverTimeout = setTimeout(() => {
+      setIsServicesOpen(false);
+    }, 100);
+  };
+  
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   return <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,39 +44,45 @@ const Header = () => {
               </Link>
               
               {/* Services Dropdown */}
-              <div className="relative" onMouseEnter={() => setIsServicesOpen(true)} onMouseLeave={() => setIsServicesOpen(false)}>
+              <div className="relative" onMouseEnter={handleServicesEnter} onMouseLeave={handleServicesLeave}>
                 <button className="relative flex items-center text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
                   Услуги
                   <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`} />
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
                 </button>
                 {isServicesOpen && (
-                  <div className="absolute top-full left-0 mt-3 w-80 bg-background border border-border/50 rounded-2xl shadow-2xl z-[9999] overflow-hidden">
-                    <div className="p-3">
-                       <Link to="/services" className="flex items-center px-4 py-3 text-sm text-foreground hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200 font-medium">
-                         <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
-                         Все услуги
-                       </Link>
-                       <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
-                         <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                         Мультимедийные решения
-                       </a>
-                       <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
-                         <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                         Разработка ПО и игр
-                       </a>
-                       <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
-                         <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                         Техническое сопровождение
-                       </a>
-                       <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
-                         <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                         Интеграция мультимедии
-                       </a>
-                       <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
-                         <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                         Брендинг мероприятий
-                       </a>
+                  <div 
+                    className="absolute top-full left-0 pt-2 w-80 z-[9999]"
+                    onMouseEnter={handleServicesEnter} 
+                    onMouseLeave={handleServicesLeave}
+                  >
+                    <div className="bg-background border border-border/50 rounded-2xl shadow-2xl overflow-hidden">
+                      <div className="p-3">
+                         <Link to="/services" className="flex items-center px-4 py-3 text-sm text-foreground hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200 font-medium">
+                           <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
+                           Все услуги
+                         </Link>
+                         <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                           <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
+                           Мультимедийные решения
+                         </a>
+                         <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                           <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
+                           Разработка ПО и игр
+                         </a>
+                         <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                           <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
+                           Техническое сопровождение
+                         </a>
+                         <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                           <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
+                           Интеграция мультимедии
+                         </a>
+                         <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                           <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
+                           Брендинг мероприятий
+                         </a>
+                      </div>
                     </div>
                   </div>
                 )}
