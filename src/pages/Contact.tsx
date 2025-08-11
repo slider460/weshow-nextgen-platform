@@ -57,7 +57,7 @@ const Contact = () => {
     {
       icon: <MapPin className="h-6 w-6" />,
       title: "Адрес",
-      content: "Москва, ул. Примерная, д. 123",
+      content: "Москва, ул. Рочдельская, 14А",
       link: ""
     },
     {
