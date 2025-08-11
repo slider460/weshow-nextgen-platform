@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, Mail, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import ProjectOrderModal from "./ProjectOrderModal";
 const Header = () => {
@@ -8,73 +8,94 @@ const Header = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  return <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+  return <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">W</span>
+            <Link to="/" className="flex items-center space-x-3 group">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary via-primary/90 to-accent rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <span className="text-primary-foreground font-bold text-xl">W</span>
               </div>
-              <span className="text-xl font-bold text-foreground">WESHOW</span>
+              <span className="text-2xl font-bold text-foreground tracking-tight">WESHOW</span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              <Link to="/about" className="text-foreground hover:text-primary transition-colors">
+          <div className="hidden md:block flex-1">
+            <div className="flex items-center justify-center space-x-8">
+              <Link to="/about" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
                 О компании
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
               </Link>
               
               {/* Services Dropdown */}
               <div className="relative" onMouseEnter={() => setIsServicesOpen(true)} onMouseLeave={() => setIsServicesOpen(false)}>
-                <button className="flex items-center text-foreground hover:text-primary transition-colors">
+                <button className="relative flex items-center text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
                   Услуги
-                  <ChevronDown className="ml-1 h-4 w-4" />
+                  <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`} />
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
                 </button>
-                {isServicesOpen && <div className="absolute top-full left-0 mt-1 w-80 bg-white rounded-lg shadow-lg border border-border z-50">
-                    <div className="py-2">
-                       <Link to="/services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                {isServicesOpen && (
+                  <div className="absolute top-full left-0 mt-3 w-80 bg-background/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-border/50 z-50 overflow-hidden">
+                    <div className="p-3">
+                       <Link to="/services" className="flex items-center px-4 py-3 text-sm text-foreground hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200 font-medium">
+                         <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
                          Все услуги
                        </Link>
-                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                       <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                         <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
                          Мультимедийные решения
                        </a>
-                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                       <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                         <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
                          Разработка ПО и игр
                        </a>
-                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                       <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                         <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
                          Техническое сопровождение
                        </a>
-                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                       <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                         <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
                          Интеграция мультимедии
                        </a>
-                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                       <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                         <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
                          Брендинг мероприятий
                        </a>
                     </div>
-                  </div>}
+                  </div>
+                )}
               </div>
               
-                <Link to="/about" className="text-foreground hover:text-primary transition-colors">
+              <Link to="/about" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
                 Команда
-               </Link>
-               <Link to="/portfolio" className="text-foreground hover:text-primary transition-colors">
-                 Проекты
-               </Link>
-               <Link to="/contact" className="text-foreground hover:text-primary transition-colors">
-                 Контакты
-               </Link>
-              
-              <div className="hidden lg:flex items-center space-x-6 text-sm text-muted-foreground">
-                <a href="tel:+74951234567" className="hover:text-primary transition-colors">+7 (495) 580- 75-37</a>
-                <span className="text-muted-foreground">Москва, ул. Рочдельская, 14А</span>
-                <a href="mailto:info@weshow.ru" className="hover:text-primary transition-colors">
-                  info@weshow.ru
-                </a>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+              </Link>
+              <Link to="/portfolio" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
+                Проекты
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+              </Link>
+              <Link to="/contact" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
+                Контакты
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+              </Link>
+            </div>
+            
+            {/* Contact Info */}
+            <div className="hidden xl:flex items-center justify-end space-x-6 text-sm text-muted-foreground mt-1">
+              <a href="tel:+74955807537" className="flex items-center space-x-1 hover:text-primary transition-colors group">
+                <Phone className="h-4 w-4 group-hover:scale-110 transition-transform" />
+                <span>+7 (495) 580-75-37</span>
+              </a>
+              <div className="flex items-center space-x-1">
+                <MapPin className="h-4 w-4" />
+                <span>Москва, ул. Рочдельская, 14А</span>
               </div>
+              <a href="mailto:info@weshow.ru" className="flex items-center space-x-1 hover:text-primary transition-colors group">
+                <Mail className="h-4 w-4 group-hover:scale-110 transition-transform" />
+                <span>info@weshow.ru</span>
+              </a>
             </div>
           </div>
 
@@ -94,37 +115,83 @@ const Header = () => {
         </div>
 
         {/* Mobile menu */}
-        {isMenuOpen && <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background border-t border-border">
-              <Link to="/about" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
+        {isMenuOpen && (
+          <div className="md:hidden animate-in slide-in-from-top-2 duration-200">
+            <div className="px-4 pt-4 pb-6 space-y-3 bg-background/95 backdrop-blur-lg border-t border-border/50 shadow-lg">
+              <Link 
+                to="/about" 
+                className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                onClick={toggleMenu}
+              >
+                <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
                 О компании
               </Link>
-              <Link to="/services" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
+              <Link 
+                to="/services" 
+                className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                onClick={toggleMenu}
+              >
+                <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
                 Услуги
               </Link>
-              <Link to="/about" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
+              <Link 
+                to="/about" 
+                className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                onClick={toggleMenu}
+              >
+                <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
                 Команда
               </Link>
-              <Link to="/portfolio" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
+              <Link 
+                to="/portfolio" 
+                className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                onClick={toggleMenu}
+              >
+                <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
                 Проекты
               </Link>
-              <Link to="/contact" className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md" onClick={toggleMenu}>
+              <Link 
+                to="/contact" 
+                className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                onClick={toggleMenu}
+              >
+                <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
                 Контакты
               </Link>
-              <div className="pt-4 pb-2 border-t border-border mt-4">
-                <div className="px-3 py-2 text-sm text-muted-foreground">
-                  <div>+7 (495) 123-45-67</div>
-                  <div>info@weshow.ru</div>
-                  <div>Москва, ул. Примерная, 123</div>
+              
+              <div className="pt-4 mt-4 border-t border-border/50">
+                <div className="space-y-3 px-4 py-3 bg-muted/30 rounded-xl">
+                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                    <Phone className="h-4 w-4" />
+                    <span>+7 (495) 580-75-37</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                    <Mail className="h-4 w-4" />
+                    <span>info@weshow.ru</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                    <MapPin className="h-4 w-4" />
+                    <span>Москва, ул. Рочдельская, 14А</span>
+                  </div>
                 </div>
               </div>
+              
               <div className="pt-4">
-                <Button variant="hero" size="lg" className="w-full" onClick={() => setIsOrderModalOpen(true)}>
+                <Button 
+                  variant="hero" 
+                  size="lg" 
+                  className="w-full shadow-lg" 
+                  onClick={() => {
+                    setIsOrderModalOpen(true);
+                    setIsMenuOpen(false);
+                  }}
+                >
                   Заказать проект
                 </Button>
               </div>
             </div>
-          </div>}
+          </div>
+        )}
       </nav>
       
       <ProjectOrderModal 
