@@ -10,7 +10,7 @@ const UniqueValueProposition = () => {
     {
       icon: <Award className="h-6 w-6" />,
       title: "Экспертность",
-      description: "15+ лет опыта и команда сертифицированных специалистов"
+      description: "20+ лет опыта и команда сертифицированных специалистов"
     },
     {
       icon: <Users className="h-6 w-6" />,
@@ -29,12 +29,12 @@ const UniqueValueProposition = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            Почему выбирают именно WESHOW?
+            WESHOW: Увеличиваем вовлеченность на 30%
           </h2>
           
           <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto">
-            Мы не просто поставляем оборудование — мы создаем комплексные технологические решения, 
-            которые увеличивают ROI и укрепляют имидж вашей компании
+            Благодаря инновационным мультимедийным решениям и безупречной технической интеграции, 
+            проверенной в 500+ проектах
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

@@ -30,10 +30,11 @@ const PortfolioSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            Наши проекты
+            Топовые кейсы
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Успешно реализованные проекты для ведущих российских компаний и государственных учреждений
+            Наиболее значимые и визуально впечатляющие проекты, демонстрирующие 
+            масштаб и качество работы WESHOW
           </p>
         </div>
 
@@ -133,10 +134,16 @@ const PortfolioSection = () => {
 
         {/* CTA */}
         <div className="text-center">
-          <Button variant="hero" size="xl">
-            Все проекты
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button variant="hero" size="xl">
+              Все проекты
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+            <Button variant="outline" size="xl">
+              Заказать проект
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Monitor, Settings, Calendar, Package } from "lucide-react";
+import { ArrowRight, Monitor, Settings, Calendar, Package, Code, Palette, Layers } from "lucide-react";
 
 const ServicesSection = () => {
   const services = [
@@ -7,32 +7,48 @@ const ServicesSection = () => {
       icon: <Monitor className="h-8 w-8" />,
       title: "Мультимедийные решения",
       description: "3D-маппинг, LED-экраны, интерактивные инсталляции для создания впечатляющих визуальных эффектов",
-      features: ["Проекционный маппинг", "LED-видеостены", "Интерактивные дисплеи"],
+      features: ["3D-маппинг шоу", "LED-видеостены", "Интерактивные дисплеи"],
       gradient: "from-primary/20 to-primary/5",
-      size: "large" // Takes 2 columns on desktop
+      size: "large"
     },
     {
-      icon: <Settings className="h-8 w-8" />,
-      title: "Техническая интеграция",
-      description: "Комплексное оснащение объектов современными AV-системами",
-      features: ["Звуковые системы", "Системы управления", "Интеграция оборудования"],
+      icon: <Code className="h-8 w-8" />,
+      title: "Разработка уникального ПО и игр",
+      description: "Создание интерактивных приложений и игровых решений",
+      features: ["Игры на базе Kinect", "AR/VR приложения", "Интерактивный контент"],
       gradient: "from-accent/20 to-accent/5",
       size: "medium"
     },
     {
       icon: <Calendar className="h-8 w-8" />,
-      title: "Организация мероприятий",
-      description: "Полный цикл технического обеспечения корпоративных событий",
-      features: ["Конференции", "Выставки", "Презентации"],
+      title: "Техническое сопровождение",
+      description: "Профессиональная поддержка мероприятий и инсталляций",
+      features: ["24/7 поддержка", "Выездное обслуживание", "Техническое консультирование"],
       gradient: "from-success/20 to-success/5",
       size: "medium"
     },
     {
-      icon: <Package className="h-8 w-8" />,
-      title: "Поставка оборудования",
-      description: "Профессиональное AV-оборудование от ведущих мировых производителей",
-      features: ["Проекторы", "Микрофонные системы", "Коммутационное оборудование"],
+      icon: <Layers className="h-8 w-8" />,
+      title: "Интеграция мультимедиа",
+      description: "Комплексная интеграция AV-систем и мультимедийных решений",
+      features: ["Системы управления", "Автоматизация", "Интеграция оборудования"],
       gradient: "from-purple-500/20 to-purple-500/5",
+      size: "medium"
+    },
+    {
+      icon: <Palette className="h-8 w-8" />,
+      title: "Брендинг мероприятий",
+      description: "Создание уникального визуального образа для ваших событий",
+      features: ["Концепция дизайна", "Брендированный контент", "Фирменный стиль"],
+      gradient: "from-orange-500/20 to-orange-500/5",
+      size: "medium"
+    },
+    {
+      icon: <Settings className="h-8 w-8" />,
+      title: "Проектирование пространств",
+      description: "Дизайн и планирование мультимедийных пространств",
+      features: ["Архитектурная визуализация", "Планирование инсталляций", "3D-моделирование"],
+      gradient: "from-teal-500/20 to-teal-500/5",
       size: "large"
     }
   ];
@@ -42,11 +58,10 @@ const ServicesSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            Наши услуги и решения
+            Топовые позиции услуг
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Предоставляем полный спектр мультимедийных технологий и технических решений 
-            для успешной реализации ваших проектов
+            Полный спектр мультимедийных решений от разработки контента до технической реализации
           </p>
         </div>
 
@@ -58,7 +73,7 @@ const ServicesSection = () => {
               className={`bento-item bg-gradient-to-br ${service.gradient} border border-border/50 group cursor-pointer
                 ${service.size === 'large' ? 'md:col-span-2' : service.size === 'medium' ? 'md:col-span-1' : ''}
                 ${index === 0 ? 'lg:col-span-2' : ''}
-                ${index === 3 ? 'lg:col-span-2' : ''}
+                ${index === 5 ? 'lg:col-span-2' : ''}
               `}
             >
               <div className="flex items-start space-x-4">

@@ -45,29 +45,41 @@ const Header = () => {
                       <a href="#multimedia" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
                         Мультимедийные решения
                       </a>
-                      <a href="#integration" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                        Техническая интеграция
+                      <a href="#rental-equipment" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                        Аренда оборудования
                       </a>
-                      <a href="#events" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                        Организация мероприятий
+                      <a href="#software-dev" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                        Разработка ПО
                       </a>
-                      <a href="#equipment" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                        Поставка оборудования
+                      <a href="#mapping" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                        3D маппинг шоу
                       </a>
                     </div>
                   </div>
                 )}
               </div>
               
+              <a href="#team" className="text-foreground hover:text-primary transition-colors">
+                Команда
+              </a>
               <a href="#projects" className="text-foreground hover:text-primary transition-colors">
                 Проекты
               </a>
               <a href="#blog" className="text-foreground hover:text-primary transition-colors">
-                Ресурсы
+                Блог
               </a>
-              <a href="#contact" className="text-foreground hover:text-primary transition-colors">
-                Контакты
-              </a>
+              
+              <div className="hidden lg:flex items-center space-x-6 text-sm text-muted-foreground">
+                <a href="tel:+74951234567" className="hover:text-primary transition-colors">
+                  +7 (495) 123-45-67
+                </a>
+                <span className="text-muted-foreground">
+                  Москва, ул. Примерная, 123
+                </span>
+                <a href="mailto:info@weshow.ru" className="hover:text-primary transition-colors">
+                  info@weshow.ru
+                </a>
+              </div>
             </div>
           </div>
 
@@ -108,6 +120,13 @@ const Header = () => {
                 Услуги
               </a>
               <a
+                href="#team"
+                className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md"
+                onClick={toggleMenu}
+              >
+                Команда
+              </a>
+              <a
                 href="#projects"
                 className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md"
                 onClick={toggleMenu}
@@ -119,15 +138,15 @@ const Header = () => {
                 className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md"
                 onClick={toggleMenu}
               >
-                Ресурсы
+                Блог
               </a>
-              <a
-                href="#contact"
-                className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md"
-                onClick={toggleMenu}
-              >
-                Контакты
-              </a>
+              <div className="pt-4 pb-2 border-t border-border mt-4">
+                <div className="px-3 py-2 text-sm text-muted-foreground">
+                  <div>+7 (495) 123-45-67</div>
+                  <div>info@weshow.ru</div>
+                  <div>Москва, ул. Примерная, 123</div>
+                </div>
+              </div>
               <div className="pt-4">
                 <Button variant="hero" size="lg" className="w-full">
                   Заказать проект
