@@ -177,8 +177,7 @@ const ContactFormSection = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-1">Телефон</h4>
-                    <p className="text-slate-600">+7 (495) 123-45-67</p>
-                    <p className="text-slate-600">+7 (800) 555-55-55</p>
+                    <p className="text-slate-600">+7 (495) 580-75-37</p>
                   </div>
                 </div>
                 
@@ -213,7 +212,7 @@ const ContactFormSection = () => {
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-1">Время работы</h4>
                     <p className="text-slate-600">
-                      Пн-Пт: 9:00 - 18:00<br />
+                      Пн-Пт: 9:00 - 21:00<br />
                       Техподдержка: 24/7
                     </p>
                   </div>
