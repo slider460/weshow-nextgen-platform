@@ -17,12 +17,12 @@ const WorkflowRoadmapSection = () => {
     processNode: ProcessNode,
   };
 
-  // Initial nodes for the workflow
+  // Initial nodes for the workflow - улучшенное позиционирование
   const initialNodes = [
     {
       id: '1',
       type: 'processNode',
-      position: { x: 50, y: 150 },
+      position: { x: 50, y: 100 },
       data: {
         number: 1,
         icon: <Search className="h-6 w-6" />,
@@ -35,7 +35,7 @@ const WorkflowRoadmapSection = () => {
     {
       id: '2',
       type: 'processNode',
-      position: { x: 400, y: 50 },
+      position: { x: 450, y: 100 },
       data: {
         number: 2,
         icon: <FileText className="h-6 w-6" />,
@@ -48,7 +48,7 @@ const WorkflowRoadmapSection = () => {
     {
       id: '3',
       type: 'processNode',
-      position: { x: 750, y: 150 },
+      position: { x: 850, y: 100 },
       data: {
         number: 3,
         icon: <Truck className="h-6 w-6" />,
@@ -61,7 +61,7 @@ const WorkflowRoadmapSection = () => {
     {
       id: '4',
       type: 'processNode',
-      position: { x: 1100, y: 250 },
+      position: { x: 850, y: 350 },
       data: {
         number: 4,
         icon: <Cog className="h-6 w-6" />,
@@ -74,7 +74,7 @@ const WorkflowRoadmapSection = () => {
     {
       id: '5',
       type: 'processNode',
-      position: { x: 750, y: 350 },
+      position: { x: 450, y: 350 },
       data: {
         number: 5,
         icon: <Settings className="h-6 w-6" />,
@@ -87,7 +87,7 @@ const WorkflowRoadmapSection = () => {
     {
       id: '6',
       type: 'processNode',
-      position: { x: 400, y: 450 },
+      position: { x: 50, y: 350 },
       data: {
         number: 6,
         icon: <Headphones className="h-6 w-6" />,
@@ -99,7 +99,7 @@ const WorkflowRoadmapSection = () => {
     },
   ];
 
-  // Initial edges connecting the workflow steps
+  // Initial edges connecting the workflow steps - обновленные соединения
   const initialEdges = [
     {
       id: 'e1-2',
@@ -178,7 +178,7 @@ const WorkflowRoadmapSection = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden" style={{ height: '600px' }}>
+        <div className="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden" style={{ height: '700px' }}>
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -189,9 +189,9 @@ const WorkflowRoadmapSection = () => {
             attributionPosition="bottom-left"
             proOptions={{ hideAttribution: true }}
             style={{ backgroundColor: '#f8fafc' }}
-            minZoom={0.5}
-            maxZoom={1.5}
-            defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
+            minZoom={0.3}
+            maxZoom={1.2}
+            defaultViewport={{ x: 50, y: 50, zoom: 0.7 }}
           >
             <Controls 
               className="bg-white border border-slate-200 rounded-xl shadow-lg"
