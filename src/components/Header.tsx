@@ -42,31 +42,31 @@ const Header = () => {
                 {isServicesOpen && (
                   <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-lg border border-border z-50">
                     <div className="py-2">
-                      <a href="#multimedia" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                        Мультимедийные решения
-                      </a>
-                      <a href="#rental-equipment" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                        Аренда оборудования
-                      </a>
-                      <a href="#software-dev" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                        Разработка ПО
-                      </a>
-                      <a href="#mapping" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
-                        3D маппинг шоу
-                      </a>
+                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Мультимедийные решения
+                       </a>
+                       <a href="#rental-equipment" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Аренда оборудования
+                       </a>
+                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         Разработка ПО
+                       </a>
+                       <a href="#services" className="block px-4 py-2 text-sm text-foreground hover:bg-muted">
+                         3D маппинг шоу
+                       </a>
                     </div>
                   </div>
                 )}
               </div>
               
-              <a href="#team" className="text-foreground hover:text-primary transition-colors">
+               <a href="#showreel" className="text-foreground hover:text-primary transition-colors">
                 Команда
               </a>
               <a href="#projects" className="text-foreground hover:text-primary transition-colors">
                 Проекты
               </a>
-              <a href="#blog" className="text-foreground hover:text-primary transition-colors">
-                Блог
+              <a href="#contacts" className="text-foreground hover:text-primary transition-colors">
+                Контакты
               </a>
               
               <div className="hidden lg:flex items-center space-x-6 text-sm text-muted-foreground">
@@ -120,7 +120,7 @@ const Header = () => {
                 Услуги
               </a>
               <a
-                href="#team"
+                href="#showreel"
                 className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md"
                 onClick={toggleMenu}
               >
@@ -134,11 +134,11 @@ const Header = () => {
                 Проекты
               </a>
               <a
-                href="#blog"
+                href="#contacts"
                 className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md"
                 onClick={toggleMenu}
               >
-                Блог
+                Контакты
               </a>
               <div className="pt-4 pb-2 border-t border-border mt-4">
                 <div className="px-3 py-2 text-sm text-muted-foreground">
