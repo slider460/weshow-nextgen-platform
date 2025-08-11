@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
+import ProjectOrderModal from "./ProjectOrderModal";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   return <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -86,7 +88,7 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button variant="hero" size="lg">
+            <Button variant="hero" size="lg" onClick={() => setIsOrderModalOpen(true)}>
               Заказать проект
             </Button>
           </div>
@@ -125,13 +127,18 @@ const Header = () => {
                 </div>
               </div>
               <div className="pt-4">
-                <Button variant="hero" size="lg" className="w-full">
+                <Button variant="hero" size="lg" className="w-full" onClick={() => setIsOrderModalOpen(true)}>
                   Заказать проект
                 </Button>
               </div>
             </div>
           </div>}
       </nav>
+      
+      <ProjectOrderModal 
+        isOpen={isOrderModalOpen} 
+        onClose={() => setIsOrderModalOpen(false)} 
+      />
     </header>;
 };
 export default Header;
