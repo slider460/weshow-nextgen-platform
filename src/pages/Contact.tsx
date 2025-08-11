@@ -63,23 +63,23 @@ const Contact = () => {
     {
       icon: <Clock className="h-6 w-6" />,
       title: "Время работы",
-      content: "Пн-Пт: 09:00-18:00",
+      content: "Пн-Пт: 09:00-21:00",
       link: ""
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+    <div className="min-h-screen bg-slate-50">
       <Header />
       
       {/* Hero Section */}
       <section className="pt-32 pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-extralight text-foreground mb-6 tracking-tight">
+            <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
               Контакты
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 font-light leading-relaxed">
+            <p className="text-xl text-slate-600 leading-relaxed mb-8">
               Свяжитесь с нами и начните создавать удивительные проекты
             </p>
           </div>
@@ -87,13 +87,13 @@ const Contact = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16">
             
             {/* Contact Form */}
-            <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-8 border border-border/50">
-              <h2 className="text-3xl font-light text-foreground mb-8">Отправить заявку</h2>
+            <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+              <h2 className="text-3xl font-semibold text-slate-900 mb-8">Отправить заявку</h2>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -171,7 +171,6 @@ const Contact = () => {
 
                 <Button 
                   type="submit" 
-                  variant="hero" 
                   size="lg" 
                   className="w-full"
                   disabled={isSubmitting}
@@ -185,23 +184,23 @@ const Contact = () => {
             {/* Contact Info */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-3xl font-light text-foreground mb-8">Как нас найти</h2>
+                <h2 className="text-3xl font-semibold text-slate-900 mb-8">Как нас найти</h2>
                 <div className="space-y-6">
                   {contactInfo.map((info, index) => (
                     <div key={index} className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                        <div className="text-primary">
+                      <div className="flex-shrink-0 w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center">
+                        <div className="text-slate-600">
                           {info.icon}
                         </div>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground mb-1">{info.title}</h3>
+                        <h3 className="font-semibold text-slate-900 mb-1">{info.title}</h3>
                         {info.link ? (
-                          <a href={info.link} className="text-muted-foreground hover:text-primary transition-colors">
+                          <a href={info.link} className="text-slate-600 hover:text-blue-500 transition-colors">
                             {info.content}
                           </a>
                         ) : (
-                          <p className="text-muted-foreground">{info.content}</p>
+                          <p className="text-slate-600">{info.content}</p>
                         )}
                       </div>
                     </div>
@@ -210,8 +209,8 @@ const Contact = () => {
               </div>
 
               {/* Map placeholder */}
-              <div className="bg-muted/50 rounded-3xl h-64 flex items-center justify-center">
-                <p className="text-muted-foreground">Карта</p>
+              <div className="bg-slate-100 rounded-2xl h-64 flex items-center justify-center">
+                <p className="text-slate-600">Карта</p>
               </div>
             </div>
           </div>

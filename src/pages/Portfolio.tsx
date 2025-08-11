@@ -50,17 +50,17 @@ const Portfolio = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+    <div className="min-h-screen bg-slate-50">
       <Header />
       
       {/* Hero Section */}
       <section className="pt-32 pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-extralight text-foreground mb-6 tracking-tight">
+            <h1 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
               Портфолио
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 font-light leading-relaxed">
+            <p className="text-xl text-slate-600 leading-relaxed mb-8">
               Примеры наших работ и реализованных проектов
             </p>
             <Button variant="outline" size="lg" className="group">
@@ -72,13 +72,13 @@ const Portfolio = () => {
       </section>
 
       {/* Projects Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <div key={index} className="group cursor-pointer">
-                <div className="bg-card/50 backdrop-blur-sm rounded-3xl overflow-hidden border border-border/50 hover:border-primary/20 transition-all duration-300">
-                  <div className="aspect-video bg-muted/50 relative overflow-hidden">
+                <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="aspect-video bg-slate-100 relative overflow-hidden">
                     <img 
                       src={project.image} 
                       alt={project.title}
@@ -93,15 +93,15 @@ const Portfolio = () => {
                   </div>
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs text-accent font-medium tracking-wide uppercase">
+                      <span className="text-xs text-blue-500 font-medium tracking-wide uppercase">
                         {project.category}
                       </span>
-                      <span className="text-xs text-muted-foreground">{project.year}</span>
+                      <span className="text-xs text-slate-600">{project.year}</span>
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                    <h3 className="text-xl font-semibold text-slate-900 mb-2 group-hover:text-blue-500 transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
+                    <p className="text-slate-600 text-sm leading-relaxed">
                       {project.description}
                     </p>
                   </div>
@@ -113,16 +113,16 @@ const Portfolio = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-card/30">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-slate-50">
+        <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-light text-foreground mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
               Хотите увидеть свой проект здесь?
             </h2>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-xl text-slate-600 mb-8">
               Начните свой проект с нами уже сегодня
             </p>
-            <Button variant="hero" size="lg">
+            <Button size="lg">
               Обсудить проект
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
