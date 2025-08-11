@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MapboxMap from "@/components/MapboxMap";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -208,10 +209,12 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Map placeholder */}
-              <div className="bg-slate-100 rounded-2xl h-64 flex items-center justify-center">
-                <p className="text-slate-600">Карта</p>
-              </div>
+              {/* Interactive Map */}
+              <MapboxMap 
+                address="Москва, ул. Рочдельская, 14А"
+                coordinates={[37.6156, 55.7796]}
+                className="w-full h-80"
+              />
             </div>
           </div>
         </div>
