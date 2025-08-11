@@ -23,10 +23,10 @@ const ModernHeroSection = () => {
                   🎯 Профессиональные решения
                 </div>
                 
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 leading-[1.1] tracking-tight">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 leading-[1.1] tracking-tight break-words">
                   Комплексные
                   <br />
-                  <span className="text-gradient bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
+                  <span className="text-gradient bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent block sm:inline">
                     мультимедийные
                   </span>
                   <br />
