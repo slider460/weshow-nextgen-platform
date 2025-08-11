@@ -38,44 +38,23 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animate-float">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3">
             Комплексные
             <span className="text-accent block">мультимедийные решения</span>
             для вашего бизнеса
           </h1>
           
-          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Профессиональное техническое оснащение, 3D-маппинг, интерактивные инсталляции 
-            и комплексная организация мероприятий для корпоративных клиентов
+          <p className="text-sm md:text-lg text-white/90 mb-4 max-w-2xl mx-auto leading-relaxed">
+            Профессиональное техническое оснащение и интерактивные инсталляции для корпоративных клиентов
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button variant="hero" size="xl" className="animate-pulse-glow">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <Button variant="hero" size="lg" className="animate-pulse-glow">
               Получить консультацию
             </Button>
-            <Button variant="outline" size="xl" className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50">
+            <Button variant="outline" size="lg" className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50">
               Посмотреть проекты
             </Button>
-          </div>
-        </div>
-        
-        {/* Stats */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">500+</div>
-            <div className="text-white/80">Реализованных проектов</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">150+</div>
-            <div className="text-white/80">Видов оборудования на складе</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">25+</div>
-            <div className="text-white/80">Лет на рынке</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-white mb-2">24/7</div>
-            <div className="text-white/80">Техническая поддержка</div>
           </div>
         </div>
       </div>
