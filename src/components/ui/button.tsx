@@ -9,19 +9,19 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:shadow-xl hover:scale-105 active:scale-95",
+        default: "gradient-card-blue text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 border-0",
         destructive:
           "bg-destructive text-destructive-foreground shadow-lg hover:bg-destructive/90 hover:shadow-xl hover:scale-105 active:scale-95",
         outline:
-          "border border-border bg-background/50 backdrop-blur-sm shadow-sm hover:bg-muted hover:text-foreground hover:shadow-md hover:scale-105 active:scale-95",
+          "border border-slate-300 bg-white/80 backdrop-blur-sm shadow-sm hover:bg-slate-100 hover:text-slate-900 hover:shadow-md hover:scale-105 active:scale-95",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 hover:shadow-md hover:scale-105 active:scale-95",
-        ghost: "hover:bg-muted hover:text-foreground hover:scale-105 active:scale-95",
-        link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-primary text-primary-foreground shadow-xl hover:bg-primary/90 hover:shadow-2xl hover:scale-105 active:scale-95 font-semibold",
-        accent: "bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 hover:shadow-xl hover:scale-105 active:scale-95",
-        success: "bg-success text-success-foreground shadow-lg hover:bg-success/90 hover:shadow-xl hover:scale-105 active:scale-95",
-        premium: "bg-gradient-to-r from-accent to-accent-light text-accent-foreground border border-accent/20 hover:border-accent shadow-lg hover:shadow-xl hover:scale-105 active:scale-95",
+          "gradient-card-purple text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 border-0",
+        ghost: "hover:bg-slate-100 hover:text-slate-900 hover:scale-105 active:scale-95",
+        link: "text-blue-500 underline-offset-4 hover:underline",
+        hero: "gradient-card-cyan text-white shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 font-semibold border-0",
+        accent: "gradient-card-dark text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 border-0",
+        success: "bg-green-500 text-white shadow-lg hover:bg-green-600 hover:shadow-xl hover:scale-105 active:scale-95",
+        premium: "gradient-card-purple text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 border-0",
       },
       size: {
         default: "h-10 px-6 py-2",

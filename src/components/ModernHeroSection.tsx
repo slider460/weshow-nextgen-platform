@@ -28,11 +28,11 @@ const ModernHeroSection = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 text-lg">
+                <Button size="lg" variant="default" className="px-8 py-4 text-lg">
                   Получить консультацию
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button variant="outline" size="lg" className="px-8 py-4 text-lg border-slate-300 text-slate-700 hover:bg-slate-100">
+                <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
                   <Play className="mr-2 h-5 w-5" />
                   Смотреть шоурил
                 </Button>

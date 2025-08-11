@@ -101,7 +101,7 @@ const ModernPortfolioSection = () => {
                   </div>
                 </div>
                 
-                <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white">
+                <Button className="w-full" variant="default">
                   Подробнее о проекте
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -112,11 +112,11 @@ const ModernPortfolioSection = () => {
 
         <div className="text-center">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4">
+            <Button size="lg" variant="hero">
               Все проекты
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button variant="outline" size="lg" className="px-8 py-4 border-slate-300 text-slate-700 hover:bg-slate-100">
+            <Button variant="outline" size="lg">
               Заказать проект
             </Button>
           </div>

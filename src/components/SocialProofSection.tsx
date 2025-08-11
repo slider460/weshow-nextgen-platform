@@ -140,7 +140,7 @@ const SocialProofSection = () => {
                             {doc.description}
                           </p>
                           
-                          <Button variant="outline" className="border-slate-300 text-slate-700 hover:bg-slate-100">
+                          <Button variant="outline">
                             Читать полностью
                             <ChevronRight className="ml-2 h-4 w-4" />
                           </Button>

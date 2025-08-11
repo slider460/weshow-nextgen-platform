@@ -156,7 +156,8 @@ const ContactFormSection = () => {
               <Button 
                 type="submit" 
                 size="lg" 
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+                className="w-full"
+                variant="default"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Отправляем..." : "Отправить заявку"}
