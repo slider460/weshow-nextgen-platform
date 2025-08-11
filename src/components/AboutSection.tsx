@@ -65,13 +65,12 @@ const AboutSection = () => {
             
             {/* Image placeholder */}
             <div className="relative">
-              <div className="aspect-[4/3] bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl border border-border/50 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    <span className="text-white font-bold text-2xl">W</span>
-                  </div>
-                  <p className="text-muted-foreground">Фото команды WESHOW</p>
-                </div>
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+                <img 
+                  src="/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png" 
+                  alt="Команда WESHOW с наградами" 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
               </div>
             </div>
           </div>
