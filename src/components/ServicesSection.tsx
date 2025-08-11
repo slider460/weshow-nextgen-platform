@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Monitor, Settings, Calendar, Package, Code, Palette, Layers } from "lucide-react";
+import { ArrowRight, Monitor, Settings, Calendar, Package, Code, Palette, Layers, ShoppingCart } from "lucide-react";
 const ServicesSection = () => {
   const services = [{
     icon: <Monitor className="h-8 w-8" />,
@@ -43,6 +43,13 @@ const ServicesSection = () => {
     features: ["Архитектурная визуализация", "Планирование инсталляций", "3D-моделирование"],
     gradient: "from-teal-500/20 to-teal-500/5",
     size: "large"
+  }, {
+    icon: <ShoppingCart className="h-8 w-8" />,
+    title: "Продажа мультимедийного оборудования",
+    description: "Поставка и продажа профессионального мультимедийного оборудования",
+    features: ["LED-панели и экраны", "Проекционное оборудование", "Звуковые системы"],
+    gradient: "from-blue-500/20 to-blue-500/5",
+    size: "medium"
   }];
   return <section id="services" className="py-20 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
