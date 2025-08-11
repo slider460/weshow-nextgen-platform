@@ -75,7 +75,7 @@ const ComplexSolutionsSection = () => {
           {solutions.map((solution, index) => (
             <div
               key={index}
-              className="bg-card p-6 rounded-lg border border-border hover:shadow-md transition-all duration-300 group cursor-pointer"
+              className="bg-card border border-border p-6 rounded-xl hover:shadow-lg transition-all duration-300 group cursor-pointer"
             >
               <div className="flex items-center mb-4">
                 <div className="flex items-center justify-center w-10 h-10 bg-primary/10 text-primary rounded-lg mr-3">
@@ -93,7 +93,7 @@ const ComplexSolutionsSection = () => {
               <ul className="space-y-2 mb-4">
                 {solution.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
-                    <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2" />
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
                     {feature}
                   </li>
                 ))}
@@ -113,7 +113,7 @@ const ComplexSolutionsSection = () => {
 
         {/* CTA Section */}
         <div className="text-center">
-          <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-8 border border-primary/10">
+          <div className="bg-muted/30 rounded-2xl p-8 border border-border">
             <h3 className="text-2xl font-bold text-foreground mb-4">
               Обсудим ваш проект?
             </h3>

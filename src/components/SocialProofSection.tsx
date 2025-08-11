@@ -11,7 +11,7 @@ const SocialProofSection = () => {
       id: 1,
       title: "Благодарственное письмо от ВТБ",
       description: "За качественное выполнение работ по техническому оснащению головного офиса",
-      image: "/public/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png", // Заглушка
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
       type: "letter",
       year: "2024"
     },
@@ -19,7 +19,7 @@ const SocialProofSection = () => {
       id: 2,
       title: "Грамота Лучший системный интегратор",
       description: "Награда за выдающиеся достижения в области системной интеграции",
-      image: "/public/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png", // Заглушка
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
       type: "award",
       year: "2023"
     },
@@ -27,7 +27,7 @@ const SocialProofSection = () => {
       id: 3,
       title: "Благодарность от Сбербанка",
       description: "За успешную реализацию мультимедийных решений для корпоративных мероприятий",
-      image: "/public/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png", // Заглушка
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
       type: "letter",
       year: "2024"
     },
@@ -35,7 +35,7 @@ const SocialProofSection = () => {
       id: 4,
       title: "Сертификат партнера года",
       description: "Признание заслуг в области инноваций и качества обслуживания",
-      image: "/public/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png", // Заглушка
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
       type: "certificate",
       year: "2024"
     },
@@ -43,24 +43,23 @@ const SocialProofSection = () => {
       id: 5,
       title: "Благодарственное письмо от Газпрома",
       description: "За профессиональное техническое сопровождение масштабного проекта",
-      image: "/public/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png", // Заглушка
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
       type: "letter",
       year: "2023"
     }
   ];
 
+  // Клиенты для отображения
   const clients = [
-    "ВТБ", "Сбербанк", "Газпром", "Роснефть", "МТС", "Билайн", "Мегафон", "Тинькофф"
+    { name: "ВТБ", logo: "/placeholder.svg" },
+    { name: "Сбербанк", logo: "/placeholder.svg" },
+    { name: "Газпром", logo: "/placeholder.svg" },
+    { name: "Российские железные дороги", logo: "/placeholder.svg" },
+    { name: "МТС", logo: "/placeholder.svg" },
+    { name: "Лукойл", logo: "/placeholder.svg" },
+    { name: "Ростелеком", logo: "/placeholder.svg" },
+    { name: "Аэрофлот", logo: "/placeholder.svg" }
   ];
-
-  // Автоматическая смена слайдов
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % documents.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [documents.length]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % documents.length);
@@ -69,6 +68,11 @@ const SocialProofSection = () => {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + documents.length) % documents.length);
   };
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -84,18 +88,22 @@ const SocialProofSection = () => {
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Client Logos */}
-        <div className="text-center mb-16">
-          <h3 className="text-lg font-semibold text-muted-foreground mb-8 uppercase tracking-wider">
-            Нам доверяют ведущие компании
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8 items-center">
+        
+        {/* Clients Section */}
+        <div className="mb-20">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-12">
+            Нам доверяют
+          </h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8">
             {clients.map((client, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-center p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors"
-              >
-                <span className="text-sm font-semibold text-muted-foreground">{client}</span>
+              <div key={index} className="flex items-center justify-center p-4 bg-card border border-border rounded-lg hover:shadow-md transition-shadow duration-300">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-muted/50 rounded-lg flex items-center justify-center mb-2 mx-auto">
+                    <span className="text-xs font-medium text-muted-foreground">LOGO</span>
+                  </div>
+                  <div className="text-xs text-muted-foreground font-medium">{client.name}</div>
+                </div>
               </div>
             ))}
           </div>
@@ -116,7 +124,7 @@ const SocialProofSection = () => {
               >
                 {documents.map((doc, index) => (
                   <div key={doc.id} className="w-full flex-shrink-0">
-                    <div className="bg-card p-8 shadow-sm border border-border">
+                    <div className="bg-card border border-border p-8 shadow-sm">
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                         {/* Document Image */}
                         <div className="order-2 lg:order-1">
@@ -148,7 +156,7 @@ const SocialProofSection = () => {
                           </p>
                           
                           <Button variant="outline" className="group">
-                            Посмотреть полностью
+                            Читать полностью
                             <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                           </Button>
                         </div>
@@ -160,58 +168,55 @@ const SocialProofSection = () => {
             </div>
 
             {/* Navigation Buttons */}
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-background/80 backdrop-blur-sm hover:bg-background z-10"
+            <button
               onClick={prevSlide}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-background/80 border border-border text-foreground rounded-full flex items-center justify-center hover:bg-background/90 transition-colors duration-200 z-10"
+              aria-label="Previous slide"
             >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
+              <ChevronLeft className="h-5 w-5" />
+            </button>
             
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-background/80 backdrop-blur-sm hover:bg-background z-10"
+            <button
               onClick={nextSlide}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-background/80 border border-border text-foreground rounded-full flex items-center justify-center hover:bg-background/90 transition-colors duration-200 z-10"
+              aria-label="Next slide"
             >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+              <ChevronRight className="h-5 w-5" />
+            </button>
 
-            {/* Dots Indicator */}
+            {/* Indicators */}
             <div className="flex justify-center mt-6 space-x-2">
               {documents.map((_, index) => (
                 <button
                   key={index}
-                  className={`w-3 h-3 rounded-full transition-colors ${
-                    index === currentSlide ? 'bg-primary' : 'bg-muted-foreground/30'
-                  }`}
                   onClick={() => setCurrentSlide(index)}
+                  className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                    index === currentSlide ? "bg-primary" : "bg-muted"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
                 />
               ))}
             </div>
           </div>
         </div>
 
-        {/* Trust Indicators */}
-        <div className="text-center">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            <div>
-              <div className="text-3xl font-bold text-primary mb-2">500+</div>
-              <div className="text-sm text-muted-foreground">Успешных проектов</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-primary mb-2">150+</div>
-              <div className="text-sm text-muted-foreground">Благодарственных писем</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-primary mb-2">99.9%</div>
-              <div className="text-sm text-muted-foreground">Время работы систем</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-              <div className="text-sm text-muted-foreground">Техническая поддержка</div>
-            </div>
+        {/* Statistics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="bg-card border border-border rounded-xl p-6">
+            <div className="text-3xl font-bold text-primary mb-2">500+</div>
+            <div className="text-muted-foreground">Проектов выполнено</div>
+          </div>
+          <div className="bg-card border border-border rounded-xl p-6">
+            <div className="text-3xl font-bold text-success mb-2">15+</div>
+            <div className="text-muted-foreground">Лет на рынке</div>
+          </div>
+          <div className="bg-card border border-border rounded-xl p-6">
+            <div className="text-3xl font-bold text-accent mb-2">50+</div>
+            <div className="text-muted-foreground">Партнеров</div>
+          </div>
+          <div className="bg-card border border-border rounded-xl p-6">
+            <div className="text-3xl font-bold text-primary mb-2">24/7</div>
+            <div className="text-muted-foreground">Техподдержка</div>
           </div>
         </div>
       </div>

@@ -47,107 +47,66 @@ const WorkProcessSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-muted/30 to-background">
+    <section className="py-20 bg-muted/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            Как мы работаем
+            Процесс работы
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Наш проверенный процесс гарантирует качественную реализацию проектов любой сложности 
-            в установленные сроки
+            Пошаговый подход к реализации мультимедийных проектов любой сложности
           </p>
         </div>
 
-        {/* Desktop Timeline */}
-        <div className="hidden lg:block relative">
-          {/* Timeline Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-primary via-accent to-primary transform -translate-y-1/2" />
-          
-          <div className="grid grid-cols-6 gap-8">
-            {steps.map((step, index) => (
-              <div key={index} className="relative">
-                {/* Step Circle */}
-                <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-full mx-auto mb-6 shadow-lg relative z-10">
-                  <span className="text-white font-bold text-lg">{step.number}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {steps.map((step, index) => (
+            <div key={step.number} className="bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
+              <div className="flex items-center mb-4">
+                <div className="flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-lg mr-4">
+                  {step.icon}
                 </div>
-                
-                {/* Content Card */}
-                <div className="bg-card p-6 rounded-xl shadow-sm border border-border hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-lg mx-auto mb-4">
-                    {step.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-3 text-center">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-3 text-center leading-relaxed">
-                    {step.description}
-                  </p>
-                  <div className="text-center">
-                    <span className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs rounded-full font-medium">
-                      {step.duration}
-                    </span>
-                  </div>
+                <div className="flex items-center justify-center w-8 h-8 bg-primary text-primary-foreground rounded-full text-sm font-bold">
+                  {step.number}
                 </div>
               </div>
-            ))}
-          </div>
+              
+              <h3 className="text-lg font-semibold text-foreground mb-3">
+                {step.title}
+              </h3>
+              
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                {step.description}
+              </p>
+              
+              <div className="text-sm font-medium text-primary">
+                Длительность: {step.duration}
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Mobile/Tablet Vertical Timeline */}
-        <div className="lg:hidden">
+        {/* Timeline for desktop */}
+        <div className="hidden lg:block mt-16">
           <div className="relative">
-            {/* Vertical Line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary" />
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-border"></div>
             
-            <div className="space-y-8">
+            <div className="space-y-12">
               {steps.map((step, index) => (
-                <div key={index} className="relative flex items-start">
-                  {/* Step Circle */}
-                  <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-full shadow-lg relative z-10 mr-6">
-                    <span className="text-white font-bold text-lg">{step.number}</span>
+                <div key={step.number} className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+                  <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
+                    <div className="bg-card border border-border rounded-lg p-4">
+                      <div className="text-sm font-medium text-primary mb-1">Этап {step.number}</div>
+                      <h4 className="font-semibold text-foreground">{step.title}</h4>
+                    </div>
                   </div>
                   
-                  {/* Content */}
-                  <div className="flex-1 bg-card p-6 rounded-xl shadow-sm border border-border">
-                    <div className="flex items-center mb-4">
-                      <div className="flex items-center justify-center w-10 h-10 bg-primary/10 text-primary rounded-lg mr-3">
-                        {step.icon}
-                      </div>
-                      <span className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs rounded-full font-medium">
-                        {step.duration}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-3">
-                      {step.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {step.description}
-                    </p>
+                  <div className="relative z-10 flex items-center justify-center w-10 h-10 bg-primary text-primary-foreground rounded-full font-bold text-sm">
+                    {step.number}
                   </div>
+                  
+                  <div className="w-1/2"></div>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-8 border border-primary/10 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
-              Готовы начать проект?
-            </h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Свяжитесь с нами для бесплатной консультации. Наши эксперты проанализируют ваши 
-              потребности и предложат оптимальное решение
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-3 bg-gradient-to-r from-primary to-primary-light text-primary-foreground rounded-lg font-semibold hover:from-primary-light hover:to-primary-glow shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
-                Получить консультацию
-              </button>
-              <button className="px-8 py-3 border border-border bg-background hover:bg-accent hover:text-accent-foreground hover:border-accent rounded-lg font-semibold transition-all">
-                Рассчитать стоимость
-              </button>
             </div>
           </div>
         </div>

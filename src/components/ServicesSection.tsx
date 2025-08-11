@@ -60,15 +60,12 @@ const ServicesSection = () => {
           </p>
         </div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {services.map((service, index) => <div key={index} className={`bg-card/50 backdrop-blur-sm rounded-3xl p-8 border border-border/50 group cursor-pointer transition-all duration-300 hover:border-primary/20 hover:shadow-xl hover:scale-105
-                ${service.size === 'large' ? 'md:col-span-2' : service.size === 'medium' ? 'md:col-span-1' : ''}
-                ${index === 0 ? 'lg:col-span-2' : ''}
-                ${index === 5 ? 'lg:col-span-2' : ''}
-              `}>
+        {/* Простая читаемая сетка */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {services.map((service, index) => (
+            <div key={index} className="bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-shadow duration-300 group">
               <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 p-3 bg-white/10 rounded-lg">
+                <div className="flex-shrink-0 p-3 bg-primary/10 rounded-lg">
                   <div className="text-primary">
                     {service.icon}
                   </div>
@@ -81,10 +78,12 @@ const ServicesSection = () => {
                     {service.description}
                   </p>
                   <ul className="space-y-2 mb-6">
-                    {service.features.map((feature, featureIndex) => <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2" />
+                    {service.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full mr-2" />
                         {feature}
-                      </li>)}
+                      </li>
+                    ))}
                   </ul>
                   <Button variant="outline" size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     Узнать больше
@@ -92,12 +91,13 @@ const ServicesSection = () => {
                   </Button>
                 </div>
               </div>
-            </div>)}
+            </div>
+          ))}
         </div>
 
         {/* CTA Section */}
         <div className="text-center">
-          <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-8 border border-primary/10">
+          <div className="bg-muted/30 rounded-2xl p-8 border border-border">
             <h3 className="text-2xl font-bold text-foreground mb-4">
               Нужно индивидуальное решение?
             </h3>

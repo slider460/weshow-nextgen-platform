@@ -3,6 +3,7 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 import officeBuilding from "@/assets/office-building.jpg";
 import teamWork from "@/assets/team-work.jpg";
 import vdnhStand from "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png";
+
 const PortfolioSection = () => {
   const projects = [{
     title: "Мультимедийная инсталляция для банка ВТБ",
@@ -29,7 +30,9 @@ const PortfolioSection = () => {
     results: ["Более 10,000 посетителей", "Интерактивное взаимодействие с контентом"],
     tech: ["Интерактивные дисплеи", "Мультимедийный контент", "Система презентаций"]
   }];
-  return <section id="projects" className="py-20 bg-muted/30">
+
+  return (
+    <section id="projects" className="py-20 bg-muted/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Проекты</h2>
@@ -40,7 +43,8 @@ const PortfolioSection = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {projects.map((project, index) => <div key={index} className="bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
+          {projects.map((project, index) => (
+            <div key={index} className="bg-card border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
               <div className="relative overflow-hidden">
                 <img src={project.image} alt={project.title} className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -65,10 +69,12 @@ const PortfolioSection = () => {
                 <div className="mb-4">
                   <h4 className="text-sm font-semibold text-foreground mb-2">Результаты:</h4>
                   <ul className="space-y-1">
-                    {project.results.map((result, resultIndex) => <li key={resultIndex} className="flex items-start text-sm text-muted-foreground">
+                    {project.results.map((result, resultIndex) => (
+                      <li key={resultIndex} className="flex items-start text-sm text-muted-foreground">
                         <div className="w-1.5 h-1.5 bg-success rounded-full mr-2 mt-2 flex-shrink-0" />
                         {result}
-                      </li>)}
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 
@@ -76,9 +82,11 @@ const PortfolioSection = () => {
                 <div className="mb-6">
                   <h4 className="text-sm font-semibold text-foreground mb-2">Технологии:</h4>
                   <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, techIndex) => <span key={techIndex} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">
+                    {project.tech.map((tech, techIndex) => (
+                      <span key={techIndex} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">
                         {tech}
-                      </span>)}
+                      </span>
+                    ))}
                   </div>
                 </div>
                 
@@ -87,9 +95,9 @@ const PortfolioSection = () => {
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
-            </div>)}
+            </div>
+          ))}
         </div>
-
 
         {/* CTA */}
         <div className="text-center">
@@ -105,6 +113,8 @@ const PortfolioSection = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default PortfolioSection;
