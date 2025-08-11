@@ -2,41 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* WESHOW Design System - Professional B2B Multimedia Technology Company
+All colors MUST be HSL. Professional, clean, minimalist aesthetic.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base Colors - Professional Tech Palette */
+    --background: 0 0% 99%;
+    --foreground: 220 15% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 15% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 15% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Deep Tech Blue */
+    --primary: 220 85% 25%;
+    --primary-foreground: 0 0% 98%;
+    --primary-light: 220 85% 35%;
+    --primary-glow: 220 85% 45%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Professional Gray */
+    --secondary: 220 10% 96%;
+    --secondary-foreground: 220 15% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted - Subtle Gray Tones */
+    --muted: 220 8% 95%;
+    --muted-foreground: 220 10% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Vibrant Tech Cyan */
+    --accent: 190 85% 45%;
+    --accent-foreground: 0 0% 98%;
+    --accent-light: 190 85% 55%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Success - Tech Green */
+    --success: 140 70% 45%;
+    --success-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --radius: 0.5rem;
+    /* Border and Input */
+    --border: 220 15% 90%;
+    --input: 220 15% 94%;
+    --ring: 220 85% 45%;
+
+    /* Gradients - Professional Tech Aesthetics */
+    --gradient-primary: linear-gradient(135deg, hsl(220 85% 25%), hsl(220 85% 35%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 85% 15%), hsl(220 85% 25%));
+    --gradient-accent: linear-gradient(135deg, hsl(190 85% 45%), hsl(190 85% 55%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 99%), hsl(220 8% 97%));
+
+    /* Shadows - Professional Depth */
+    --shadow-sm: 0 2px 4px hsl(220 15% 15% / 0.08);
+    --shadow-md: 0 4px 12px hsl(220 15% 15% / 0.12);
+    --shadow-lg: 0 8px 24px hsl(220 15% 15% / 0.15);
+    --shadow-hero: 0 20px 40px hsl(220 85% 25% / 0.3);
+    --shadow-glow: 0 0 30px hsl(220 85% 45% / 0.4);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +131,93 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Professional Typography Scale */
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl font-bold tracking-tight;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl font-semibold tracking-tight;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl font-semibold;
+  }
+
+  /* Video Background Styling */
+  .video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, hsl(220 85% 15% / 0.8), hsl(220 85% 25% / 0.6));
+    z-index: 0;
+  }
+
+  /* Bento Grid - 8px modular system */
+  .bento-grid {
+    display: grid;
+    gap: 1rem; /* 16px */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .bento-item {
+    padding: 2rem; /* 32px - multiple of 8 */
+    border-radius: var(--radius);
+    transition: var(--transition-smooth);
+  }
+
+  .bento-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(220 85% 45% / 0.3); }
+    50% { box-shadow: 0 0 30px hsl(220 85% 45% / 0.5); }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .video-background {
+      display: none;
+    }
+    
+    .animate-float,
+    .animate-pulse-glow {
+      animation: none;
+    }
   }
 }

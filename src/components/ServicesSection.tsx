@@ -1,0 +1,125 @@
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Monitor, Settings, Calendar, Package } from "lucide-react";
+
+const ServicesSection = () => {
+  const services = [
+    {
+      icon: <Monitor className="h-8 w-8" />,
+      title: "Мультимедийные решения",
+      description: "3D-маппинг, LED-экраны, интерактивные инсталляции для создания впечатляющих визуальных эффектов",
+      features: ["Проекционный маппинг", "LED-видеостены", "Интерактивные дисплеи"],
+      gradient: "from-primary/20 to-primary/5",
+      size: "large" // Takes 2 columns on desktop
+    },
+    {
+      icon: <Settings className="h-8 w-8" />,
+      title: "Техническая интеграция",
+      description: "Комплексное оснащение объектов современными AV-системами",
+      features: ["Звуковые системы", "Системы управления", "Интеграция оборудования"],
+      gradient: "from-accent/20 to-accent/5",
+      size: "medium"
+    },
+    {
+      icon: <Calendar className="h-8 w-8" />,
+      title: "Организация мероприятий",
+      description: "Полный цикл технического обеспечения корпоративных событий",
+      features: ["Конференции", "Выставки", "Презентации"],
+      gradient: "from-success/20 to-success/5",
+      size: "medium"
+    },
+    {
+      icon: <Package className="h-8 w-8" />,
+      title: "Поставка оборудования",
+      description: "Профессиональное AV-оборудование от ведущих мировых производителей",
+      features: ["Проекторы", "Микрофонные системы", "Коммутационное оборудование"],
+      gradient: "from-purple-500/20 to-purple-500/5",
+      size: "large"
+    }
+  ];
+
+  return (
+    <section id="services" className="py-20 bg-background">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            Наши услуги и решения
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Предоставляем полный спектр мультимедийных технологий и технических решений 
+            для успешной реализации ваших проектов
+          </p>
+        </div>
+
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className={`bento-item bg-gradient-to-br ${service.gradient} border border-border/50 group cursor-pointer
+                ${service.size === 'large' ? 'md:col-span-2' : service.size === 'medium' ? 'md:col-span-1' : ''}
+                ${index === 0 ? 'lg:col-span-2' : ''}
+                ${index === 3 ? 'lg:col-span-2' : ''}
+              `}
+            >
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 p-3 bg-white/10 rounded-lg">
+                  <div className="text-primary">
+                    {service.icon}
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold text-foreground mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-4 leading-relaxed">
+                    {service.description}
+                  </p>
+                  <ul className="space-y-2 mb-6">
+                    {service.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                  >
+                    Узнать больше
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <div className="text-center">
+          <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-8 border border-primary/10">
+            <h3 className="text-2xl font-bold text-foreground mb-4">
+              Нужно индивидуальное решение?
+            </h3>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              Наши эксперты разработают техническое решение, которое идеально подойдет 
+              для ваших задач и бюджета
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button variant="hero" size="lg">
+                Обсудить проект
+              </Button>
+              <Button variant="outline" size="lg">
+                Все услуги
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ServicesSection;
