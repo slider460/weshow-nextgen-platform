@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import BentoGridSection from "@/components/BentoGridSection";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import PortfolioSection from "@/components/PortfolioSection";
@@ -16,6 +17,7 @@ const Index = () => {
     <div className="min-h-screen">
       <Header />
       <main>
+        <BentoGridSection />
         <HeroSection />
         <ServicesSection />
         <PortfolioSection />
