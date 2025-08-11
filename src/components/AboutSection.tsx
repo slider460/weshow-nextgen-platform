@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, Award, Globe } from "lucide-react";
-
 const AboutSection = () => {
-  return (
-    <section id="about" className="py-20 bg-background">
+  return <section id="about" className="py-20 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -38,7 +36,7 @@ const AboutSection = () => {
                   <div className="flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-lg mb-3 mx-auto">
                     <Users className="h-6 w-6" />
                   </div>
-                  <div className="text-2xl font-bold text-foreground">20+</div>
+                  <div className="text-2xl font-bold text-foreground">25+</div>
                   <div className="text-sm text-muted-foreground">Лет опыта</div>
                 </div>
                 
@@ -79,8 +77,6 @@ const AboutSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default AboutSection;
