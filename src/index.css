@@ -8,7 +8,7 @@ Modern, professional, tech-forward aesthetic with enhanced visual elements
 
 @layer base {
   :root {
-    /* Apple-inspired design system colors */
+    /* Apple-inspired neutral design system */
     --background: 255 255 255;
     --foreground: 29 29 31;
 
@@ -18,36 +18,36 @@ Modern, professional, tech-forward aesthetic with enhanced visual elements
     --popover: 255 255 255;
     --popover-foreground: 29 29 31;
 
-    /* Apple-inspired Primary - System Blue */
+    /* Apple System Blue - спокойный и читаемый */
     --primary: 0 122 255;
     --primary-foreground: 255 255 255;
-    --primary-light: 64 156 255;
+    --primary-light: 52 120 246;
     --primary-glow: 0 122 255;
 
-    /* Apple-inspired Secondary */
+    /* Нейтральные серые */
     --secondary: 245 245 247;
     --secondary-foreground: 29 29 31;
 
-    /* Apple Muted Tones */
+    /* Мягкие серые тона */
     --muted: 245 245 247;
     --muted-foreground: 99 99 102;
 
-    /* Apple Orange */
-    --accent: 255 149 0;
+    /* Спокойный акцент - серо-синий */
+    --accent: 88 99 117;
     --accent-foreground: 255 255 255;
-    --accent-light: 255 179 64;
+    --accent-light: 142 150 170;
 
-    /* Apple Green */
+    /* Apple зеленый для успеха */
     --success: 52 199 89;
     --success-foreground: 255 255 255;
 
-    /* Apple Warning & Error */
+    /* Мягкие оранжевые для предупреждений */
     --warning: 255 149 0;
     --warning-foreground: 29 29 31;
     --destructive: 255 59 48;
     --destructive-foreground: 255 255 255;
 
-    /* Apple Borders & Inputs */
+    /* Нейтральные границы */
     --border: 209 209 214;
     --input: 245 245 247;
     --ring: 0 122 255;
@@ -90,50 +90,50 @@ Modern, professional, tech-forward aesthetic with enhanced visual elements
   }
 
   .dark {
-    /* Enhanced Dark Mode */
-    --background: 220 25% 6%;
-    --foreground: 210 40% 98%;
+    /* Спокойная темная тема */
+    --background: 0 0 0;
+    --foreground: 255 255 255;
 
-    --card: 220 25% 8%;
-    --card-foreground: 210 40% 98%;
+    --card: 28 28 30;
+    --card-foreground: 255 255 255;
 
-    --popover: 220 25% 8%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 28 28 30;
+    --popover-foreground: 255 255 255;
 
-    --primary: 220 90% 65%;
-    --primary-foreground: 220 25% 6%;
-    --primary-light: 220 85% 70%;
-    --primary-glow: 220 85% 75%;
+    --primary: 10 132 255;
+    --primary-foreground: 255 255 255;
+    --primary-light: 52 120 246;
+    --primary-glow: 10 132 255;
 
-    --secondary: 220 15% 15%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 28 28 30;
+    --secondary-foreground: 255 255 255;
 
-    --muted: 220 15% 12%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 44 44 46;
+    --muted-foreground: 174 174 178;
 
-    --accent: 190 95% 55%;
-    --accent-foreground: 220 25% 6%;
-    --accent-light: 190 90% 65%;
+    --accent: 99 110 123;
+    --accent-foreground: 255 255 255;
+    --accent-light: 142 150 170;
 
-    --success: 140 80% 55%;
-    --success-foreground: 220 25% 6%;
+    --success: 48 209 88;
+    --success-foreground: 255 255 255;
 
-    --destructive: 0 90% 65%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 255 69 58;
+    --destructive-foreground: 255 255 255;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 15%;
-    --ring: 220 90% 65%;
+    --border: 58 58 60;
+    --input: 44 44 46;
+    --ring: 10 132 255;
 
     /* Dark Mode Sidebar */
-    --sidebar-background: 220 25% 5%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 220 90% 65%;
-    --sidebar-primary-foreground: 220 25% 6%;
-    --sidebar-accent: 220 15% 12%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 220 15% 15%;
-    --sidebar-ring: 220 90% 65%;
+    --sidebar-background: 28 28 30;
+    --sidebar-foreground: 255 255 255;
+    --sidebar-primary: 10 132 255;
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: 44 44 46;
+    --sidebar-accent-foreground: 255 255 255;
+    --sidebar-border: 58 58 60;
+    --sidebar-ring: 10 132 255;
   }
 }
 
