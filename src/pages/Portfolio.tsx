@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Portfolio = () => {
   const projects = [
@@ -49,6 +50,18 @@ const Portfolio = () => {
     }
   ];
 
+  const extendedProjects = [
+    {
+      title: "Стенд Самарской области на форуме «Россия»",
+      category: "Exhibition / Interactive",
+      description: "Мультимедийный стенд: Naked Eye, Kinect‑игры, VR/AR, кинетический экран",
+      image: "/placeholder.svg",
+      year: "2023–2024",
+      link: "/portfolio/samara-stand"
+    },
+    ...projects,
+  ];
+
   return (
     <div className="min-h-screen bg-slate-50">
       <Header />
@@ -75,13 +88,14 @@ const Portfolio = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <div key={index} className="group cursor-pointer">
+            {extendedProjects.map((project: any, index: number) => {
+              const card = (
                 <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
                   <div className="aspect-video bg-slate-100 relative overflow-hidden">
-                    <img 
-                      src={project.image} 
+                    <img
+                      src={project.image}
                       alt={project.title}
+                      loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -106,8 +120,16 @@ const Portfolio = () => {
                     </p>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+
+              return project.link ? (
+                <Link key={index} to={project.link} className="group cursor-pointer block" aria-label={`${project.title} — подробнее`}>
+                  {card}
+                </Link>
+              ) : (
+                <div key={index} className="group cursor-pointer">{card}</div>
+              );
+            })}
           </div>
         </div>
       </section>
