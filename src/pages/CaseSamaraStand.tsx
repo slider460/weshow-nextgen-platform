@@ -68,7 +68,7 @@ const CaseSamaraStand: React.FC = () => {
   ), []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-slate-50">
       <Header />
 
       <header className="pt-28 sm:pt-32 pb-8">
@@ -98,11 +98,11 @@ const CaseSamaraStand: React.FC = () => {
       <main className="pb-20">
         <section className="py-6">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <article className="lg:col-span-8">
-              <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+            <article className="lg:col-span-8 max-w-3xl">
+              <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-6">
                 Стенд Самарской области на выставке‑форуме «Россия» 2023–2024
               </h1>
-              <p className="text-muted-foreground text-lg mb-6">
+              <p className="text-xl text-muted-foreground leading-relaxed mb-8">
                 Интерактивный просветительский стенд на ВДНХ: двусторонний экран‑парус с эффектом Naked Eye, Kinect‑игры, VR/AR, кинетический экран, LED‑шары и мультимедийные панели.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
@@ -131,10 +131,10 @@ const CaseSamaraStand: React.FC = () => {
           </div>
         </section>
 
-        <section id="tasks" className="py-12 border-t">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-semibold mb-4">Задачи</h2>
-            <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
+        <section id="tasks" className="py-12 border-t scroll-mt-28">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Задачи</h2>
+            <ul className="list-disc pl-6 space-y-2 text-lg leading-relaxed text-muted-foreground">
               <li>Разработать концепцию представления стенда Самарской области на выставке‑форуме.</li>
               <li>Создать мультимедийное решение, демонстрирующее инновационность и технологичность региона.</li>
               <li>Подготовить контент для отображения на стенде.</li>
@@ -144,70 +144,70 @@ const CaseSamaraStand: React.FC = () => {
           </div>
         </section>
 
-        <section id="implementation" className="py-12 border-t">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-            <h2 className="text-2xl font-semibold">Реализация</h2>
+        <section id="implementation" className="py-12 border-t scroll-mt-28">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-8">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Реализация</h2>
 
             <div>
-              <h3 className="text-xl font-medium mb-2">Концепция стенда</h3>
-              <p className="text-muted-foreground">Стенд выполнен в виде ладьи, символизирующей историческое наследие Самарской области.</p>
+              <h3 className="text-2xl font-semibold mb-3">Концепция стенда</h3>
+              <p className="text-lg text-muted-foreground leading-relaxed">Стенд выполнен в виде ладьи, символизирующей историческое наследие Самарской области.</p>
             </div>
 
             <div>
-              <h3 className="text-xl font-medium mb-4">Инновационные мультимедийные системы</h3>
+              <h3 className="text-2xl font-semibold mb-4">Инновационные мультимедийные системы</h3>
               <div className="grid md:grid-cols-2 gap-6">
-                <article className="p-5 rounded-xl border bg-card text-card-foreground">
+                <article className="clean-card">
                   <h4 className="font-semibold mb-2">Двусторонний экран‑парус</h4>
-                  <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
+                  <ul className="list-disc pl-5 text-base leading-relaxed text-muted-foreground space-y-1">
                     <li>Изогнутая часть — обложка стенда с контентом формата Naked Eye (стереоэффект без очков).</li>
                     <li>Обратная сторона — презентации, мастер‑классы, трансляции и телемосты.</li>
                   </ul>
                 </article>
-                <article className="p-5 rounded-xl border bg-card text-card-foreground">
+                <article className="clean-card">
                   <h4 className="font-semibold mb-2">Шесть вертикальных тач‑панелей (32″)</h4>
-                  <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
+                  <ul className="list-disc pl-5 text-base leading-relaxed text-muted-foreground space-y-1">
                     <li>Размещены по бокам кормы стенда.</li>
                     <li>ПО с информацией по департаментам и интерактивные игры: крестики‑нолики с «Союзом»/«Ладой», пазлы, профориентационные игры.</li>
                   </ul>
                 </article>
-                <article className="p-5 rounded-xl border bg-card text-card-foreground">
+                <article className="clean-card">
                   <h4 className="font-semibold mb-2">Две горизонтальных тач‑панели (86″) с Kinect</h4>
-                  <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
+                  <ul className="list-disc pl-5 text-base leading-relaxed text-muted-foreground space-y-1">
                     <li>Жестовое управление спортивными играми:</li>
                     <li className="ml-4">— Отбить шайбу хоккеиста ХК «Лада».</li>
                     <li className="ml-4">— Отбить мяч футболиста ФК «Крылья Советов».</li>
                     <li className="ml-4">— Забросить мяч в корзину БК «Самара».</li>
                   </ul>
                 </article>
-                <article className="p-5 rounded-xl border bg-card text-card-foreground">
+                <article className="clean-card">
                   <h4 className="font-semibold mb-2">Три LED‑шара (1,5 м)</h4>
-                  <p className="text-sm text-muted-foreground">Расположены сверху для быстрой идентификации стенда и поддержки контента.</p>
+                  <p className="text-base text-muted-foreground leading-relaxed">Расположены сверху для быстрой идентификации стенда и поддержки контента.</p>
                 </article>
-                <article className="p-5 rounded-xl border bg-card text-card-foreground">
+                <article className="clean-card">
                   <h4 className="font-semibold mb-2">Кинетический экран (5×3 м)</h4>
-                  <p className="text-sm text-muted-foreground">Пиксели выдвигаются до 20 см с программируемой скоростью для видео и кинетического контента.</p>
+                  <p className="text-base text-muted-foreground leading-relaxed">Пиксели выдвигаются до 20 см с программируемой скоростью для видео и кинетического контента.</p>
                 </article>
-                <article className="p-5 rounded-xl border bg-card text-card-foreground">
+                <article className="clean-card">
                   <h4 className="font-semibold mb-2">Прозрачный экран</h4>
-                  <p className="text-sm text-muted-foreground">Две вертикальные панели по 55″ каждая.</p>
+                  <p className="text-base text-muted-foreground leading-relaxed">Две вертикальные панели по 55″ каждая.</p>
                 </article>
-                <article className="p-5 rounded-xl border bg-card text-card-foreground">
+                <article className="clean-card">
                   <h4 className="font-semibold mb-2">VR‑очки и AR‑очки</h4>
-                  <p className="text-sm text-muted-foreground">Для иммерсивных демонстраций и интерактивных сценариев.</p>
+                  <p className="text-base text-muted-foreground leading-relaxed">Для иммерсивных демонстраций и интерактивных сценариев.</p>
                 </article>
-                <article className="p-5 rounded-xl border bg-card text-card-foreground">
+                <article className="clean-card">
                   <h4 className="font-semibold mb-2">Звуковой душ</h4>
-                  <p className="text-sm text-muted-foreground">Локальное звукоусиление без избыточного шума на площадке.</p>
+                  <p className="text-base text-muted-foreground leading-relaxed">Локальное звукоусиление без избыточного шума на площадке.</p>
                 </article>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="content" className="py-12 border-t">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-semibold mb-4">Контент стенда</h2>
-            <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
+        <section id="content" className="py-12 border-t scroll-mt-28">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Контент стенда</h2>
+            <ul className="list-disc pl-6 space-y-2 text-lg leading-relaxed text-muted-foreground">
               <li>3D‑контент: природа, водная гладь, ладья, мост, автомобиль «Лада», памятник «Слава».</li>
               <li>3D‑герб Самарской области на парусе ладьи.</li>
               <li>Цифровые достижения региона.</li>
@@ -222,26 +222,26 @@ const CaseSamaraStand: React.FC = () => {
           </div>
         </section>
 
-        <section id="management" className="py-12 border-t">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-semibold mb-4">Управление стендом</h2>
-            <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
+        <section id="management" className="py-12 border-t scroll-mt-28">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Управление стендом</h2>
+            <ul className="list-disc pl-6 space-y-2 text-lg leading-relaxed text-muted-foreground">
               <li>Ежедневные мероприятия по индивидуальным сценариям.</li>
               <li>Техническое сопровождение командой специалистов.</li>
             </ul>
           </div>
         </section>
 
-        <section id="awards" className="py-12 border-t">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-semibold mb-4">Премии</h2>
+        <section id="awards" className="py-12 border-t scroll-mt-28">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Премии</h2>
             <p className="text-muted-foreground">Стенд получил главную премию в номинации «Лучший просветительский стенд» и был высоко оценен посетителями и первыми лицами РФ.</p>
           </div>
         </section>
 
-        <section id="gallery" className="py-12 border-t">
+        <section id="gallery" className="py-12 border-t scroll-mt-28">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-semibold mb-6">Медиа</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Медиа</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[1,2,3,4,5,6].map((n) => (
                 <div key={n} className="aspect-video rounded-xl overflow-hidden border bg-muted">
