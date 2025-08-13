@@ -6,7 +6,6 @@ import ModernPortfolioSection from "@/components/ModernPortfolioSection";
 import ModernShowreelSection from "@/components/ModernShowreelSection";
 import ComplexSolutionsSection from "@/components/ComplexSolutionsSection";
 import RentalEquipmentSection from "@/components/RentalEquipmentSection";
-import WorkflowRoadmapSection from "@/components/WorkflowRoadmapSection";
 import SocialProofSection from "@/components/SocialProofSection";
 import ContactFormSection from "@/components/ContactFormSection";
 import Footer from "@/components/Footer";
@@ -21,7 +20,6 @@ const Index = () => {
         <RentalEquipmentSection />
         <ModernPortfolioSection />
         <ComplexSolutionsSection />
-        <WorkflowRoadmapSection />
         <SocialProofSection />
         <ModernShowreelSection />
         <ContactFormSection />
