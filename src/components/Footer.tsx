@@ -32,6 +32,9 @@ const Footer = () => {
                 <MapPin className="h-5 w-5 text-blue-500" />
                 <span className="text-slate-700">г. Москва, ул. Рочдельская, д. 14А</span>
               </div>
+              <div className="text-slate-700 mt-2 ml-8">
+                <strong>Время работы:</strong> Пн-Пт: 10:00-19:00, Сб: 11:00-17:00
+              </div>
             </div>
           </div>
 
