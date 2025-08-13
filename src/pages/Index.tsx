@@ -15,8 +15,8 @@ const Index = () => {
       <Header />
       <main className="space-y-0">
         <ModernHeroSection />
-        <ModernServicesSection />
         <RentalEquipmentSection />
+        <ModernServicesSection />
         <ModernPortfolioSection />
         <ComplexSolutionsSection />
         <ModernShowreelSection />
