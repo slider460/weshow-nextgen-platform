@@ -45,7 +45,7 @@ const ContactFormSection = () => {
       [name]: value
     }));
   };
-  return <section className="py-20 bg-slate-50">
+  return <section id="contact" className="py-20 bg-slate-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
@@ -133,8 +133,12 @@ const ContactFormSection = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-1">Телефон</h4>
-                    <p className="text-slate-600">+7 (495) 123-45-67</p>
-                    <p className="text-slate-600">+7 (800) 555-55-55</p>
+                    <a href="tel:+74951234567" className="text-slate-600 hover:text-blue-500 transition-colors block">
+                      +7 (495) 123-45-67
+                    </a>
+                    <a href="tel:+78005555555" className="text-slate-600 hover:text-blue-500 transition-colors block">
+                      +7 (800) 555-55-55
+                    </a>
                   </div>
                 </div>
                 
@@ -144,8 +148,12 @@ const ContactFormSection = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-slate-900 mb-1">Email</h4>
-                    <p className="text-slate-600">info@weshow.ru</p>
-                    <p className="text-slate-600">sales@weshow.ru</p>
+                    <a href="mailto:info@weshow.ru" className="text-slate-600 hover:text-blue-500 transition-colors block">
+                      info@weshow.ru
+                    </a>
+                    <a href="mailto:sales@weshow.ru" className="text-slate-600 hover:text-blue-500 transition-colors block">
+                      sales@weshow.ru
+                    </a>
                   </div>
                 </div>
                 
@@ -181,13 +189,17 @@ const ContactFormSection = () => {
             <div className="gradient-card-dark rounded-3xl p-6">
               <h4 className="font-semibold text-white mb-4">Нужна срочная помощь?</h4>
               <div className="space-y-3">
-                <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
-                  <Phone className="mr-2 h-4 w-4" />
-                  Заказать обратный звонок
+                <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20" asChild>
+                  <a href="tel:+74951234567">
+                    <Phone className="mr-2 h-4 w-4" />
+                    Заказать обратный звонок
+                  </a>
                 </Button>
-                <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Написать в Telegram
+                <Button variant="outline" className="w-full justify-start border-white/30 text-white hover:bg-white/20" asChild>
+                  <a href="https://t.me/weshow_support" target="_blank" rel="noopener noreferrer">
+                    <Mail className="mr-2 h-4 w-4" />
+                    Написать в Telegram
+                  </a>
                 </Button>
               </div>
             </div>

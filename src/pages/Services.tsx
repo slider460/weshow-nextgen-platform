@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Monitor, Code, Settings, Calendar, Package, Palette, Layers, ShoppingCart, Cog, Video, Users, Gamepad2, Smartphone, Globe, Zap, Shield, Wrench, Headphones, Database, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Services = () => {
   const serviceCategories = [
@@ -143,9 +144,12 @@ const Services = () => {
                   <Button 
                     variant="secondary" 
                     className="mt-8 w-full bg-white/20 border-white/30 text-white hover:bg-white hover:text-slate-900 backdrop-blur-sm transition-all duration-300"
+                    asChild
                   >
-                    Узнать подробнее
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <Link to={`/services/${index === 0 ? 'multimedia' : index === 1 ? 'development' : index === 2 ? 'support' : index === 3 ? 'integration' : index === 4 ? 'branding' : 'equipment'}`}>
+                      Узнать подробнее
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
                 </div>
               </div>
@@ -197,7 +201,7 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-slate-900 to-slate-800 text-white relative overflow-hidden">
+      <section id="contact" className="py-20 bg-gradient-to-r from-slate-900 to-slate-800 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20"></div>
         <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
@@ -211,17 +215,23 @@ const Services = () => {
               <Button 
                 size="lg" 
                 className="bg-white text-slate-900 hover:bg-slate-100 shadow-xl hover:shadow-2xl transition-all duration-300"
+                asChild
               >
-                <Phone className="mr-2 h-5 w-5" />
-                Связаться с нами
+                <a href="#contact">
+                  <Phone className="mr-2 h-5 w-5" />
+                  Связаться с нами
+                </a>
               </Button>
               <Button 
                 variant="outline" 
                 size="lg"
                 className="border-white/30 text-white hover:bg-white hover:text-slate-900 transition-all duration-300"
+                asChild
               >
-                Смотреть портфолио
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <Link to="/portfolio">
+                  Смотреть портфолио
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
             </div>
           </div>

@@ -101,9 +101,11 @@ const ModernPortfolioSection = () => {
                   </div>
                 </div>
                 
-                <Button className="w-full" variant="default">
-                  Подробнее о проекте
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                <Button className="w-full" variant="default" asChild>
+                  <a href={index === 2 ? "/portfolio/samara-stand" : "/portfolio"}>
+                    Подробнее о проекте
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
                 </Button>
               </div>
             </div>
@@ -112,12 +114,16 @@ const ModernPortfolioSection = () => {
 
         <div className="text-center">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="hero">
-              Все проекты
-              <ArrowRight className="ml-2 h-5 w-5" />
+            <Button size="lg" variant="hero" asChild>
+              <a href="/portfolio">
+                Все проекты
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
             </Button>
-            <Button variant="outline" size="lg">
-              Заказать проект
+            <Button variant="outline" size="lg" asChild>
+              <a href="#contact">
+                Заказать проект
+              </a>
             </Button>
           </div>
         </div>

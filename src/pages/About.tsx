@@ -18,9 +18,11 @@ const About = () => {
             <p className="text-xl text-slate-600 leading-relaxed mb-8">
               Мы создаем впечатляющие мультимедийные решения, которые превращают обычные события в незабываемые впечатления
             </p>
-            <Button size="lg" className="group">
-              Узнать больше
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <Button size="lg" className="group" asChild>
+              <a href="/contact">
+                Узнать больше
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </a>
             </Button>
           </div>
         </div>

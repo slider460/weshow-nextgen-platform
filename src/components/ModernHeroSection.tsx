@@ -33,19 +33,23 @@ const ModernHeroSection = () => {
                   решения
                 </h1>
                 
-                <p className="text-lg lg:text-xl text-slate-600 leading-relaxed max-w-lg">
+                <p className="text-lg lg:text-xl text-slate-700 leading-relaxed max-w-lg">
                   Профессиональное техническое оснащение и интерактивные 
                   инсталляции для корпоративных клиентов
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <Button size="lg" className="px-8 py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                    Получить консультацию
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                  <Button size="lg" className="px-8 py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300" asChild>
+                    <a href="#contact" className="inline-flex items-center">
+                      Получить консультацию
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </a>
                   </Button>
                   
-                  <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-semibold bg-white/70 backdrop-blur-sm border-slate-300 text-slate-700 hover:bg-white/90 transition-all duration-300">
-                    Наши проекты
+                  <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-semibold bg-white/70 backdrop-blur-sm border-slate-300 text-slate-700 hover:bg-white/90 transition-all duration-300" asChild>
+                    <a href="/portfolio" className="inline-flex items-center">
+                      Наши проекты
+                    </a>
                   </Button>
                 </div>
               </div>
@@ -63,14 +67,16 @@ const ModernHeroSection = () => {
                     ИНТЕРАКТИВНОГО<br />
                     ОБОРУДОВАНИЯ
                   </h3>
-                  <p className="text-white/90 text-sm leading-relaxed mb-6">
+                  <p className="text-white text-sm leading-relaxed mb-6">
                     Цена аренды нашего цифрового оборудования включает в себя 
                     полный спектр обслуживания: оперативная доставка, 
                     качественный монтаж и техническое сопровождение.
                   </p>
                 </div>
-                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10">
-                  Подробнее
+                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                  <a href="/equipment">
+                    Подробнее
+                  </a>
                 </Button>
               </div>
 
@@ -92,8 +98,10 @@ const ModernHeroSection = () => {
                   на выставке-форуме<br />
                   «Россия»
                 </p>
-                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10 mt-auto">
-                  посмотреть
+                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10 mt-auto" asChild>
+                  <a href="/portfolio/samara-stand">
+                    посмотреть
+                  </a>
                 </Button>
               </div>
 
@@ -103,8 +111,10 @@ const ModernHeroSection = () => {
                 <p className="text-white/90 text-sm mb-4">
                   Особенный новый год Samsung
                 </p>
-                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10 mt-auto">
-                  посмотреть
+                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10 mt-auto" asChild>
+                  <a href="/portfolio">
+                    посмотреть
+                  </a>
                 </Button>
               </div>
 

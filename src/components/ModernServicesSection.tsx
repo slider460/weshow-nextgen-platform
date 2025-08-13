@@ -72,13 +72,13 @@ const ModernServicesSection = () => {
                 {service.title}
               </h3>
               
-              <p className="text-white/90 text-sm leading-relaxed mb-6">
+              <p className="text-white text-sm leading-relaxed mb-6">
                 {service.description}
               </p>
               
               <ul className="space-y-2 mb-8">
                 {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center text-sm text-white/80">
+                  <li key={featureIndex} className="flex items-center text-sm text-white">
                     <div className="w-1.5 h-1.5 bg-white rounded-full mr-3" />
                     {feature}
                   </li>
@@ -104,12 +104,16 @@ const ModernServicesSection = () => {
               Наши эксперты разработают техническое решение, которое идеально подойдет для ваших задач
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                Обсудить проект
-                <ArrowRight className="ml-2 h-5 w-5" />
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <a href="#contact">
+                  Обсудить проект
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
               </Button>
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                Все услуги
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <a href="/services">
+                  Все услуги
+                </a>
               </Button>
             </div>
           </div>
