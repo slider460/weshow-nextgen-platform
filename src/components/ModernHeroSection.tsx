@@ -1,10 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { Play, ArrowRight } from "lucide-react";
-
 const ModernHeroSection = () => {
-  return (
-    <section className="relative min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden">
+  return <section className="relative min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-50/20 to-purple-50/20"></div>
       <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl"></div>
@@ -33,10 +30,7 @@ const ModernHeroSection = () => {
                   решения
                 </h1>
                 
-                <p className="text-lg lg:text-xl text-slate-700 leading-relaxed max-w-lg">
-                  Профессиональное техническое оснащение и интерактивные 
-                  инсталляции для корпоративных клиентов
-                </p>
+                <p className="text-lg lg:text-xl text-slate-700 leading-relaxed max-w-lg">Аренда на мероприятия, продажа, разработка и интеграция</p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <Button size="lg" className="px-8 py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300" asChild>
@@ -143,8 +137,6 @@ const ModernHeroSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ModernHeroSection;
