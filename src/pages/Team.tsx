@@ -53,6 +53,20 @@ const Team = () => {
       experience: "Более 10 лет",
       description: "Старший менеджер по работе с клиентами, координация проектов",
       image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
+    },
+    {
+      name: "Иншакова Ксения",
+      position: "Creative Project Manager",
+      experience: "Более 8 лет",
+      description: "Креативный менеджер проектов, координация творческих процессов и клиентских запросов",
+      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png"
+    },
+    {
+      name: "Овсянникова Мария",
+      position: "Marketing Communications Specialist",
+      experience: "Более 7 лет",
+      description: "Специалист по маркетинговым коммуникациям, развитие бренда и внешних связей",
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
     }
   ];
 
@@ -64,7 +78,7 @@ const Team = () => {
     },
     {
       icon: <Users className="h-8 w-8" />,
-      title: "7+",
+      title: "9+",
       description: "Ключевых специалистов"
     },
     {
