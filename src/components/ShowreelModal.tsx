@@ -37,6 +37,15 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
     };
     const handleLoadedData = () => {
       console.log('Video data loaded');
+      // Автоматически начинаем воспроизведение после загрузки
+      if (isOpen) {
+        video.play().then(() => {
+          setIsPlaying(true);
+        }).catch((error) => {
+          console.log('Auto-play failed:', error);
+          // Если автовоспроизведение не удалось, показываем кнопку Play
+        });
+      }
     };
 
     video.addEventListener('timeupdate', handleTimeUpdate);
@@ -54,7 +63,7 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
       video.removeEventListener('loadstart', handleLoadStart);
       video.removeEventListener('loadeddata', handleLoadedData);
     };
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     if (showControls) {
@@ -66,6 +75,25 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
       }, 3000);
     }
   }, [showControls]);
+
+  // Автоматическое воспроизведение при открытии модального окна
+  useEffect(() => {
+    if (isOpen && videoRef.current) {
+      const video = videoRef.current;
+      
+      // Небольшая задержка для корректной инициализации
+      const timer = setTimeout(() => {
+        video.play().then(() => {
+          setIsPlaying(true);
+        }).catch((error) => {
+          console.log('Auto-play failed:', error);
+          // Если автовоспроизведение не удалось, показываем кнопку Play
+        });
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -127,7 +155,9 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
   const handleClose = () => {
     if (videoRef.current) {
       videoRef.current.pause();
+      videoRef.current.currentTime = 0; // Сбрасываем время к началу
       setIsPlaying(false);
+      setCurrentTime(0);
     }
     onClose();
   };
@@ -155,7 +185,9 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
             src="/showreel.mp4"
             className="w-full h-full object-contain"
             playsInline
-            preload="metadata"
+            preload="auto"
+            autoPlay
+            muted
             crossOrigin="anonymous"
             onError={(e) => {
               console.error('Video error:', e);
@@ -171,13 +203,16 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
           {/* Center Play Button (when paused) */}
           {!isPlaying && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <Button
-                onClick={togglePlay}
-                size="lg"
-                className="w-24 h-24 bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30 hover:scale-110 transition-all duration-300 rounded-full"
-              >
-                <Play className="w-12 h-12 ml-1" />
-              </Button>
+              <div className="text-center">
+                <Button
+                  onClick={togglePlay}
+                  size="lg"
+                  className="w-24 h-24 bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/40 hover:scale-110 transition-all duration-300 rounded-full"
+                >
+                  <Play className="w-12 h-12 ml-1" />
+                </Button>
+                <p className="text-white/80 text-sm mt-4">Нажмите для воспроизведения</p>
+              </div>
             </div>
           )}
 
