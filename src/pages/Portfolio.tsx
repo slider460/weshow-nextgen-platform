@@ -59,7 +59,7 @@ const Portfolio = () => {
       title: "Особенный Новый год Samsung",
       category: "Corporate Events / 3D Mapping",
       description: "Новогоднее мероприятие с 3D-проекциями, digital зонами и интерактивными решениями",
-      image: "/lovable-uploads/samsung-event-card.jpg",
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
       year: "2020",
       link: "/portfolio/samsung-event"
     },
