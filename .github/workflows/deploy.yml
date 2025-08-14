@@ -39,11 +39,12 @@ jobs:
         
     - name: Deploy to Lovable.dev
       if: github.ref == 'refs/heads/main'
-      run: |
-        echo "🚀 Deploying to Lovable.dev..."
-        echo "✅ Build completed successfully"
-        echo "📁 Build output: dist/"
-        echo "🌐 Ready for deployment to Lovable.dev"
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
         
     - name: Build Summary
       run: |
@@ -54,8 +55,4 @@ jobs:
         echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
         echo "**Build Output:** dist/" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Next Steps:**" >> $GITHUB_STEP_SUMMARY
-        echo "1. Connect this repository to Lovable.dev" >> $GITHUB_STEP_SUMMARY
-        echo "2. Set build command: npm run build" >> $GITHUB_STEP_SUMMARY
-        echo "3. Set output directory: dist" >> $GITHUB_STEP_SUMMARY
-        echo "4. Enable auto-deploy on push to main" >> $GITHUB_STEP_SUMMARY
+        echo "**Deployment:** 🚀 Automatic deployment to Lovable.dev enabled" >> $GITHUB_STEP_SUMMARY
