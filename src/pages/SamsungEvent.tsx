@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { 
   Calendar, 
   Users, 
@@ -83,6 +85,8 @@ const SamsungEvent = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200">
+      <Header />
+      
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-50/30 to-purple-50/30"></div>
@@ -342,6 +346,8 @@ const SamsungEvent = () => {
         title="Заказать похожий проект"
         triggerText="Заказать проект"
       />
+      
+      <Footer />
     </div>
   );
 };
