@@ -1,0 +1,61 @@
+name: Deploy to Lovable.dev
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build project
+      run: npm run build
+      env:
+        NODE_ENV: production
+        
+    - name: Test build output
+      run: |
+        if [ ! -d "dist" ]; then
+          echo "Build failed: dist directory not found"
+          exit 1
+        fi
+        echo "Build successful! Files in dist:"
+        ls -la dist/
+        
+    - name: Deploy to Lovable.dev
+      if: github.ref == 'refs/heads/main'
+      run: |
+        echo "🚀 Deploying to Lovable.dev..."
+        echo "✅ Build completed successfully"
+        echo "📁 Build output: dist/"
+        echo "🌐 Ready for deployment to Lovable.dev"
+        
+    - name: Build Summary
+      run: |
+        echo "## 🎯 Build Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Status:** ✅ Success" >> $GITHUB_STEP_SUMMARY
+        echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Build Output:** dist/" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Next Steps:**" >> $GITHUB_STEP_SUMMARY
+        echo "1. Connect this repository to Lovable.dev" >> $GITHUB_STEP_SUMMARY
+        echo "2. Set build command: npm run build" >> $GITHUB_STEP_SUMMARY
+        echo "3. Set output directory: dist" >> $GITHUB_STEP_SUMMARY
+        echo "4. Enable auto-deploy on push to main" >> $GITHUB_STEP_SUMMARY

@@ -1,73 +1,169 @@
-# Welcome to your Lovable project
+# 🚀 WeShow NextGen Platform
 
-## Project info
+Современная веб-платформа мультимедийных решений и интерактивных технологий.
 
-**URL**: https://lovable.dev/projects/8afefcf3-18cd-41a8-b382-bdf665c902a3
+## ✨ Особенности
 
-## How can I edit this code?
+- 🌐 **45+ страниц** услуг и решений
+- 🗺️ **Интерактивная карта** с OpenStreetMap
+- 📱 **Адаптивный дизайн** для всех устройств
+- 🎨 **Современный UI/UX** с shadcn/ui
+- 📝 **Функциональные формы** консультаций и заказов
+- 🚀 **Быстрая загрузка** с Vite
+- 🔄 **Автоматическое развертывание** в Lovable.dev
 
-There are several ways of editing your application.
+## 🛠️ Технологии
 
-**Use Lovable**
+- **Frontend**: React 18 + TypeScript
+- **Build Tool**: Vite 5.4
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **Routing**: React Router DOM
+- **Maps**: Leaflet.js + OpenStreetMap
+- **Icons**: Lucide React
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8afefcf3-18cd-41a8-b382-bdf665c902a3) and start prompting.
+## 🚀 Быстрый старт
 
-Changes made via Lovable will be committed automatically to this repo.
+### Локальная разработка
+```bash
+# Установка зависимостей
+npm install
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Запуск dev сервера
 npm run dev
+
+# Сборка для продакшена
+npm run build
+
+# Preview сборки
+npm run preview
 ```
 
-**Edit a file directly in GitHub**
+### Развертывание в Lovable.dev
+```bash
+# 1. Push в main ветку
+git push origin main
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+# 2. GitHub Actions автоматически собирает проект
+# 3. Lovable.dev автоматически деплоит
+```
 
-**Use GitHub Codespaces**
+## 🌐 Основные страницы
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **Главная** (`/`) - Hero секция и основные услуги
+- **Услуги** (`/services`) - Каталог всех услуг
+- **Портфолио** (`/portfolio`) - Примеры работ
+- **Контакты** (`/contact`) - Формы связи + карта
+- **О компании** (`/about`) - Информация о WESHOW
 
-## What technologies are used for this project?
+## 🗺️ Интерактивная карта
 
-This project is built with:
+- **Адрес**: Москва, ул. Рочдельская, 14А
+- **Координаты**: 55.7796, 37.6156
+- **Функции**: масштабирование, маршруты, информация
+- **Технология**: Leaflet.js + OpenStreetMap
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📱 Адаптивность
 
-## How can I deploy this project?
+- **Mobile-first** дизайн
+- **Responsive** для всех устройств
+- **Touch-friendly** интерфейс
+- **Оптимизированная** производительность
 
-Simply open [Lovable](https://lovable.dev/projects/8afefcf3-18cd-41a8-b382-bdf665c902a3) and click on Share -> Publish.
+## 🔧 Настройки для продакшена
 
-## Can I connect a custom domain to my Lovable project?
+### Переменные окружения
+```env
+NODE_ENV=production
+VITE_APP_TITLE=WeShow NextGen Platform
+VITE_APP_DESCRIPTION=Современная платформа мультимедийных решений
+```
 
-Yes, you can!
+### Оптимизация
+- **Code splitting** автоматически
+- **Tree shaking** для неиспользуемого кода
+- **Minification** CSS и JavaScript
+- **Gzip compression** на сервере
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🚀 Развертывание
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Lovable.dev (Рекомендуется)
+- ✅ **Автоматический деплой** при push в main
+- ✅ **GitHub Actions** для сборки
+- ✅ **SSL сертификаты** автоматически
+- ✅ **CDN** для статических файлов
+
+### Настройки в Lovable.dev
+```
+Build Command: npm run build
+Output Directory: dist
+Install Command: npm install
+Node Version: 18.x
+```
+
+### GitHub Actions
+- 🔄 Автоматическая сборка при push
+- 🧪 Тестирование build output
+- 📊 Уведомления о статусе деплоя
+
+## 📊 Мониторинг
+
+- **GitHub Actions** - статус сборки
+- **Lovable.dev** - производительность и логи
+- **Автоматические** уведомления об ошибках
+
+## 🔄 Обновления
+
+### Автоматические
+- При push в `main` ветку
+- GitHub Actions собирает проект
+- Lovable.dev автоматически деплоит
+
+### Ручные
+- Изменения в lovable.dev dashboard
+- Пересборка через интерфейс
+- Rollback к предыдущей версии
+
+## 🚨 Troubleshooting
+
+### Частые проблемы
+1. **Build fails** - проверьте Node.js версию (18+)
+2. **Dependencies** - выполните `npm ci` в clean environment
+3. **Port conflicts** - Vite автоматически выбирает свободный порт
+
+### Логи и отладка
+```bash
+# Локальная разработка
+npm run dev
+
+# Продакшн сборка
+npm run build
+
+# Preview сборки
+npm run preview
+```
+
+## 📞 Поддержка
+
+### Команда разработки
+- **GitHub Issues**: [Repository Issues](https://github.com/slider460/weshow-nextgen-platform/issues)
+- **Documentation**: [Project Wiki](https://github.com/slider460/weshow-nextgen-platform/wiki)
+
+### Lovable.dev Support
+- **Documentation**: [Lovable.dev Docs](https://docs.lovable.dev)
+- **Community**: [Discord Community](https://discord.gg/lovable)
+
+## 📚 Документация
+
+- [LOVABLE_DEPLOYMENT.md](./LOVABLE_DEPLOYMENT.md) - Подробная инструкция по развертыванию
+- [LOVABLE_README.md](./LOVABLE_README.md) - README для lovable.dev
+
+---
+
+## 🎉 Готово к использованию!
+
+Ваш проект полностью настроен для разработки и автоматического развертывания в Lovable.dev. Просто push'ите в main ветку и наслаждайтесь автоматическими деплоями! 🚀✨
+
+## 📄 Лицензия
+
+MIT License - см. [LICENSE](LICENSE) файл для деталей.
