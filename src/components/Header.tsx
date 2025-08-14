@@ -10,11 +10,13 @@ import {
   Zap,
   Star
 } from "lucide-react";
+import ConsultationModal from "./ConsultationModal";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -40,6 +42,11 @@ const Header = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
+  };
+
+  const openConsultModal = () => {
+    setIsConsultModalOpen(true);
+    closeMenu();
   };
 
   const isActive = (path: string) => location.pathname === path;
@@ -256,7 +263,7 @@ const Header = () => {
           <div className="hidden lg:flex items-center space-x-4">
             <Button 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-              onClick={() => document.getElementById('consultation-modal')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={openConsultModal}
             >
               <Zap className="w-4 h-4 mr-2" />
               Получить консультацию
@@ -442,10 +449,7 @@ const Header = () => {
               <div className="pt-4">
                 <Button 
                   className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg"
-                  onClick={() => {
-                    closeMenu();
-                    document.getElementById('consultation-modal')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
+                  onClick={openConsultModal}
                 >
                   <Zap className="w-4 h-4 mr-2" />
                   Получить консультацию
@@ -455,6 +459,14 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      {/* Consultation Modal */}
+      <ConsultationModal 
+        isOpen={isConsultModalOpen}
+        onClose={() => setIsConsultModalOpen(false)}
+        title="Получить консультацию"
+        triggerText="Получить консультацию"
+      />
     </header>
   );
 };
