@@ -63,9 +63,24 @@ const ModernHeroSection = ({ onShowShowreel }: ModernHeroSectionProps) => {
             {/* Right side - Cards grid */}
             <div className="lg:col-span-7 grid grid-cols-2 gap-4 h-full max-h-[600px]">
               
-              {/* Large purple card */}
-              <div className="gradient-card-purple rounded-3xl p-8 flex flex-col justify-between row-span-2">
-                <div>
+              {/* Large purple card - обновлен в стиле изображения */}
+              <div className="gradient-card-purple-dark rounded-3xl p-8 flex flex-col justify-between row-span-2 relative overflow-hidden">
+                {/* Абстрактная 3D геометрическая фигура */}
+                <div className="absolute top-4 right-4 w-24 h-24 opacity-60">
+                  <div className="relative w-full h-full">
+                    {/* Основной куб */}
+                    <div className="absolute inset-0 bg-white/20 rounded-lg transform rotate-45 scale-75"></div>
+                    {/* Верхняя грань */}
+                    <div className="absolute top-0 left-0 w-3/4 h-3/4 bg-white/30 rounded-lg transform rotate-45 scale-75 translate-x-2 -translate-y-2"></div>
+                    {/* Боковая грань */}
+                    <div className="absolute top-0 right-0 w-3/4 h-3/4 bg-white/15 rounded-lg transform rotate-45 scale-75 -translate-x-2 -translate-y-2"></div>
+                    {/* Дополнительные элементы */}
+                    <div className="absolute bottom-2 right-2 w-8 h-8 bg-white/25 rounded-full"></div>
+                    <div className="absolute top-2 left-2 w-6 h-6 bg-white/20 rounded-full"></div>
+                  </div>
+                </div>
+                
+                <div className="relative z-10">
                   <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">
                     КОМПЛЕКСНАЯ<br />
                     АРЕНДА<br />
@@ -78,7 +93,7 @@ const ModernHeroSection = ({ onShowShowreel }: ModernHeroSectionProps) => {
                     качественный монтаж и техническое сопровождение.
                   </p>
                 </div>
-                <Button variant="outline" className="self-start border-white/40 text-white hover:bg-white/20 bg-white/10 hover:border-white/60 transition-all duration-300 drop-shadow-md" asChild>
+                <Button variant="outline" className="self-start border-white/50 text-white hover:bg-white/25 bg-white/10 hover:border-white/70 transition-all duration-300 drop-shadow-md backdrop-blur-sm relative z-10" asChild>
                   <a href="/equipment">
                     Подробнее
                   </a>
