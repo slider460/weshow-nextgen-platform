@@ -125,6 +125,14 @@ const Header = () => {
                 Проекты
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
               </Link>
+              <Link to="/news" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
+                Новости
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+              </Link>
+              <Link to="/careers" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
+                Карьера
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+              </Link>
               <Link to="/blog" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
                 Блог
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
@@ -280,6 +288,22 @@ const Header = () => {
               >
                 <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
                 Проекты
+              </Link>
+              <Link 
+                to="/news" 
+                className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                onClick={toggleMenu}
+              >
+                <span className="w-2 h-2 bg-blue-500/30 rounded-full mr-3"></span>
+                Новости
+              </Link>
+              <Link 
+                to="/careers" 
+                className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                onClick={toggleMenu}
+              >
+                <span className="w-2 h-2 bg-green-500/30 rounded-full mr-3"></span>
+                Карьера
               </Link>
               <Link 
                 to="/blog" 

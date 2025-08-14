@@ -1,369 +1,527 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, User, ArrowRight, ExternalLink, TrendingUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { 
+  Search, 
+  Filter, 
+  Calendar, 
+  User, 
+  Tag, 
+  Eye, 
+  Share2, 
+  Bookmark,
+  Plus,
+  Edit,
+  Trash2,
+  ExternalLink,
+  ArrowRight,
+  Clock,
+  MapPin
+} from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const News = () => {
-  const newsItems = [
+  const { toast } = useToast();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [showAddNews, setShowAddNews] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newsForm, setNewsForm] = useState({
+    title: "",
+    content: "",
+    category: "",
+    author: "",
+    image: "",
+    tags: ""
+  });
+
+  // Новости (в реальном проекте будут загружаться с сервера)
+  const [news, setNews] = useState([
     {
       id: 1,
-      title: "WeShow запускает новый отдел AR/VR разработки",
-      excerpt: "Компания расширяет свои возможности в области дополненной и виртуальной реальности, нанимая команду экспертов для создания инновационных решений.",
-      category: "Компания",
-      author: "Пресс-служба WeShow",
-      date: "2024-01-20",
-      readTime: "3 мин",
-      image: "/public/placeholder.svg",
-      tags: ["AR/VR", "развитие", "команда"],
-      isFeatured: true
+      title: "WESHOW запускает новую платформу мультимедийных решений",
+      content: "Мы рады представить нашу новую платформу, которая объединяет все наши услуги в единую экосистему. Платформа включает в себя интерактивные дисплеи, AR/VR решения, 3D маппинг и многое другое.",
+      excerpt: "Новая платформа объединяет все услуги WESHOW в единую экосистему с интерактивными дисплеями, AR/VR решениями и 3D маппингом...",
+      category: "Технологии",
+      author: "Команда WESHOW",
+      date: "2024-01-15",
+      image: "/src/assets/hero-bg.jpg",
+      tags: ["платформа", "мультимедиа", "инновации"],
+      views: 1247,
+      featured: true
     },
     {
       id: 2,
-      title: "Мы выиграли тендер на оснащение выставки 'Иннопром-2024'",
-      excerpt: "WeShow стала официальным партнером крупнейшей промышленной выставки России, обеспечив техническое оснащение всех павильонов.",
+      title: "Успешный запуск проекта для ВДНХ",
+      content: "Наша команда успешно реализовала масштабный проект для ВДНХ, создав интерактивную экспозицию с использованием передовых технологий. Проект получил высокую оценку от руководства выставки.",
+      excerpt: "Масштабный проект для ВДНХ с интерактивной экспозицией и передовыми технологиями получил высокую оценку...",
       category: "Проекты",
-      author: "Анна Соколова",
-      date: "2024-01-18",
-      readTime: "5 мин",
-      image: "/public/placeholder.svg",
-      tags: ["выставка", "тендер", "Иннопром"],
-      isFeatured: false
+      author: "Александр Петров",
+      date: "2024-01-10",
+      image: "/src/assets/office-building.jpg",
+      tags: ["ВДНХ", "интерактив", "экспозиция"],
+      views: 892,
+      featured: false
     },
     {
       id: 3,
-      title: "Новые технологии в мультимедийном оборудовании 2024",
-      excerpt: "Обзор последних инноваций в области LED-технологий, проекционного оборудования и интерактивных решений.",
-      category: "Технологии",
-      author: "Дмитрий Козлов",
-      date: "2024-01-15",
-      readTime: "7 мин",
-      image: "/public/placeholder.svg",
-      tags: ["технологии", "оборудование", "инновации"],
-      isFeatured: false
+      title: "WESHOW расширяет команду разработчиков",
+      content: "В связи с ростом проектов мы ищем талантливых разработчиков для нашей команды. Мы предлагаем интересные задачи, современные технологии и отличные условия для профессионального роста.",
+      excerpt: "WESHOW расширяет команду разработчиков, предлагая интересные задачи и отличные условия для роста...",
+      category: "Карьера",
+      author: "HR отдел",
+      date: "2024-01-08",
+      image: "/src/assets/team-work.jpg",
+      tags: ["карьера", "разработка", "команда"],
+      views: 567,
+      featured: false
     },
     {
       id: 4,
-      title: "Мы открыли представительство в Санкт-Петербурге",
-      excerpt: "Расширяя географию присутствия, WeShow открывает офис в Северной столице для обслуживания клиентов Северо-Западного региона.",
-      category: "Компания",
-      author: "Пресс-служба WeShow",
-      date: "2024-01-12",
-      readTime: "4 мин",
-      image: "/public/placeholder.svg",
-      tags: ["расширение", "Санкт-Петербург", "регионы"],
-      isFeatured: false
+      title: "Новые технологии в 3D маппинге",
+      content: "Мы внедрили новейшие технологии в области 3D маппинга, что позволяет создавать еще более впечатляющие визуальные эффекты. Наши клиенты теперь могут получить уникальные проекции на любых поверхностях.",
+      excerpt: "Внедрение новейших технологий 3D маппинга для создания впечатляющих визуальных эффектов на любых поверхностях...",
+      category: "Технологии",
+      author: "Техническая команда",
+      date: "2024-01-05",
+      image: "/src/assets/hero-bg.jpg",
+      tags: ["3D маппинг", "визуальные эффекты", "технологии"],
+      views: 743,
+      featured: false
     },
     {
       id: 5,
-      title: "Успешное завершение проекта для Samsung",
-      excerpt: "Команда WeShow реализовала масштабный мультимедийный проект для Samsung, включающий 3D-маппинг и интерактивные инсталляции.",
-      category: "Проекты",
-      author: "Мария Сидорова",
-      date: "2024-01-10",
-      readTime: "6 мин",
-      image: "/public/placeholder.svg",
-      tags: ["Samsung", "3D-маппинг", "проект"],
-      isFeatured: false
-    },
-    {
-      id: 6,
-      title: "Мы получили сертификат ISO 9001:2015",
-      excerpt: "WeShow подтвердила соответствие международным стандартам качества, что гарантирует высокий уровень обслуживания клиентов.",
-      category: "Компания",
-      author: "Пресс-служба WeShow",
-      date: "2024-01-08",
-      readTime: "3 мин",
-      image: "/public/placeholder.svg",
-      tags: ["сертификация", "качество", "ISO"],
-      isFeatured: false
+      title: "WESHOW на международной выставке",
+      content: "Наша компания приняла участие в международной выставке мультимедийных технологий, где представила свои инновационные решения. Мы получили множество положительных отзывов и новых партнерств.",
+      excerpt: "Участие в международной выставке мультимедийных технологий с представлением инновационных решений...",
+      category: "События",
+      author: "Маркетинг команда",
+      date: "2024-01-03",
+      image: "/src/assets/office-building.jpg",
+      tags: ["выставка", "международная", "партнерства"],
+      views: 456,
+      featured: false
     }
+  ]);
+
+  const categories = [
+    { value: "all", label: "Все категории" },
+    { value: "technologies", label: "Технологии" },
+    { value: "projects", label: "Проекты" },
+    { value: "career", label: "Карьера" },
+    { value: "events", label: "События" },
+    { value: "company", label: "Компания" }
   ];
 
-  const industryNews = [
-    {
-      title: "Рынок мультимедийных технологий вырос на 25% в 2023 году",
-      source: "TechCrunch",
-      date: "2024-01-19",
-      url: "#"
-    },
-    {
-      title: "Новые стандарты для LED-дисплеев в 2024",
-      source: "Display Daily",
-      date: "2024-01-17",
-      url: "#"
-    },
-    {
-      title: "AR/VR технологии в корпоративном секторе",
-      source: "VentureBeat",
-      date: "2024-01-15",
-      url: "#"
-    }
-  ];
+  const handleNewsSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Add new news
+    const newNews = {
+      id: news.length + 1,
+      title: newsForm.title,
+      content: newsForm.content,
+      excerpt: newsForm.content.substring(0, 150) + "...",
+      category: newsForm.category,
+      author: newsForm.author,
+      date: new Date().toISOString().split('T')[0],
+      image: newsForm.image || "/src/assets/hero-bg.jpg",
+      tags: newsForm.tags.split(',').map(tag => tag.trim()),
+      views: 0,
+      featured: false
+    };
+    
+    setNews([newNews, ...news]);
+    
+    toast({
+      title: "Новость добавлена!",
+      description: "Ваша новость успешно опубликована"
+    });
+    
+    setNewsForm({
+      title: "", content: "", category: "", author: "", image: "", tags: ""
+    });
+    setShowAddNews(false);
+    setIsSubmitting(false);
+  };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+  const handleInputChange = (field: string, value: string) => {
+    setNewsForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  const deleteNews = (id: number) => {
+    setNews(news.filter(item => item.id !== id));
+    toast({
+      title: "Новость удалена",
+      description: "Новость была успешно удалена"
     });
   };
 
-  const featuredNews = newsItems.find(item => item.isFeatured);
-  const regularNews = newsItems.filter(item => !item.isFeatured);
+  const filteredNews = news.filter(item => {
+    const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         item.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    const matchesCategory = selectedCategory === "all" || 
+                           item.category.toLowerCase() === selectedCategory.toLowerCase();
+    
+    return matchesSearch && matchesCategory;
+  });
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ru-RU', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
   return (
     <div className="min-h-screen bg-slate-50">
       <Header />
       
-      <main className="pt-24">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-50 to-purple-50 py-20 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-60"></div>
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-full blur-3xl opacity-60"></div>
-          
-          <div className="container mx-auto px-6 lg:px-8 relative">
-            <div className="text-center max-w-4xl mx-auto">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-sm font-medium text-blue-700 mb-6">
-                📰 Новости
-              </div>
-              <h1 className="text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
-                Новости компании и
-                <span className="text-gradient bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent block">
-                  индустрии
-                </span>
-              </h1>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                Будьте в курсе последних событий, проектов и технологических достижений 
-                WeShow и мультимедийной индустрии
-              </p>
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 bg-gradient-to-br from-purple-50 to-pink-100">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-purple-100 border border-purple-200 text-sm font-medium text-purple-700 mb-6">
+              📰 Новости WESHOW
+            </div>
+            <h1 className="text-4xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
+              Будьте в курсе
+              <span className="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent block">
+                наших событий
+              </span>
+            </h1>
+            <p className="text-xl text-slate-600 leading-relaxed mb-8 max-w-3xl mx-auto">
+              Узнавайте первыми о новых проектах, технологиях и достижениях команды WESHOW. 
+              Мы делимся всем, что происходит в мире мультимедийных инноваций.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg" 
+                className="px-8 py-4 text-lg"
+                onClick={() => setShowAddNews(true)}
+              >
+                <Plus className="mr-2 h-5 w-5" />
+                Добавить новость
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="px-8 py-4 text-lg"
+                onClick={() => document.getElementById('news-grid')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Читать новости
+              </Button>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Featured News */}
-        {featuredNews && (
-          <section className="py-20 bg-white">
-            <div className="container mx-auto px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-slate-900 mb-6">
-                  Главная новость
-                </h2>
-                <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                  Самое важное событие недели, которое стоит вашего внимания
-                </p>
+      {/* Search and Filter Section */}
+      <section className="py-12 bg-white border-b border-slate-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+            <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+              <div className="relative flex-1 sm:flex-none">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <Input
+                  placeholder="Поиск по новостям..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 w-full sm:w-80"
+                />
               </div>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-full sm:w-48">
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Категория" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category.value} value={category.value}>
+                      {category.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="text-sm text-slate-600">
+              Найдено: {filteredNews.length} новостей
+            </div>
+          </div>
+        </div>
+      </section>
 
-              <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl p-8 border border-slate-200/50">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                  <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl overflow-hidden">
-                    <div className="w-full h-full bg-gradient-to-br from-blue-200/50 to-purple-200/50 flex items-center justify-center">
-                      <div className="text-center space-y-4">
-                        <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto">
-                          <span className="text-white text-2xl font-bold">WS</span>
-                        </div>
-                        <p className="text-slate-600 font-medium">WeShow News</p>
-                      </div>
-                    </div>
-                  </div>
+      {/* Add News Modal */}
+      {showAddNews && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-slate-900">Добавить новость</h2>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowAddNews(false)}
+              >
+                ✕
+              </Button>
+            </div>
+            
+            <form onSubmit={handleNewsSubmit} className="space-y-4">
+              <div>
+                <Label htmlFor="title">Заголовок *</Label>
+                <Input
+                  id="title"
+                  required
+                  value={newsForm.title}
+                  onChange={(e) => handleInputChange("title", e.target.value)}
+                  className="mt-2"
+                  placeholder="Введите заголовок новости"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="content">Содержание *</Label>
+                <Textarea
+                  id="content"
+                  required
+                  rows={6}
+                  value={newsForm.content}
+                  onChange={(e) => handleInputChange("content", e.target.value)}
+                  className="mt-2"
+                  placeholder="Напишите содержание новости"
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="category">Категория *</Label>
+                  <Select value={newsForm.category} onValueChange={(value) => handleInputChange("category", value)}>
+                    <SelectTrigger className="mt-2">
+                      <SelectValue placeholder="Выберите категорию" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Технологии">Технологии</SelectItem>
+                      <SelectItem value="Проекты">Проекты</SelectItem>
+                      <SelectItem value="Карьера">Карьера</SelectItem>
+                      <SelectItem value="События">События</SelectItem>
+                      <SelectItem value="Компания">Компания</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="author">Автор *</Label>
+                  <Input
+                    id="author"
+                    required
+                    value={newsForm.author}
+                    onChange={(e) => handleInputChange("author", e.target.value)}
+                    className="mt-2"
+                    placeholder="Имя автора"
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="image">URL изображения</Label>
+                  <Input
+                    id="image"
+                    type="url"
+                    value={newsForm.image}
+                    onChange={(e) => handleInputChange("image", e.target.value)}
+                    className="mt-2"
+                    placeholder="https://example.com/image.jpg"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="tags">Теги</Label>
+                  <Input
+                    id="tags"
+                    value={newsForm.tags}
+                    onChange={(e) => handleInputChange("tags", e.target.value)}
+                    className="mt-2"
+                    placeholder="тег1, тег2, тег3"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex gap-3 pt-4">
+                <Button 
+                  type="submit" 
+                  className="flex-1"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Публикация...
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="mr-2 h-4 w-4" />
+                      Опубликовать
+                    </>
+                  )}
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="outline"
+                  onClick={() => setShowAddNews(false)}
+                >
+                  Отмена
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
-                  <div className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                        {featuredNews.category}
-                      </Badge>
-                      <div className="flex items-center space-x-2 text-sm text-slate-500">
-                        <Calendar className="h-4 w-4" />
-                        <span>{formatDate(featuredNews.date)}</span>
-                      </div>
-                    </div>
-
-                    <h3 className="text-3xl font-bold text-slate-900 leading-tight">
-                      {featuredNews.title}
-                    </h3>
-
-                    <p className="text-lg text-slate-600 leading-relaxed">
-                      {featuredNews.excerpt}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {featuredNews.tags.map((tag, index) => (
-                        <Badge key={index} variant="secondary" className="bg-slate-100 text-slate-600">
-                          #{tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between pt-4">
-                      <div className="flex items-center space-x-2 text-sm text-slate-500">
-                        <User className="h-4 w-4" />
-                        <span>{featuredNews.author}</span>
-                      </div>
-                      <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                        Читать полностью
-                        <ArrowRight className="ml-2 h-5 w-5" />
+      {/* News Grid Section */}
+      <section id="news-grid" className="py-20 bg-slate-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            {filteredNews.map((item) => (
+              <Card key={item.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="relative">
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
+                  {item.featured && (
+                    <Badge className="absolute top-4 left-4 bg-gradient-to-r from-purple-600 to-pink-600">
+                      Главная
+                    </Badge>
+                  )}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="secondary" className="h-8 w-8 p-0">
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="destructive" 
+                        className="h-8 w-8 p-0"
+                        onClick={() => deleteNews(item.id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Regular News */}
-        <section className="py-20 bg-slate-50">
-          <div className="container mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-6">
-                Последние новости
-              </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Все важные события и обновления компании
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {regularNews.map((news) => (
-                <article key={news.id} className="bg-white rounded-2xl border border-slate-200/50 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
-                  {/* Image */}
-                  <div className="aspect-video bg-gradient-to-br from-slate-100 to-slate-200 overflow-hidden">
-                    <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-                      <div className="text-center space-y-4">
-                        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto">
-                          <span className="text-white text-xl font-bold">WS</span>
-                        </div>
-                        <p className="text-slate-600 font-medium">WeShow News</p>
-                      </div>
-                    </div>
+                
+                <CardHeader>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Badge variant="outline">{item.category}</Badge>
+                    <span className="text-sm text-slate-500">•</span>
+                    <span className="text-sm text-slate-500">{formatDate(item.date)}</span>
                   </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    {/* Category and Date */}
-                    <div className="flex items-center justify-between mb-4">
-                      <Badge variant="outline" className="text-xs">
-                        {news.category}
+                  <CardTitle className="text-xl leading-tight group-hover:text-purple-600 transition-colors duration-300">
+                    {item.title}
+                  </CardTitle>
+                  <CardDescription className="text-base leading-relaxed">
+                    {item.excerpt}
+                  </CardDescription>
+                </CardHeader>
+                
+                <CardContent>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {item.tags.map((tag, index) => (
+                      <Badge key={index} variant="secondary" className="text-xs">
+                        #{tag}
                       </Badge>
-                      <div className="flex items-center space-x-2 text-xs text-slate-500">
-                        <Calendar className="h-3 w-3" />
-                        <span>{formatDate(news.date)}</span>
-                      </div>
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2">
-                      {news.title}
-                    </h3>
-
-                    {/* Excerpt */}
-                    <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3">
-                      {news.excerpt}
-                    </p>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {news.tags.slice(0, 2).map((tag, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs bg-slate-100 text-slate-600">
-                          #{tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    {/* Author and Read More */}
-                    <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                      <div className="flex items-center space-x-2 text-sm text-slate-500">
-                        <User className="h-4 w-4" />
-                        <span>{news.author}</span>
-                      </div>
-                      <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
-                        Читать
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
+                    ))}
                   </div>
-                </article>
-              ))}
-            </div>
-
-            {/* Load More */}
-            <div className="text-center mt-16">
-              <Button size="lg" variant="outline" className="px-8 py-4 text-lg">
-                Загрузить еще
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Industry News */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-6">
-                Новости индустрии
-              </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Самые интересные события и тренды в мире мультимедийных технологий
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {industryNews.map((news, index) => (
-                <div key={index} className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl p-6 border border-slate-200/50 hover:shadow-lg transition-all duration-300">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <TrendingUp className="h-5 w-5 text-blue-500" />
-                    <span className="text-sm font-medium text-blue-700">Индустрия</span>
-                  </div>
-                  
-                  <h3 className="text-lg font-bold text-slate-900 mb-3 line-clamp-2">
-                    {news.title}
-                  </h3>
                   
                   <div className="flex items-center justify-between text-sm text-slate-500 mb-4">
-                    <span>{news.source}</span>
-                    <span>{formatDate(news.date)}</span>
+                    <div className="flex items-center gap-4">
+                      <span className="flex items-center gap-1">
+                        <User className="h-4 w-4" />
+                        {item.author}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Eye className="h-4 w-4" />
+                        {item.views}
+                      </span>
+                    </div>
                   </div>
                   
-                  <a 
-                    href={news.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm"
-                  >
-                    Читать на {news.source}
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </div>
-              ))}
-            </div>
+                  <div className="flex gap-2">
+                    <Button className="flex-1" variant="outline">
+                      <Bookmark className="mr-2 h-4 w-4" />
+                      Сохранить
+                    </Button>
+                    <Button className="flex-1" variant="outline">
+                      <Share2 className="mr-2 h-4 w-4" />
+                      Поделиться
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        </section>
+          
+          {filteredNews.length === 0 && (
+            <div className="text-center py-20">
+              <div className="text-6xl mb-4">📰</div>
+              <h3 className="text-2xl font-semibold text-slate-900 mb-2">
+                Новости не найдены
+              </h3>
+              <p className="text-slate-600 mb-6">
+                Попробуйте изменить параметры поиска или категорию
+              </p>
+              <Button onClick={() => {
+                setSearchQuery("");
+                setSelectedCategory("all");
+              }}>
+                Сбросить фильтры
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
 
-        {/* Newsletter CTA */}
-        <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
-          <div className="container mx-auto px-6 lg:px-8 text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+      {/* Newsletter Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-slate-900 mb-6">
               Подпишитесь на новости
             </h2>
-            <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
-              Получайте уведомления о новых проектах, технологиях и событиях WeShow
+            <p className="text-xl text-slate-600 mb-8">
+              Получайте уведомления о новых статьях, проектах и событиях WESHOW
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-              <input
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <Input
                 type="email"
                 placeholder="Ваш email"
-                className="px-6 py-3 rounded-xl border-0 focus:ring-2 focus:ring-white/50 bg-white/20 text-white placeholder:text-white/70"
+                className="flex-1"
               />
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
+              <Button>
                 Подписаться
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
       <Footer />
     </div>
