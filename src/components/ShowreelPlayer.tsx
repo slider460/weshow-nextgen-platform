@@ -21,6 +21,8 @@ const ShowreelPlayer = ({
   const [duration, setDuration] = useState(0);
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -31,17 +33,32 @@ const ShowreelPlayer = ({
     if (!video) return;
 
     const handleTimeUpdate = () => setCurrentTime(video.currentTime);
-    const handleLoadedMetadata = () => setDuration(video.duration);
+    const handleLoadedMetadata = () => {
+      setDuration(video.duration);
+      setIsLoading(false);
+    };
     const handleEnded = () => setIsPlaying(false);
+    const handleError = () => {
+      setHasError(true);
+      setIsLoading(false);
+    };
+    const handleLoadStart = () => setIsLoading(true);
+    const handleLoadedData = () => setIsLoading(false);
 
     video.addEventListener('timeupdate', handleTimeUpdate);
     video.addEventListener('loadedmetadata', handleLoadedMetadata);
     video.addEventListener('ended', handleEnded);
+    video.addEventListener('error', handleError);
+    video.addEventListener('loadstart', handleLoadStart);
+    video.addEventListener('loadeddata', handleLoadedData);
 
     return () => {
       video.removeEventListener('timeupdate', handleTimeUpdate);
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
       video.removeEventListener('ended', handleEnded);
+      video.removeEventListener('error', handleError);
+      video.removeEventListener('loadstart', handleLoadStart);
+      video.removeEventListener('loadeddata', handleLoadedData);
     };
   }, []);
 
@@ -127,6 +144,20 @@ const ShowreelPlayer = ({
         className="w-full h-full object-cover"
         playsInline
         preload="metadata"
+        crossOrigin="anonymous"
+        onError={(e) => {
+          console.error('Video error:', e);
+          setHasError(true);
+          setIsLoading(false);
+        }}
+        onLoadStart={() => {
+          console.log('Video loading started');
+          setIsLoading(true);
+        }}
+        onLoadedData={() => {
+          console.log('Video data loaded');
+          setIsLoading(false);
+        }}
       />
 
       {/* Overlay with Title and Description */}
@@ -214,9 +245,23 @@ const ShowreelPlayer = ({
       </div>
 
       {/* Loading State */}
-      {duration === 0 && (
+      {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+            <p className="text-white text-sm">Загрузка видео...</p>
+          </div>
+        </div>
+      )}
+
+      {/* Error State */}
+      {hasError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+          <div className="text-center text-white">
+            <div className="text-4xl mb-4">⚠️</div>
+            <p className="text-lg mb-2">Ошибка загрузки видео</p>
+            <p className="text-sm text-white/80">Проверьте ссылку на файл</p>
+          </div>
         </div>
       )}
     </div>

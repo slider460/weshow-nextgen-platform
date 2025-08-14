@@ -14,10 +14,12 @@ import {
   ArrowRight,
   Star,
   Award,
-  Zap
+  Zap,
+  Video
 } from "lucide-react";
 import ConsultationModal from "@/components/ConsultationModal";
 import ProjectOrderModal from "@/components/ProjectOrderModal";
+import ShowreelPlayer from "@/components/ShowreelPlayer";
 
 const SamsungEvent = () => {
   const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
@@ -169,6 +171,27 @@ const SamsungEvent = () => {
                 <span className="font-medium">Премиум клиент</span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-6">Видео проекта</h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Посмотрите, как мы создали волшебную новогоднюю атмосферу для Samsung
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <ShowreelPlayer 
+              videoSrc="/samsung-event.mp4"
+              title="Особенный Новый год Samsung"
+              description="Новогоднее мероприятие с 3D-проекциями и digital зонами"
+              className="aspect-video w-full"
+            />
           </div>
         </div>
       </section>

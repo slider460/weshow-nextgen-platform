@@ -1,8 +1,11 @@
 # 🎥 Настройка видео Showreel
 
-## 📁 Файл видео
+## 📁 Файлы видео
 
-Проект использует видео файл `showreel.mp4` для демонстрации наших работ.
+Проект использует два видео файла:
+
+1. **`showreel.mp4`** - основной showreel с лучшими проектами
+2. **`samsung-event.mp4`** - видео проекта Samsung "Особенный Новый год"
 
 ## ⚠️ Важно
 
@@ -12,8 +15,11 @@
 
 ### **Автоматическая загрузка:**
 ```bash
-# Загрузить видео с Dropbox
+# Загрузить основной showreel
 curl -L "https://www.dropbox.com/scl/fi/ia60fgempj6mlafdvvbr4/HM_Showreel.mp4?rlkey=d802gdjo6qe28t0olm0g94oys&st=iov0931m&dl=1" -o "public/showreel.mp4"
+
+# Загрузить видео проекта Samsung
+curl -L "https://www.dropbox.com/scl/fi/rljujmu5jpotalcme31bv/Samsung-2020.mp4?rlkey=uy7uhib44p8fjc4fys1ykkipj&st=p8dfxzg5&dl=1" -o "public/samsung-event.mp4"
 ```
 
 ### **Ручная загрузка:**
@@ -24,7 +30,8 @@ curl -L "https://www.dropbox.com/scl/fi/ia60fgempj6mlafdvvbr4/HM_Showreel.mp4?rl
 
 ```
 public/
-├── showreel.mp4          # Видео файл (не в git)
+├── showreel.mp4          # Основной showreel (не в git)
+├── samsung-event.mp4     # Видео проекта Samsung (не в git)
 ├── favicon.ico
 ├── placeholder.svg
 └── robots.txt
