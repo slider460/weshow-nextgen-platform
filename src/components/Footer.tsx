@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { 
   Phone, 
   Mail, 
@@ -18,6 +19,8 @@ import {
 } from "lucide-react";
 
 const Footer = () => {
+  const { t } = useLanguage();
+  
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -70,7 +73,7 @@ const Footer = () => {
               </div>
               
               <p className="text-slate-300 leading-relaxed mb-6 max-w-md">
-                Создаем будущее мультимедийных технологий. Инновационные решения для вашего бизнеса с 15+ летним опытом.
+                {t('footer.description')}
               </p>
               
               <div className="flex space-x-4">
@@ -94,7 +97,7 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-lg font-semibold mb-6 text-white">Быстрые ссылки</h3>
+              <h3 className="text-lg font-semibold mb-6 text-white">Quick Links</h3>
               <ul className="space-y-3">
                 <li>
                   <Link 
@@ -102,7 +105,7 @@ const Footer = () => {
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    О компании
+                    {t('nav.about')}
                   </Link>
                 </li>
                 <li>
@@ -111,7 +114,7 @@ const Footer = () => {
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-purple-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    Услуги
+                    {t('nav.services')}
                   </Link>
                 </li>
                 <li>
@@ -120,7 +123,7 @@ const Footer = () => {
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-pink-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    Проекты
+                    {t('nav.portfolio')}
                   </Link>
                 </li>
                 <li>
@@ -129,7 +132,7 @@ const Footer = () => {
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-green-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    Команда
+                    {t('nav.team')}
                   </Link>
                 </li>
                 <li>
@@ -155,7 +158,7 @@ const Footer = () => {
 
             {/* Services */}
             <div>
-              <h3 className="text-lg font-semibold mb-6 text-white">Услуги</h3>
+              <h3 className="text-lg font-semibold mb-6 text-white">{t('nav.services')}</h3>
               <ul className="space-y-3">
                 <li>
                   <Link 
@@ -219,14 +222,14 @@ const Footer = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16 pt-16 border-t border-slate-700/50">
             {/* Contact Info */}
             <div>
-              <h3 className="text-lg font-semibold mb-6 text-white">Контакты</h3>
+              <h3 className="text-lg font-semibold mb-6 text-white">{t('nav.contact')}</h3>
               <div className="space-y-4">
                 <div className="flex items-start space-x-4 group">
                   <div className="w-10 h-10 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <Phone className="h-5 w-5 text-blue-400" />
                   </div>
                   <div>
-                    <div className="text-slate-300 font-medium">Телефон</div>
+                    <div className="text-slate-300 font-medium">{t('footer.phone')}</div>
                     <a href="tel:+74955807537" className="text-slate-400 hover:text-blue-400 transition-colors duration-300">
                       +7 (495) 580-75-37
                     </a>
@@ -238,7 +241,7 @@ const Footer = () => {
                     <Mail className="h-5 w-5 text-purple-400" />
                   </div>
                   <div>
-                    <div className="text-slate-300 font-medium">Email</div>
+                    <div className="text-slate-300 font-medium">{t('footer.email')}</div>
                     <a href="mailto:info@weshow.ru" className="text-slate-400 hover:text-purple-400 transition-colors duration-300">
                       info@weshow.ru
                     </a>
@@ -250,7 +253,7 @@ const Footer = () => {
                     <MapPin className="h-5 w-5 text-green-400" />
                   </div>
                   <div>
-                    <div className="text-slate-300 font-medium">Адрес</div>
+                    <div className="text-slate-300 font-medium">{t('footer.address')}</div>
                     <div className="text-slate-400">
                       Москва, ул. Рочдельская, 14А
                     </div>

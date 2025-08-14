@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Play, ArrowRight } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
 
+
 interface ModernHeroSectionProps {
   onShowShowreel?: () => void;
 }
@@ -62,6 +63,8 @@ const ModernHeroSection = ({ onShowShowreel }: ModernHeroSectionProps) => {
 
             {/* Right side - Cards grid */}
             <div className="lg:col-span-7 grid grid-cols-2 gap-4 h-full max-h-[600px]">
+              
+
               
               {/* Large purple card - обновлен в стиле изображения */}
               <div className="gradient-card-purple-dark rounded-3xl p-8 flex flex-col justify-between row-span-2 relative overflow-hidden">

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import AnimatedButton from "./AnimatedButton";
+
 import { 
   Menu, 
   X, 
@@ -11,8 +13,11 @@ import {
   Star
 } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
+  const { t, language, setLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -67,21 +72,12 @@ const Header = () => {
             className="flex items-center space-x-3 group"
             onClick={closeMenu}
           >
-            <div className="relative">
-              {/* Main logo container */}
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
-                {/* W letter with modern styling */}
-                <div className="relative">
-                  <span className="text-white font-black text-2xl tracking-tight">W</span>
-                  {/* Subtle inner glow */}
-                  <div className="absolute inset-0 bg-white/20 rounded-full blur-sm"></div>
-                </div>
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
+              <div className="relative">
+                <span className="text-white font-black text-2xl tracking-tight">W</span>
+                <div className="absolute inset-0 bg-white/20 rounded-full blur-sm"></div>
               </div>
-              
-              {/* Outer glow effect */}
               <div className="absolute -inset-2 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-all duration-500"></div>
-              
-              {/* Animated corner accents */}
               <div className="absolute -top-1 -left-1 w-3 h-3 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full opacity-60 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500"></div>
               <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-60 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500"></div>
             </div>
@@ -108,7 +104,7 @@ const Header = () => {
                 isActive("/") ? "text-blue-600" : ""
               }`}
             >
-              Главная
+              {t('nav.home')}
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ${
                 isActive("/") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -120,7 +116,7 @@ const Header = () => {
                 className="flex items-center space-x-1 text-slate-700 hover:text-blue-600 transition-all duration-300 font-medium group"
                 onClick={toggleServices}
               >
-                <span>Услуги</span>
+                <span>{t('nav.services')}</span>
                 <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${
                   isServicesOpen ? "rotate-180" : ""
                 }`} />
@@ -192,7 +188,7 @@ const Header = () => {
                 isActive("/team") ? "text-blue-600" : ""
               }`}
             >
-              Команда
+              {t('nav.team')}
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ${
                 isActive("/team") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -204,7 +200,7 @@ const Header = () => {
                 isActive("/portfolio") ? "text-blue-600" : ""
               }`}
             >
-              Проекты
+              {t('nav.portfolio')}
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ${
                 isActive("/portfolio") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -216,7 +212,7 @@ const Header = () => {
                 isActive("/news") ? "text-blue-600" : ""
               }`}
             >
-              Новости
+              {t('nav.news')}
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ${
                 isActive("/news") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -230,7 +226,7 @@ const Header = () => {
                 isActive("/blog") ? "text-blue-600" : ""
               }`}
             >
-              Блог
+              {t('nav.blog')}
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ${
                 isActive("/blog") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -242,7 +238,7 @@ const Header = () => {
                 isActive("/contact") ? "text-blue-600" : ""
               }`}
             >
-              Контакты
+              {t('nav.contact')}
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ${
                 isActive("/contact") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -251,13 +247,20 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Button 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            <LanguageSwitcher 
+              currentLanguage={language}
+              onLanguageChange={setLanguage}
+            />
+            <AnimatedButton 
+              variant="gradient"
+              hoverEffect="lift"
+              glow={true}
+              icon={<Zap className="w-4 h-4" />}
               onClick={openConsultModal}
+              className="text-white"
             >
-              <Zap className="w-4 h-4 mr-2" />
-              Получить консультацию
-            </Button>
+              {t('btn.get-consultation')}
+            </AnimatedButton>
           </div>
 
           {/* Mobile Menu Button */}
@@ -290,13 +293,13 @@ const Header = () => {
                   onClick={closeMenu}
                 >
                   <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                  Главная
+                  {t('nav.home')}
                 </Link>
               
               {/* Services Section */}
               <div className="space-y-2">
                 <div className="px-4 py-2">
-                  <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Услуги:</h3>
+                  <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">{t('nav.services')}:</h3>
                 </div>
                 
                                   <Link 
@@ -387,7 +390,7 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                Команда
+                {t('nav.team')}
               </Link>
               
               <Link 
@@ -396,7 +399,7 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-purple-600 rounded-full mr-3"></span>
-                Проекты
+                {t('nav.portfolio')}
               </Link>
               
               <Link 
@@ -405,7 +408,7 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                Новости
+                {t('nav.news')}
               </Link>
               
 
@@ -416,7 +419,7 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                Блог
+                {t('nav.blog')}
               </Link>
               
               <Link 
@@ -425,18 +428,21 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-purple-600 rounded-full mr-3"></span>
-                Контакты
+                {t('nav.contact')}
               </Link>
               
               {/* Mobile CTA */}
               <div className="pt-4">
-                <Button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg"
+                <AnimatedButton 
+                  variant="gradient"
+                  hoverEffect="scale"
+                  glow={true}
+                  icon={<Zap className="w-4 h-4" />}
                   onClick={openConsultModal}
+                  className="w-full text-white"
                 >
-                  <Zap className="w-4 h-4 mr-2" />
-                  Получить консультацию
-                </Button>
+                  {t('btn.get-consultation')}
+                </AnimatedButton>
               </div>
             </nav>
           </div>
@@ -447,8 +453,8 @@ const Header = () => {
       <ConsultationModal 
         isOpen={isConsultModalOpen}
         onClose={() => setIsConsultModalOpen(false)}
-        title="Получить консультацию"
-        triggerText="Получить консультацию"
+        title={t('btn.get-consultation')}
+        triggerText={t('btn.get-consultation')}
       />
     </header>
   );
