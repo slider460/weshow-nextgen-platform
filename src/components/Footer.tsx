@@ -57,21 +57,12 @@ const Footer = () => {
                   <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-60"></div>
                 </div>
                 <div>
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center">
                     <span className="text-2xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent tracking-tight">
-                      E
+                      WE
                     </span>
                     <span className="text-2xl font-black bg-gradient-to-r from-purple-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent tracking-tight">
-                      S
-                    </span>
-                    <span className="text-2xl font-black bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
-                      H
-                    </span>
-                    <span className="text-2xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent tracking-tight">
-                      O
-                    </span>
-                    <span className="text-2xl font-black bg-gradient-to-r from-purple-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent tracking-tight">
-                      W
+                      SHOW
                     </span>
                   </div>
                   <div className="text-sm text-slate-400 tracking-wide">NextGen Platform</div>

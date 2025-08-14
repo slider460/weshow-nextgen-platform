@@ -81,21 +81,12 @@ const Header = () => {
             
             {/* Company name */}
             <div className="hidden sm:block">
-              <div className="flex items-center space-x-1">
+              <div className="flex items-center">
                 <span className="text-2xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight">
-                  E
+                  WE
                 </span>
                 <span className="text-2xl font-black bg-gradient-to-r from-purple-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
-                  S
-                </span>
-                <span className="text-2xl font-black bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
-                  H
-                </span>
-                <span className="text-2xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight">
-                  O
-                </span>
-                <span className="text-2xl font-black bg-gradient-to-r from-purple-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
-                  W
+                  SHOW
                 </span>
               </div>
               <div className="text-xs text-slate-500 font-medium tracking-wide">NextGen Platform</div>
