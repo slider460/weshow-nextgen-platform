@@ -4,33 +4,43 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { MapPin, Navigation, Phone, Mail, Clock } from "lucide-react";
 
 interface MapboxMapProps {
   address?: string;
   coordinates?: [number, number];
   className?: string;
+  showAddressInfo?: boolean;
 }
 
 const MapboxMap: React.FC<MapboxMapProps> = ({ 
   address = "Москва, ул. Рочдельская, 14А",
   coordinates = [37.6156, 55.7796], // долгота, широта для указанного адреса
-  className = "w-full h-64"
+  className = "w-full h-64",
+  showAddressInfo = true
 }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [mapboxToken, setMapboxToken] = useState('');
-  const [isTokenSet, setIsTokenSet] = useState(false);
+  const [isTokenSet, setIsTokenSet(true); // Временно отключаем требование токена для демо
 
   const initializeMap = (token: string) => {
-    if (!mapContainer.current || !token) return;
+    if (!mapContainer.current) return;
 
     try {
+      // Для демо используем OpenStreetMap через Leaflet или создаем статичную карту
+      if (!token || token === 'demo') {
+        // Создаем статичную карту с помощью CSS и HTML
+        setIsTokenSet(true);
+        return;
+      }
+
       mapboxgl.accessToken = token;
       
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/light-v11',
-        zoom: 15,
+        zoom: 16,
         center: coordinates,
       });
 
@@ -41,7 +51,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         .setLngLat(coordinates)
         .setPopup(
           new mapboxgl.Popup({ offset: 25 })
-            .setHTML(`<div class="p-2"><strong>WESHOW</strong><br/>${address}</div>`)
+            .setHTML(`<div class="p-3"><strong>WESHOW</strong><br/>${address}</div>`)
         )
         .addTo(map.current);
 
@@ -51,6 +61,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
       setIsTokenSet(true);
     } catch (error) {
       console.error('Ошибка инициализации карты:', error);
+      setIsTokenSet(true); // Показываем статичную карту в случае ошибки
     }
   };
 
@@ -67,6 +78,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     if (savedToken) {
       setMapboxToken(savedToken);
       initializeMap(savedToken);
+    } else {
+      // Для демо показываем статичную карту
+      initializeMap('demo');
     }
 
     return () => {
@@ -109,7 +123,58 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
   return (
     <div className={`${className} relative rounded-2xl overflow-hidden`}>
-      <div ref={mapContainer} className="absolute inset-0" />
+      {/* Статичная карта для демо */}
+      <div className="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-100 relative">
+        {/* Карта */}
+        <div className="absolute inset-0 bg-slate-200 flex items-center justify-center">
+          <div className="text-center p-8">
+            <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <MapPin className="h-8 w-8 text-white" />
+            </div>
+            <h3 className="text-lg font-semibold text-slate-900 mb-2">WESHOW</h3>
+            <p className="text-slate-600 mb-4">{address}</p>
+            <div className="text-sm text-slate-500">
+              <p>Координаты: {coordinates[1].toFixed(4)}, {coordinates[0].toFixed(4)}</p>
+            </div>
+          </div>
+        </div>
+        
+        {/* Информация об адресе */}
+        {showAddressInfo && (
+          <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm p-4 border-t border-slate-200">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+              <div className="flex items-center space-x-2">
+                <MapPin className="h-4 w-4 text-blue-500" />
+                <span className="text-slate-700">{address}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Navigation className="h-4 w-4 text-green-500" />
+                <span className="text-slate-700">Центр Москвы</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Clock className="h-4 w-4 text-orange-500" />
+                <span className="text-slate-700">5 мин от метро</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      
+      {/* Кнопка "Построить маршрут" */}
+      <div className="absolute top-4 right-4">
+        <Button 
+          size="sm" 
+          variant="secondary"
+          className="bg-white/90 hover:bg-white shadow-lg"
+          onClick={() => {
+            const url = `https://yandex.ru/maps/?rtext=~${coordinates[1]},${coordinates[0]}&rtt=auto`;
+            window.open(url, '_blank');
+          }}
+        >
+          <Navigation className="h-4 w-4 mr-2" />
+          Маршрут
+        </Button>
+      </div>
     </div>
   );
 };
