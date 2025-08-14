@@ -33,14 +33,14 @@ const SocialProofSection = () => {
   ];
 
   const clients = [
-    { name: "ВТБ", logo: "/placeholder.svg" },
-    { name: "Сбербанк", logo: "/placeholder.svg" },
-    { name: "Газпром", logo: "/placeholder.svg" },
-    { name: "МТС", logo: "/placeholder.svg" },
-    { name: "Лукойл", logo: "/placeholder.svg" },
-    { name: "Ростелеком", logo: "/placeholder.svg" },
-    { name: "Аэрофлот", logo: "/placeholder.svg" },
-    { name: "Яндекс", logo: "/placeholder.svg" }
+    { name: "ВТБ", logo: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png" },
+    { name: "Сбербанк", logo: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png" },
+    { name: "Газпром", logo: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png" },
+    { name: "МТС", logo: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png" },
+    { name: "Лукойл", logo: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png" },
+    { name: "Ростелеком", logo: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png" },
+    { name: "Аэрофлот", logo: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png" },
+    { name: "Яндекс", logo: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png" }
   ];
 
   const nextSlide = () => {

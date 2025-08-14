@@ -11,46 +11,58 @@ const Portfolio = () => {
   
   const projects = [
     {
-      title: "Интерактивная выставка",
-      category: "3D Mapping",
-      description: "Создание иммерсивного пространства с использованием 3D-проекций",
-      image: "/placeholder.svg",
-      year: "2024"
+      title: "Интерактивная выставка 'Цифровое будущее'",
+      category: "3D Mapping / Interactive",
+      description: "Создание иммерсивного пространства с использованием 3D-проекций, интерактивных стен и VR-зоны для выставки технологий будущего",
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      year: "2024",
+      results: ["15,000+ посетителей", "95% положительных отзывов", "Увеличение времени пребывания на 40%"],
+      tech: ["3D-маппинг", "Интерактивные стены", "VR-гарнитуры", "Проекционные экраны"]
     },
     {
-      title: "Корпоративное мероприятие",
-      category: "LED Solutions",
-      description: "Масштабная LED-инсталляция для презентации продукта",
-      image: "/placeholder.svg", 
-      year: "2024"
+      title: "Корпоративное мероприятие 'Инновации 2024'",
+      category: "LED Solutions / Corporate",
+      description: "Масштабная LED-инсталляция для презентации новых продуктов с интерактивными зонами и 3D-визуализацией",
+      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
+      year: "2024",
+      results: ["500+ участников", "100% выполнение технических требований", "Высокая оценка от руководства"],
+      tech: ["LED-видеостены", "Интерактивные панели", "3D-проекции", "Звуковые системы"]
     },
     {
-      title: "Музейная экспозиция",
-      category: "Interactive",
-      description: "Интерактивные столы и AR-приложения для музея",
-      image: "/placeholder.svg",
-      year: "2023"
+      title: "Музейная экспозиция 'История технологий'",
+      category: "Interactive / Museums",
+      description: "Интерактивные столы, AR-приложения и голографические дисплеи для современного музея технологий",
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      year: "2023",
+      results: ["Увеличение посещаемости на 60%", "Среднее время пребывания 2.5 часа", "Высокая вовлеченность детей"],
+      tech: ["Интерактивные столы", "AR-приложения", "Голографические дисплеи", "Сенсорные экраны"]
     },
     {
-      title: "Торговый центр",
-      category: "Digital Signage",
-      description: "Система цифровых вывесок и навигации",
-      image: "/placeholder.svg",
-      year: "2023"
+      title: "Торговый центр 'Метрополис'",
+      category: "Digital Signage / Retail",
+      description: "Система цифровых вывесок, интерактивной навигации и информационных киосков для современного ТЦ",
+      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
+      year: "2023",
+      results: ["Улучшение навигации на 80%", "Сокращение времени поиска товаров", "Увеличение продаж на 25%"],
+      tech: ["Цифровые вывески", "Интерактивная навигация", "Информационные киоски", "Система управления"]
     },
     {
-      title: "Концертная площадка",
-      category: "Stage Design",
-      description: "Мультимедийное оформление сцены",
-      image: "/placeholder.svg",
-      year: "2023"
+      title: "Концертная площадка 'Звездный зал'",
+      category: "Stage Design / Entertainment",
+      description: "Мультимедийное оформление сцены с проекционными экранами, световыми эффектами и интерактивными элементами",
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      year: "2023",
+      results: ["50+ успешных концертов", "Восторженные отзывы артистов", "Увеличение продаж билетов"],
+      tech: ["Проекционные экраны", "Световые эффекты", "Интерактивные элементы", "Звуковые системы"]
     },
     {
-      title: "Образовательный центр",
-      category: "EdTech",
-      description: "Интерактивные классы и обучающие системы",
-      image: "/placeholder.svg",
-      year: "2022"
+      title: "Образовательный центр 'ТехноШкола'",
+      category: "EdTech / Education",
+      description: "Интерактивные классы с 3D-проекциями, VR-лабораториями и умными досками для современного обучения",
+      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
+      year: "2022",
+      results: ["Улучшение усвоения материала на 45%", "Повышение интереса к учебе", "100% положительных отзывов"],
+      tech: ["3D-проекции", "VR-лаборатории", "Интерактивные доски", "Умные системы"]
     }
   ];
 
@@ -58,18 +70,22 @@ const Portfolio = () => {
     {
       title: "Особенный Новый год Samsung",
       category: "Corporate Events / 3D Mapping",
-      description: "Новогоднее мероприятие с 3D-проекциями, digital зонами и интерактивными решениями",
+      description: "Новогоднее мероприятие с 3D-проекциями, digital зонами и интерактивными решениями для корпоративного праздника",
       image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
       year: "2020",
-      link: "/portfolio/samsung-event"
+      link: "/portfolio/samsung-event",
+      results: ["500+ участников", "Уникальный новогодний контент", "Полное техническое сопровождение"],
+      tech: ["3D-маппинг", "Интерактивные зоны", "Проекционные сетки", "Digital почтовый ящик"]
     },
     {
       title: "Стенд Самарской области на форуме «Россия»",
       category: "Exhibition / Interactive",
-      description: "Мультимедийный стенд: Naked Eye, Kinect‑игры, VR/AR, кинетический экран",
-      image: "/placeholder.svg",
+      description: "Мультимедийный стенд с Naked Eye технологиями, Kinect‑играми, VR/AR зонами и кинетическим экраном",
+      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
       year: "2023–2024",
-      link: "/portfolio/samara-stand"
+      link: "/portfolio/samara-stand",
+      results: ["10,000+ посетителей", "Высокая интерактивность", "Положительные отзывы от руководства"],
+      tech: ["Naked Eye", "Kinect-игры", "VR/AR", "Кинетический экран"]
     },
     ...projects,
   ];
@@ -144,9 +160,42 @@ const Portfolio = () => {
                     <h3 className="text-xl font-semibold text-slate-900 mb-2 group-hover:text-blue-500 transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-slate-600 text-sm leading-relaxed">
+                    <p className="text-slate-600 text-sm leading-relaxed mb-4">
                       {project.description}
                     </p>
+                    
+                    {/* Results and Technologies */}
+                    {project.results && (
+                      <div className="mb-4">
+                        <h4 className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">Результаты:</h4>
+                        <div className="space-y-1">
+                          {project.results.slice(0, 2).map((result: string, resultIndex: number) => (
+                            <div key={resultIndex} className="flex items-center text-xs text-slate-600">
+                              <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2 flex-shrink-0" />
+                              {result}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {project.tech && (
+                      <div>
+                        <h4 className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">Технологии:</h4>
+                        <div className="flex flex-wrap gap-1">
+                          {project.tech.slice(0, 3).map((tech: string, techIndex: number) => (
+                            <span key={techIndex} className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">
+                              {tech}
+                            </span>
+                          ))}
+                          {project.tech.length > 3 && (
+                            <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">
+                              +{project.tech.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
