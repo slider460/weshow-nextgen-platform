@@ -1,37 +1,81 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Users, Award, Star, Linkedin } from "lucide-react";
+import { Users, Award, Star, Linkedin, Building, Globe, Users2, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Team = () => {
   const teamMembers = [
     {
-      name: "Александр Петров",
-      position: "Генеральный директор",
-      experience: "15+ лет",
-      description: "Эксперт в области мультимедийных технологий и управления проектами",
+      name: "Народецкий Александр",
+      position: "Client Service Director / CEO",
+      experience: "Более 10 лет",
+      description: "Руководитель клиентского сервиса и генеральный директор агентства",
       image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
     },
     {
-      name: "Мария Иванова",
-      position: "Технический директор",
-      experience: "12+ лет",
-      description: "Специалист по интеграции сложных технических решений",
+      name: "Семенов Эдвард",
+      position: "Commercial Director",
+      experience: "Более 10 лет",
+      description: "Коммерческий директор, отвечает за развитие бизнеса и партнерские отношения",
       image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png"
     },
     {
-      name: "Дмитрий Сидоров",
-      position: "Руководитель отдела разработки",
-      experience: "10+ лет",
-      description: "Разработчик AR/VR решений и интерактивных приложений",
+      name: "Дементьев Святослав",
+      position: "Chief Creative Officer",
+      experience: "Более 10 лет",
+      description: "Главный креативный директор, создает уникальные творческие решения",
       image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
     },
     {
-      name: "Анна Смирнова",
-      position: "Менеджер проектов",
-      experience: "8+ лет",
-      description: "Координатор крупных мероприятий и технических проектов",
+      name: "Кличановский Сергей",
+      position: "Business Development Director",
+      experience: "Более 10 лет",
+      description: "Директор по развитию бизнеса, стратегическое планирование и рост",
       image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png"
+    },
+    {
+      name: "Осотов Алексей",
+      position: "Chief Information Officer",
+      experience: "Более 10 лет",
+      description: "Главный информационный директор, управление IT-инфраструктурой",
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
+    },
+    {
+      name: "Муратов Денис",
+      position: "Technical Director",
+      experience: "Более 10 лет",
+      description: "Технический директор, контроль качества и техническое обеспечение",
+      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png"
+    },
+    {
+      name: "Агафонова Илона",
+      position: "Senior Account Manager",
+      experience: "Более 10 лет",
+      description: "Старший менеджер по работе с клиентами, координация проектов",
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
+    }
+  ];
+
+  const companyInfo = [
+    {
+      icon: <Building className="h-8 w-8" />,
+      title: "БОЛЕЕ 10 ЛЕТ",
+      description: "мы преумножаем успехи"
+    },
+    {
+      icon: <Target className="h-8 w-8" />,
+      title: "FULL SERVICE",
+      description: "Любые услуги в области маркетинговых коммуникаций"
+    },
+    {
+      icon: <Users2 className="h-8 w-8" />,
+      title: "СОТРУДНИЧЕСТВО",
+      description: "Целеустремленность и внимание к партнерам - залог долгосрочного партнерства"
+    },
+    {
+      icon: <Globe className="h-8 w-8" />,
+      title: "ЛОКАЦИЯ",
+      description: "Офис в центре Москвы. Региональная партнерская сеть с охватом более 100 городов России"
     }
   ];
 
@@ -43,12 +87,12 @@ const Team = () => {
     },
     {
       icon: <Users className="h-8 w-8" />,
-      title: "50+",
-      description: "Специалистов в команде"
+      title: "7+",
+      description: "Ключевых специалистов"
     },
     {
       icon: <Star className="h-8 w-8" />,
-      title: "15+",
+      title: "10+",
       description: "Лет на рынке"
     }
   ];
@@ -71,8 +115,59 @@ const Team = () => {
               Наша команда
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              Профессионалы с многолетним опытом в области мультимедийных технологий
+              Профессионалы с многолетним опытом в области мультимедийных технологий и маркетинговых коммуникаций
             </p>
+          </div>
+        </section>
+
+        {/* Company Philosophy */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-8">
+                Философия компании
+              </h2>
+              <div className="space-y-6 text-lg text-slate-700 leading-relaxed">
+                <p>
+                  Основную бизнес-философию агентства можно охарактеризовать словом «прозрачность»: клиент 
+                  имеет возможность наблюдать за исполнением заказа на каждом этапе работы, получая экспертную 
+                  оценку исполняемых процедур.
+                </p>
+                <p>
+                  Главной движущей силой нашей компании являются ее сотрудники. На сегодняшний день в агентстве 
+                  работают специалисты, имеющие богатый опыт работы в рекламном бизнесе.
+                </p>
+                <p>
+                  Основной принцип нашей работы - комплексное обеспечение клиентского сервиса на основе 
+                  ситуационного анализа его потребностей, с последующей выработкой наиболее оптимальных 
+                  методик и инструментов продвижения продуктов и услуг.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Company Info */}
+        <section className="py-20 relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-white"></div>
+          <div className="container mx-auto px-4 relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {companyInfo.map((info, index) => (
+                <div key={index} className="text-center group">
+                  <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-xl">
+                    <div className="text-white">
+                      {info.icon}
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3">
+                    {info.title}
+                  </h3>
+                  <p className="text-slate-600 font-medium text-base leading-relaxed">
+                    {info.description}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -108,20 +203,20 @@ const Team = () => {
                 Ключевые специалисты
               </h2>
               <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Наша команда объединяет опытных профессионалов в области технологий и управления проектами
+                Наша команда объединяет опытных профессионалов в области маркетинговых коммуникаций и технологий
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {teamMembers.map((member, index) => (
-                <div key={index} className="bg-white rounded-3xl p-8 text-center hover:shadow-lg transition-all duration-300">
+                <div key={index} className="bg-white rounded-3xl p-8 text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-slate-100">
                   <div className="relative mb-6">
                     <img 
                       src={member.image} 
                       alt={member.name}
-                      className="w-24 h-24 rounded-full mx-auto object-cover"
+                      className="w-24 h-24 rounded-full mx-auto object-cover shadow-lg"
                     />
-                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
                       <Linkedin className="h-4 w-4 text-white" />
                     </div>
                   </div>
