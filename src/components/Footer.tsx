@@ -65,7 +65,7 @@ const Footer = () => {
                       SHOW
                     </span>
                   </div>
-                  <div className="text-sm text-slate-400 tracking-wide">NextGen Platform</div>
+                  <div className="text-sm text-slate-400 tracking-wide">NextGen Agency</div>
                 </div>
               </div>
               
