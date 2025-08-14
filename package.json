@@ -4,7 +4,14 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Современная платформа мультимедийных решений и интерактивных технологий",
-  "keywords": ["multimedia", "interactive", "technology", "solutions", "react", "typescript"],
+  "keywords": [
+    "multimedia",
+    "interactive",
+    "technology",
+    "solutions",
+    "react",
+    "typescript"
+  ],
   "author": "WeShow Team",
   "license": "MIT",
   "scripts": {
@@ -53,7 +60,6 @@
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.462.0",
-    "mapbox-gl": "^3.14.0",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
