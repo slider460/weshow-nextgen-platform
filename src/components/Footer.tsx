@@ -38,14 +38,43 @@ const Footer = () => {
             {/* Company Info */}
             <div className="lg:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-xl">W</span>
+                <div className="relative">
+                  {/* Main logo container */}
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl">
+                    {/* W letter with modern styling */}
+                    <div className="relative">
+                      <span className="text-white font-black text-2xl tracking-tight">W</span>
+                      {/* Subtle inner glow */}
+                      <div className="absolute inset-0 bg-white/20 rounded-full blur-sm"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Outer glow effect */}
+                  <div className="absolute -inset-2 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 rounded-2xl blur-xl opacity-30"></div>
+                  
+                  {/* Corner accents */}
+                  <div className="absolute -top-1 -left-1 w-3 h-3 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full opacity-60"></div>
+                  <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-60"></div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    ESHOW
+                  <div className="flex items-center space-x-1">
+                    <span className="text-2xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent tracking-tight">
+                      E
+                    </span>
+                    <span className="text-2xl font-black bg-gradient-to-r from-purple-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent tracking-tight">
+                      S
+                    </span>
+                    <span className="text-2xl font-black bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
+                      H
+                    </span>
+                    <span className="text-2xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent tracking-tight">
+                      O
+                    </span>
+                    <span className="text-2xl font-black bg-gradient-to-r from-purple-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent tracking-tight">
+                      W
+                    </span>
                   </div>
-                  <div className="text-sm text-slate-400">NextGen Platform</div>
+                  <div className="text-sm text-slate-400 tracking-wide">NextGen Platform</div>
                 </div>
               </div>
               

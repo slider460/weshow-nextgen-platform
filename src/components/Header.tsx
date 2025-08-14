@@ -57,20 +57,48 @@ const Header = () => {
           {/* Logo */}
           <Link 
             to="/" 
-            className="flex items-center space-x-2 group"
+            className="flex items-center space-x-3 group"
             onClick={closeMenu}
           >
             <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                <span className="text-white font-bold text-xl">W</span>
+              {/* Main logo container */}
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
+                {/* W letter with modern styling */}
+                <div className="relative">
+                  <span className="text-white font-black text-2xl tracking-tight">W</span>
+                  {/* Subtle inner glow */}
+                  <div className="absolute inset-0 bg-white/20 rounded-full blur-sm"></div>
+                </div>
               </div>
-              <div className="absolute -inset-1 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
+              
+              {/* Outer glow effect */}
+              <div className="absolute -inset-2 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-all duration-500"></div>
+              
+              {/* Animated corner accents */}
+              <div className="absolute -top-1 -left-1 w-3 h-3 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full opacity-60 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500"></div>
+              <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-60 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500"></div>
             </div>
+            
+            {/* Company name */}
             <div className="hidden sm:block">
-              <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                ESHOW
+              <div className="flex items-center space-x-1">
+                <span className="text-2xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight">
+                  E
+                </span>
+                <span className="text-2xl font-black bg-gradient-to-r from-purple-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
+                  S
+                </span>
+                <span className="text-2xl font-black bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
+                  H
+                </span>
+                <span className="text-2xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent tracking-tight">
+                  O
+                </span>
+                <span className="text-2xl font-black bg-gradient-to-r from-purple-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
+                  W
+                </span>
               </div>
-              <div className="text-xs text-slate-500 font-medium">NextGen Platform</div>
+              <div className="text-xs text-slate-500 font-medium tracking-wide">NextGen Platform</div>
             </div>
           </Link>
 
