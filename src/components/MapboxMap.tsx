@@ -22,7 +22,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [mapboxToken, setMapboxToken] = useState('');
-  const [isTokenSet, setIsTokenSet(true); // Временно отключаем требование токена для демо
+  const [isTokenSet, setIsTokenSet] = useState(true); // Временно отключаем требование токена для демо
 
   const initializeMap = (token: string) => {
     if (!mapContainer.current) return;
