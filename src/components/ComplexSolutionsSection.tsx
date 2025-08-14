@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Building, Users, Trophy, Globe, Presentation, Store, Construction, Video } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ComplexSolutionsSection = () => {
   const solutions = [
@@ -104,9 +105,11 @@ const ComplexSolutionsSection = () => {
                 ))}
               </ul>
               
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                Узнать больше
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <Link to="/services/complex-solutions">
+                  Узнать больше
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
             </div>
           ))}
@@ -121,12 +124,16 @@ const ComplexSolutionsSection = () => {
               Расскажите о ваших задачах, и мы предложим оптимальное решение
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                Обсудить проект
-                <ArrowRight className="ml-2 h-5 w-5" />
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <Link to="/contact">
+                  Обсудить проект
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                Посмотреть кейсы
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <Link to="/portfolio">
+                  Посмотреть кейсы
+                </Link>
               </Button>
             </div>
           </div>

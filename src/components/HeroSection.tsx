@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Play, Pause } from "lucide-react";
 import heroImage from "@/assets/hero-bg.jpg";
+import ConsultationModal from "./ConsultationModal";
+
 const HeroSection = () => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [preferReducedMotion, setPreferReducedMotion] = useState(false);
+  const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
+
   useEffect(() => {
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -13,24 +17,37 @@ const HeroSection = () => {
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
+
   const toggleVideo = () => {
     setIsVideoPlaying(!isVideoPlaying);
   };
-  return <section className="relative h-[33vh] flex items-center justify-center overflow-hidden">
+
+  return (
+    <section className="relative h-[33vh] flex items-center justify-center overflow-hidden">
       {/* Background - Image for reduced motion, video for others */}
-      {preferReducedMotion ? <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
-      backgroundImage: `url(${heroImage})`
-    }} /> : <>
+      {preferReducedMotion ? (
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+          style={{ backgroundImage: `url(${heroImage})` }} 
+        />
+      ) : (
+        <>
           {/* Video Background Placeholder - Using image as fallback */}
-          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
-        backgroundImage: `url(${heroImage})`
-      }} />
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+            style={{ backgroundImage: `url(${heroImage})` }} 
+          />
           
           {/* Video Controls */}
-          <button onClick={toggleVideo} className="absolute bottom-4 right-4 z-20 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors" aria-label={isVideoPlaying ? "Pause video" : "Play video"}>
+          <button 
+            onClick={toggleVideo} 
+            className="absolute bottom-4 right-4 z-20 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors" 
+            aria-label={isVideoPlaying ? "Pause video" : "Play video"}
+          >
             {isVideoPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           </button>
-        </>}
+        </>
+      )}
       
       {/* Overlay */}
       <div className="video-overlay" />
@@ -49,7 +66,12 @@ const HeroSection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-            <Button variant="hero" size="lg" className="animate-pulse-glow">
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="animate-pulse-glow"
+              onClick={() => setIsConsultModalOpen(true)}
+            >
               Получить консультацию
             </Button>
             <Button variant="outline" size="lg" className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50">
@@ -58,6 +80,13 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-    </section>;
+
+      <ConsultationModal 
+        isOpen={isConsultModalOpen} 
+        onClose={() => setIsConsultModalOpen(false)} 
+      />
+    </section>
+  );
 };
+
 export default HeroSection;

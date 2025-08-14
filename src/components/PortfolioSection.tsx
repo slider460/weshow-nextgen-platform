@@ -1,29 +1,16 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ExternalLink } from "lucide-react";
-import officeBuilding from "@/assets/office-building.jpg";
-import teamWork from "@/assets/team-work.jpg";
-import vdnhStand from "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png";
+import { ExternalLink, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import vdnhStand from "@/assets/office-building.jpg";
+import ProjectOrderModal from "./ProjectOrderModal";
 
 const PortfolioSection = () => {
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+
   const projects = [{
-    title: "Мультимедийная инсталляция для банка ВТБ",
-    client: "ВТБ",
-    date: "2024",
-    description: "Комплексное оснащение головного офиса интерактивными LED-панелями и системами управления",
-    image: officeBuilding,
-    results: ["Увеличение клиентского трафика на 35%", "Сокращение времени ожидания на 50%"],
-    tech: ["LED-видеостены", "Интерактивные киоски", "Система управления контентом"]
-  }, {
-    title: "3D-маппинг для корпоративного мероприятия Сбербанка",
-    client: "Сбербанк",
-    date: "2024",
-    description: "Проекционный маппинг для презентации новых технологических решений на конференции",
-    image: teamWork,
-    results: ["5000+ участников", "100% выполнение технических требований"],
-    tech: ["Проекционный маппинг", "Синхронизация звука", "Интерактивное управление"]
-  }, {
-    title: "Стенд Самарской области на выставке-форуме «Россия»",
-    client: "ВДНХ",
+    title: "Интерактивный стенд ВДНХ",
+    client: "Самарская область",
     date: "2024",
     description: "Интерактивный мультимедийный стенд с цифровыми решениями для представления региона",
     image: vdnhStand,
@@ -90,9 +77,11 @@ const PortfolioSection = () => {
                   </div>
                 </div>
                 
-                <Button variant="outline" className="w-full group">
-                  Подробнее о проекте
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                <Button variant="outline" className="w-full group" asChild>
+                  <Link to={index === 1 ? "/portfolio/samara-stand" : "/portfolio"}>
+                    Подробнее о проекте
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -102,17 +91,28 @@ const PortfolioSection = () => {
         {/* CTA */}
         <div className="text-center">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="xl">
-              Все проекты
-              <ArrowRight className="ml-2 h-5 w-5" />
+            <Button variant="hero" size="xl" asChild>
+              <Link to="/portfolio">
+                Все проекты
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
             </Button>
-            <Button variant="outline" size="xl">
+            <Button 
+              variant="outline" 
+              size="xl"
+              onClick={() => setIsProjectModalOpen(true)}
+            >
               Заказать проект
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </div>
       </div>
+
+      <ProjectOrderModal 
+        isOpen={isProjectModalOpen} 
+        onClose={() => setIsProjectModalOpen(false)} 
+      />
     </section>
   );
 };

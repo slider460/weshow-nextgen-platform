@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Monitor, Speaker, Eye, Projector, Gamepad, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const RentalEquipmentSection = () => {
   const [showAll, setShowAll] = useState(false);
@@ -11,91 +12,104 @@ const RentalEquipmentSection = () => {
       title: "Кинетический экран",
       description: "Движущиеся интерактивные поверхности",
       icon: <Monitor className="h-8 w-8" />,
-      gradient: "gradient-card-purple"
+      gradient: "gradient-card-purple",
+      link: "/services/kinetic-screen"
     },
     {
       id: 2,
       title: "Матричный экран",
       description: "Многосегментные LED дисплеи",
       icon: <Monitor className="h-8 w-8" />,
-      gradient: "gradient-card-blue"
+      gradient: "gradient-card-blue",
+      link: "/services/matrix-screen"
     },
     {
       id: 3,
       title: "Прозрачный экран",
       description: "Полупрозрачные дисплеи",
       icon: <Eye className="h-8 w-8" />,
-      gradient: "gradient-card-cyan"
+      gradient: "gradient-card-cyan",
+      link: "/services/transparent-screen"
     },
     {
       id: 4,
       title: "Информационные панели",
       description: "Цифровые вывески",
       icon: <Monitor className="h-8 w-8" />,
-      gradient: "gradient-card-dark"
+      gradient: "gradient-card-dark",
+      link: "/services/info-panels"
     },
     {
       id: 5,
       title: "Проектора (от 10000 люмен)",
       description: "Высокояркостная проекция",
       icon: <Projector className="h-8 w-8" />,
-      gradient: "gradient-card-purple"
+      gradient: "gradient-card-purple",
+      link: "/services/projectors"
     },
     {
       id: 6,
       title: "Гибкий неон",
       description: "Эластичная LED подсветка",
       icon: <Zap className="h-8 w-8" />,
-      gradient: "gradient-card-blue"
+      gradient: "gradient-card-blue",
+      link: "/services/flexible-neon"
     },
     {
       id: 7,
       title: "Проекционные сетки",
       description: "Специальные поверхности для проекции",
       icon: <Projector className="h-8 w-8" />,
-      gradient: "gradient-card-cyan"
+      gradient: "gradient-card-cyan",
+      link: "/services/projection-screens"
     },
     {
       id: 8,
       title: "Голографические вентиляторы",
       description: "3D голограммы в воздухе",
       icon: <Zap className="h-8 w-8" />,
-      gradient: "gradient-card-dark"
+      gradient: "gradient-card-dark",
+      link: "/services/holographic-fans"
     },
     {
       id: 9,
       title: "Очки дополненной реальности",
       description: "AR технологии",
       icon: <Eye className="h-8 w-8" />,
-      gradient: "gradient-card-purple"
+      gradient: "gradient-card-purple",
+      link: "/services/ar-glasses"
     },
     {
       id: 10,
       title: "Игры на базе Kinect",
       description: "Интерактивные игровые решения",
       icon: <Gamepad className="h-8 w-8" />,
-      gradient: "gradient-card-blue"
+      gradient: "gradient-card-blue",
+      link: "/services/interactive-games"
     },
     {
       id: 11,
       title: "VR кинотеатр",
       description: "Виртуальная реальность для просмотра",
       icon: <Gamepad className="h-8 w-8" />,
-      gradient: "gradient-card-cyan"
+      gradient: "gradient-card-cyan",
+      link: "/services/ar-vr-apps"
     },
     {
       id: 12,
       title: "Прозрачные телевизоры",
       description: "Прозрачные дисплеи высокого разрешения",
       icon: <Eye className="h-8 w-8" />,
-      gradient: "gradient-card-dark"
+      gradient: "gradient-card-dark",
+      link: "/services/transparent-screen"
     },
     {
       id: 13,
       title: "Мультимедийные витрины",
       description: "Интерактивные торговые решения",
       icon: <Monitor className="h-8 w-8" />,
-      gradient: "gradient-card-purple"
+      gradient: "gradient-card-purple",
+      link: "/services/info-panels"
     },
     {
       id: 14,
@@ -163,9 +177,11 @@ const RentalEquipmentSection = () => {
                 {item.description}
               </p>
               
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                Подробнее
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <Link to={item.link}>
+                  Подробнее
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
             </div>
           ))}
@@ -194,12 +210,16 @@ const RentalEquipmentSection = () => {
               Наши эксперты помогут подобрать оптимальный комплект оборудования под ваши задачи и бюджет
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                Получить консультацию
-                <ArrowRight className="ml-2 h-5 w-5" />
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <Link to="/contact">
+                  Получить консультацию
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                Каталог оборудования
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <Link to="/equipment">
+                  Каталог оборудования
+                </Link>
               </Button>
             </div>
           </div>

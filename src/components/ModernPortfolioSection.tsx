@@ -1,43 +1,42 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ExternalLink } from "lucide-react";
-import officeBuilding from "@/assets/office-building.jpg";
-import teamWork from "@/assets/team-work.jpg";
-import vdnhStand from "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png";
+import { ExternalLink, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import vdnhStand from "@/assets/office-building.jpg";
+import ProjectOrderModal from "./ProjectOrderModal";
 
 const ModernPortfolioSection = () => {
-  const projects = [
-    {
-      title: "Мультимедийная инсталляция для банка ВТБ",
-      client: "ВТБ",
-      date: "2024",
-      description: "Комплексное оснащение головного офиса интерактивными LED-панелями и системами управления",
-      image: officeBuilding,
-      results: ["Увеличение клиентского трафика на 35%", "Сокращение времени ожидания на 50%"],
-      tech: ["LED-видеостены", "Интерактивные киоски", "Система управления контентом"],
-      gradient: "gradient-card-purple"
-    },
-    {
-      title: "3D-маппинг для корпоративного мероприятия",
-      client: "Сбербанк",
-      date: "2024", 
-      description: "Проекционный маппинг для презентации новых технологических решений на конференции",
-      image: teamWork,
-      results: ["5000+ участников", "100% выполнение технических требований"],
-      tech: ["Проекционный маппинг", "Синхронизация звука", "Интерактивное управление"],
-      gradient: "gradient-card-blue"
-    },
-    {
-      title: "Стенд Самарской области на ВДНХ",
-      client: "ВДНХ",
-      date: "2024",
-      description: "Интерактивный мультимедийный стенд с цифровыми решениями для представления региона",
-      image: vdnhStand,
-      results: ["Более 10,000 посетителей", "Интерактивное взаимодействие с контентом"],
-      tech: ["Интерактивные дисплеи", "Мультимедийный контент", "Система презентаций"],
-      gradient: "gradient-card-cyan"
-    }
-  ];
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+
+  const projects = [{
+    title: "Мультимедийная инсталляция для банка ВТБ",
+    client: "ВТБ",
+    date: "2024",
+    description: "Комплексное оснащение головного офиса интерактивными LED-панелями и системами управления",
+    image: vdnhStand,
+    results: ["Увеличение клиентского трафика на 35%", "Сокращение времени ожидания на 50%"],
+    tech: ["LED-видеостены", "Интерактивные киоски", "Система управления контентом"],
+    gradient: "gradient-card-purple"
+  }, {
+    title: "3D-маппинг для корпоративного мероприятия Сбербанка",
+    client: "Сбербанк",
+    date: "2024",
+    description: "Проекционный маппинг для презентации новых технологических решений на конференции",
+    image: vdnhStand,
+    results: ["5000+ участников", "100% выполнение технических требований"],
+    tech: ["Проекционный маппинг", "Синхронизация звука", "Интерактивное управление"],
+    gradient: "gradient-card-cyan"
+  }, {
+    title: "Стенд Самарской области на выставке-форуме «Россия»",
+    client: "ВДНХ",
+    date: "2024",
+    description: "Интерактивный мультимедийный стенд с цифровыми решениями для представления региона",
+    image: vdnhStand,
+    results: ["Более 10,000 посетителей", "Интерактивное взаимодействие с контентом"],
+    tech: ["Интерактивные дисплеи", "Мультимедийный контент", "Система презентаций"],
+    gradient: "gradient-card-cyan"
+  }];
 
   return (
     <section className="py-20 bg-slate-50">
@@ -102,10 +101,10 @@ const ModernPortfolioSection = () => {
                 </div>
                 
                 <Button className="w-full" variant="default" asChild>
-                  <a href={index === 2 ? "/portfolio/samara-stand" : "/portfolio"}>
+                  <Link to={index === 2 ? "/portfolio/samara-stand" : "/portfolio"}>
                     Подробнее о проекте
                     <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -115,19 +114,26 @@ const ModernPortfolioSection = () => {
         <div className="text-center">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="hero" asChild>
-              <a href="/portfolio">
+              <Link to="/portfolio">
                 Все проекты
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild>
-              <a href="#contact">
-                Заказать проект
-              </a>
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => setIsProjectModalOpen(true)}
+            >
+              Заказать проект
             </Button>
           </div>
         </div>
       </div>
+
+      <ProjectOrderModal 
+        isOpen={isProjectModalOpen} 
+        onClose={() => setIsProjectModalOpen(false)} 
+      />
     </section>
   );
 };

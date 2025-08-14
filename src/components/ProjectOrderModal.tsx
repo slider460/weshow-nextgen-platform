@@ -60,9 +60,9 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-center">
+          <DialogTitle className="text-2xl font-bold text-center text-gray-900">
             Заказать проект
           </DialogTitle>
         </DialogHeader>
@@ -70,42 +70,45 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Имя *</Label>
+              <Label htmlFor="name" className="text-sm font-medium text-gray-700">Имя *</Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
                 placeholder="Ваше имя"
                 required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="company">Компания</Label>
+              <Label htmlFor="company" className="text-sm font-medium text-gray-700">Компания</Label>
               <Input
                 id="company"
                 value={formData.company}
                 onChange={(e) => handleInputChange("company", e.target.value)}
                 placeholder="Название компании"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="phone">Телефон *</Label>
+              <Label htmlFor="phone" className="text-sm font-medium text-gray-700">Телефон *</Label>
               <Input
                 id="phone"
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleInputChange("phone", e.target.value)}
-                placeholder="+7 (999) 123-45-67"
+                placeholder="+7 (xxx) xxx-xx-xx"
                 required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
+              <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email *</Label>
               <Input
                 id="email"
                 type="email"
@@ -113,81 +116,80 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
                 onChange={(e) => handleInputChange("email", e.target.value)}
                 placeholder="your@email.com"
                 required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="serviceType">Тип услуги *</Label>
-            <Select value={formData.serviceType} onValueChange={(value) => handleInputChange("serviceType", value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Выберите тип услуги" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="multimedia">Мультимедийные решения</SelectItem>
-                <SelectItem value="software">Разработка ПО и игр</SelectItem>
-                <SelectItem value="content">Разработка контента</SelectItem>
-                <SelectItem value="technical">Техническое сопровождение</SelectItem>
-                <SelectItem value="integration">Интеграция мультимедии</SelectItem>
-                <SelectItem value="branding">Брендинг мероприятий</SelectItem>
-                <SelectItem value="space-design">Проектирование пространств</SelectItem>
-                <SelectItem value="installations">Проектирование инсталляций</SelectItem>
-                <SelectItem value="3d-mapping">3D маппинг шоу</SelectItem>
-                <SelectItem value="equipment-sales">Продажа оборудования</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="budget">Бюджет</Label>
-              <Select value={formData.budget} onValueChange={(value) => handleInputChange("budget", value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Примерный бюджет" />
+              <Label htmlFor="serviceType" className="text-sm font-medium text-gray-700">Тип услуги *</Label>
+              <Select onValueChange={(value) => handleInputChange("serviceType", value)}>
+                <SelectTrigger className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900">
+                  <SelectValue placeholder="Выберите услугу" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="under-500k">До 500 тыс. руб.</SelectItem>
-                  <SelectItem value="500k-1m">500 тыс. - 1 млн руб.</SelectItem>
-                  <SelectItem value="1m-3m">1 - 3 млн руб.</SelectItem>
-                  <SelectItem value="3m-5m">3 - 5 млн руб.</SelectItem>
-                  <SelectItem value="over-5m">Свыше 5 млн руб.</SelectItem>
-                  <SelectItem value="discuss">Обсудим при встрече</SelectItem>
+                <SelectContent className="bg-white border border-gray-300 rounded-md shadow-lg">
+                  <SelectItem value="multimedia">Мультимедийные решения</SelectItem>
+                  <SelectItem value="development">Разработка ПО и игр</SelectItem>
+                  <SelectItem value="support">Техническое сопровождение</SelectItem>
+                  <SelectItem value="integration">Интеграция мультимедии</SelectItem>
+                  <SelectItem value="branding">Брендинг мероприятий</SelectItem>
+                  <SelectItem value="equipment">Аренда оборудования</SelectItem>
+                  <SelectItem value="other">Другое</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="timeline">Сроки реализации</Label>
-              <Select value={formData.timeline} onValueChange={(value) => handleInputChange("timeline", value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Желаемые сроки" />
+              <Label htmlFor="budget" className="text-sm font-medium text-gray-700">Бюджет</Label>
+              <Select onValueChange={(value) => handleInputChange("budget", value)}>
+                <SelectTrigger className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900">
+                  <SelectValue placeholder="Выберите бюджет" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="urgent">Срочно (до 2 недель)</SelectItem>
-                  <SelectItem value="month">В течение месяца</SelectItem>
-                  <SelectItem value="quarter">В течение квартала</SelectItem>
-                  <SelectItem value="flexible">Сроки гибкие</SelectItem>
+                <SelectContent className="bg-white border border-gray-300 rounded-md shadow-lg">
+                  <SelectItem value="small">До 100,000 ₽</SelectItem>
+                  <SelectItem value="medium">100,000 - 500,000 ₽</SelectItem>
+                  <SelectItem value="large">500,000 - 1,000,000 ₽</SelectItem>
+                  <SelectItem value="enterprise">Более 1,000,000 ₽</SelectItem>
+                  <SelectItem value="discuss">Обсудить</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Описание проекта</Label>
+            <Label htmlFor="description" className="text-sm font-medium text-gray-700">Описание проекта</Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => handleInputChange("description", e.target.value)}
-              placeholder="Опишите ваш проект, задачи, особые требования..."
+              placeholder="Расскажите о вашем проекте, целях и требованиях..."
               rows={4}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 resize-none"
             />
           </div>
 
-          <div className="flex gap-3 justify-end pt-4">
-            <Button type="button" variant="outline" onClick={onClose}>
+          <div className="space-y-2">
+            <Label htmlFor="timeline" className="text-sm font-medium text-gray-700">Сроки реализации</Label>
+            <Select onValueChange={(value) => handleInputChange("timeline", value)}>
+              <SelectTrigger className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900">
+                <SelectValue placeholder="Выберите сроки" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-300 rounded-md shadow-lg">
+                <SelectItem value="urgent">Срочно (до 1 месяца)</SelectItem>
+                <SelectItem value="fast">Быстро (1-3 месяца)</SelectItem>
+                <SelectItem value="normal">Обычно (3-6 месяцев)</SelectItem>
+                <SelectItem value="flexible">Гибкие сроки</SelectItem>
+                <SelectItem value="discuss">Обсудить</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <Button type="button" variant="outline" onClick={onClose} className="flex-1 bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200">
               Отмена
             </Button>
-            <Button type="submit" variant="hero">
+            <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white">
               Отправить заявку
             </Button>
           </div>

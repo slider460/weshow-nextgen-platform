@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Play, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import ProjectOrderModal from "@/components/ProjectOrderModal";
 
 const BentoGridSection = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const bentoItems = [
     {
@@ -17,7 +19,7 @@ const BentoGridSection = () => {
       size: "large", // занимает 2 колонки
       gradient: "from-primary/20 to-primary/5",
       image: "/src/assets/office-building.jpg",
-      action: () => console.log("Navigate to equipment rental")
+      action: () => navigate("/equipment")
     },
     {
       id: 2,
@@ -37,7 +39,7 @@ const BentoGridSection = () => {
       size: "medium",
       gradient: "from-success/20 to-success/5",
       image: "/src/assets/hero-bg.jpg",
-      action: () => console.log("Navigate to Samsung case")
+      action: () => navigate("/portfolio")
     },
     {
       id: 4,
@@ -47,7 +49,7 @@ const BentoGridSection = () => {
       size: "large", // занимает 2 колонки
       gradient: "from-primary/20 to-primary/5",
       image: "/src/assets/office-building.jpg",
-      action: () => console.log("Navigate to showroom")
+      action: () => navigate("/contact")
     },
     {
       id: 5,
@@ -57,7 +59,7 @@ const BentoGridSection = () => {
       size: "medium",
       gradient: "from-accent/20 to-accent/5",
       image: "/src/assets/team-work.jpg",
-      action: () => console.log("Navigate to Samara exhibition")
+      action: () => navigate("/portfolio")
     },
     {
       id: 6,
@@ -67,7 +69,7 @@ const BentoGridSection = () => {
       size: "medium",
       gradient: "from-primary/20 to-primary/5",
       image: "/src/assets/hero-bg.jpg",
-      action: () => console.log("Navigate to VDNH case")
+      action: () => navigate("/portfolio/samara-stand")
     }
   ];
 

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown, Phone, Mail, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import ProjectOrderModal from "./ProjectOrderModal";
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -22,7 +23,9 @@ const Header = () => {
   };
   
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  return <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm">
+
+  return (
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-sm">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
@@ -58,30 +61,56 @@ const Header = () => {
                   >
                     <div className="bg-background border border-border/50 rounded-2xl shadow-2xl overflow-hidden">
                       <div className="p-3">
-                         <Link to="/services" className="flex items-center px-4 py-3 text-sm text-foreground hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200 font-medium">
-                           <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
-                           Все услуги
-                         </Link>
-                         <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
-                           <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                           Мультимедийные решения
-                         </a>
-                         <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
-                           <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                           Разработка ПО и игр
-                         </a>
-                         <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
-                           <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                           Техническое сопровождение
-                         </a>
-                         <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
-                           <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                           Интеграция мультимедии
-                         </a>
-                         <a href="#services" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
-                           <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                           Брендинг мероприятий
-                         </a>
+                        <Link to="/services" className="flex items-center px-4 py-3 text-sm text-foreground hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200 font-medium">
+                          <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
+                          Все услуги
+                        </Link>
+                        
+                        {/* Основные услуги */}
+                        <Link to="/services/multimedia" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                          <span className="w-2 h-2 bg-blue-500/30 rounded-full mr-3"></span>
+                          Мультимедийные решения
+                        </Link>
+                        
+                        <Link to="/services/development" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                          <span className="w-2 h-2 bg-purple-500/30 rounded-full mr-3"></span>
+                          Разработка ПО и игр
+                        </Link>
+                        
+                        <Link to="/services/design" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                          <span className="w-2 h-2 bg-pink-500/30 rounded-full mr-3"></span>
+                          Дизайн и брендинг
+                        </Link>
+                        
+                        <Link to="/services/technical-support" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                          <span className="w-2 h-2 bg-green-500/30 rounded-full mr-3"></span>
+                          Техническое сопровождение
+                        </Link>
+                        
+                        <Link to="/services/equipment-rental" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                          <span className="w-2 h-2 bg-yellow-500/30 rounded-full mr-3"></span>
+                          Аренда оборудования
+                        </Link>
+                        
+                        <Link to="/services/complex-solutions" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                          <span className="w-2 h-2 bg-orange-500/30 rounded-full mr-3"></span>
+                          Комплексные решения
+                        </Link>
+                        
+                        <Link to="/services/space-planning" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                          <span className="w-2 h-2 bg-indigo-500/30 rounded-full mr-3"></span>
+                          Пространственное проектирование
+                        </Link>
+                        
+                        <Link to="/services/tech-support" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                          <span className="w-2 h-2 bg-cyan-500/30 rounded-full mr-3"></span>
+                          Техническая поддержка
+                        </Link>
+                        
+                        <Link to="/services/system-integration" className="flex items-center px-4 py-3 text-sm text-foreground/80 hover:bg-primary/5 hover:text-primary rounded-xl transition-all duration-200">
+                          <span className="w-2 h-2 bg-red-500/30 rounded-full mr-3"></span>
+                          Системная интеграция
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -94,6 +123,10 @@ const Header = () => {
               </Link>
               <Link to="/portfolio" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
                 Проекты
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
+              </Link>
+              <Link to="/blog" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
+                Блог
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full"></span>
               </Link>
               <Link to="/contact" className="relative text-foreground/80 hover:text-primary transition-all duration-200 font-medium group">
@@ -146,14 +179,92 @@ const Header = () => {
                 <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
                 О компании
               </Link>
-              <Link 
-                to="/services" 
-                className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
-                onClick={toggleMenu}
-              >
-                <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
-                Услуги
-              </Link>
+              
+              {/* Mobile Services Section */}
+              <div className="space-y-2">
+                <div className="px-4 py-2 text-sm font-medium text-muted-foreground">Услуги:</div>
+                <Link 
+                  to="/services" 
+                  className="flex items-center px-4 py-2 text-sm text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                  onClick={toggleMenu}
+                >
+                  <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
+                  Все услуги
+                </Link>
+                <Link 
+                  to="/services/multimedia" 
+                  className="flex items-center px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                  onClick={toggleMenu}
+                >
+                  <span className="w-2 h-2 bg-blue-500/30 rounded-full mr-3"></span>
+                  Мультимедийные решения
+                </Link>
+                <Link 
+                  to="/services/development" 
+                  className="flex items-center px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                  onClick={toggleMenu}
+                >
+                  <span className="w-2 h-2 bg-purple-500/30 rounded-full mr-3"></span>
+                  Разработка ПО и игр
+                </Link>
+                <Link 
+                  to="/services/design" 
+                  className="flex items-center px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                  onClick={toggleMenu}
+                >
+                  <span className="w-2 h-2 bg-pink-500/30 rounded-full mr-3"></span>
+                  Дизайн и брендинг
+                </Link>
+                <Link 
+                  to="/services/technical-support" 
+                  className="flex items-center px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                  onClick={toggleMenu}
+                >
+                  <span className="w-2 h-2 bg-green-500/30 rounded-full mr-3"></span>
+                  Техническое сопровождение
+                </Link>
+                <Link 
+                  to="/services/equipment-rental" 
+                  className="flex items-center px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                  onClick={toggleMenu}
+                >
+                  <span className="w-2 h-2 bg-yellow-500/30 rounded-full mr-3"></span>
+                  Аренда оборудования
+                </Link>
+                <Link 
+                  to="/services/complex-solutions" 
+                  className="flex items-center px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                  onClick={toggleMenu}
+                >
+                  <span className="w-2 h-2 bg-orange-500/30 rounded-full mr-3"></span>
+                  Комплексные решения
+                </Link>
+                <Link 
+                  to="/services/space-planning" 
+                  className="flex items-center px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                  onClick={toggleMenu}
+                >
+                  <span className="w-2 h-2 bg-indigo-500/30 rounded-full mr-3"></span>
+                  Пространственное проектирование
+                </Link>
+                <Link 
+                  to="/services/tech-support" 
+                  className="flex items-center px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                  onClick={toggleMenu}
+                >
+                  <span className="w-2 h-2 bg-cyan-500/30 rounded-full mr-3"></span>
+                  Техническая поддержка
+                </Link>
+                <Link 
+                  to="/services/system-integration" 
+                  className="flex items-center px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                  onClick={toggleMenu}
+                >
+                  <span className="w-2 h-2 bg-red-500/30 rounded-full mr-3"></span>
+                  Системная интеграция
+                </Link>
+              </div>
+              
               <Link 
                 to="/team" 
                 className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
@@ -171,11 +282,19 @@ const Header = () => {
                 Проекты
               </Link>
               <Link 
-                to="/contact" 
+                to="/blog" 
                 className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
                 onClick={toggleMenu}
               >
                 <span className="w-2 h-2 bg-primary/30 rounded-full mr-3"></span>
+                Блог
+              </Link>
+              <Link 
+                to="/contact" 
+                className="flex items-center px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200" 
+                onClick={toggleMenu}
+              >
+                <span className="w-2 h-2 bg-accent/30 rounded-full mr-3"></span>
                 Контакты
               </Link>
               
@@ -218,6 +337,8 @@ const Header = () => {
         isOpen={isOrderModalOpen} 
         onClose={() => setIsOrderModalOpen(false)} 
       />
-    </header>;
+    </header>
+  );
 };
+
 export default Header;
