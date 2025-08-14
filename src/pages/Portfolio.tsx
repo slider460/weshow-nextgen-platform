@@ -52,6 +52,14 @@ const Portfolio = () => {
 
   const extendedProjects = [
     {
+      title: "Особенный Новый год Samsung",
+      category: "Corporate Events / 3D Mapping",
+      description: "Новогоднее мероприятие с 3D-проекциями, digital зонами и интерактивными решениями",
+      image: "/placeholder.svg",
+      year: "2020",
+      link: "/portfolio/samsung-event"
+    },
+    {
       title: "Стенд Самарской области на форуме «Россия»",
       category: "Exhibition / Interactive",
       description: "Мультимедийный стенд: Naked Eye, Kinect‑игры, VR/AR, кинетический экран",
@@ -85,9 +93,12 @@ const Portfolio = () => {
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 px-8 py-4 text-lg font-semibold group"
+              asChild
             >
-              <Play className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
-              Смотреть шоурил
+              <Link to="/showreel">
+                <Play className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
+                Смотреть шоурил
+              </Link>
             </Button>
           </div>
         </div>

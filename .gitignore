@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Video files (too large for git)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+public/showreel.mp4

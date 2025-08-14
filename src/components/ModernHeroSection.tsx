@@ -113,7 +113,7 @@ const ModernHeroSection = () => {
                   Особенный новый год Samsung
                 </p>
                 <Button variant="outline" className="self-start border-white/40 text-white hover:bg-white/20 bg-white/10 hover:border-white/60 transition-all duration-300 mt-auto drop-shadow-md" asChild>
-                  <a href="/portfolio">
+                  <a href="/portfolio/samsung-event">
                     посмотреть
                   </a>
                 </Button>
