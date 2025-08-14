@@ -222,17 +222,7 @@ const Header = () => {
               }`}></span>
             </Link>
             
-            <Link 
-              to="/careers" 
-              className={`relative text-slate-700 hover:text-blue-600 transition-all duration-300 font-medium group ${
-                isActive("/careers") ? "text-blue-600" : ""
-              }`}
-            >
-              Карьера
-              <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ${
-                isActive("/careers") ? "w-full" : "w-0 group-hover:w-full"
-              }`}></span>
-            </Link>
+
             
             <Link 
               to="/blog" 
@@ -418,14 +408,7 @@ const Header = () => {
                 Новости
               </Link>
               
-              <Link 
-                to="/careers" 
-                className="flex items-center px-4 py-3 text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200" 
-                onClick={closeMenu}
-              >
-                <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
-                Карьера
-              </Link>
+
               
               <Link 
                 to="/blog" 
