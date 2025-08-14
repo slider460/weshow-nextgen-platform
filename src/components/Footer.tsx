@@ -1,254 +1,310 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, ArrowRight, Facebook, Twitter, Instagram, Linkedin, Youtube, Clock, Globe } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Clock, 
+  Facebook, 
+  Twitter, 
+  Instagram, 
+  Linkedin, 
+  Youtube,
+  ArrowUp,
+  Heart,
+  Sparkles,
+  Zap,
+  Star
+} from "lucide-react";
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const currentYear = new Date().getFullYear();
 
-  const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Youtube, href: "#", label: "YouTube" }
-  ];
-
-  const services = [
-    { name: "Мультимедийные решения", href: "/services/multimedia" },
-    { name: "Разработка ПО и игр", href: "/services/development" },
-    { name: "Техническое сопровождение", href: "/services/technical-support" },
-    { name: "Дизайн и брендинг", href: "/services/design" },
-    { name: "Комплексные решения", href: "/services/complex-solutions" },
-    { name: "Аренда оборудования", href: "/equipment" }
-  ];
-
-  const company = [
-    { name: "О компании", href: "/about" },
-    { name: "Команда", href: "/team" },
-    { name: "Портфолио", href: "/portfolio" },
-    { name: "Блог", href: "/blog" },
-    { name: "Карьера", href: "/careers" },
-    { name: "Новости", href: "/news" }
-  ];
-
-  const support = [
-    { name: "Контакты", href: "/contact" },
-    { name: "Техподдержка", href: "/services/technical-support" },
-    { name: "Оборудование", href: "/equipment" },
-    { name: "Портфолио", href: "/portfolio" },
-    { name: "Команда", href: "/team" }
-  ];
-
   return (
-    <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-full blur-3xl"></div>
+    <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-pattern-dots opacity-5"></div>
+      <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl"></div>
       
-      <div className="container mx-auto px-6 lg:px-8 relative">
+      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-          
-          {/* Company Info */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-8">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-2xl">W</span>
-              </div>
-              <span className="text-3xl font-bold text-white">WESHOW</span>
-            </div>
-            
-            <p className="text-slate-300 mb-8 max-w-md leading-relaxed text-lg">
-              Ведущая компания в области комплексных мультимедийных технологий, 
-              технической интеграции и организации мероприятий для B2B сегмента.
-            </p>
-            
-            {/* Contact Info */}
-            <div className="space-y-4 mb-8">
-              <div className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
-                  <Phone className="h-5 w-5 text-blue-400" />
+        <div className="py-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            {/* Company Info */}
+            <div className="lg:col-span-2">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-xl">W</span>
                 </div>
                 <div>
-                  <div className="text-slate-300 text-sm">Телефон</div>
-                  <a href="tel:+74955807537" className="text-white font-medium hover:text-blue-400 transition-colors">
-                    +7 (495) 580-75-37
-                  </a>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
-                  <Mail className="h-5 w-5 text-purple-400" />
-                </div>
-                <div>
-                  <div className="text-slate-300 text-sm">Email</div>
-                  <a href="mailto:info@weshow.ru" className="text-white font-medium hover:text-purple-400 transition-colors">
-                    info@weshow.ru
-                  </a>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center group-hover:bg-cyan-500/30 transition-colors">
-                  <MapPin className="h-5 w-5 text-cyan-400" />
-                </div>
-                <div>
-                  <div className="text-slate-300 text-sm">Адрес</div>
-                  <div className="text-white font-medium">
-                    Москва, ул. Рочдельская, 14А
+                  <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    ESHOW
                   </div>
+                  <div className="text-sm text-slate-400">NextGen Platform</div>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center group-hover:bg-green-500/30 transition-colors">
-                  <Clock className="h-5 w-5 text-green-400" />
-                </div>
-                <div>
-                  <div className="text-slate-300 text-sm">Время работы</div>
-                  <div className="text-white font-medium">
-                    Пн-Пт: 9:00-18:00
-                  </div>
-                </div>
+              <p className="text-slate-300 leading-relaxed mb-6 max-w-md">
+                Создаем будущее мультимедийных технологий. Инновационные решения для вашего бизнеса с 15+ летним опытом.
+              </p>
+              
+              <div className="flex space-x-4">
+                <a href="#" className="w-10 h-10 bg-slate-800 hover:bg-blue-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 group">
+                  <Facebook className="h-5 w-5 text-slate-400 group-hover:text-white transition-colors duration-300" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-slate-800 hover:bg-purple-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 group">
+                  <Twitter className="h-5 w-5 text-slate-400 group-hover:text-white transition-colors duration-300" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-slate-800 hover:bg-pink-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 group">
+                  <Instagram className="h-5 w-5 text-slate-400 group-hover:text-white transition-colors duration-300" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-slate-800 hover:bg-blue-700 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 group">
+                  <Linkedin className="h-5 w-5 text-slate-400 group-hover:text-white transition-colors duration-300" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-slate-800 hover:bg-red-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 group">
+                  <Youtube className="h-5 w-5 text-slate-400 group-hover:text-white transition-colors duration-300" />
+                </a>
               </div>
             </div>
 
-            {/* Social Links */}
+            {/* Quick Links */}
             <div>
-              <h4 className="text-slate-300 text-sm font-medium mb-4">Мы в соцсетях</h4>
-              <div className="flex space-x-3">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    className="w-10 h-10 bg-slate-700/50 hover:bg-blue-500/20 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 group"
-                    aria-label={social.label}
+              <h3 className="text-lg font-semibold mb-6 text-white">Быстрые ссылки</h3>
+              <ul className="space-y-3">
+                <li>
+                  <Link 
+                    to="/about" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
-                    <social.icon className="h-5 w-5 text-slate-300 group-hover:text-blue-400 transition-colors" />
-                  </a>
-                ))}
-              </div>
+                    <span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    О компании
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/services" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-purple-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Услуги
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/portfolio" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-pink-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Проекты
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/team" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-green-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Команда
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/careers" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-yellow-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Карьера
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/news" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-cyan-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Новости
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h3 className="text-lg font-semibold mb-6 text-white">Услуги</h3>
+              <ul className="space-y-3">
+                <li>
+                  <Link 
+                    to="/services/multimedia" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Мультимедиа
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/services/development" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-purple-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Разработка
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/services/design" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-pink-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Дизайн
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/services/equipment-rental" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-yellow-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Аренда
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/services/complex-solutions" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-orange-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Комплексные решения
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/services/technical-support" 
+                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
+                  >
+                    <span className="w-1 h-1 bg-green-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                    Поддержка
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
 
-          {/* Services */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6 text-white border-b border-slate-700 pb-2">
-              Услуги
-            </h3>
-            <ul className="space-y-3">
-              {services.map((service, index) => (
-                <li key={index}>
-                  <Link 
-                    to={service.href} 
-                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 inline-block"
-                  >
-                    {service.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6 text-white border-b border-slate-700 pb-2">
-              Компания
-            </h3>
-            <ul className="space-y-3">
-              {company.map((item, index) => (
-                <li key={index}>
-                  <Link 
-                    to={item.href} 
-                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 inline-block"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6 text-white border-b border-slate-700 pb-2">
-              Поддержка
-            </h3>
-            <ul className="space-y-3">
-              {support.map((item, index) => (
-                <li key={index}>
-                  <Link 
-                    to={item.href} 
-                    className="text-slate-300 hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 inline-block"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Newsletter Subscription */}
-        <div className="py-12 border-t border-slate-700/50">
-          <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl p-8 border border-slate-700/50">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-              <div className="text-center lg:text-left">
-                <h3 className="text-2xl font-bold mb-3 text-white">
-                  📧 Подписка на новости
-                </h3>
-                <p className="text-slate-300 max-w-md">
-                  Получайте информацию о новых технологиях, успешных проектах и эксклюзивных предложениях
-                </p>
+          {/* Contact & Hours Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16 pt-16 border-t border-slate-700/50">
+            {/* Contact Info */}
+            <div>
+              <h3 className="text-lg font-semibold mb-6 text-white">Контакты</h3>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-4 group">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Phone className="h-5 w-5 text-blue-400" />
+                  </div>
+                  <div>
+                    <div className="text-slate-300 font-medium">Телефон</div>
+                    <a href="tel:+74955807537" className="text-slate-400 hover:text-blue-400 transition-colors duration-300">
+                      +7 (495) 580-75-37
+                    </a>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-4 group">
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Mail className="h-5 w-5 text-purple-400" />
+                  </div>
+                  <div>
+                    <div className="text-slate-300 font-medium">Email</div>
+                    <a href="mailto:info@weshow.ru" className="text-slate-400 hover:text-purple-400 transition-colors duration-300">
+                      info@weshow.ru
+                    </a>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-4 group">
+                  <div className="w-10 h-10 bg-gradient-to-br from-green-600/20 to-cyan-600/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <MapPin className="h-5 w-5 text-green-400" />
+                  </div>
+                  <div>
+                    <div className="text-slate-300 font-medium">Адрес</div>
+                    <div className="text-slate-400">
+                      Москва, ул. Рочдельская, 14А
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="flex w-full lg:w-auto max-w-md space-x-3">
-                <Input 
-                  type="email" 
-                  placeholder="Ваш email" 
-                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20" 
-                />
-                <Button 
-                  className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 border-0 px-6"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
+            </div>
+
+            {/* Working Hours */}
+            <div>
+              <h3 className="text-lg font-semibold mb-6 text-white">Режим работы</h3>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-4 group">
+                  <div className="w-10 h-10 bg-gradient-to-br from-yellow-600/20 to-orange-600/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Clock className="h-5 w-5 text-yellow-400" />
+                  </div>
+                  <div>
+                    <div className="text-slate-300 font-medium">Рабочие дни</div>
+                    <div className="text-slate-400">Пн-Пт: 9:00 - 21:00</div>
+                    <div className="text-slate-400">Сб-Вс: 10:00 - 18:00</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-start space-x-4 group">
+                  <div className="w-10 h-10 bg-gradient-to-br from-red-600/20 to-pink-600/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Zap className="h-5 w-5 text-red-400" />
+                  </div>
+                  <div>
+                    <div className="text-slate-300 font-medium">Экстренная поддержка</div>
+                    <div className="text-slate-400">24/7 для критических проектов</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Footer */}
-        <div className="py-8 border-t border-slate-700/50">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center space-x-6 text-sm">
-              <div className="text-slate-400">
-                © {currentYear} WESHOW. Все права защищены.
-              </div>
-              <div className="flex items-center space-x-2 text-slate-400">
-                <Globe className="h-4 w-4" />
-                <span>RU</span>
-              </div>
+        {/* Bottom Section */}
+        <div className="border-t border-slate-700/50 py-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
+            <div className="flex items-center space-x-2 text-slate-400">
+              <span>© {currentYear} WESHOW. Все права защищены.</span>
+              <Heart className="h-4 w-4 text-red-400 animate-pulse" />
+              <span>Сделано с любовью</span>
             </div>
             
-            <div className="flex flex-wrap justify-center gap-6 text-sm">
-              <Link to="/privacy" className="text-slate-400 hover:text-blue-400 transition-colors">
+            <div className="flex items-center space-x-6 text-sm">
+              <Link to="/privacy" className="text-slate-400 hover:text-blue-400 transition-colors duration-300">
                 Политика конфиденциальности
               </Link>
-              <Link to="/terms" className="text-slate-400 hover:text-blue-400 transition-colors">
+              <Link to="/terms" className="text-slate-400 hover:text-blue-400 transition-colors duration-300">
                 Условия использования
               </Link>
-              <Link to="/sitemap" className="text-slate-400 hover:text-blue-400 transition-colors">
-                Карта сайта
-              </Link>
-              <Link to="/cookies" className="text-slate-400 hover:text-blue-400 transition-colors">
+              <Link to="/cookies" className="text-slate-400 hover:text-blue-400 transition-colors duration-300">
                 Cookies
               </Link>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Scroll to Top Button */}
+      <button
+        onClick={scrollToTop}
+        className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group z-50"
+        aria-label="Scroll to top"
+      >
+        <ArrowUp className="h-6 w-6 mx-auto group-hover:-translate-y-1 transition-transform duration-300" />
+      </button>
+
+      {/* Floating Elements */}
+      <div className="absolute top-20 right-20 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+      <div className="absolute top-40 left-20 w-1 h-1 bg-purple-400 rounded-full animate-pulse-slow"></div>
+      <div className="absolute bottom-40 right-32 w-1.5 h-1.5 bg-pink-400 rounded-full animate-bounce-slow"></div>
     </footer>
   );
 };
