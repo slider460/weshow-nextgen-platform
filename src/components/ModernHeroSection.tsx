@@ -62,19 +62,19 @@ const ModernHeroSection = () => {
               {/* Large purple card */}
               <div className="gradient-card-purple rounded-3xl p-8 flex flex-col justify-between row-span-2">
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-4">
+                  <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">
                     КОМПЛЕКСНАЯ<br />
                     АРЕНДА<br />
                     ИНТЕРАКТИВНОГО<br />
                     ОБОРУДОВАНИЯ
                   </h3>
-                  <p className="text-white text-sm leading-relaxed mb-6">
+                  <p className="text-white/95 text-sm leading-relaxed mb-6 drop-shadow-md">
                     Цена аренды нашего цифрового оборудования включает в себя 
                     полный спектр обслуживания: оперативная доставка, 
                     качественный монтаж и техническое сопровождение.
                   </p>
                 </div>
-                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <Button variant="outline" className="self-start border-white/40 text-white hover:bg-white/20 bg-white/10 hover:border-white/60 transition-all duration-300 drop-shadow-md" asChild>
                   <a href="/equipment">
                     Подробнее
                   </a>
@@ -83,23 +83,23 @@ const ModernHeroSection = () => {
 
               {/* SHOWREEL card */}
               <div className="gradient-card-purple rounded-3xl p-8 flex flex-col items-center justify-center text-center">
-                <h3 className="text-4xl font-bold text-white mb-4">
+                <h3 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
                   SHOW<br />REEL
                 </h3>
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                  <Play className="h-8 w-8 text-white ml-1" />
+                <div className="w-16 h-16 bg-white/30 rounded-full flex items-center justify-center hover:bg-white/40 transition-all duration-300">
+                  <Play className="h-8 w-8 text-white ml-1 drop-shadow-md" />
                 </div>
               </div>
 
               {/* ВДНХ card */}
               <div className="gradient-card-cyan rounded-3xl p-6 flex flex-col">
-                <h3 className="text-2xl font-bold text-white mb-2">ВДНХ</h3>
-                <p className="text-white/90 text-sm mb-4">
+                <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">ВДНХ</h3>
+                <p className="text-white/95 text-sm mb-4 drop-shadow-md">
                   стенд Самарской области<br />
                   на выставке-форуме<br />
                   «Россия»
                 </p>
-                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10 mt-auto" asChild>
+                <Button variant="outline" className="self-start border-white/40 text-white hover:bg-white/20 bg-white/10 hover:border-white/60 transition-all duration-300 mt-auto drop-shadow-md" asChild>
                   <a href="/portfolio/samara-stand">
                     посмотреть
                   </a>
@@ -108,11 +108,11 @@ const ModernHeroSection = () => {
 
               {/* Samsung event card */}
               <div className="gradient-card-dark rounded-3xl p-6 flex flex-col row-span-1">
-                <h3 className="text-xl font-bold text-white mb-2">A Galaxy Event</h3>
-                <p className="text-white/90 text-sm mb-4">
+                <h3 className="text-xl font-bold text-white mb-2 drop-shadow-lg">A Galaxy Event</h3>
+                <p className="text-white/95 text-sm mb-4 drop-shadow-md">
                   Особенный новый год Samsung
                 </p>
-                <Button variant="outline" className="self-start border-white/30 text-white hover:bg-white/20 bg-white/10 mt-auto" asChild>
+                <Button variant="outline" className="self-start border-white/40 text-white hover:bg-white/20 bg-white/10 hover:border-white/60 transition-all duration-300 mt-auto drop-shadow-md" asChild>
                   <a href="/portfolio">
                     посмотреть
                   </a>
@@ -121,21 +121,21 @@ const ModernHeroSection = () => {
 
               {/* SHOWROOM card */}
               <div className="gradient-card-cyan rounded-3xl p-6 flex flex-col col-span-1">
-                <h3 className="text-2xl font-bold text-white mb-4">
+                <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">
                   SHOW<br />ROOM
                 </h3>
                 <div className="flex items-center space-x-2 mt-auto">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl"></div>
-                  <div className="w-12 h-12 bg-white/20 rounded-xl"></div>
+                  <div className="w-12 h-12 bg-white/30 rounded-xl hover:bg-white/40 transition-all duration-300"></div>
+                  <div className="w-12 h-12 bg-white/30 rounded-xl hover:bg-white/40 transition-all duration-300"></div>
                 </div>
               </div>
 
               {/* Samara exhibition card */}
               <div className="gradient-card-purple rounded-3xl p-6 flex flex-col">
-                <h3 className="text-xl font-bold text-white mb-2">
+                <h3 className="text-xl font-bold text-white mb-2 drop-shadow-lg">
                   Выставка «Самара»
                 </h3>
-                <p className="text-white/90 text-sm">
+                <p className="text-white/95 text-sm drop-shadow-md">
                   интерактивные решения
                 </p>
               </div>
