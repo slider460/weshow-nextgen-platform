@@ -200,8 +200,8 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
             }}
           />
 
-          {/* Center Play Button (when paused) */}
-          {!isPlaying && (
+          {/* Center Play Button (when paused) - скрыта, так как видео воспроизводится автоматически */}
+          {/* {!isPlaying && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
                 <Button
@@ -214,7 +214,7 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
                 <p className="text-white/80 text-sm mt-4">Нажмите для воспроизведения</p>
               </div>
             </div>
-          )}
+          )} */}
 
           {/* Video Controls */}
           <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6 transition-all duration-300 ${
