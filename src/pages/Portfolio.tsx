@@ -3,8 +3,12 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
+import ShowreelModal from "@/components/ShowreelModal";
+import { useState } from "react";
 
 const Portfolio = () => {
+  const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
+  
   const projects = [
     {
       title: "Интерактивная выставка",
@@ -93,12 +97,10 @@ const Portfolio = () => {
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 px-8 py-4 text-lg font-semibold group"
-              asChild
+              onClick={() => setIsShowreelModalOpen(true)}
             >
-              <Link to="/showreel">
-                <Play className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
-                Смотреть шоурил
-              </Link>
+              <Play className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
+              Смотреть шоурил
             </Button>
           </div>
         </div>
@@ -196,6 +198,12 @@ const Portfolio = () => {
         </div>
       </section>
 
+      {/* Showreel Modal */}
+      <ShowreelModal 
+        isOpen={isShowreelModalOpen}
+        onClose={() => setIsShowreelModalOpen(false)}
+      />
+      
       <Footer />
     </div>
   );

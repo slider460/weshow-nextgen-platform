@@ -12,25 +12,35 @@ import UniqueValueProposition from "@/components/UniqueValueProposition";
 import WorkflowRoadmapSection from "@/components/WorkflowRoadmapSection";
 import ContactFormSection from "@/components/ContactFormSection";
 import Footer from "@/components/Footer";
+import ShowreelModal from "@/components/ShowreelModal";
+import { useState } from "react";
 
 const Index = () => {
+  const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <Header />
       <main className="space-y-0">
-        <ModernHeroSection />
+        <ModernHeroSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <AboutSection />
         <RentalEquipmentSection />
         <ModernServicesSection />
         <UniqueValueProposition />
-        <ModernPortfolioSection />
+        <ModernPortfolioSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <ComplexSolutionsSection />
         <WorkflowRoadmapSection />
-        <ModernShowreelSection />
+        <ModernShowreelSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <SocialProofSection />
         <ContactFormSection />
       </main>
       <Footer />
+      
+      {/* Showreel Modal */}
+      <ShowreelModal 
+        isOpen={isShowreelModalOpen}
+        onClose={() => setIsShowreelModalOpen(false)}
+      />
     </div>
   );
 };

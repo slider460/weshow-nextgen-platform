@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Play, ArrowRight } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
 
-const ModernHeroSection = () => {
+interface ModernHeroSectionProps {
+  onShowShowreel?: () => void;
+}
+
+const ModernHeroSection = ({ onShowShowreel }: ModernHeroSectionProps) => {
   const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
 
   return <section className="relative min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden">
@@ -82,7 +86,10 @@ const ModernHeroSection = () => {
               </div>
 
               {/* SHOWREEL card */}
-              <div className="gradient-card-purple rounded-3xl p-8 flex flex-col items-center justify-center text-center">
+              <div 
+                className="gradient-card-purple rounded-3xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:scale-105 transition-all duration-300"
+                onClick={onShowShowreel}
+              >
                 <h3 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
                   SHOW<br />REEL
                 </h3>

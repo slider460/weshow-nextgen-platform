@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Play, MapPin, Calendar, ArrowRight, Phone } from "lucide-react";
-const ModernShowreelSection = () => {
+
+interface ModernShowreelSectionProps {
+  onShowShowreel?: () => void;
+}
+
+const ModernShowreelSection = ({ onShowShowreel }: ModernShowreelSectionProps) => {
   return <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
@@ -68,8 +73,14 @@ const ModernShowreelSection = () => {
           
           <div className="text-center">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="default">
-                Записаться на демонстрацию
+              <Button 
+                size="lg" 
+                variant="default"
+                onClick={onShowShowreel}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              >
+                <Play className="mr-2 h-5 w-5" />
+                Смотреть Showreel
               </Button>
               <Button variant="outline" size="lg">
                 Виртуальный тур

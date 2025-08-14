@@ -12,7 +12,7 @@ import Careers from "./pages/Careers";
 import Equipment from "./pages/Equipment";
 import CaseSamaraStand from "./pages/CaseSamaraStand";
 import SamsungEvent from "./pages/SamsungEvent";
-import Showreel from "./pages/Showreel";
+
 
 // Основные страницы услуг
 import Multimedia from "./pages/services/Multimedia";
@@ -84,8 +84,6 @@ const App = () => (
       <Route path="/equipment" element={<Equipment />} />
       <Route path="/portfolio/samara-stand" element={<CaseSamaraStand />} />
       <Route path="/portfolio/samsung-event" element={<SamsungEvent />} />
-      <Route path="/showreel" element={<Showreel />} />
-      
       {/* Основные страницы услуг */}
       <Route path="/services/multimedia" element={<Multimedia />} />
       <Route path="/services/development" element={<Development />} />

@@ -1,12 +1,16 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, ArrowRight } from "lucide-react";
+import { ExternalLink, ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import vdnhStand from "@/assets/office-building.jpg";
 import ProjectOrderModal from "./ProjectOrderModal";
 
-const ModernPortfolioSection = () => {
+interface ModernPortfolioSectionProps {
+  onShowShowreel?: () => void;
+}
+
+const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps) => {
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
   const projects = [{
@@ -125,6 +129,15 @@ const ModernPortfolioSection = () => {
               onClick={() => setIsProjectModalOpen(true)}
             >
               Заказать проект
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={onShowShowreel}
+              className="border-blue-500 text-blue-600 hover:bg-blue-50"
+            >
+              <Play className="mr-2 h-4 w-4" />
+              Смотреть Showreel
             </Button>
           </div>
         </div>
