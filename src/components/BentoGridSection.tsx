@@ -38,7 +38,7 @@ const BentoGridSection = () => {
       buttonText: "Посмотреть",
       size: "medium",
       gradient: "from-success/20 to-success/5",
-      image: "/src/assets/hero-bg.jpg",
+      image: "/lovable-uploads/samsung-event-card.jpg",
       action: () => navigate("/portfolio")
     },
     {

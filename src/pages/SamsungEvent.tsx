@@ -90,7 +90,7 @@ const SamsungEvent = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-50/30 to-purple-50/30"></div>
-        <div className="absolute inset-0 bg-[url('/src/assets/office-building.jpg')] bg-cover bg-center opacity-5"></div>
+        <div className="absolute inset-0 bg-[url('/lovable-uploads/samsung-event-card.jpg')] bg-cover bg-center opacity-10"></div>
         
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
