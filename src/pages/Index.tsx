@@ -15,6 +15,7 @@ import Footer from "@/components/Footer";
 import ShowreelModal from "@/components/ShowreelModal";
 import AnimationShowcase from "@/components/AnimationShowcase";
 
+
 import { useState } from "react";
 
 const Index = () => {
