@@ -980,3 +980,120 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
+
+/* Предотвращение мерцания в Header */
+.header-no-flicker {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Оптимизация анимаций для Header */
+.header-transition {
+  transition: background-color 0.2s ease-out, 
+              border-color 0.2s ease-out, 
+              box-shadow 0.2s ease-out;
+}
+
+/* Предотвращение мерцания при hover */
+.hover-no-flicker {
+  will-change: auto;
+  transform: translateZ(0);
+}
+
+/* Оптимизация backdrop-blur */
+.backdrop-blur-optimized {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  will-change: auto;
+}
+
+/* Предотвращение мерцания при переходах */
+.page-transition {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Оптимизация для всех элементов с анимацией */
+.animate-optimized {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Предотвращение мерцания градиентов */
+.gradient-no-flicker {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Оптимизация для скролла */
+.scroll-optimized {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Предотвращение мерцания при изменении backdrop-blur */
+.backdrop-transition {
+  transition: backdrop-filter 0.2s ease-out;
+  will-change: auto;
+}
+
+/* Оптимизация для всех интерактивных элементов */
+.interactive-optimized {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Предотвращение мерцания при изменении состояния */
+.state-change-optimized {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Оптимизация для элементов с backdrop-blur */
+.backdrop-element-optimized {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+/* Предотвращение мерцания при hover эффектах */
+.hover-effect-optimized {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Оптимизация для перехода между страницами */
+.page-transition-optimized {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Предотвращение мерцания при изменении z-index */
+.z-index-optimized {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Оптимизация для всех анимированных элементов */
+.animation-optimized {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}

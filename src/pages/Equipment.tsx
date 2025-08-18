@@ -1,12 +1,148 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Monitor, Projector, Speaker, Lightbulb, Cpu, Tv, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { 
+  ArrowLeft, 
+  Move, 
+  Zap, 
+  Monitor, 
+  Users, 
+  Calendar, 
+  Phone, 
+  ArrowRight,
+  Play,
+  Camera,
+  FileText,
+  X,
+  Send,
+  CheckCircle,
+  Settings,
+  Wrench,
+  Palette,
+  ShoppingCart,
+  Tv,
+  Projector,
+  Speaker,
+  Lightbulb,
+  Cpu,
+  Trash2
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import EquipmentCart from "@/components/EquipmentCart";
+import { useState, useEffect } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Calculator } from "lucide-react";
 import ConsultationModal from "@/components/ConsultationModal";
+import { useEquipmentCart } from "@/hooks/useEquipmentCart";
 
 const Equipment = () => {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { cartCount, addToCart, forceClearCart } = useEquipmentCart();
+
+  // Добавляем CSS стили для уведомлений
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      .cart-notification {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        pointer-events: none;
+      }
+      
+      .cart-notification:hover {
+        transform: translateX(0) scale(1.02);
+        transition: transform 0.2s ease;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
+  // Слушаем события открытия корзины из Header
+  useEffect(() => {
+    const handleOpenCart = () => setIsCartOpen(true);
+    window.addEventListener('openEquipmentCart', handleOpenCart);
+    
+    return () => {
+      window.removeEventListener('openEquipmentCart', handleOpenCart);
+    };
+  }, []);
+
+
+
+  // Функция для показа уведомления
+  const showNotification = (message: string) => {
+    // Удаляем все существующие уведомления
+    const existingNotifications = document.querySelectorAll('.cart-notification');
+    existingNotifications.forEach(notification => {
+      if (document.body.contains(notification)) {
+        (notification as HTMLElement).style.transform = 'translateX(full)';
+        setTimeout(() => {
+          if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+          }
+        }, 300);
+      }
+    });
+    
+    // Ждем немного перед показом нового уведомления
+    setTimeout(() => {
+      // Создаем новое уведомление
+      const notification = document.createElement('div');
+      notification.className = 'cart-notification fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[999998] transform translate-x-full transition-transform duration-300 max-w-sm font-medium';
+      notification.textContent = message;
+      
+      // Добавляем иконку корзины
+      const icon = document.createElement('span');
+      icon.innerHTML = '🛒 ';
+      icon.className = 'mr-2';
+      notification.insertBefore(icon, notification.firstChild);
+      
+      document.body.appendChild(notification);
+      
+      // Анимируем появление
+      setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+      }, 100);
+      
+      // Убираем через 3 секунды
+      setTimeout(() => {
+        notification.style.transform = 'translateX(full)';
+        setTimeout(() => {
+          if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }, 100);
+  };
+
+  // Обработчик добавления в корзину с уведомлением
+  const handleAddToCart = (equipment: any) => {
+    try {
+      // Добавляем в корзину через хук
+      addToCart(equipment);
+      
+      // Показываем уведомление
+      showNotification(`${equipment.name} добавлен в корзину`);
+      
+      // Принудительно обновляем данные корзины
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: 0 } }));
+      }, 100);
+      
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      showNotification('Ошибка при добавлении в корзину');
+    }
+  };
 
   const equipmentCategories = [
     {
@@ -14,10 +150,38 @@ const Equipment = () => {
       title: "LED-панели и видеостены",
       description: "Высококачественные LED-дисплеи для любых задач",
       items: [
-        { name: "LED-панель P2.5 (indoor)", specs: "500x500мм, 200000 точек/м²", price: "от 5000₽/день" },
-        { name: "LED-панель P3.9 (outdoor)", specs: "500x1000мм, 65536 точек/м²", price: "от 3500₽/день" },
-        { name: "Видеостена 3x3", specs: "1.5x1.5м, Full HD", price: "от 25000₽/день" },
-        { name: "Мобильный LED-экран", specs: "6x4м, P5, трейлер", price: "от 45000₽/день" }
+        { 
+          id: "led-p2.5-indoor",
+          name: "LED-панель P2.5 (indoor)", 
+          specs: "500x500мм, 200000 точек/м²", 
+          price: "от 5000₽/день",
+          priceValue: 5000,
+          category: "led-panels"
+        },
+        { 
+          id: "led-p3.9-outdoor",
+          name: "LED-панель P3.9 (outdoor)", 
+          specs: "500x1000мм, 65536 точек/м²", 
+          price: "от 3500₽/день",
+          priceValue: 3500,
+          category: "led-panels"
+        },
+        { 
+          id: "videowall-3x3",
+          name: "Видеостена 3x3", 
+          specs: "1.5x1.5м, Full HD", 
+          price: "от 25000₽/день",
+          priceValue: 25000,
+          category: "led-panels"
+        },
+        { 
+          id: "mobile-led-screen",
+          name: "Мобильный LED-экран", 
+          specs: "6x4м, P5, трейлер", 
+          price: "от 45000₽/день",
+          priceValue: 45000,
+          category: "led-panels"
+        }
       ],
       gradient: "gradient-card-blue"
     },
@@ -26,10 +190,38 @@ const Equipment = () => {
       title: "Проекторы и экраны",
       description: "Профессиональное проекционное оборудование",
       items: [
-        { name: "Проектор 6000 ANSI", specs: "Full HD, LCD", price: "от 8000₽/день" },
-        { name: "Проектор 12000 ANSI", specs: "4K, лазерный", price: "от 15000₽/день" },
-        { name: "Экран 3x4м", specs: "Fast-fold, front/rear", price: "от 3000₽/день" },
-        { name: "Экран 6x8м", specs: "Натяжной, seamless", price: "от 8000₽/день" }
+        { 
+          id: "projector-6000-ansi",
+          name: "Проектор 6000 ANSI", 
+          specs: "Full HD, LCD", 
+          price: "от 8000₽/день",
+          priceValue: 8000,
+          category: "projectors"
+        },
+        { 
+          id: "projector-12000-ansi",
+          name: "Проектор 12000 ANSI", 
+          specs: "4K, лазерный", 
+          price: "от 15000₽/день",
+          priceValue: 15000,
+          category: "projectors"
+        },
+        { 
+          id: "screen-3x4m",
+          name: "Экран 3x4м", 
+          specs: "Fast-fold, front/rear", 
+          price: "от 3000₽/день",
+          priceValue: 3000,
+          category: "projectors"
+        },
+        { 
+          id: "screen-6x8m",
+          name: "Экран 6x8м", 
+          specs: "Натяжной, seamless", 
+          price: "от 8000₽/день",
+          priceValue: 8000,
+          category: "projectors"
+        }
       ],
       gradient: "gradient-card-purple"
     },
@@ -38,10 +230,38 @@ const Equipment = () => {
       title: "Звуковые системы",
       description: "Профессиональное звуковое оборудование",
       items: [
-        { name: "Линейный массив", specs: "L-Acoustics KARA, 2x12", price: "от 12000₽/день" },
-        { name: "Активная акустика", specs: "JBL VTX A12, комплект", price: "от 8000₽/день" },
-        { name: "Микрофонная система", specs: "Shure ULXD, 8 каналов", price: "от 5000₽/день" },
-        { name: "Микшерный пульт", specs: "Yamaha CL5, 72 канала", price: "от 6000₽/день" }
+        { 
+          id: "line-array-l-acoustics",
+          name: "Линейный массив", 
+          specs: "L-Acoustics KARA, 2x12", 
+          price: "от 12000₽/день",
+          priceValue: 12000,
+          category: "audio"
+        },
+        { 
+          id: "active-speakers-jbl",
+          name: "Активная акустика", 
+          specs: "JBL VTX A12, комплект", 
+          price: "от 8000₽/день",
+          priceValue: 8000,
+          category: "audio"
+        },
+        { 
+          id: "microphone-system-shure",
+          name: "Микрофонная система", 
+          specs: "Shure ULXD, 8 каналов", 
+          price: "от 5000₽/день",
+          priceValue: 5000,
+          category: "audio"
+        },
+        { 
+          id: "mixer-yamaha-cl5",
+          name: "Микшерный пульт", 
+          specs: "Yamaha CL5, 72 канала", 
+          price: "от 6000₽/день",
+          priceValue: 6000,
+          category: "audio"
+        }
       ],
       gradient: "gradient-card-cyan"
     },
@@ -50,10 +270,38 @@ const Equipment = () => {
       title: "Освещение",
       description: "Световое оборудование для мероприятий",
       items: [
-        { name: "Moving Head", specs: "Clay Paky Sharpy Plus, 1200W", price: "от 2500₽/день" },
-        { name: "LED Par", specs: "RGBW, 18x15W", price: "от 800₽/день" },
-        { name: "Стробоскопы", specs: "Atomic 3000W", price: "от 1500₽/день" },
-        { name: "Лазерная установка", specs: "RGB 10W, ILDA", price: "от 4000₽/день" }
+        { 
+          id: "moving-head-clay-paky",
+          name: "Moving Head", 
+          specs: "Clay Paky Sharpy Plus, 1200W", 
+          price: "от 2500₽/день",
+          priceValue: 2500,
+          category: "lighting"
+        },
+        { 
+          id: "led-par-rgbw",
+          name: "LED Par", 
+          specs: "RGBW, 18x15W", 
+          price: "от 800₽/день",
+          priceValue: 800,
+          category: "lighting"
+        },
+        { 
+          id: "strobe-atomic-3000w",
+          name: "Стробоскопы", 
+          specs: "Atomic 3000W", 
+          price: "от 1500₽/день",
+          priceValue: 1500,
+          category: "lighting"
+        },
+        { 
+          id: "laser-rgb-10w",
+          name: "Лазерная установка", 
+          specs: "RGB 10W, ILDA", 
+          price: "от 4000₽/день",
+          priceValue: 4000,
+          category: "lighting"
+        }
       ],
       gradient: "gradient-card-dark"
     },
@@ -62,10 +310,38 @@ const Equipment = () => {
       title: "Интерактивные панели",
       description: "Сенсорные дисплеи и интерактивные решения",
       items: [
-        { name: "Сенсорная панель 55\"", specs: "4K, мультитач 20 точек", price: "от 4000₽/день" },
-        { name: "Интерактивная доска", specs: "SMART Board, 77\"", price: "от 3500₽/день" },
-        { name: "Киоск-терминал", specs: "32\", металлический корпус", price: "от 2500₽/день" },
-        { name: "Голографический дисплей", specs: "46\", 3D эффект", price: "от 8000₽/день" }
+        { 
+          id: "touch-panel-55",
+          name: "Сенсорная панель 55\"", 
+          specs: "4K, мультитач 20 точек", 
+          price: "от 4000₽/день",
+          priceValue: 4000,
+          category: "interactive"
+        },
+        { 
+          id: "smart-board-77",
+          name: "Интерактивная доска", 
+          specs: "SMART Board, 77\"", 
+          price: "от 3500₽/день",
+          priceValue: 3500,
+          category: "interactive"
+        },
+        { 
+          id: "kiosk-terminal-32",
+          name: "Киоск-терминал", 
+          specs: "32\", металлический корпус", 
+          price: "от 2500₽/день",
+          priceValue: 2500,
+          category: "interactive"
+        },
+        { 
+          id: "holographic-display-46",
+          name: "Голографический дисплей", 
+          specs: "46\", 3D эффект", 
+          price: "от 8000₽/день",
+          priceValue: 8000,
+          category: "interactive"
+        }
       ],
       gradient: "gradient-card-purple"
     },
@@ -74,10 +350,38 @@ const Equipment = () => {
       title: "Системы управления",
       description: "Оборудование для управления и коммутации",
       items: [
-        { name: "Медиасервер", specs: "4K, 8 выходов", price: "от 6000₽/день" },
-        { name: "Видеокоммутатор", specs: "16x16, HDMI 4K", price: "от 3000₽/день" },
-        { name: "Система видеоконференций", specs: "Poly Studio X70", price: "от 4500₽/день" },
-        { name: "Контроллер освещения", specs: "MA Lighting, 2048 каналов", price: "от 5000₽/день" }
+        { 
+          id: "media-server-4k",
+          name: "Медиасервер", 
+          specs: "4K, 8 выходов", 
+          price: "от 6000₽/день",
+          priceValue: 6000,
+          category: "control"
+        },
+        { 
+          id: "video-switcher-16x16",
+          name: "Видеокоммутатор", 
+          specs: "16x16, HDMI 4K", 
+          price: "от 3000₽/день",
+          priceValue: 3000,
+          category: "control"
+        },
+        { 
+          id: "video-conference-poly",
+          name: "Система видеоконференций", 
+          specs: "Poly Studio X70", 
+          price: "от 4500₽/день",
+          priceValue: 4500,
+          category: "control"
+        },
+        { 
+          id: "lighting-controller-ma",
+          name: "Контроллер освещения", 
+          specs: "MA Lighting, 2048 каналов", 
+          price: "от 5000₽/день",
+          priceValue: 5000,
+          category: "control"
+        }
       ],
       gradient: "gradient-card-blue"
     }
@@ -98,49 +402,68 @@ const Equipment = () => {
               Оборудование в аренду
             </div>
             <h1 className="text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
-              Каталог оборудования
+              Категории оборудования
             </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Профессиональное мультимедийное оборудование в аренду для любых мероприятий
+            <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+              Весь спектр технического оборудования для проведения мероприятий любого масштаба
             </p>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-white/30 text-white hover:bg-white/20 bg-white/10"
-              onClick={() => setIsConsultationOpen(true)}
-            >
-              Получить консультацию
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            
+            {/* Кнопки корзины */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => setIsCartOpen(true)}
+                className="border-white/30 text-white hover:bg-white/20 bg-white/10 px-8 py-4 text-lg font-semibold hover:scale-105 transition-transform duration-200"
+              >
+                <ShoppingCart className="h-5 w-5 mr-2" />
+                Корзина
+                {cartCount > 0 && (
+                  <Badge variant="secondary" className="ml-2 bg-white text-blue-600 border-0">
+                    {cartCount}
+                  </Badge>
+                )}
+              </Button>
+              
+                       {cartCount > 0 && (
+           <Button
+             size="sm"
+             variant="outline"
+             onClick={() => {
+               if (confirm('Вы уверены, что хотите полностью очистить корзину? Это действие нельзя отменить.')) {
+                 forceClearCart();
+               }
+             }}
+             className="border-red-500 text-red-700 hover:bg-red-100 hover:border-red-600 bg-white font-medium"
+             title="Очистить корзину от всех товаров"
+           >
+             <Trash2 className="h-4 w-4 mr-2" />
+             Очистить корзину
+           </Button>
+         )}
+            </div>
           </div>
         </section>
 
         {/* Equipment Categories */}
-        <section className="py-20 bg-white">
+        <section className="py-20">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-                Категории оборудования
-              </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Весь спектр технического оборудования для проведения мероприятий любого масштаба
-              </p>
-            </div>
-
             <div className="space-y-16">
-              {equipmentCategories.map((category, index) => (
-                <div key={index} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  {/* Category Header */}
-                  <div className={`${category.gradient} rounded-3xl p-8`}>
-                    <div className="text-white mb-6">
-                      {category.icon}
+              {equipmentCategories.map((category, categoryIndex) => (
+                <div key={categoryIndex} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  {/* Category Card */}
+                  <div className={`${category.gradient} rounded-3xl p-8 text-white`}>
+                    <div className="mb-6">
+                      <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
+                        {category.icon}
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-4">
+                        {category.title}
+                      </h3>
+                      <p className="text-white/90 leading-relaxed">
+                        {category.description}
+                      </p>
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-4">
-                      {category.title}
-                    </h3>
-                    <p className="text-white/90 leading-relaxed">
-                      {category.description}
-                    </p>
                   </div>
 
                   {/* Equipment Items */}
@@ -160,9 +483,26 @@ const Equipment = () => {
                             <span className="text-xl font-bold text-primary">
                               {item.price}
                             </span>
-                            <Button size="sm" variant="outline">
-                              Заказать
-                            </Button>
+                            <div className="flex space-x-2">
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleAddToCart(item)}
+                                className="hover:bg-green-50 hover:text-green-600 hover:border-green-300 transition-colors duration-200"
+                              >
+                                <ShoppingCart className="h-4 w-4 mr-2" />
+                                В корзину
+                              </Button>
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                asChild
+                              >
+                                <Link to="/services/equipment-calculation">
+                                  Заказать
+                                </Link>
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -235,8 +575,12 @@ const Equipment = () => {
                   variant="outline" 
                   size="lg" 
                   className="border-white/30 text-white hover:bg-white/20 bg-white/10"
+                  asChild
                 >
-                  Скачать каталог
+                  <a href="/services/equipment-calculation">
+                    Калькулятор аренды
+                    <Calculator className="ml-2 h-5 w-5" />
+                  </a>
                 </Button>
               </div>
             </div>
@@ -250,6 +594,12 @@ const Equipment = () => {
         isOpen={isConsultationOpen}
         onClose={() => setIsConsultationOpen(false)}
         title="Консультация по оборудованию"
+      />
+
+      {/* Корзина оборудования */}
+      <EquipmentCart 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
       />
     </div>
   );

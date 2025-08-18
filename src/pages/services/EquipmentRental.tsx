@@ -17,7 +17,8 @@ import {
   Users,
   Globe,
   Settings,
-  Truck
+  Truck,
+  Calculator
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -93,6 +94,12 @@ const EquipmentRental = () => {
                 </Button>
                 <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-semibold">
                   Посмотреть каталог
+                </Button>
+                <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-semibold" asChild>
+                  <a href="/services/equipment-calculation">
+                    Калькулятор аренды
+                    <Calculator className="ml-2 h-5 w-5" />
+                  </a>
                 </Button>
               </div>
             </div>
@@ -301,6 +308,12 @@ const EquipmentRental = () => {
               <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
                 <Mail className="mr-2 h-5 w-5" />
                 Написать
+              </Button>
+              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
+                <a href="/services/equipment-calculation">
+                  <Calculator className="mr-2 h-5 w-5" />
+                  Калькулятор аренды
+                </a>
               </Button>
             </div>
           </div>

@@ -11,7 +11,7 @@ const RentalEquipmentSection = () => {
       id: 1,
       title: "Кинетический экран",
       description: "Движущиеся интерактивные поверхности",
-      icon: <Monitor className="h-8 w-8" />,
+      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-purple",
       link: "/services/kinetic-screen"
     },
@@ -19,7 +19,7 @@ const RentalEquipmentSection = () => {
       id: 2,
       title: "Матричный экран",
       description: "Многосегментные LED дисплеи",
-      icon: <Monitor className="h-8 w-8" />,
+      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-blue",
       link: "/services/matrix-screen"
     },
@@ -27,7 +27,7 @@ const RentalEquipmentSection = () => {
       id: 3,
       title: "Прозрачный экран",
       description: "Полупрозрачные дисплеи",
-      icon: <Eye className="h-8 w-8" />,
+      icon: <Eye className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-cyan",
       link: "/services/transparent-screen"
     },
@@ -35,7 +35,7 @@ const RentalEquipmentSection = () => {
       id: 4,
       title: "Информационные панели",
       description: "Цифровые вывески",
-      icon: <Monitor className="h-8 w-8" />,
+      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-dark",
       link: "/services/info-panels"
     },
@@ -43,7 +43,7 @@ const RentalEquipmentSection = () => {
       id: 5,
       title: "Проектора (от 10000 люмен)",
       description: "Высокояркостная проекция",
-      icon: <Projector className="h-8 w-8" />,
+      icon: <Projector className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-purple",
       link: "/services/projectors"
     },
@@ -51,7 +51,7 @@ const RentalEquipmentSection = () => {
       id: 6,
       title: "Гибкий неон",
       description: "Эластичная LED подсветка",
-      icon: <Zap className="h-8 w-8" />,
+      icon: <Zap className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-blue",
       link: "/services/flexible-neon"
     },
@@ -59,7 +59,7 @@ const RentalEquipmentSection = () => {
       id: 7,
       title: "Проекционные сетки",
       description: "Специальные поверхности для проекции",
-      icon: <Projector className="h-8 w-8" />,
+      icon: <Projector className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-cyan",
       link: "/services/projection-screens"
     },
@@ -67,7 +67,7 @@ const RentalEquipmentSection = () => {
       id: 8,
       title: "Голографические вентиляторы",
       description: "3D голограммы в воздухе",
-      icon: <Zap className="h-8 w-8" />,
+      icon: <Zap className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-dark",
       link: "/services/holographic-fans"
     },
@@ -75,7 +75,7 @@ const RentalEquipmentSection = () => {
       id: 9,
       title: "Очки дополненной реальности",
       description: "AR технологии",
-      icon: <Eye className="h-8 w-8" />,
+      icon: <Eye className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-purple",
       link: "/services/ar-glasses"
     },
@@ -83,7 +83,7 @@ const RentalEquipmentSection = () => {
       id: 10,
       title: "Игры на базе Kinect",
       description: "Интерактивные игровые решения",
-      icon: <Gamepad className="h-8 w-8" />,
+      icon: <Gamepad className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-blue",
       link: "/services/interactive-games"
     },
@@ -91,134 +91,103 @@ const RentalEquipmentSection = () => {
       id: 11,
       title: "VR кинотеатр",
       description: "Виртуальная реальность для просмотра",
-      icon: <Gamepad className="h-8 w-8" />,
+      icon: <Gamepad className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-cyan",
       link: "/services/ar-vr-apps"
     },
     {
       id: 12,
       title: "Прозрачные телевизоры",
-      description: "Прозрачные дисплеи высокого разрешения",
-      icon: <Eye className="h-8 w-8" />,
-      gradient: "gradient-card-dark",
-      link: "/services/transparent-screen"
-    },
-    {
-      id: 13,
-      title: "Мультимедийные витрины",
-      description: "Интерактивные торговые решения",
-      icon: <Monitor className="h-8 w-8" />,
+      description: "Современные прозрачные дисплеи",
+      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
       gradient: "gradient-card-purple",
-      link: "/services/info-panels"
-    },
-    {
-      id: 14,
-      title: "Светодиодные струны",
-      description: "Декоративная LED подсветка",
-      icon: <Zap className="h-8 w-8" />,
-      gradient: "gradient-card-blue"
-    },
-    {
-      id: 15,
-      title: "Винтовые прозрачные экраны",
-      description: "Изогнутые прозрачные поверхности",
-      icon: <Eye className="h-8 w-8" />,
-      gradient: "gradient-card-cyan"
-    },
-    {
-      id: 16,
-      title: "ГОБО проектора",
-      description: "Проекция логотипов и узоров",
-      icon: <Projector className="h-8 w-8" />,
-      gradient: "gradient-card-dark"
-    },
-    {
-      id: 17,
-      title: "Безмембранный звук",
-      description: "Инновационные аудио технологии",
-      icon: <Speaker className="h-8 w-8" />,
-      gradient: "gradient-card-purple"
-    },
-    {
-      id: 18,
-      title: "Зонированный звук",
-      description: "Направленные аудиопотоки",
-      icon: <Speaker className="h-8 w-8" />,
-      gradient: "gradient-card-blue"
+      link: "/services/transparent-screen"
     }
   ];
 
-  const visibleItems = showAll ? equipmentItems : equipmentItems.slice(0, 9);
+  const visibleItems = showAll ? equipmentItems : equipmentItems.slice(0, 6);
 
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-            Аренда и продажа мультимедийных решений
+    <section className="py-12 lg:py-24 bg-slate-50 relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full blur-3xl opacity-60"></div>
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-full blur-3xl opacity-60"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+        {/* Header */}
+        <div className="text-center mb-12 lg:mb-16">
+          <div className="inline-flex items-center px-3 py-1 lg:px-4 lg:py-2 rounded-full bg-blue-50 border border-blue-200 text-sm font-medium text-blue-700 mb-4">
+            🎬 Аренда оборудования
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-900 leading-tight mb-4">
+            Интерактивное оборудование
+            <span className="text-gradient bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent block">
+              для ваших мероприятий
+            </span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Современное оборудование для создания незабываемых впечатлений
+          <p className="text-base lg:text-lg text-slate-600 max-w-3xl mx-auto">
+            Широкий спектр современного мультимедийного оборудования для создания 
+            незабываемых впечатлений на любых мероприятиях
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {visibleItems.map((item, index) => (
-            <div key={item.id} className={`${item.gradient} rounded-3xl p-8 hover:scale-105 transition-all duration-300`}>
-              <div className="text-white mb-6">
-                {item.icon}
+        {/* Equipment Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-8 lg:mb-12">
+          {visibleItems.map((item) => (
+            <Link
+              key={item.id}
+              to={item.link}
+              className={`${item.gradient} rounded-xl lg:rounded-2xl p-4 lg:p-6 text-white hover:scale-105 transition-all duration-300 group cursor-pointer`}
+            >
+              <div className="flex items-start space-x-3 lg:space-x-4">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white/20 rounded-lg lg:rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-all duration-300">
+                  {item.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm lg:text-base font-semibold mb-1 lg:mb-2 group-hover:text-white/90 transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs lg:text-sm text-white/80 group-hover:text-white/90 transition-colors duration-300 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
               </div>
-              
-              <h3 className="text-2xl font-bold text-white mb-4">
-                {item.title}
-              </h3>
-              
-              <p className="text-white/90 text-sm leading-relaxed mb-8">
-                {item.description}
-              </p>
-              
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
-                <Link to={item.link}>
-                  Подробнее
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
+            </Link>
           ))}
         </div>
 
-        <div className="text-center mb-12">
+        {/* Show More/Less Button */}
+        <div className="text-center">
           <Button
             variant="outline"
             size="lg"
             onClick={() => setShowAll(!showAll)}
-            className="min-w-[200px]"
+            className="px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-300"
           >
-            {showAll ? "Скрыть" : "Показать все"}
-            <ArrowRight 
-              className={`ml-2 h-4 w-4 transition-transform ${showAll ? "rotate-90" : ""}`}
-            />
+            {showAll ? "Показать меньше" : "Показать все"}
+            <ArrowRight className={`ml-2 h-4 w-4 lg:h-5 lg:w-5 transition-transform duration-300 ${showAll ? 'rotate-90' : ''}`} />
           </Button>
         </div>
 
-        <div className="text-center">
-          <div className="gradient-card-cyan rounded-3xl p-12">
-            <h3 className="text-3xl font-bold text-white mb-4">
-              Нужна помощь с выбором оборудования?
+        {/* CTA Section */}
+        <div className="mt-12 lg:mt-16 text-center">
+          <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-slate-200/50">
+            <h3 className="text-xl lg:text-2xl font-bold text-slate-900 mb-3 lg:mb-4">
+              Нужна консультация по оборудованию?
             </h3>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Наши эксперты помогут подобрать оптимальный комплект оборудования под ваши задачи и бюджет
+            <p className="text-sm lg:text-base text-slate-600 mb-6 lg:mb-8">
+              Наши специалисты помогут подобрать оптимальное решение для вашего мероприятия
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
-                <Link to="/contact">
-                  Получить консультацию
-                  <ArrowRight className="ml-2 h-5 w-5" />
+            <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center">
+              <Button size="lg" className="px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold" asChild>
+                <Link to="/equipment" className="inline-flex items-center">
+                  Перейти к оборудованию
+                  <ArrowRight className="ml-2 h-4 w-4 lg:h-5 lg:w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
-                <Link to="/equipment">
-                  Каталог оборудования
+              <Button size="lg" variant="outline" className="px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold" asChild>
+                <Link to="/contact">
+                  Получить консультацию
                 </Link>
               </Button>
             </div>

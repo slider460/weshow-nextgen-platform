@@ -54,6 +54,8 @@ import Installation from "./pages/services/Installation";
 import Configuration from "./pages/services/Configuration";
 import EquipmentDiagnostics from "./pages/services/EquipmentDiagnostics";
 import Maintenance from "./pages/services/Maintenance";
+import EquipmentCalculation from "./pages/services/EquipmentCalculation";
+import DebugCart from "./pages/DebugCart";
 
 // Страницы комплексных решений
 import SystemIntegration from "./pages/services/SystemIntegration";
@@ -84,6 +86,7 @@ const App = () => (
         <Route path="/news" element={<News />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/equipment" element={<Equipment />} />
+        <Route path="/debug-cart" element={<DebugCart />} />
         <Route path="/portfolio/samara-stand" element={<CaseSamaraStand />} />
         <Route path="/portfolio/samsung-event" element={<SamsungEvent />} />
         {/* Основные страницы услуг */}
@@ -125,6 +128,7 @@ const App = () => (
         <Route path="/services/configuration" element={<Configuration />} />
         <Route path="/services/equipment-diagnostics" element={<EquipmentDiagnostics />} />
         <Route path="/services/maintenance" element={<Maintenance />} />
+        <Route path="/services/equipment-calculation" element={<EquipmentCalculation />} />
         
         {/* Страницы комплексных решений */}
         <Route path="/services/system-integration" element={<SystemIntegration />} />
