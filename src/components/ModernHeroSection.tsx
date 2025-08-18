@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Play, ArrowRight } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
+import { Link } from "react-router-dom";
 
 interface ModernHeroSectionProps {
   onShowShowreel?: () => void;
@@ -26,7 +27,7 @@ const ModernHeroSection = ({ onShowShowreel }: ModernHeroSectionProps) => {
             {/* Left side - Main content */}
             <div className="lg:col-span-5 space-y-6 lg:space-y-8 lg:pr-8">
               <div className="space-y-4 lg:space-y-6">
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/60 backdrop-blur-sm border border-white/30 text-sm font-medium text-slate-700">
+                <div className="inline-flex items-center px-3 py-1 lg:px-4 lg:py-2 rounded-full bg-white/60 backdrop-blur-sm border border-white/30 text-sm font-medium text-slate-700">
                   🎯 Профессиональные решения
                 </div>
                 
@@ -65,22 +66,23 @@ const ModernHeroSection = ({ onShowShowreel }: ModernHeroSectionProps) => {
             <div className="lg:col-span-7">
               {/* Мобильная версия - упрощенная сетка */}
               <div className="lg:hidden space-y-4">
-                {/* Основная карточка аренды */}
-                <div className="gradient-card-purple-dark rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden">
+                {/* Основная карточка аренды - весь блок кликабельный */}
+                <Link 
+                  to="/equipment"
+                  className="gradient-card-purple-dark rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden cursor-pointer hover:scale-105 transition-all duration-300 group"
+                >
                   <div className="relative z-10">
-                    <h3 className="text-xl font-bold text-white mb-3 drop-shadow-lg">
+                    <h3 className="text-xl font-bold text-white mb-3 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">
                       КОМПЛЕКСНАЯ АРЕНДА
                     </h3>
-                    <p className="text-white/95 text-sm leading-relaxed mb-4 drop-shadow-md">
+                    <p className="text-white/95 text-sm leading-relaxed mb-4 drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
                       Цена аренды включает доставку, монтаж и сопровождение
                     </p>
                   </div>
-                  <Button variant="outline" size="sm" className="self-start border-white/50 text-white hover:bg-white/25 bg-white/10 hover:border-white/70 transition-all duration-300 drop-shadow-md backdrop-blur-sm relative z-10" asChild>
-                    <a href="/equipment">
-                      Подробнее
-                    </a>
-                  </Button>
-                </div>
+                  <div className="self-start border-white/50 text-white group-hover:bg-white/25 bg-white/10 group-hover:border-white/70 transition-all duration-300 drop-shadow-md backdrop-blur-sm relative z-10 px-3 py-1 rounded text-sm">
+                    Подробнее →
+                  </div>
+                </Link>
 
                 {/* SHOWREEL карточка */}
                 <div 
@@ -95,26 +97,30 @@ const ModernHeroSection = ({ onShowShowreel }: ModernHeroSectionProps) => {
                   </div>
                 </div>
 
-                {/* ВДНХ карточка */}
-                <div className="gradient-card-cyan rounded-2xl p-6 flex items-center justify-between">
+                {/* ВДНХ карточка - весь блок кликабельный */}
+                <Link 
+                  to="/portfolio/samara-stand"
+                  className="gradient-card-cyan rounded-2xl p-6 flex items-center justify-between cursor-pointer hover:scale-105 transition-all duration-300 group"
+                >
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-1 drop-shadow-lg">ВДНХ</h3>
-                    <p className="text-white/95 text-sm drop-shadow-md">
+                    <h3 className="text-xl font-bold text-white mb-1 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">ВДНХ</h3>
+                    <p className="text-white/95 text-sm drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
                       стенд Самарской области
                     </p>
                   </div>
-                  <Button variant="outline" size="sm" className="border-white/40 text-white hover:bg-white/20 bg-white/10 hover:border-white/60 transition-all duration-300 drop-shadow-md" asChild>
-                    <a href="/portfolio/samara-stand">
-                      посмотреть
-                    </a>
-                  </Button>
-                </div>
+                  <div className="border-white/40 text-white group-hover:bg-white/20 bg-white/10 group-hover:border-white/60 transition-all duration-300 drop-shadow-md px-3 py-1 rounded text-sm">
+                    посмотреть →
+                  </div>
+                </Link>
               </div>
 
               {/* Десктопная версия - оригинальная сетка */}
               <div className="hidden lg:grid grid-cols-2 gap-4 h-full max-h-[600px]">
-                {/* Large purple card */}
-                <div className="gradient-card-purple-dark rounded-3xl p-8 flex flex-col justify-between row-span-2 relative overflow-hidden">
+                {/* Large purple card - весь блок кликабельный */}
+                <Link 
+                  to="/equipment"
+                  className="gradient-card-purple-dark rounded-3xl p-8 flex flex-col justify-between row-span-2 relative overflow-hidden cursor-pointer hover:scale-105 transition-all duration-300 group"
+                >
                   {/* Абстрактная 3D геометрическая фигура */}
                   <div className="absolute top-4 right-4 w-24 h-24 opacity-60">
                     <div className="relative w-full h-full">
@@ -131,24 +137,22 @@ const ModernHeroSection = ({ onShowShowreel }: ModernHeroSectionProps) => {
                   </div>
                   
                   <div className="relative z-10">
-                    <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">
+                    <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">
                       КОМПЛЕКСНАЯ<br />
                       АРЕНДА<br />
                       ИНТЕРАКТИВНОГО<br />
                       ОБОРУДОВАНИЯ
                     </h3>
-                    <p className="text-white/95 text-sm leading-relaxed mb-6 drop-shadow-md">
+                    <p className="text-white/95 text-sm leading-relaxed mb-6 drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
                       Цена аренды нашего цифрового оборудования включает в себя 
                       полный спектр обслуживания: оперативная доставка, 
                       качественный монтаж и техническое сопровождение.
                     </p>
                   </div>
-                  <Button variant="outline" className="self-start border-white/50 text-white hover:bg-white/25 bg-white/10 hover:border-white/70 transition-all duration-300 drop-shadow-md backdrop-blur-sm relative z-10" asChild>
-                    <a href="/equipment">
-                      Подробнее
-                    </a>
-                  </Button>
-                </div>
+                  <div className="self-start border-white/50 text-white group-hover:bg-white/25 bg-white/10 group-hover:border-white/70 transition-all duration-300 drop-shadow-md backdrop-blur-sm relative z-10 px-4 py-2 rounded text-sm">
+                    Подробнее →
+                  </div>
+                </Link>
 
                 {/* SHOWREEL card */}
                 <div 
@@ -163,33 +167,35 @@ const ModernHeroSection = ({ onShowShowreel }: ModernHeroSectionProps) => {
                   </div>
                 </div>
 
-                {/* ВДНХ card */}
-                <div className="gradient-card-cyan rounded-3xl p-6 flex flex-col">
-                  <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">ВДНХ</h3>
-                  <p className="text-white/95 text-sm mb-4 drop-shadow-md">
+                {/* ВДНХ card - весь блок кликабельный */}
+                <Link 
+                  to="/portfolio/samara-stand"
+                  className="gradient-card-cyan rounded-3xl p-6 flex flex-col cursor-pointer hover:scale-105 transition-all duration-300 group"
+                >
+                  <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">ВДНХ</h3>
+                  <p className="text-white/95 text-sm mb-4 drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
                     стенд Самарской области<br />
                     на выставке-форуме<br />
                     «Россия»
                   </p>
-                  <Button variant="outline" className="self-start border-white/40 text-white hover:bg-white/20 bg-white/10 hover:border-white/60 transition-all duration-300 mt-auto drop-shadow-md" asChild>
-                    <a href="/portfolio/samara-stand">
-                      посмотреть
-                    </a>
-                  </Button>
-                </div>
+                  <div className="self-start border-white/40 text-white group-hover:bg-white/20 bg-white/10 group-hover:border-white/60 transition-all duration-300 mt-auto drop-shadow-md px-3 py-1 rounded text-sm">
+                    посмотреть →
+                  </div>
+                </Link>
 
-                {/* Samsung event card */}
-                <div className="gradient-card-dark rounded-3xl p-6 flex flex-col row-span-1">
-                  <h3 className="text-xl font-bold text-white mb-2 drop-shadow-lg">A Galaxy Event</h3>
-                  <p className="text-white/95 text-sm mb-4 drop-shadow-md">
+                {/* Samsung event card - весь блок кликабельный */}
+                <Link 
+                  to="/portfolio/samsung-event"
+                  className="gradient-card-dark rounded-3xl p-6 flex flex-col row-span-1 cursor-pointer hover:scale-105 transition-all duration-300 group"
+                >
+                  <h3 className="text-xl font-bold text-white mb-2 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">A Galaxy Event</h3>
+                  <p className="text-white/95 text-sm mb-4 drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
                     Особенный новый год Samsung
                   </p>
-                  <Button variant="outline" className="self-start border-white/40 text-white hover:bg-white/20 bg-white/10 hover:border-white/60 transition-all duration-300 mt-auto drop-shadow-md" asChild>
-                    <a href="/portfolio/samsung-event">
-                      посмотреть
-                    </a>
-                  </Button>
-                </div>
+                  <div className="self-start border-white/40 text-white group-hover:bg-white/20 bg-white/10 group-hover:border-white/60 transition-all duration-300 mt-auto drop-shadow-md px-3 py-1 rounded text-sm">
+                    посмотреть →
+                  </div>
+                </Link>
 
                 {/* SHOWROOM card */}
                 <div className="gradient-card-cyan rounded-3xl p-6 flex flex-col col-span-1">
