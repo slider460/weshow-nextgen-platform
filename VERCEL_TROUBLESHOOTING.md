@@ -1,5 +1,63 @@
 # 🚨 Решение проблем с развертыванием на Vercel
 
+## 🚨 **Ошибка: "The `functions` property cannot be used in conjunction with the `builds` property"**
+
+### 🔍 **Причины ошибки:**
+1. **Конфликт в `vercel.json`** - нельзя использовать `builds` и `functions` одновременно
+2. **Неправильная конфигурация** для статического сайта
+3. **Устаревшие настройки** Vercel
+
+### 🛠️ **Решение:**
+
+#### **Вариант 1: Использовать исправленный vercel.json**
+```json
+{
+  "version": 2,
+  "name": "weshow-nextgen-platform",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
+```
+
+#### **Вариант 2: Использовать простую версию vercel.simple.json**
+```json
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install"
+}
+```
+
+#### **Вариант 3: Без конфигурационного файла**
+- Удалите `vercel.json` из проекта
+- В Vercel Dashboard настройте проект вручную:
+  - **Build Command:** `npm run build`
+  - **Output Directory:** `dist`
+  - **Install Command:** `npm install`
+
+### ✅ **После исправления:**
+- Пересоздайте проект в Vercel
+- Импортируйте обновленный репозиторий
+- Ошибка должна исчезнуть
+
+---
+
 ## ❌ **Ошибка: "The provided GitHub repository does not contain the requested branch or commit reference"**
 
 ### 🔍 **Причины ошибки:**
