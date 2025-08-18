@@ -1,5 +1,77 @@
 # 🚨 Решение проблем с развертыванием на Vercel
 
+## 🚨 **Ошибка: "If `rewrites`, `redirects`, `headers`, `cleanUrls` or `trailingSlash` are used, then `routes` cannot be present"**
+
+### 🔍 **Причины ошибки:**
+1. **Устаревший синтаксис** - `routes` несовместим с современными свойствами Vercel
+2. **Смешение старого и нового API** - нельзя использовать `routes` + `rewrites` одновременно
+3. **Неправильная конфигурация** для новой версии Vercel
+
+### 🛠️ **Решение:**
+
+#### **Вариант 1: Использовать современный синтаксис (рекомендуется)**
+```json
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "rewrites": [
+    {
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "destination": "/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### **Вариант 2: Минимальная конфигурация**
+```json
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+```
+
+#### **Вариант 3: Без конфигурационного файла**
+- Удалите `vercel.json` из проекта
+- В Vercel Dashboard настройте проект вручную:
+  - **Build Command:** `npm run build`
+  - **Output Directory:** `dist`
+  - **Install Command:** `npm install`
+
+### ✅ **После исправления:**
+- Пересоздайте проект в Vercel
+- Импортируйте обновленный репозиторий
+- Ошибка должна исчезнуть
+
+---
+
 ## 🚨 **Ошибка: "The `functions` property cannot be used in conjunction with the `builds` property"**
 
 ### 🔍 **Причины ошибки:**
