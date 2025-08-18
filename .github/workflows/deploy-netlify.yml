@@ -1,4 +1,4 @@
-name: 🚀 Deploy to Vercel
+name: 🚀 Deploy to Netlify
 
 on:
   push:
@@ -27,18 +27,25 @@ jobs:
       - name: 🔨 Build project
         run: npm run build
         
-      - name: 🚀 Deploy to Vercel
-        uses: amondnet/vercel-action@v25
+      - name: 🚀 Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2.0
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-          
+          publish-dir: './dist'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
+        
       - name: 📧 Send notification
         if: success()
         run: |
-          echo "✅ Сайт успешно развернут на Vercel!"
+          echo "✅ Сайт успешно развернут на Netlify!"
           echo "🌐 Домен: weshow.su"
           echo "📅 Время: $(date)"
           
