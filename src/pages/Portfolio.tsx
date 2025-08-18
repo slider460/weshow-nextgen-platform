@@ -15,7 +15,7 @@ const Portfolio = () => {
     {
       title: "Интерактивная выставка 'Цифровое будущее'",
       category: "3D Mapping / Interactive",
-      description: "Создание иммерсивного пространства с использованием <ClickableKeyword keyword='3D-проекций' link='/services/three-d-mapping-modeling' />, <ClickableKeyword keyword='интерактивных стен' link='/services/interactive-games' /> и <ClickableKeyword keyword='VR-зоны' link='/services/ar-vr-apps' /> для выставки технологий будущего",
+      description: "Создание иммерсивного пространства с использованием 3D-проекций, интерактивных стен и VR-зоны для выставки технологий будущего",
       image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
       year: "2024",
       results: ["15,000+ посетителей", "95% положительных отзывов", "Увеличение времени пребывания на 40%"],
@@ -24,7 +24,7 @@ const Portfolio = () => {
     {
       title: "Корпоративное мероприятие 'Инновации 2024'",
       category: "LED Solutions / Corporate",
-      description: "Масштабная <ClickableKeyword keyword='LED-инсталляция' link='/services/flexible-neon' /> для презентации новых продуктов с <ClickableKeyword keyword='интерактивными зонами' link='/services/interactive-games' /> и <ClickableKeyword keyword='3D-визуализацией' link='/services/three-d-modeling' />",
+      description: "Масштабная LED-инсталляция для презентации новых продуктов с интерактивными зонами и 3D-визуализацией",
       image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
       year: "2024",
       results: ["500+ участников", "100% выполнение технических требований", "Высокая оценка от руководства"],
@@ -42,7 +42,7 @@ const Portfolio = () => {
     {
       title: "Торговый центр 'Метрополис'",
       category: "Digital Signage / Retail",
-      description: "Система <ClickableKeyword keyword='цифровых вывесок' link='/services/info-panels' />, <ClickableKeyword keyword='интерактивной навигации' link='/services/interactive-games' /> и <ClickableKeyword keyword='информационных киосков' link='/services/info-panels' /> для современного ТЦ",
+      description: "Система цифровых вывесок, интерактивной навигации и информационных киосков для современного ТЦ",
       image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
       year: "2023",
       results: ["Улучшение навигации на 80%", "Сокращение времени поиска товаров", "Увеличение продаж на 25%"],
@@ -51,7 +51,7 @@ const Portfolio = () => {
     {
       title: "Концертная площадка 'Звездный зал'",
       category: "Stage Design / Entertainment",
-      description: "Мультимедийное оформление сцены с <ClickableKeyword keyword='проекционными экранами' link='/services/projection-screens' />, <ClickableKeyword keyword='световыми эффектами' link='/services/lighting' /> и <ClickableKeyword keyword='интерактивными элементами' link='/services/interactive-games' />",
+      description: "Мультимедийное оформление сцены с проекционными экранами, световыми эффектами и интерактивными элементами",
       image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
       year: "2023",
       results: ["50+ успешных концертов", "Восторженные отзывы артистов", "Увеличение продаж билетов"],
@@ -60,7 +60,7 @@ const Portfolio = () => {
     {
       title: "Образовательный центр 'ТехноШкола'",
       category: "EdTech / Education",
-      description: "<ClickableKeyword keyword='Интерактивные классы' link='/services/interactive-games' /> с <ClickableKeyword keyword='3D-проекциями' link='/services/three-d-modeling' />, <ClickableKeyword keyword='VR-лабораториями' link='/services/ar-vr-apps' /> и <ClickableKeyword keyword='умными досками' link='/services/interactive-games' /> для современного обучения",
+      description: "Интерактивные классы с 3D-проекциями, VR-лабораториями и умными досками для современного обучения",
       image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
       year: "2022",
       results: ["Улучшение усвоения материала на 45%", "Повышение интереса к учебе", "100% положительных отзывов"],
@@ -72,7 +72,7 @@ const Portfolio = () => {
     {
       title: "Особенный Новый год Samsung",
       category: "Corporate Events / 3D Mapping",
-      description: "Новогоднее мероприятие с <ClickableKeyword keyword='3D-проекциями' link='/services/three-d-mapping-modeling' />, <ClickableKeyword keyword='digital зонами' link='/services/interactive-games' /> и <ClickableKeyword keyword='интерактивными решениями' link='/services/interactive-games' /> для корпоративного праздника",
+      description: "Новогоднее мероприятие с 3D-проекциями, digital зонами и интерактивными решениями для корпоративного праздника",
       image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
       year: "2020",
       link: "/portfolio/samsung-event",
@@ -82,7 +82,7 @@ const Portfolio = () => {
     {
       title: "Стенд Самарской области на форуме «Россия»",
       category: "Exhibition / Interactive",
-      description: "Мультимедийный стенд с <ClickableKeyword keyword='Naked Eye технологиями' link='/services/transparent-screen' />, <ClickableKeyword keyword='Kinect‑играми' link='/services/interactive-games' />, <ClickableKeyword keyword='VR/AR зонами' link='/services/ar-vr-apps' /> и <ClickableKeyword keyword='кинетическим экраном' link='/services/kinetic-screen' />",
+      description: "Мультимедийный стенд с Naked Eye технологиями, Kinect‑играми, VR/AR зонами и кинетическим экраном",
       image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
       year: "2023–2024",
       link: "/portfolio/samara-stand",
@@ -187,48 +187,11 @@ const Portfolio = () => {
                       <div>
                         <h4 className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">Технологии:</h4>
                         <div className="flex flex-wrap gap-1">
-                          {project.tech.slice(0, 3).map((tech: string, techIndex: number) => {
-                            // Определяем ссылку для каждой технологии
-                            const getTechLink = (techName: string) => {
-                              const techMap: { [key: string]: string } = {
-                                '3D-маппинг': '/services/three-d-mapping-modeling',
-                                'Интерактивные стены': '/services/interactive-games',
-                                'VR-гарнитуры': '/services/ar-vr-apps',
-                                'Проекционные экраны': '/services/projection-screens',
-                                'LED-видеостены': '/services/flexible-neon',
-                                'Интерактивные панели': '/services/interactive-games',
-                                '3D-проекции': '/services/three-d-modeling',
-                                'Звуковые системы': '/services/audio-systems',
-                                'Интерактивные столы': '/services/interactive-games',
-                                'AR-приложения': '/services/ar-vr-apps',
-                                'Голографические дисплеи': '/services/holographic-fans',
-                                'Сенсорные экраны': '/services/interactive-games',
-                                'Цифровые вывески': '/services/info-panels',
-                                'Интерактивная навигация': '/services/interactive-games',
-                                'Информационные киоски': '/services/info-panels',
-                                'Система управления': '/services/system-integration',
-                                'Световые эффекты': '/services/lighting',
-                                'Интерактивные элементы': '/services/interactive-games',
-                                'VR-лаборатории': '/services/ar-vr-apps',
-                                'Интерактивные доски': '/services/interactive-games',
-                                'Умные системы': '/services/system-integration',
-                                'Naked Eye': '/services/transparent-screen',
-                                'Kinect-игры': '/services/interactive-games',
-                                'VR/AR': '/services/ar-vr-apps',
-                                'Кинетический экран': '/services/kinetic-screen'
-                              };
-                              return techMap[techName] || '/services';
-                            };
-
-                            return (
-                              <ClickableKeyword
-                                key={techIndex}
-                                keyword={tech}
-                                link={getTechLink(tech)}
-                                className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-800 text-xs rounded-full transition-all duration-200 cursor-pointer"
-                              />
-                            );
-                          })}
+                          {project.tech.slice(0, 3).map((tech: string, techIndex: number) => (
+                            <span key={techIndex} className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">
+                              {tech}
+                            </span>
+                          ))}
                           {project.tech.length > 3 && (
                             <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">
                               +{project.tech.length - 3}
