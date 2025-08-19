@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
+import { useEquipmentCart } from "@/hooks/useEquipmentCart";
 import { 
   Calculator, 
   Calendar, 
@@ -61,6 +62,8 @@ const EquipmentRentalCalculator: React.FC = () => {
     eventLocation: '',
     additionalInfo: ''
   });
+  
+  const { clearCart } = useEquipmentCart();
 
   // Проверяем предварительно выбранное оборудование при загрузке
   useEffect(() => {
@@ -439,6 +442,19 @@ const EquipmentRentalCalculator: React.FC = () => {
         eventLocation: '',
         additionalInfo: ''
       });
+      
+      // Очищаем корзину и выбранное оборудование
+      setSelectedEquipment([]);
+      setSelectedServices([]);
+      
+      // Очищаем корзину через хук
+      clearCart();
+      
+      // Показываем сообщение об очистке корзины
+      setTimeout(() => {
+        alert('Корзина очищена. Вы можете продолжить выбирать оборудование.');
+      }, 500);
+      
     } catch (error) {
       alert('Произошла ошибка при отправке заказа. Попробуйте еще раз.');
     } finally {

@@ -393,30 +393,30 @@ const Equipment = () => {
       
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 relative overflow-hidden">
+        <section className="py-12 lg:py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20"></div>
           <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D220.1%22%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-10"></div>
           <div className="container mx-auto px-4 text-center relative">
-            <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium mb-8 border border-white/30">
-              <Monitor className="h-5 w-5 mr-2 animate-pulse" />
+            <div className="inline-flex items-center px-4 lg:px-6 py-2 lg:py-3 bg-white/20 backdrop-blur-sm text-white rounded-full text-xs lg:text-sm font-medium mb-6 lg:mb-8 border border-white/30">
+              <Monitor className="h-4 w-4 lg:h-5 lg:w-5 mr-2 animate-pulse" />
               Оборудование в аренду
             </div>
-            <h1 className="text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+            <h1 className="text-4xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 lg:mb-8 leading-tight">
               Категории оборудования
             </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base lg:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed px-4">
               Весь спектр технического оборудования для проведения мероприятий любого масштаба
             </p>
             
             {/* Кнопки корзины */}
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="mt-6 lg:mt-8 flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center items-center">
               <Button
                 size="lg"
                 variant="outline"
                 onClick={() => setIsCartOpen(true)}
-                className="border-white/30 text-white hover:bg-white/20 bg-white/10 px-8 py-4 text-lg font-semibold hover:scale-105 transition-transform duration-200"
+                className="border-white/30 text-white hover:bg-white/20 bg-white/10 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold hover:scale-105 transition-transform duration-200"
               >
-                <ShoppingCart className="h-5 w-5 mr-2" />
+                <ShoppingCart className="h-4 w-4 lg:h-5 lg:w-5 mr-2" />
                 Корзина
                 {cartCount > 0 && (
                   <Badge variant="secondary" className="ml-2 bg-white text-blue-600 border-0">
@@ -425,78 +425,79 @@ const Equipment = () => {
                 )}
               </Button>
               
-                       {cartCount > 0 && (
-           <Button
-             size="sm"
-             variant="outline"
-             onClick={() => {
-               if (confirm('Вы уверены, что хотите полностью очистить корзину? Это действие нельзя отменить.')) {
-                 forceClearCart();
-               }
-             }}
-             className="border-red-500 text-red-700 hover:bg-red-100 hover:border-red-600 bg-white font-medium"
-             title="Очистить корзину от всех товаров"
-           >
-             <Trash2 className="h-4 w-4 mr-2" />
-             Очистить корзину
-           </Button>
-         )}
+              {cartCount > 0 && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    if (confirm('Вы уверены, что хотите полностью очистить корзину? Это действие нельзя отменить.')) {
+                      forceClearCart();
+                    }
+                  }}
+                  className="border-red-500 text-red-700 hover:bg-red-100 hover:border-red-600 bg-white font-medium text-xs lg:text-sm px-3 lg:px-4 py-2 lg:py-3"
+                  title="Очистить корзину от всех товаров"
+                >
+                  <Trash2 className="h-3 w-3 lg:h-4 lg:w-4 mr-2" />
+                  Очистить корзину
+                </Button>
+              )}
             </div>
           </div>
         </section>
 
         {/* Equipment Categories */}
-        <section className="py-20">
+        <section className="py-12 lg:py-16">
           <div className="container mx-auto px-4">
-            <div className="space-y-16">
+            <div className="space-y-12 lg:space-y-16">
               {equipmentCategories.map((category, categoryIndex) => (
-                <div key={categoryIndex} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div key={categoryIndex} className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                   {/* Category Card */}
-                  <div className={`${category.gradient} rounded-3xl p-8 text-white`}>
-                    <div className="mb-6">
-                      <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
+                  <div className={`${category.gradient} rounded-2xl lg:rounded-3xl p-6 lg:p-8 text-white shadow-lg`}>
+                    <div className="mb-4 lg:mb-6">
+                      <div className="w-12 h-12 lg:w-16 lg:h-16 bg-white/20 rounded-xl lg:rounded-2xl flex items-center justify-center mb-3 lg:mb-4">
                         {category.icon}
                       </div>
-                      <h3 className="text-2xl font-bold text-white mb-4">
+                      <h3 className="text-xl lg:text-2xl font-bold text-white mb-3 lg:mb-4">
                         {category.title}
                       </h3>
-                      <p className="text-white/90 leading-relaxed">
+                      <p className="text-white/90 leading-relaxed text-sm lg:text-base">
                         {category.description}
                       </p>
                     </div>
                   </div>
 
                   {/* Equipment Items */}
-                  <div className="lg:col-span-2 space-y-4">
+                  <div className="lg:col-span-2 space-y-3 lg:space-y-4">
                     {category.items.map((item, itemIndex) => (
-                      <div key={itemIndex} className="bg-slate-50 rounded-2xl p-6 hover:bg-slate-100 transition-colors">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between">
-                          <div className="mb-4 md:mb-0">
-                            <h4 className="text-lg font-bold text-slate-900 mb-2">
+                      <div key={itemIndex} className="bg-white rounded-xl lg:rounded-2xl p-4 lg:p-6 hover:bg-slate-50 transition-all duration-200 shadow-sm hover:shadow-md border border-slate-100">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 lg:gap-4">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-base lg:text-lg font-bold text-slate-900 mb-1 lg:mb-2 truncate">
                               {item.name}
                             </h4>
-                            <p className="text-slate-600 text-sm">
+                            <p className="text-slate-600 text-xs lg:text-sm leading-relaxed">
                               {item.specs}
                             </p>
                           </div>
-                          <div className="flex items-center space-x-4">
-                            <span className="text-xl font-bold text-primary">
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 lg:gap-4">
+                            <span className="text-lg lg:text-xl font-bold text-primary whitespace-nowrap">
                               {item.price}
                             </span>
-                            <div className="flex space-x-2">
+                            <div className="flex flex-col sm:flex-row gap-2">
                               <Button 
                                 size="sm" 
                                 variant="outline"
                                 onClick={() => handleAddToCart(item)}
-                                className="hover:bg-green-50 hover:text-green-600 hover:border-green-300 transition-colors duration-200"
+                                className="hover:bg-green-50 hover:text-green-600 hover:border-green-300 transition-colors duration-200 text-xs lg:text-sm px-3 lg:px-4 py-1 lg:py-2"
                               >
-                                <ShoppingCart className="h-4 w-4 mr-2" />
+                                <ShoppingCart className="h-3 w-3 lg:h-4 lg:w-4 mr-1 lg:mr-2" />
                                 В корзину
                               </Button>
                               <Button 
                                 size="sm" 
                                 variant="outline"
                                 asChild
+                                className="text-xs lg:text-sm px-3 lg:px-4 py-1 lg:py-2"
                               >
                                 <Link to="/services/equipment-calculation">
                                   Заказать
@@ -515,71 +516,71 @@ const Equipment = () => {
         </section>
 
         {/* Services */}
-        <section className="py-20 bg-slate-50">
+        <section className="py-12 lg:py-16 bg-slate-50">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-6">
+            <div className="text-center mb-8 lg:mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-4 lg:mb-6">
                 Дополнительные услуги
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-2xl p-8 text-center">
-                <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <ArrowRight className="h-8 w-8 text-primary" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+              <div className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 text-center shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div className="w-12 h-12 lg:w-16 lg:h-16 bg-primary/20 rounded-xl lg:rounded-2xl flex items-center justify-center mx-auto mb-4 lg:mb-6">
+                  <ArrowRight className="h-6 w-6 lg:h-8 lg:w-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Доставка и монтаж</h3>
-                <p className="text-slate-600">Доставим и установим оборудование в любой точке Москвы и области</p>
+                <h3 className="text-lg lg:text-xl font-bold text-slate-900 mb-3 lg:mb-4">Доставка и монтаж</h3>
+                <p className="text-slate-600 text-sm lg:text-base">Доставим и установим оборудование в любой точке Москвы и области</p>
               </div>
 
-              <div className="bg-white rounded-2xl p-8 text-center">
-                <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Cpu className="h-8 w-8 text-primary" />
+              <div className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 text-center shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div className="w-12 h-12 lg:w-16 lg:h-16 bg-primary/20 rounded-xl lg:rounded-2xl flex items-center justify-center mx-auto mb-4 lg:mb-6">
+                  <Cpu className="h-6 w-6 lg:h-8 lg:w-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Техническая поддержка</h3>
-                <p className="text-slate-600">Специалист на объекте на протяжении всего мероприятия</p>
+                <h3 className="text-lg lg:text-xl font-bold text-slate-900 mb-3 lg:mb-4">Техническая поддержка</h3>
+                <p className="text-slate-600 text-sm lg:text-base">Специалист на объекте на протяжении всего мероприятия</p>
               </div>
 
-              <div className="bg-white rounded-2xl p-8 text-center">
-                <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Monitor className="h-8 w-8 text-primary" />
+              <div className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 text-center shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div className="w-12 h-12 lg:w-16 lg:h-16 bg-primary/20 rounded-xl lg:rounded-2xl flex items-center justify-center mx-auto mb-4 lg:mb-6">
+                  <Monitor className="h-6 w-6 lg:h-8 lg:w-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Настройка и калибровка</h3>
-                <p className="text-slate-600">Профессиональная настройка оборудования под ваши задачи</p>
+                <h3 className="text-lg lg:text-xl font-bold text-slate-900 mb-3 lg:mb-4">Настройка и калибровка</h3>
+                <p className="text-slate-600 text-sm lg:text-base">Профессиональная настройка оборудования под ваши задачи</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="py-20 bg-white">
+        <section className="py-12 lg:py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
-            <div className="bg-gradient-to-br from-primary via-primary/90 to-accent rounded-3xl p-12">
-              <h2 className="text-3xl font-bold text-white mb-4">
+            <div className="bg-gradient-to-br from-primary via-primary/90 to-accent rounded-2xl lg:rounded-3xl p-8 lg:p-12 shadow-lg">
+              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-3 lg:mb-4">
                 Нужна консультация по оборудованию?
               </h2>
-              <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              <p className="text-base lg:text-xl text-white/90 mb-6 lg:mb-8 max-w-2xl mx-auto leading-relaxed">
                 Наши специалисты помогут подобрать оптимальный комплект оборудования для вашего мероприятия
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center">
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="border-white/30 text-white hover:bg-white/20 bg-white/10"
+                  className="border-white/30 text-white hover:bg-white/20 bg-white/10 text-sm lg:text-base px-6 lg:px-8 py-2 lg:py-3"
                   onClick={() => setIsConsultationOpen(true)}
                 >
                   Получить консультацию
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-4 w-4 lg:h-5 lg:w-5" />
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="border-white/30 text-white hover:bg-white/20 bg-white/10"
+                  className="border-white/30 text-white hover:bg-white/20 bg-white/10 text-sm lg:text-base px-6 lg:px-8 py-2 lg:py-3"
                   asChild
                 >
                   <a href="/services/equipment-calculation">
                     Калькулятор аренды
-                    <Calculator className="ml-2 h-5 w-5" />
+                    <Calculator className="ml-2 h-4 w-4 lg:h-5 lg:w-5" />
                   </a>
                 </Button>
               </div>
