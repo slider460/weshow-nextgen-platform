@@ -4,7 +4,6 @@ import { OptimizedImage } from '@/components/ui/optimized-image';
 import { OptimizedVideo } from '@/components/ui/optimized-video';
 import { MediaGallery } from '@/components/ui/media-gallery';
 import { MediaItem } from '@/config/media-config';
-import ShowreelButton from '@/components/ShowreelButton';
 
 // Пример данных для портфолио
 const portfolioData: MediaItem[] = [
@@ -127,23 +126,10 @@ const Portfolio = () => {
           <h1 className="text-4xl md:text-6xl font-black text-white mb-6">
             Наше <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Портфолио</span>
           </h1>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             Реализованные проекты, которые демонстрируют наш опыт в создании 
             инновационных мультимедийных решений для бизнеса
           </p>
-          
-          {/* Кнопка Showreel */}
-          <div className="flex justify-center">
-            <ShowreelButton
-              variant="outline"
-              size="lg"
-              icon="film"
-              className="bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/40"
-            >
-              <Play className="mr-2 h-5 w-5" />
-              Смотреть шоурил
-            </ShowreelButton>
-          </div>
         </div>
       </div>
 

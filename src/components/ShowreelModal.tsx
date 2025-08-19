@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Play, Pause, Volume2, VolumeX, Maximize2, RotateCcw, Settings } from "lucide-react";
-import { SHOWREEL_CONFIG, ShowreelUtils } from "@/config/showreel-config";
+import { X, Play, Pause, Volume2, VolumeX, Maximize2, RotateCcw } from "lucide-react";
 
 interface ShowreelModalProps {
   isOpen: boolean;
@@ -16,15 +15,10 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
   const [duration, setDuration] = useState(0);
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [currentQuality, setCurrentQuality] = useState('1080p');
-  const [showSettings, setShowSettings] = useState(false);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout>();
-
-  // Получаем конфигурацию
-  const { MAIN_VIDEO, UI, PLAYBACK } = SHOWREEL_CONFIG;
 
   useEffect(() => {
     const video = videoRef.current;
@@ -78,9 +72,9 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
       }
       controlsTimeoutRef.current = setTimeout(() => {
         setShowControls(false);
-      }, UI.controlsTimeout);
+      }, 3000);
     }
-  }, [showControls, UI.controlsTimeout]);
+  }, [showControls]);
 
   // Автоматическое воспроизведение при открытии модального окна
   useEffect(() => {
@@ -185,58 +179,18 @@ const ShowreelModal = ({ isOpen, onClose }: ShowreelModalProps) => {
              <X className="w-5 h-5" />
            </button>
 
-           {/* Settings Button */}
-           <button
-             onClick={() => setShowSettings(!showSettings)}
-             className="absolute top-4 right-20 z-50 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-           >
-             <Settings className="w-5 h-5" />
-           </button>
 
-           {/* Settings Panel */}
-           {showSettings && (
-             <div className="absolute top-16 right-4 z-50 bg-black/80 backdrop-blur-sm rounded-xl p-4 border border-white/20 min-w-48">
-               <div className="space-y-3">
-                 <div>
-                   <label className="text-white text-sm mb-2 block">Качество:</label>
-                   <select
-                     value={currentQuality}
-                     onChange={(e) => setCurrentQuality(e.target.value)}
-                     className="w-full bg-white/10 text-white text-sm px-3 py-2 rounded-lg border border-white/20"
-                   >
-                     {MAIN_VIDEO.sources.map(source => (
-                       <option key={source.quality} value={source.quality}>
-                         {source.quality}
-                       </option>
-                     ))}
-                   </select>
-                 </div>
-                 
-                 <div>
-                   <label className="text-white text-sm mb-2 block">Громкость:</label>
-                   <input
-                     type="range"
-                     min="0"
-                     max="1"
-                     step="0.1"
-                     defaultValue={PLAYBACK.volume}
-                     className="w-full"
-                   />
-                 </div>
-               </div>
-             </div>
-           )}
 
                      {/* Video Element */}
            <video
              ref={videoRef}
-             src={MAIN_VIDEO.sources[0].url}
+             src="https://dl.dropboxusercontent.com/scl/fi/ia60fgempj6mlafdvvbr4/HM_Showreel.mp4?rlkey=d802gdjo6qe28t0olm0g94oys&st=837979cu&dl=1"
              className="w-full h-full object-contain"
              playsInline
              preload="auto"
-             autoPlay={MAIN_VIDEO.autoplay}
-             muted={MAIN_VIDEO.muted}
-             loop={MAIN_VIDEO.loop}
+             autoPlay
+             muted
+             loop={false}
              crossOrigin="anonymous"
              onError={(e) => {
                console.error('Video error:', e);

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import AnimatedButton from "./AnimatedButton";
 import { useEquipmentCart } from "@/hooks/useEquipmentCart";
-import ShowreelButton from "./ShowreelButton";
 
 import { 
   Menu, 
@@ -371,16 +370,6 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-3 flex-shrink-0">
             {/* LanguageSwitcher убран */}
-            
-            {/* Кнопка Showreel */}
-            <ShowreelButton
-              variant="outline"
-              size="sm"
-              icon="film"
-              className="border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-200"
-            >
-              <span className="hidden lg:inline ml-1">Showreel</span>
-            </ShowreelButton>
             
             {/* Кнопка корзины */}
             <Button

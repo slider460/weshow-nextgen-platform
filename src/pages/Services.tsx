@@ -1,9 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Monitor, Code, Settings, Calendar, Package, Palette, Layers, ShoppingCart, Cog, Video, Users, Gamepad2, Smartphone, Globe, Zap, Shield, Wrench, Headphones, Database, Phone, Building2, Hammer, Puzzle, Sparkles, Eye, Projector, Lightbulb, Box, Grid3X3, Move, View, Info, Play } from "lucide-react";
+import { ArrowRight, Monitor, Code, Settings, Calendar, Package, Palette, Layers, ShoppingCart, Cog, Video, Users, Gamepad2, Smartphone, Globe, Zap, Shield, Wrench, Headphones, Database, Phone, Building2, Hammer, Puzzle, Sparkles, Eye, Projector, Lightbulb, Box, Grid3X3, Move, View, Info } from "lucide-react";
 import { Link } from "react-router-dom";
-import ShowreelButton from "@/components/ShowreelButton";
 
 const Services = () => {
   const serviceCategories = [
@@ -294,17 +293,6 @@ const Services = () => {
                   Связаться с нами
                 </Link>
               </Button>
-              
-              <ShowreelButton
-                variant="outline"
-                size="lg"
-                icon="film"
-                className="border-white/30 text-white hover:bg-white hover:text-slate-900 transition-all duration-500 hover:scale-105 px-8 py-4 text-lg backdrop-blur-sm"
-              >
-                <Play className="mr-2 h-5 w-5" />
-                Смотреть шоурил
-              </ShowreelButton>
-              
               <Button 
                 variant="outline" 
                 size="lg"
