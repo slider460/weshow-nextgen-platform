@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Очистка кэша Favicon - WESHOW</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .status-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .success { border-color: #22c55e; }
+        .error { border-color: #ef4444; }
+        .info { border-color: #3b82f6; }
+        
+        h1 { font-size: 3rem; margin-bottom: 20px; }
+        .btn {
+            background: #007aff;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #0056cc;
+            transform: scale(1.05);
+        }
+        .log {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 Очистка кэша Favicon</h1>
+        
+        <div class="status-box info">
+            <h2>🎯 Цель</h2>
+            <p>Принудительно очистить кэш favicon и загрузить новый логотип WESHOW</p>
+        </div>
+        
+        <div class="status-box">
+            <h2>🔧 Действия</h2>
+            <button class="btn" onclick="clearAllFavicons()">Очистить все favicon</button>
+            <button class="btn" onclick="forceReload()">Принудительно перезагрузить</button>
+            <button class="btn" onclick="clearBrowserCache()">Очистить кэш браузера</button>
+        </div>
+        
+        <div class="status-box">
+            <h2>📊 Статус</h2>
+            <div id="status">Готов к очистке</div>
+        </div>
+        
+        <div class="status-box">
+            <h2>📝 Лог операций</h2>
+            <div id="log" class="log"></div>
+        </div>
+        
+        <div class="status-box">
+            <h2>🔍 Проверка</h2>
+            <p>После очистки проверьте favicon в адресной строке и вкладках браузера</p>
+            <a href="/" class="btn">Вернуться на главную</a>
+        </div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<span style="color: #888">[${timestamp}]</span> ${message}`;
+            logDiv.appendChild(logEntry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = type;
+        }
+
+        function clearAllFavicons() {
+            log('🚀 Начинаем очистку favicon...');
+            updateStatus('Очистка favicon...', 'info');
+            
+            try {
+                // Удаляем все существующие favicon ссылки
+                const existingFavicons = document.querySelectorAll('link[rel*="icon"], link[rel*="shortcut"]');
+                log(`🗑️ Найдено ${existingFavicons.length} favicon ссылок для удаления`);
+                
+                existingFavicons.forEach(link => {
+                    log(`❌ Удаляем: ${link.rel} -> ${link.href}`);
+                    link.remove();
+                });
+                
+                // Создаем новые favicon ссылки с уникальными параметрами
+                const timestamp = Date.now();
+                const randomId = Math.random().toString(36).substr(2, 9);
+                
+                const faviconTypes = [
+                    { rel: 'icon', type: 'image/svg+xml', href: '/weshow-favicon.svg' },
+                    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+                    { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+                    { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+                    { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+                    { rel: 'shortcut icon', href: '/favicon.ico' }
+                ];
+                
+                faviconTypes.forEach(type => {
+                    const link = document.createElement('link');
+                    Object.keys(type).forEach(key => {
+                        if (key === 'href') {
+                            link[key] = type[key] + '?v=' + timestamp + '&r=' + randomId;
+                        } else {
+                            link[key] = type[key];
+                        }
+                    });
+                    document.head.appendChild(link);
+                    log(`✅ Создан: ${type.rel} -> ${link.href}`);
+                });
+                
+                log(`🔄 Favicon обновлен с timestamp: ${timestamp} и randomId: ${randomId}`);
+                updateStatus('Favicon успешно обновлен!', 'success');
+                
+                // Дополнительно очищаем кэш через fetch
+                faviconTypes.forEach(type => {
+                    if (type.href) {
+                        fetch(type.href + '?v=' + timestamp + '&r=' + randomId, { 
+                            method: 'HEAD',
+                            cache: 'no-cache'
+                        }).then(() => {
+                            log(`🌐 Кэш очищен для: ${type.href}`);
+                        }).catch(() => {
+                            log(`⚠️ Ошибка очистки кэша для: ${type.href}`);
+                        });
+                    }
+                });
+                
+            } catch (error) {
+                log(`❌ Ошибка: ${error.message}`, 'error');
+                updateStatus('Ошибка при очистке favicon', 'error');
+            }
+        }
+
+        function forceReload() {
+            log('🔄 Принудительная перезагрузка страницы...');
+            updateStatus('Перезагрузка...', 'info');
+            
+            // Очищаем favicon перед перезагрузкой
+            clearAllFavicons();
+            
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 1000);
+        }
+
+        function clearBrowserCache() {
+            log('🧹 Попытка очистки кэша браузера...');
+            updateStatus('Очистка кэша браузера...', 'info');
+            
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    log(`🗂️ Найдено ${names.length} кэшей`);
+                    names.forEach(name => {
+                        caches.delete(name);
+                        log(`🗑️ Удален кэш: ${name}`);
+                    });
+                    log('✅ Кэши браузера очищены');
+                    updateStatus('Кэши браузера очищены', 'success');
+                });
+            } else {
+                log('⚠️ API кэшей не поддерживается в этом браузере');
+                updateStatus('API кэшей не поддерживается', 'error');
+            }
+        }
+
+        // Автоматическая очистка при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            log('📱 Страница загружена, готов к очистке favicon');
+            updateStatus('Готов к очистке', 'info');
+        });
+
+        // Очистка при фокусе на странице
+        window.addEventListener('focus', function() {
+            log('👁️ Страница получила фокус, проверяем favicon...');
+            clearAllFavicons();
+        });
+    </script>
+</body>
+</html>

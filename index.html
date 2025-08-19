@@ -8,8 +8,13 @@
     <meta name="author" content="WESHOW" />
     <meta name="keywords" content="мультимедийные технологии, техническая интеграция, AV системы, проекционный маппинг, корпоративные мероприятия" />
 
-    <!-- Favicon - современная структура -->
+    <!-- Favicon - максимально надежная система -->
     <link rel="icon" type="image/svg+xml" href="/weshow-favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Open Graph - современные meta-теги -->
@@ -34,52 +39,87 @@
     
     <!-- Preload критических ресурсов -->
     <link rel="preload" href="/weshow-favicon.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="/favicon.ico" as="image" type="image/x-icon">
+    <link rel="preload" href="/favicon-32x32.png" as="image" type="image/png">
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Агрессивная очистка кэша favicon -->
+    <!-- Максимально агрессивная очистка кэша favicon -->
     <script>
-      // Принудительно очищаем кэш favicon при загрузке страницы
-      document.addEventListener('DOMContentLoaded', function() {
-        // Удаляем все существующие favicon ссылки
-        const existingFavicons = document.querySelectorAll('link[rel*="icon"]');
+      // Функция для принудительной очистки favicon
+      function forceFaviconUpdate() {
+        const timestamp = Date.now();
+        const randomId = Math.random().toString(36).substr(2, 9);
+        
+        // Удаляем ВСЕ существующие favicon ссылки
+        const existingFavicons = document.querySelectorAll('link[rel*="icon"], link[rel*="shortcut"]');
         existingFavicons.forEach(link => link.remove());
         
-        // Создаем новые favicon ссылки с уникальным timestamp
-        const timestamp = Date.now();
+        // Создаем новые favicon ссылки с уникальными параметрами
+        const faviconTypes = [
+          { rel: 'icon', type: 'image/svg+xml', href: '/weshow-favicon.svg' },
+          { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+          { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+          { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+          { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+          { rel: 'shortcut icon', href: '/favicon.ico' }
+        ];
         
-        // Основной SVG favicon
-        const svgFavicon = document.createElement('link');
-        svgFavicon.rel = 'icon';
-        svgFavicon.type = 'image/svg+xml';
-        svgFavicon.href = '/weshow-favicon.svg?v=' + timestamp;
-        document.head.appendChild(svgFavicon);
+        faviconTypes.forEach(type => {
+          const link = document.createElement('link');
+          Object.keys(type).forEach(key => {
+            if (key === 'href') {
+              link[key] = type[key] + '?v=' + timestamp + '&r=' + randomId;
+            } else {
+              link[key] = type[key];
+            }
+          });
+          document.head.appendChild(link);
+        });
         
-        // Fallback ICO favicon
-        const icoFavicon = document.createElement('link');
-        icoFavicon.rel = 'icon';
-        icoFavicon.href = '/weshow-favicon.svg?v=' + timestamp;
-        document.head.appendChild(icoFavicon);
+        console.log('🔄 Favicon принудительно обновлен:', timestamp, randomId);
         
-        // Apple touch icon
-        const appleIcon = document.createElement('link');
-        appleIcon.rel = 'apple-touch-icon';
-        appleIcon.href = '/weshow-favicon.svg?v=' + timestamp;
-        document.head.appendChild(appleIcon);
-        
-        console.log('🔄 Favicon полностью обновлен с timestamp:', timestamp);
+        // Дополнительно очищаем кэш через fetch
+        faviconTypes.forEach(type => {
+          if (type.href) {
+            fetch(type.href + '?v=' + timestamp + '&r=' + randomId, { 
+              method: 'HEAD',
+              cache: 'no-cache'
+            }).catch(() => {});
+          }
+        });
+      }
+      
+      // Очищаем favicon при загрузке страницы
+      document.addEventListener('DOMContentLoaded', forceFaviconUpdate);
+      
+      // Очищаем при фокусе на странице
+      window.addEventListener('focus', forceFaviconUpdate);
+      
+      // Очищаем при видимости страницы
+      document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+          forceFaviconUpdate();
+        }
       });
       
-      // Дополнительная очистка при фокусе на странице
-      window.addEventListener('focus', function() {
-        const favicon = document.querySelector('link[rel="icon"]');
-        if (favicon) {
-          const timestamp = Date.now();
-          favicon.href = '/weshow-favicon.svg?v=' + timestamp;
+      // Очищаем каждые 5 секунд в течение первой минуты
+      let updateCount = 0;
+      const updateInterval = setInterval(() => {
+        if (updateCount < 12) {
+          forceFaviconUpdate();
+          updateCount++;
+        } else {
+          clearInterval(updateInterval);
         }
+      }, 5000);
+      
+      // Очищаем при любом взаимодействии с страницей
+      ['click', 'scroll', 'mousemove', 'keydown'].forEach(event => {
+        document.addEventListener(event, forceFaviconUpdate, { once: true });
       });
     </script>
   </body>
