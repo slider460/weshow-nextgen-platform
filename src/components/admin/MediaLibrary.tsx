@@ -45,11 +45,12 @@ const MediaLibrary: React.FC = () => {
       name: 'hero-bg.jpg',
       url: '/placeholder.svg',
       thumbnail: '/placeholder.svg',
-      type: 'image',
+      type: 'image' as const,
       size: 2048576,
       dimensions: { width: 1920, height: 1080 },
       uploadedAt: new Date('2024-01-15'),
       uploadedBy: 'admin',
+      order: 0,
     },
     {
       id: '2',
@@ -61,6 +62,7 @@ const MediaLibrary: React.FC = () => {
       dimensions: { width: 1920, height: 1080 },
       uploadedAt: new Date('2024-01-20'),
       uploadedBy: 'admin',
+      order: 1,
     },
     {
       id: '3',
@@ -71,6 +73,7 @@ const MediaLibrary: React.FC = () => {
       size: 1048576,
       uploadedAt: new Date('2024-01-18'),
       uploadedBy: 'admin',
+      order: 2,
     },
   ]);
 
@@ -93,6 +96,7 @@ const MediaLibrary: React.FC = () => {
           dimensions: file.type.startsWith('image/') ? { width: 1920, height: 1080 } : undefined,
           uploadedAt: new Date(),
           uploadedBy: state.currentUser?.username || 'admin',
+          order: mediaFiles.length,
         };
 
         setMediaFiles(prev => [newFile, ...prev]);
