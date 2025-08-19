@@ -10,7 +10,7 @@ const SocialProofSection = () => {
       id: 1,
       title: "Благодарственное письмо от ВТБ",
       description: "За качественное выполнение работ по техническому оснащению головного офиса",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      image: "/placeholder.svg",
       type: "letter",
       year: "2024"
     },
@@ -18,7 +18,7 @@ const SocialProofSection = () => {
       id: 2,
       title: "Грамота Лучший системный интегратор",
       description: "Награда за выдающиеся достижения в области системной интеграции",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      image: "/placeholder.svg",
       type: "award",
       year: "2023"
     },
@@ -26,21 +26,21 @@ const SocialProofSection = () => {
       id: 3,
       title: "Благодарность от Сбербанка",
       description: "За успешную реализацию мультимедийных решений для корпоративных мероприятий",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      image: "/placeholder.svg",
       type: "letter",
       year: "2024"
     }
   ];
 
   const clients = [
-    { name: "ВТБ", logo: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png" },
-    { name: "Сбербанк", logo: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png" },
-    { name: "Газпром", logo: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png" },
-    { name: "МТС", logo: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png" },
-    { name: "Лукойл", logo: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png" },
-    { name: "Ростелеком", logo: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png" },
-    { name: "Аэрофлот", logo: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png" },
-    { name: "Яндекс", logo: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png" }
+    { name: "ВТБ", logo: "/placeholder.svg" },
+    { name: "Сбербанк", logo: "/placeholder.svg" },
+    { name: "Газпром", logo: "/placeholder.svg" },
+    { name: "МТС", logo: "/placeholder.svg" },
+    { name: "Лукойл", logo: "/placeholder.svg" },
+    { name: "Ростелеком", logo: "/placeholder.svg" },
+    { name: "Аэрофлот", logo: "/placeholder.svg" },
+    { name: "Яндекс", logo: "/placeholder.svg" }
   ];
 
   const nextSlide = () => {

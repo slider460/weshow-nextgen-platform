@@ -86,7 +86,7 @@ const About = () => {
           <div className="max-w-4xl mx-auto group">
             <div className="relative overflow-hidden rounded-3xl shadow-2xl group-hover:shadow-3xl transition-all duration-700">
               <img 
-                src="/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png" 
+                src="/placeholder.svg" 
                 alt="Команда WESHOW" 
                 className="w-full group-hover:scale-105 transition-transform duration-700"
               />

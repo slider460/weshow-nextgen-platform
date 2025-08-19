@@ -9,7 +9,7 @@
     <meta name="keywords" content="мультимедийные технологии, техническая интеграция, AV системы, проекционный маппинг, корпоративные мероприятия" />
 
     <!-- Favicon - современная структура -->
-    <link rel="icon" type="image/svg+xml" href="/logo-favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/weshow-favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Open Graph - современные meta-теги -->
@@ -33,30 +33,52 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- Preload критических ресурсов -->
-    <link rel="preload" href="/logo-favicon.svg" as="image" type="image/svg+xml">
+    <link rel="preload" href="/weshow-favicon.svg" as="image" type="image/svg+xml">
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Принудительное обновление favicon -->
+    <!-- Агрессивная очистка кэша favicon -->
     <script>
-      // Принудительно обновляем favicon при загрузке страницы
+      // Принудительно очищаем кэш favicon при загрузке страницы
       document.addEventListener('DOMContentLoaded', function() {
+        // Удаляем все существующие favicon ссылки
+        const existingFavicons = document.querySelectorAll('link[rel*="icon"]');
+        existingFavicons.forEach(link => link.remove());
+        
+        // Создаем новые favicon ссылки с уникальным timestamp
+        const timestamp = Date.now();
+        
+        // Основной SVG favicon
+        const svgFavicon = document.createElement('link');
+        svgFavicon.rel = 'icon';
+        svgFavicon.type = 'image/svg+xml';
+        svgFavicon.href = '/weshow-favicon.svg?v=' + timestamp;
+        document.head.appendChild(svgFavicon);
+        
+        // Fallback ICO favicon
+        const icoFavicon = document.createElement('link');
+        icoFavicon.rel = 'icon';
+        icoFavicon.href = '/weshow-favicon.svg?v=' + timestamp;
+        document.head.appendChild(icoFavicon);
+        
+        // Apple touch icon
+        const appleIcon = document.createElement('link');
+        appleIcon.rel = 'apple-touch-icon';
+        appleIcon.href = '/weshow-favicon.svg?v=' + timestamp;
+        document.head.appendChild(appleIcon);
+        
+        console.log('🔄 Favicon полностью обновлен с timestamp:', timestamp);
+      });
+      
+      // Дополнительная очистка при фокусе на странице
+      window.addEventListener('focus', function() {
         const favicon = document.querySelector('link[rel="icon"]');
         if (favicon) {
           const timestamp = Date.now();
-          const newHref = favicon.href.split('?')[0] + '?v=' + timestamp;
-          favicon.href = newHref;
-          
-          // Также обновляем все остальные favicon ссылки
-          const allFavicons = document.querySelectorAll('link[rel*="icon"]');
-          allFavicons.forEach(link => {
-            if (link.href && !link.href.includes('?')) {
-              link.href = link.href + '?v=' + timestamp;
-            }
-          });
+          favicon.href = '/weshow-favicon.svg?v=' + timestamp;
         }
       });
     </script>

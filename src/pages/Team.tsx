@@ -10,63 +10,63 @@ const Team = () => {
       position: "Client Service Director / CEO",
       experience: "Более 10 лет",
       description: "Руководитель клиентского сервиса и генеральный директор агентства",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
+      image: "/placeholder.svg"
     },
     {
       name: "Семенов Эдвард",
       position: "Commercial Director",
       experience: "Более 10 лет",
       description: "Коммерческий директор, отвечает за развитие бизнеса и партнерские отношения",
-      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png"
+      image: "/placeholder.svg"
     },
     {
       name: "Дементьев Святослав",
       position: "Chief Creative Officer",
       experience: "Более 10 лет",
       description: "Главный креативный директор, создает уникальные творческие решения",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
+      image: "/placeholder.svg"
     },
     {
       name: "Кличановский Сергей",
       position: "Business Development Director",
       experience: "Более 10 лет",
       description: "Директор по развитию бизнеса, стратегическое планирование и рост",
-      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png"
+      image: "/placeholder.svg"
     },
     {
       name: "Осотов Алексей",
       position: "Chief Information Officer",
       experience: "Более 10 лет",
       description: "Главный информационный директор, управление IT-инфраструктурой",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
+      image: "/placeholder.svg"
     },
     {
       name: "Муратов Денис",
       position: "Technical Director",
       experience: "Более 10 лет",
       description: "Технический директор, контроль качества и техническое обеспечение",
-      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png"
+      image: "/placeholder.svg"
     },
     {
       name: "Агафонова Илона",
       position: "Senior Account Manager",
       experience: "Более 10 лет",
       description: "Старший менеджер по работе с клиентами, координация проектов",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
+      image: "/placeholder.svg"
     },
     {
       name: "Иншакова Ксения",
       position: "Creative Project Manager",
       experience: "Более 8 лет",
       description: "Креативный менеджер проектов, координация творческих процессов и клиентских запросов",
-      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png"
+      image: "/placeholder.svg"
     },
     {
       name: "Овсянникова Мария",
       position: "Marketing Communications Specialist",
       experience: "Более 7 лет",
       description: "Специалист по маркетинговым коммуникациям, развитие бренда и внешних связей",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png"
+      image: "/placeholder.svg"
     }
   ];
 
