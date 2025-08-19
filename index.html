@@ -155,15 +155,41 @@
         }
       });
       
-      // Очищаем при изменении URL (если используется History API)
-      if (window.history && window.history.pushState) {
-        const originalPushState = history.pushState;
-        history.pushState = function() {
-          originalPushState.apply(this, arguments);
-          console.log('🔗 URL изменен, очищаем favicon');
-          superAggressiveFaviconUpdate();
-        };
-      }
-    </script>
+                  // Очищаем при изменении URL (если используется History API)
+            if (window.history && window.history.pushState) {
+              const originalPushState = history.pushState;
+              history.pushState = function() {
+                originalPushState.apply(this, arguments);
+                console.log('🔗 URL изменен, очищаем favicon');
+                superAggressiveFaviconUpdate();
+              };
+            }
+          </script>
+
+          <!-- Service Worker для оптимизации медиа -->
+          <script>
+            // Регистрация Service Worker
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                  .then(function(registration) {
+                    console.log('🚀 Service Worker зарегистрирован:', registration.scope);
+                    
+                    // Обновление Service Worker
+                    registration.addEventListener('updatefound', function() {
+                      const newWorker = registration.installing;
+                      newWorker.addEventListener('statechange', function() {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                          console.log('🔄 Доступно обновление Service Worker');
+                        }
+                      });
+                    });
+                  })
+                  .catch(function(error) {
+                    console.error('❌ Ошибка регистрации Service Worker:', error);
+                  });
+              });
+            }
+          </script>
   </body>
 </html>

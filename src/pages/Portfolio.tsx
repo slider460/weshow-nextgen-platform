@@ -1,263 +1,271 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom";
-import ShowreelModal from "@/components/ShowreelModal";
-import ClickableKeyword from "@/components/ClickableKeyword";
+import React, { useState } from 'react';
+import { Filter, Grid, List, Search, Play, Image as ImageIcon } from 'lucide-react';
+import { OptimizedImage } from '@/components/ui/optimized-image';
+import { OptimizedVideo } from '@/components/ui/optimized-video';
+import { MediaGallery } from '@/components/ui/media-gallery';
+import { MediaItem } from '@/config/media-config';
 
-import { useState } from "react";
+// Пример данных для портфолио
+const portfolioData: MediaItem[] = [
+  {
+    id: '1',
+    type: 'image',
+    src: '/media/cases/samsung-event/images/main.jpg',
+    alt: 'Samsung Event - Главная сцена',
+    title: 'Samsung Event 2024',
+    description: 'Масштабное мероприятие с интерактивными экранами',
+    thumbnail: '/media/cases/samsung-event/thumbnails/main-thumb.jpg',
+    width: 1920,
+    height: 1080,
+    category: 'corporate-events',
+    tags: ['samsung', 'event', 'interactive', 'screens']
+  },
+  {
+    id: '2',
+    type: 'video',
+    src: '/media/cases/samsung-event/videos/highlight.mp4',
+    alt: 'Samsung Event - Видео обзор',
+    title: 'Samsung Event - Видео обзор',
+    description: 'Полный обзор мероприятия Samsung',
+    poster: '/media/cases/samsung-event/images/poster.jpg',
+    thumbnail: '/media/cases/samsung-event/thumbnails/video-thumb.jpg',
+    width: 1920,
+    height: 1080,
+    duration: 120,
+    category: 'corporate-events',
+    tags: ['samsung', 'video', 'highlight'],
+    videoSources: [
+      { quality: '480p', url: '/media/cases/samsung-event/videos/highlight-480p.mp4', type: 'video/mp4' },
+      { quality: '720p', url: '/media/cases/samsung-event/videos/highlight-720p.mp4', type: 'video/mp4' },
+      { quality: '1080p', url: '/media/cases/samsung-event/videos/highlight-1080p.mp4', type: 'video/mp4' }
+    ]
+  },
+  {
+    id: '3',
+    type: 'image',
+    src: '/media/cases/samara-stand/images/main.jpg',
+    alt: 'Самарский стенд - Выставочный стенд',
+    title: 'Самарский выставочный стенд',
+    description: 'Современный дизайн выставочного стенда',
+    thumbnail: '/media/cases/samara-stand/thumbnails/main-thumb.jpg',
+    width: 1600,
+    height: 900,
+    category: 'exhibition-stands',
+    tags: ['samara', 'exhibition', 'stand', 'design']
+  },
+  {
+    id: '4',
+    type: 'image',
+    src: '/media/cases/samara-stand/images/detail.jpg',
+    alt: 'Самарский стенд - Детали',
+    title: 'Самарский стенд - Детали',
+    description: 'Детализация выставочного стенда',
+    thumbnail: '/media/cases/samara-stand/thumbnails/detail-thumb.jpg',
+    width: 1200,
+    height: 800,
+    category: 'exhibition-stands',
+    tags: ['samara', 'exhibition', 'stand', 'details']
+  },
+  {
+    id: '5',
+    type: 'video',
+    src: '/media/cases/samara-stand/videos/walkthrough.mp4',
+    alt: 'Самарский стенд - Виртуальный тур',
+    title: 'Виртуальный тур по стенду',
+    description: '3D тур по выставочному стенду',
+    poster: '/media/cases/samara-stand/images/3d-poster.jpg',
+    thumbnail: '/media/cases/samara-stand/thumbnails/3d-thumb.jpg',
+    width: 1920,
+    height: 1080,
+    duration: 45,
+    category: 'exhibition-stands',
+    tags: ['samara', '3d', 'virtual-tour', 'stand'],
+    videoSources: [
+      { quality: '720p', url: '/media/cases/samara-stand/videos/walkthrough-720p.mp4', type: 'video/mp4' },
+      { quality: '1080p', url: '/media/cases/samara-stand/videos/walkthrough-1080p.mp4', type: 'video/mp4' }
+    ]
+  }
+];
+
+const categories = [
+  { id: 'all', name: 'Все проекты', count: portfolioData.length },
+  { id: 'corporate-events', name: 'Корпоративные мероприятия', count: portfolioData.filter(item => item.category === 'corporate-events').length },
+  { id: 'exhibition-stands', name: 'Выставочные стенды', count: portfolioData.filter(item => item.category === 'exhibition-stands').length },
+  { id: 'multimedia', name: 'Мультимедиа', count: portfolioData.filter(item => item.tags?.includes('multimedia')).length },
+  { id: '3d-design', name: '3D дизайн', count: portfolioData.filter(item => item.tags?.includes('3d')).length }
+];
 
 const Portfolio = () => {
-  const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
-  
-  const projects = [
-    {
-      title: "Интерактивная выставка 'Цифровое будущее'",
-      category: "3D Mapping / Interactive",
-      description: "Создание иммерсивного пространства с использованием 3D-проекций, интерактивных стен и VR-зоны для выставки технологий будущего",
-      image: "/placeholder.svg",
-      year: "2024",
-      results: ["15,000+ посетителей", "95% положительных отзывов", "Увеличение времени пребывания на 40%"],
-      tech: ["3D-маппинг", "Интерактивные стены", "VR-гарнитуры", "Проекционные экраны"]
-    },
-    {
-      title: "Корпоративное мероприятие 'Инновации 2024'",
-      category: "LED Solutions / Corporate",
-      description: "Масштабная LED-инсталляция для презентации новых продуктов с интерактивными зонами и 3D-визуализацией",
-      image: "/placeholder.svg",
-      year: "2024",
-      results: ["500+ участников", "100% выполнение технических требований", "Высокая оценка от руководства"],
-      tech: ["LED-видеостены", "Интерактивные панели", "3D-проекции", "Звуковые системы"]
-    },
-    {
-      title: "Музейная экспозиция 'История технологий'",
-      category: "Interactive / Museums",
-      description: "Интерактивные столы, AR-приложения и голографические дисплеи для современного музея технологий",
-      image: "/placeholder.svg",
-      year: "2023",
-      results: ["Увеличение посещаемости на 60%", "Среднее время пребывания 2.5 часа", "Высокая вовлеченность детей"],
-      tech: ["Интерактивные столы", "AR-приложения", "Голографические дисплеи", "Сенсорные экраны"]
-    },
-    {
-      title: "Торговый центр 'Метрополис'",
-      category: "Digital Signage / Retail",
-      description: "Система цифровых вывесок, интерактивной навигации и информационных киосков для современного ТЦ",
-      image: "/placeholder.svg",
-      year: "2023",
-      results: ["Улучшение навигации на 80%", "Сокращение времени поиска товаров", "Увеличение продаж на 25%"],
-      tech: ["Цифровые вывески", "Интерактивная навигация", "Информационные киоски", "Система управления"]
-    },
-    {
-      title: "Концертная площадка 'Звездный зал'",
-      category: "Stage Design / Entertainment",
-      description: "Мультимедийное оформление сцены с проекционными экранами, световыми эффектами и интерактивными элементами",
-      image: "/placeholder.svg",
-      year: "2023",
-      results: ["50+ успешных концертов", "Восторженные отзывы артистов", "Увеличение продаж билетов"],
-      tech: ["Проекционные экраны", "Световые эффекты", "Интерактивные элементы", "Звуковые системы"]
-    },
-    {
-      title: "Образовательный центр 'ТехноШкола'",
-      category: "EdTech / Education",
-      description: "Интерактивные классы с 3D-проекциями, VR-лабораториями и умными досками для современного обучения",
-      image: "/placeholder.svg",
-      year: "2022",
-      results: ["Улучшение усвоения материала на 45%", "Повышение интереса к учебе", "100% положительных отзывов"],
-      tech: ["3D-проекции", "VR-лаборатории", "Интерактивные доски", "Умные системы"]
-    }
-  ];
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
 
-  const extendedProjects = [
-    {
-      title: "Особенный Новый год Samsung",
-      category: "Corporate Events / 3D Mapping",
-      description: "Новогоднее мероприятие с 3D-проекциями, digital зонами и интерактивными решениями для корпоративного праздника",
-      image: "/placeholder.svg",
-      year: "2020",
-      link: "/portfolio/samsung-event",
-      results: ["500+ участников", "Уникальный новогодний контент", "Полное техническое сопровождение"],
-      tech: ["3D-маппинг", "Интерактивные зоны", "Проекционные сетки", "Digital почтовый ящик"]
-    },
-    {
-      title: "Стенд Самарской области на форуме «Россия»",
-      category: "Exhibition / Interactive",
-      description: "Мультимедийный стенд с Naked Eye технологиями, Kinect‑играми, VR/AR зонами и кинетическим экраном",
-      image: "/placeholder.svg",
-      year: "2023–2024",
-      link: "/portfolio/samara-stand",
-      results: ["10,000+ посетителей", "Высокая интерактивность", "Положительные отзывы от руководства"],
-      tech: ["Naked Eye", "Kinect-игры", "VR/AR", "Кинетический экран"]
-    },
-    ...projects,
-  ];
+  // Фильтрация по категории и поиску
+  const filteredData = portfolioData.filter(item => {
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+    const matchesSearch = searchQuery === '' || 
+      item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    return matchesCategory && matchesSearch;
+  });
+
+  const handleItemClick = (item: MediaItem, index: number) => {
+    setSelectedItem(item);
+    console.log('Выбран элемент:', item.title);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200">
-      <Header />
-      
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Hero Section */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50/30 to-purple-50/30"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-5"></div>
-        
+      <div className="relative py-20 px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-3xl"></div>
+        <div className="relative max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl md:text-6xl font-black text-white mb-6">
+            Наше <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Портфолио</span>
+          </h1>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            Реализованные проекты, которые демонстрируют наш опыт в создании 
+            инновационных мультимедийных решений для бизнеса
+          </p>
+        </div>
+      </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-700 rounded-full text-sm font-medium mb-8 backdrop-blur-sm border border-blue-300/30">
-              <Play className="h-5 w-5 mr-2 animate-pulse" />
-              Наши проекты
+      {/* Фильтры и поиск */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          {/* Поиск */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Поиск по проектам..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
-            <h1 className="text-6xl lg:text-7xl font-bold bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 bg-clip-text text-transparent mb-8 leading-tight">
-              Портфолио
-            </h1>
-            <p className="text-xl text-slate-600 leading-relaxed mb-10 max-w-3xl mx-auto">
-              Примеры наших работ и реализованных проектов в области мультимедиа и интерактивных технологий
-            </p>
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 px-8 py-4 text-lg font-semibold group"
-              onClick={() => setIsShowreelModalOpen(true)}
-            >
-              <Play className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
-              Смотреть шоурил
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Grid */}
-      <section className="py-20 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-white to-slate-50"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {extendedProjects.map((project: any, index: number) => {
-              const card = (
-                <div className="group bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative">
-                  <div className="aspect-video bg-gradient-to-br from-slate-100 to-slate-200 relative overflow-hidden">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="absolute top-4 right-4">
-                      <div className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-slate-700">
-                        {project.year}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                      <ExternalLink className="h-4 w-4 text-white" />
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs text-blue-500 font-medium tracking-wide uppercase">
-                        {project.category}
-                      </span>
-                      <span className="text-xs text-slate-600">{project.year}</span>
-                    </div>
-                    <h3 className="text-xl font-semibold text-slate-900 mb-2 group-hover:text-blue-500 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                      {project.description}
-                    </p>
-                    
-                    {/* Results and Technologies */}
-                    {project.results && (
-                      <div className="mb-4">
-                        <h4 className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">Результаты:</h4>
-                        <div className="space-y-1">
-                          {project.results.slice(0, 2).map((result: string, resultIndex: number) => (
-                            <div key={resultIndex} className="flex items-center text-xs text-slate-600">
-                              <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2 flex-shrink-0" />
-                              {result}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    
-                    {project.tech && (
-                      <div>
-                        <h4 className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">Технологии:</h4>
-                        <div className="flex flex-wrap gap-1">
-                          {project.tech.slice(0, 3).map((tech: string, techIndex: number) => (
-                            <span key={techIndex} className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">
-                              {tech}
-                            </span>
-                          ))}
-                          {project.tech.length > 3 && (
-                            <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">
-                              +{project.tech.length - 3}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-
-              return project.link ? (
-                <Link key={index} to={project.link} className="group cursor-pointer block" aria-label={`${project.title} — подробнее`}>
-                  {card}
-                </Link>
-              ) : (
-                <div key={index} className="group cursor-pointer">{card}</div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-slate-900 to-slate-800 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20"></div>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D220.05%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-10"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8">
-              Хотите увидеть свой проект здесь?
-            </h2>
-            <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Начните свой проект с нами уже сегодня и создайте что-то удивительное
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-white text-slate-900 hover:bg-slate-100 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 px-8 py-4 text-lg font-semibold"
+            
+            {/* Переключатель вида */}
+            <div className="flex bg-white/10 rounded-xl p-1">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+                  viewMode === 'grid' 
+                    ? 'bg-blue-500 text-white' 
+                    : 'text-slate-400 hover:text-white'
+                }`}
               >
-                Обсудить проект
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-white/30 text-white hover:bg-white hover:text-slate-900 transition-all duration-500 hover:scale-105 px-8 py-4 text-lg backdrop-blur-sm"
-                asChild
+                <Grid className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+                  viewMode === 'list' 
+                    ? 'bg-blue-500 text-white' 
+                    : 'text-slate-400 hover:text-white'
+                }`}
               >
-                <Link to="/contact">
-                  Связаться с нами
-                </Link>
-              </Button>
+                <List className="w-5 h-5" />
+              </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Showreel Modal */}
-      <ShowreelModal 
-        isOpen={isShowreelModalOpen}
-        onClose={() => setIsShowreelModalOpen(false)}
-      />
-      
-      <Footer />
+          {/* Категории */}
+          <div className="flex flex-wrap gap-3">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-4 py-2 rounded-xl transition-all duration-300 ${
+                  selectedCategory === category.id
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white/10 text-slate-300 hover:bg-white/20 hover:text-white'
+                }`}
+              >
+                {category.name} ({category.count})
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Портфолио */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+        {filteredData.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="w-24 h-24 mx-auto mb-6 bg-white/10 rounded-full flex items-center justify-center">
+              <Search className="w-12 h-12 text-slate-400" />
+            </div>
+            <h3 className="text-2xl font-semibold text-white mb-2">Ничего не найдено</h3>
+            <p className="text-slate-400">Попробуйте изменить параметры поиска или категорию</p>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {/* Заголовок секции */}
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-white mb-2">
+                {selectedCategory === 'all' ? 'Все проекты' : 
+                 categories.find(c => c.id === selectedCategory)?.name}
+              </h2>
+              <p className="text-slate-400">
+                Найдено {filteredData.length} {filteredData.length === 1 ? 'проект' : 
+                filteredData.length < 5 ? 'проекта' : 'проектов'}
+              </p>
+            </div>
+
+            {/* Галерея */}
+            <MediaGallery
+              items={filteredData}
+              columns={viewMode === 'grid' ? 3 : 1}
+              gap={6}
+              showLightbox={true}
+              onItemClick={handleItemClick}
+              className="mt-8"
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Статистика */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 text-center">
+            <div className="w-16 h-16 mx-auto mb-4 bg-blue-500/20 rounded-2xl flex items-center justify-center">
+              <ImageIcon className="w-8 h-8 text-blue-400" />
+            </div>
+            <div className="text-3xl font-bold text-white mb-2">150+</div>
+            <div className="text-slate-400">Реализованных проектов</div>
+          </div>
+          
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 text-center">
+            <div className="w-16 h-16 mx-auto mb-4 bg-purple-500/20 rounded-2xl flex items-center justify-center">
+              <Play className="w-8 h-8 text-purple-400" />
+            </div>
+            <div className="text-3xl font-bold text-white mb-2">50+</div>
+            <div className="text-slate-400">Видео проектов</div>
+          </div>
+          
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 text-center">
+            <div className="w-16 h-16 mx-auto mb-4 bg-green-500/20 rounded-2xl flex items-center justify-center">
+              <Filter className="w-8 h-8 text-green-400" />
+            </div>
+            <div className="text-3xl font-bold text-white mb-2">25+</div>
+            <div className="text-slate-400">Категорий услуг</div>
+          </div>
+          
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 text-center">
+            <div className="w-16 h-16 mx-auto mb-4 bg-orange-500/20 rounded-2xl flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-red-400 rounded-lg"></div>
+            </div>
+            <div className="text-3xl font-bold text-white mb-2">5+</div>
+            <div className="text-slate-400">Лет опыта</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
