@@ -49,6 +49,15 @@ const AdminDashboardContent: React.FC = () => {
     setEditing(false);
   };
 
+  const handleDelete = (id: string) => {
+    if (confirm('Вы уверены, что хотите удалить этот проект?')) {
+      // В реальном приложении здесь был бы API вызов
+      console.log('Удаление проекта:', id);
+      // Обновляем состояние через контекст
+      // deletePortfolioItem(id);
+    }
+  };
+
   const filteredItems = state.portfolioItems.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(state.filters.search.toLowerCase()) ||
                          item.description.toLowerCase().includes(state.filters.search.toLowerCase());
@@ -171,7 +180,7 @@ const AdminDashboardContent: React.FC = () => {
             <PortfolioList 
               items={filteredItems}
               onEdit={handleEdit}
-              onDelete={(id) => {/* Handle delete */}}
+              onDelete={handleDelete}
             />
           </div>
         )}
