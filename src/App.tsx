@@ -56,6 +56,7 @@ import EquipmentDiagnostics from "./pages/services/EquipmentDiagnostics";
 import Maintenance from "./pages/services/Maintenance";
 import EquipmentCalculation from "./pages/services/EquipmentCalculation";
 import DebugCart from "./pages/DebugCart";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 // Страницы комплексных решений
 import SystemIntegration from "./pages/services/SystemIntegration";
@@ -87,6 +88,7 @@ const App = () => (
         <Route path="/careers" element={<Careers />} />
         <Route path="/equipment" element={<Equipment />} />
         <Route path="/debug-cart" element={<DebugCart />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/portfolio/samara-stand" element={<CaseSamaraStand />} />
         <Route path="/portfolio/samsung-event" element={<SamsungEvent />} />
         {/* Основные страницы услуг */}
