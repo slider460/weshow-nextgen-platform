@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useAdmin } from '@/contexts/admin/AdminContext';
-import { PortfolioFormData, PortfolioItem } from '@/types/admin/portfolio';
+import { PortfolioFormData, PortfolioItem, PORTFOLIO_LIMITS } from '@/types/admin/portfolio';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import WYSIWYGEditor from './WYSIWYGEditor';
+import SortableMediaGallery from './SortableMediaGallery';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
@@ -34,16 +36,15 @@ const PortfolioForm: React.FC = () => {
   const { state, updatePortfolioItem, addPortfolioItem, setEditing } = useAdmin();
   const [formData, setFormData] = useState<PortfolioFormData>({
     title: '',
+    subtitle: '',
     slug: '',
     category: '',
     description: '',
     shortDescription: '',
     content: '',
-    image: '',
-    thumbnail: '',
-    gallery: [],
-    video: '',
-    poster: '',
+    coverImage: '',
+    photos: [],
+    videos: [],
     year: new Date().getFullYear().toString(),
     client: '',
     location: '',
@@ -67,16 +68,15 @@ const PortfolioForm: React.FC = () => {
     if (state.selectedItem) {
       setFormData({
         title: state.selectedItem.title,
+        subtitle: state.selectedItem.subtitle,
         slug: state.selectedItem.slug,
         category: state.selectedItem.category,
         description: state.selectedItem.description,
         shortDescription: state.selectedItem.shortDescription,
         content: state.selectedItem.content,
-        image: state.selectedItem.image,
-        thumbnail: state.selectedItem.thumbnail,
-        gallery: state.selectedItem.gallery,
-        video: state.selectedItem.video || '',
-        poster: state.selectedItem.poster || '',
+        coverImage: state.selectedItem.coverImage,
+        photos: state.selectedItem.photos,
+        videos: state.selectedItem.videos,
         year: state.selectedItem.year,
         client: state.selectedItem.client || '',
         location: state.selectedItem.location || '',
@@ -491,79 +491,68 @@ const PortfolioForm: React.FC = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="image">Главное изображение *</Label>
-                  <Input
-                    id="image"
-                    value={formData.image}
-                    onChange={(e) => handleInputChange('image', e.target.value)}
-                    placeholder="URL главного изображения"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="thumbnail">Миниатюра</Label>
-                  <Input
-                    id="thumbnail"
-                    value={formData.thumbnail}
-                    onChange={(e) => handleInputChange('thumbnail', e.target.value)}
-                    placeholder="URL миниатюры"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="video">Видео</Label>
-                  <Input
-                    id="video"
-                    value={formData.video}
-                    onChange={(e) => handleInputChange('video', e.target.value)}
-                    placeholder="URL видео"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="poster">Постер видео</Label>
-                  <Input
-                    id="poster"
-                    value={formData.poster}
-                    onChange={(e) => handleInputChange('poster', e.target.value)}
-                    placeholder="URL постера видео"
-                  />
-                </div>
-              </div>
-
               <div>
-                <Label>Галерея изображений</Label>
-                <div className="space-y-2">
-                  {formData.gallery.map((image, index) => (
-                    <div key={index} className="flex space-x-2">
-                      <Input
-                        value={image}
-                        onChange={(e) => handleArrayFieldChange('gallery', index, e.target.value)}
-                        placeholder={`URL изображения ${index + 1}`}
-                      />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeArrayFieldItem('gallery', index)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => addArrayFieldItem('gallery')}
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Добавить изображение
-                  </Button>
-                </div>
+                <Label htmlFor="coverImage">Обложка проекта *</Label>
+                <Input
+                  id="coverImage"
+                  value={formData.coverImage}
+                  onChange={(e) => handleInputChange('coverImage', e.target.value)}
+                  placeholder="URL обложки проекта"
+                  required
+                />
               </div>
+
+              <SortableMediaGallery
+                type="photos"
+                files={formData.photos.map((url, index) => ({
+                  id: `photo-${index}`,
+                  name: `Фото ${index + 1}`,
+                  url,
+                  thumbnail: url,
+                  type: 'image' as const,
+                  size: 0,
+                  uploadedAt: new Date(),
+                  uploadedBy: 'admin',
+                  order: index,
+                }))}
+                onFilesChange={(files) => handleInputChange('photos', files.map(f => f.url))}
+                onFileRemove={(fileId) => {
+                  const index = parseInt(fileId.split('-')[1]);
+                  const newPhotos = formData.photos.filter((_, i) => i !== index);
+                  handleInputChange('photos', newPhotos);
+                }}
+                onFileAdd={(files) => {
+                  // Здесь должна быть логика загрузки файлов
+                  console.log('Добавление фото:', files);
+                }}
+                maxFiles={PORTFOLIO_LIMITS.MAX_PHOTOS}
+              />
+
+              <SortableMediaGallery
+                type="videos"
+                files={formData.videos.map((url, index) => ({
+                  id: `video-${index}`,
+                  name: `Видео ${index + 1}`,
+                  url,
+                  thumbnail: url,
+                  type: 'video' as const,
+                  size: 0,
+                  uploadedAt: new Date(),
+                  uploadedBy: 'admin',
+                  order: index,
+                }))}
+                onFilesChange={(files) => handleInputChange('videos', files.map(f => f.url))}
+                onFileRemove={(fileId) => {
+                  const index = parseInt(fileId.split('-')[1]);
+                  const newVideos = formData.videos.filter((_, i) => i !== index);
+                  handleInputChange('videos', newVideos);
+                }}
+                onFileAdd={(files) => {
+                  // Здесь должна быть логика загрузки файлов
+                  console.log('Добавление видео:', files);
+                }}
+                maxFiles={PORTFOLIO_LIMITS.MAX_VIDEOS}
+              />
             </CardContent>
           </Card>
         </TabsContent>
