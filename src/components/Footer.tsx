@@ -12,7 +12,6 @@ import {
   Linkedin, 
   Youtube,
   ArrowUp,
-  Heart,
   Sparkles,
   Zap,
   Star
@@ -296,8 +295,6 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
             <div className="flex items-center space-x-2 text-slate-400">
               <span>© {currentYear} WESHOW. Все права защищены.</span>
-              <Heart className="h-4 w-4 text-red-400 animate-pulse" />
-              <span>Сделано с любовью</span>
             </div>
             
             <div className="flex items-center space-x-6 text-sm">
