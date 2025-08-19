@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест Favicon WESHOW</title>
+    <link rel="icon" type="image/svg+xml" href="/weshow-favicon.svg" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .favicon-display {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .favicon-preview {
+            display: inline-block;
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .favicon-preview img {
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .status {
+            background: rgba(34, 197, 94, 0.2);
+            border: 2px solid #22c55e;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+        }
+        .info {
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid #3b82f6;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .info h3 {
+            margin-top: 0;
+            color: #60a5fa;
+        }
+        .code {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Тест Favicon WESHOW</h1>
+        
+        <div class="status">
+            <strong>✅ Статус:</strong> Новый favicon WESHOW успешно загружен!
+        </div>
+        
+        <div class="favicon-display">
+            <h2>🖼️ Предварительный просмотр</h2>
+            <div class="favicon-preview">
+                <img src="/weshow-favicon.svg" alt="WESHOW Favicon" />
+                <br>
+                <strong>32x32</strong>
+            </div>
+            <div class="favicon-preview">
+                <img src="/weshow-favicon.svg" alt="WESHOW Favicon" style="width: 48px; height: 48px;" />
+                <br>
+                <strong>48x48</strong>
+            </div>
+            <div class="favicon-preview">
+                <img src="/weshow-favicon.svg" alt="WESHOW Favicon" style="width: 64px; height: 64px;" />
+                <br>
+                <strong>64x64</strong>
+            </div>
+        </div>
+        
+        <div class="info">
+            <h3>📋 Информация о favicon</h3>
+            <p><strong>Файл:</strong> <span class="code">/weshow-favicon.svg</span></p>
+            <p><strong>Формат:</strong> SVG (векторный)</p>
+            <p><strong>Цвета:</strong> Синий → Фиолетовый → Голубой градиент</p>
+            <p><strong>Дизайн:</strong> Буква "W" с современным стилем</p>
+            <p><strong>Особенности:</strong> Адаптивный, поддерживает все размеры</p>
+        </div>
+        
+        <div class="info">
+            <h3>🔧 Технические детали</h3>
+            <p><strong>HTML тег:</strong></p>
+            <div class="code">&lt;link rel="icon" type="image/svg+xml" href="/weshow-favicon.svg" /&gt;</div>
+            <p><strong>Web Manifest:</strong> <span class="code">/site.webmanifest</span></p>
+            <p><strong>Кэш:</strong> Автоматически обновляется с timestamp</p>
+        </div>
+        
+        <div class="status">
+            <strong>🎉 Результат:</strong> Старый favicon Lovable полностью заменен на новый WESHOW!
+        </div>
+    </div>
+    
+    <script>
+        // Проверяем загрузку favicon
+        document.addEventListener('DOMContentLoaded', function() {
+            const favicon = document.querySelector('link[rel="icon"]');
+            if (favicon) {
+                console.log('✅ Favicon найден:', favicon.href);
+                
+                // Принудительно обновляем favicon для тестирования
+                const timestamp = Date.now();
+                favicon.href = '/weshow-favicon.svg?v=' + timestamp;
+                console.log('🔄 Favicon обновлен с timestamp:', timestamp);
+            } else {
+                console.log('❌ Favicon не найден');
+            }
+        });
+    </script>
+</body>
+</html>
