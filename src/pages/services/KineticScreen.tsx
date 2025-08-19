@@ -56,56 +56,76 @@ const KineticScreen: React.FC = () => {
   const galleryItems: GalleryItem[] = [
     {
       id: 1,
-      title: "Кинетический экран для выставки",
-      description: "Интерактивная инсталляция на международной выставке",
-      image: "/placeholder.svg",
+      title: "Кинетическая Инсталляция 'Волна'",
+      description: "Интерактивная инсталляция на международной выставке технологий будущего",
+      image: "/media/services/kinetic-screen/cases/wave-installation/main.jpg",
       type: 'video',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+      videoUrl: 'https://www.youtube.com/embed/example1'
     },
     {
       id: 2,
-      title: "Корпоративная презентация",
-      description: "Динамичная презентация для крупной компании",
-      image: "/placeholder.svg",
+      title: "Корпоративная Презентация Samsung",
+      description: "Динамичная презентация новых продуктов с 6 кинетическими экранами",
+      image: "/media/services/kinetic-screen/cases/samsung-presentation/main.jpg",
       type: 'photo'
     },
     {
       id: 3,
-      title: "Торговый центр",
-      description: "Кинетические экраны в розничном пространстве",
-      image: "/placeholder.svg",
+      title: "Торговый Центр 'Метрополис'",
+      description: "Кинетические экраны в розничном пространстве для привлечения клиентов",
+      image: "/media/services/kinetic-screen/cases/metropolis-mall/main.jpg",
       type: 'case',
       caseData: {
         task: "Создать привлекающие внимание интерактивные экраны для торгового центра",
-        solution: "Установили 4 кинетических LED экрана с датчиками движения",
+        solution: "Установили 4 кинетических LED экрана с датчиками движения и AI-анализом",
         result: "Увеличение времени пребывания посетителей на 40%, рост продаж на 25%"
       }
     },
     {
       id: 4,
-      title: "Музейная экспозиция",
-      description: "Интерактивная выставка с кинетическими элементами",
-      image: "/placeholder.svg",
+      title: "Музей Современного Искусства",
+      description: "Интерактивная выставка 'Технологии в Искусстве' с кинетическими элементами",
+      image: "/media/services/kinetic-screen/cases/modern-art-museum/main.jpg",
       type: 'video',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+      videoUrl: 'https://www.youtube.com/embed/example2'
     },
     {
       id: 5,
-      title: "Спортивное мероприятие",
-      description: "Кинетические экраны на стадионе",
-      image: "/placeholder.svg",
+      title: "Спортивный Стадион 'Олимпийский'",
+      description: "Кинетические экраны для трансляции матчей и рекламы",
+      image: "/media/services/kinetic-screen/cases/olympic-stadium/main.jpg",
       type: 'photo'
     },
     {
       id: 6,
-      title: "Конференция",
-      description: "Технологическая конференция с кинетическими экранами",
-      image: "/placeholder.svg",
+      title: "IT-Конференция 'Digital Future'",
+      description: "Технологическая конференция с кинетическими экранами для презентаций",
+      image: "/media/services/kinetic-screen/cases/digital-future-conference/main.jpg",
       type: 'case',
       caseData: {
-        task: "Организовать впечатляющую презентацию для IT-конференции",
-        solution: "Создали кинетическую стену с 8 движущимися экранами",
-        result: "100% положительных отзывов, приглашения на другие конференции"
+        task: "Организовать впечатляющую презентацию для IT-конференции с 2000+ участниками",
+        solution: "Создали кинетическую стену с 8 движущимися экранами и синхронизированным контентом",
+        result: "100% положительных отзывов, приглашения на другие конференции, рост продаж билетов на 60%"
+      }
+    },
+    {
+      id: 7,
+      title: "Выставка Автомобилей 'AutoExpo'",
+      description: "Кинетические экраны для демонстрации новых моделей автомобилей",
+      image: "/media/services/kinetic-screen/cases/auto-expo/main.jpg",
+      type: 'video',
+      videoUrl: 'https://www.youtube.com/embed/example3'
+    },
+    {
+      id: 8,
+      title: "Концертный Зал 'Филармония'",
+      description: "Кинетические экраны для музыкальных представлений и опер",
+      image: "/media/services/kinetic-screen/cases/philharmonic-hall/main.jpg",
+      type: 'case',
+      caseData: {
+        task: "Создать динамичное визуальное сопровождение для классических концертов",
+        solution: "Установили 3 кинетических экрана с синхронизацией под музыку",
+        result: "Увеличение посещаемости на 35%, восторженные отзывы критиков и публики"
       }
     }
   ];
@@ -289,6 +309,239 @@ const KineticScreen: React.FC = () => {
         </div>
       </section>
 
+      {/* Technology Overview Section */}
+      <section className="py-20 bg-[#0f0f0f]">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-white mb-6">
+                Технология Кинетических Экранов: Будущее Уже Здесь
+              </h2>
+              <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+                Кинетические экраны представляют собой революционную технологию, где физическое движение 
+                и цифровое изображение создают уникальный интерактивный опыт.
+              </p>
+            </div>
+            
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-6">
+                  Как Работает Кинетический Экран?
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-8 h-8 bg-gradient-to-r from-[#00F2A9] to-[#007BFF] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white font-bold text-sm">1</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white mb-1">Датчики Движения</h4>
+                      <p className="text-gray-400 text-sm">Специальные сенсоры отслеживают перемещение объектов и людей в пространстве</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-4">
+                    <div className="w-8 h-8 bg-gradient-to-r from-[#00F2A9] to-[#007BFF] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white font-bold text-sm">2</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white mb-1">Анализ Данных</h4>
+                      <p className="text-gray-400 text-sm">Компьютер обрабатывает информацию и определяет оптимальную траекторию движения</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-4">
+                    <div className="w-8 h-8 bg-gradient-to-r from-[#00F2A9] to-[#007BFF] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white font-bold text-sm">3</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white mb-1">Физическое Движение</h4>
+                      <p className="text-gray-400 text-sm">Экраны плавно перемещаются, создавая динамичную композицию</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-4">
+                    <div className="w-8 h-8 bg-gradient-to-r from-[#00F2A9] to-[#007BFF] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-white font-bold text-sm">4</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white mb-1">Синхронизация Контента</h4>
+                      <p className="text-gray-400 text-sm">Визуальный контент адаптируется под новое расположение экранов</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-[#2a2a2a] rounded-2xl p-8 border border-[#3a3a3a]">
+                <h4 className="text-xl font-semibold text-white mb-4">Ключевые Преимущества</h4>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Привлечение внимания на 300% больше</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Уникальный пользовательский опыт</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Адаптивность под любые пространства</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Технологическое превосходство</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Высокая рентабельность инвестиций</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Technical Specifications Section */}
+      <section className="py-20 bg-[#1a1a1a]">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-white mb-6">
+                Технические Характеристики
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Профессиональное оборудование для создания впечатляющих кинетических инсталляций
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="bg-[#2a2a2a] rounded-2xl p-8 border border-[#3a3a3a]">
+                <div className="w-16 h-16 bg-gradient-to-r from-[#007BFF] to-[#00F2A9] rounded-2xl flex items-center justify-center mb-6">
+                  <Monitor className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-4">Экраны</h3>
+                <div className="space-y-2 text-gray-400">
+                  <div>• Разрешение: 4K Ultra HD (3840×2160)</div>
+                  <div>• Яркость: 5000+ нит</div>
+                  <div>• Контрастность: 5000:1</div>
+                  <div>• Угол обзора: 178°</div>
+                  <div>• Размеры: 55" - 86"</div>
+                </div>
+              </div>
+              
+              <div className="bg-[#2a2a2a] rounded-2xl p-8 border border-[#3a3a3a]">
+                <div className="w-16 h-16 bg-gradient-to-r from-[#00F2A9] to-[#007BFF] rounded-2xl flex items-center justify-center mb-6">
+                  <Move className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-4">Кинетическая Система</h3>
+                <div className="space-y-2 text-gray-400">
+                  <div>• Скорость движения: до 2 м/с</div>
+                  <div>• Точность позиционирования: ±1мм</div>
+                  <div>• Грузоподъемность: до 50 кг</div>
+                  <div>• Диапазон движения: 360°</div>
+                  <div>• Время отклика: <50мс</div>
+                </div>
+              </div>
+              
+              <div className="bg-[#2a2a2a] rounded-2xl p-8 border border-[#3a3a3a]">
+                <div className="w-16 h-16 bg-gradient-to-r from-[#007BFF] to-[#00F2A9] rounded-2xl flex items-center justify-center mb-6">
+                  <Zap className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-4">Питание и Управление</h3>
+                <div className="space-y-2 text-gray-400">
+                  <div>• Потребление: 200-500 Вт</div>
+                  <div>• Напряжение: 220-240В</div>
+                  <div>• Интерфейс: Ethernet, Wi-Fi</div>
+                  <div>• Управление: ПК, планшет, смартфон</div>
+                  <div>• Автономность: до 8 часов</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Real Applications & Statistics Section */}
+      <section className="py-20 bg-[#0f0f0f]">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-white mb-6">
+                Реальные Применения и Статистика
+              </h2>
+              <p className="text-xl text-gray-300 max-w-4xl mx-auto">
+                Доказанная эффективность кинетических экранов в различных отраслях и сферах применения
+              </p>
+            </div>
+            
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-6">
+                  Где Используются Кинетические Экраны?
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-4 p-4 bg-[#2a2a2a] rounded-xl">
+                    <div className="w-12 h-12 bg-gradient-to-r from-[#00F2A9] to-[#007BFF] rounded-xl flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold text-lg">🏢</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white">Корпоративные Мероприятия</h4>
+                      <p className="text-gray-400 text-sm">Презентации, конференции, выставки</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4 p-4 bg-[#2a2a2a] rounded-xl">
+                    <div className="w-12 h-12 bg-gradient-to-r from-[#00F2A9] to-[#007BFF] rounded-xl flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold text-lg">🛍️</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white">Торговые Центры</h4>
+                      <p className="text-gray-400 text-sm">Реклама, навигация, развлечения</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4 p-4 bg-[#2a2a2a] rounded-xl">
+                    <div className="w-12 h-12 bg-gradient-to-r from-[#00F2A9] to-[#007BFF] rounded-xl flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold text-lg">🎭</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white">Культурные Учреждения</h4>
+                      <p className="text-gray-400 text-sm">Музеи, театры, концертные залы</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4 p-4 bg-[#2a2a2a] rounded-xl">
+                    <div className="w-12 h-12 bg-gradient-to-r from-[#00F2A9] to-[#007BFF] rounded-xl flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold text-lg">🏟️</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white">Спортивные Объекты</h4>
+                      <p className="text-gray-400 text-sm">Стадионы, арены, фитнес-центры</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-[#2a2a2a] rounded-2xl p-8 border border-[#3a3a3a]">
+                <h4 className="text-xl font-semibold text-white mb-6">Статистика Эффективности</h4>
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-[#00F2A9] mb-2">300%</div>
+                    <div className="text-gray-300">Увеличение внимания аудитории</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-[#007BFF] mb-2">85%</div>
+                    <div className="text-gray-300">Повышение запоминаемости контента</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-[#00F2A9] mb-2">40%</div>
+                    <div className="text-gray-300">Рост времени взаимодействия</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-[#007BFF] mb-2">60%</div>
+                    <div className="text-gray-300">Увеличение конверсии</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section className="py-20 bg-[#0f0f0f]">
         <div className="container mx-auto px-4">
@@ -332,6 +585,147 @@ const KineticScreen: React.FC = () => {
                   Анимации, интерактивные элементы и визуальные эффекты.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing & Packages Section */}
+      <section className="py-20 bg-[#1a1a1a]">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-white mb-6">
+                Тарифы и Пакеты Услуг
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Выберите оптимальный пакет для вашего мероприятия или получите индивидуальное предложение
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-[#2a2a2a] rounded-2xl p-8 border border-[#3a3a3a] hover:border-[#007BFF] transition-all duration-300">
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-white mb-2">Старт</h3>
+                  <div className="text-4xl font-bold text-[#00F2A9] mb-2">от 150₽</div>
+                  <div className="text-gray-400">за час аренды</div>
+                </div>
+                <div className="space-y-3 mb-8">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">1 кинетический экран 55"</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Базовая настройка</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Техническая поддержка</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Монтаж и демонтаж</span>
+                  </div>
+                </div>
+                <Button 
+                  className="w-full bg-gradient-to-r from-[#00F2A9] to-[#007BFF] hover:from-[#00E0A0] hover:to-[#0066CC] text-white"
+                  onClick={scrollToForm}
+                >
+                  Заказать
+                </Button>
+              </div>
+              
+              <div className="bg-[#2a2a2a] rounded-2xl p-8 border-2 border-[#007BFF] relative hover:scale-105 transition-all duration-300">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-[#007BFF] text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    Популярный
+                  </div>
+                </div>
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-white mb-2">Профи</h3>
+                  <div className="text-4xl font-bold text-[#007BFF] mb-2">от 250₽</div>
+                  <div className="text-gray-400">за час аренды</div>
+                </div>
+                <div className="space-y-3 mb-8">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#007BFF] rounded-full"></div>
+                    <span className="text-gray-300">2-3 кинетических экрана 65"</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#007BFF] rounded-full"></div>
+                    <span className="text-gray-300">Продвинутая настройка</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#007BFF] rounded-full"></div>
+                    <span className="text-gray-300">Синхронизация экранов</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#007BFF] rounded-full"></div>
+                    <span className="text-gray-300">Базовый контент</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#007BFF] rounded-full"></div>
+                    <span className="text-gray-300">24/7 поддержка</span>
+                  </div>
+                </div>
+                <Button 
+                  className="w-full bg-gradient-to-r from-[#007BFF] to-[#00F2A9] hover:from-[#0066CC] hover:to-[#00E0A0] text-white"
+                  onClick={scrollToForm}
+                >
+                  Заказать
+                </Button>
+              </div>
+              
+              <div className="bg-[#2a2a2a] rounded-2xl p-8 border border-[#3a3a3a] hover:border-[#00F2A9] transition-all duration-300">
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-white mb-2">Премиум</h3>
+                  <div className="text-4xl font-bold text-[#00F2A9] mb-2">от 400₽</div>
+                  <div className="text-gray-400">за час аренды</div>
+                </div>
+                <div className="space-y-3 mb-8">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">4+ кинетических экрана 86"</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Полная настройка</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">AI-анализ движения</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Кастомный контент</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 bg-[#00F2A9] rounded-full"></div>
+                    <span className="text-gray-300">Персональный менеджер</span>
+                  </div>
+                </div>
+                <Button 
+                  className="w-full bg-gradient-to-r from-[#00F2A9] to-[#007BFF] hover:from-[#00E0A0] hover:to-[#0066CC] text-white"
+                  onClick={scrollToForm}
+                >
+                  Заказать
+                </Button>
+              </div>
+            </div>
+            
+            <div className="text-center mt-12">
+              <p className="text-gray-400 mb-4">
+                * Цены указаны за базовую аренду. Финальная стоимость зависит от сложности проекта, 
+                длительности мероприятия и дополнительных услуг.
+              </p>
+              <Button 
+                variant="outline" 
+                className="border-[#007BFF] text-[#007BFF] hover:bg-[#007BFF] hover:text-white"
+                onClick={scrollToForm}
+              >
+                Получить индивидуальное предложение
+              </Button>
             </div>
           </div>
         </div>
