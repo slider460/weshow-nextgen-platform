@@ -137,10 +137,10 @@ const Header = () => {
                 }`} />
               </button>
               
-              <div className={`absolute top-full left-0 mt-2 w-[900px] bg-white/95 backdrop-blur-optimized border border-slate-200 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-1 z-50`}>
-                <div className="p-6">
+              <div className={`absolute top-full left-0 mt-2 w-[800px] bg-white border border-slate-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50`}>
+                <div className="p-4">
                   {/* Верхняя навигация */}
-                  <div className="flex items-center space-x-6 mb-6 pb-4 border-b border-slate-200">
+                  <div className="flex items-center space-x-4 mb-4 pb-3 border-b border-slate-200">
                     <Link to="/services" className="text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
                       Все услуги
                     </Link>
@@ -159,144 +159,144 @@ const Header = () => {
                   </div>
 
                   {/* Поиск */}
-                  <div className="mb-6">
+                  <div className="mb-4">
                     <div className="relative">
                       <input 
                         type="text" 
-                        placeholder="Найти услугу..." 
-                        className="w-full px-4 py-3 pl-12 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Подобрать услугу..." 
+                        className="w-full px-3 py-2 pl-10 border border-slate-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
                       />
-                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                     </div>
                   </div>
 
                   {/* Основной контент в колонках */}
-                  <div className="grid grid-cols-4 gap-8">
+                  <div className="grid grid-cols-4 gap-6">
                     {/* Колонка 1: Популярное */}
-                    <div className="space-y-4">
-                      <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider mb-3">Популярное</h3>
+                    <div className="space-y-3">
+                      <h3 className="text-xs font-semibold text-slate-800 uppercase tracking-wider mb-2">Популярное</h3>
                       
                       <Link to="/services/equipment-rental" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Аренда оборудования</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Аренда оборудования</h4>
                           <p className="text-xs text-slate-600 mt-1">Готовые решения для мероприятий любого масштаба</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/kinetic-screen" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Кинетические LED экраны</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Кинетические LED экраны</h4>
                           <p className="text-xs text-slate-600 mt-1">Инновационные решения для создания wow-эффекта</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/complex-solutions" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Комплексные решения</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Комплексные решения</h4>
                           <p className="text-xs text-slate-600 mt-1">От концепции до реализации под ключ</p>
                         </div>
                       </Link>
                       
-                      <Button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white text-sm">
-                        Все услуги
-                        <ArrowRight className="h-4 w-4 ml-2" />
+                      <Button className="w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white text-xs py-2">
+                        Мои услуги
+                        <ArrowRight className="h-3 w-3 ml-1" />
                       </Button>
                     </div>
 
                     {/* Колонка 2: Мультимедиа */}
-                    <div className="space-y-4">
-                      <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider mb-3">Мультимедиа</h3>
+                    <div className="space-y-3">
+                      <h3 className="text-xs font-semibold text-slate-800 uppercase tracking-wider mb-2">Мультимедиа</h3>
                       
                       <Link to="/services/multimedia" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Мультимедийные решения</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Мультимедийные решения</h4>
                           <p className="text-xs text-slate-600 mt-1">Видео, аудио, интерактив</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/projection-mapping" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Проекционное маппинг</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Проекционное маппинг</h4>
                           <p className="text-xs text-slate-600 mt-1">3D проекции на любые поверхности</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/interactive-games" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Интерактивные игры</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Интерактивные игры</h4>
                           <p className="text-xs text-slate-600 mt-1">Motion tracking и VR/AR</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/holographic-displays" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Голографические дисплеи</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Голографические дисплеи</h4>
                           <p className="text-xs text-slate-600 mt-1">3D эффекты без очков</p>
                         </div>
                       </Link>
                     </div>
 
                     {/* Колонка 3: Разработка */}
-                    <div className="space-y-4">
-                      <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider mb-3">Разработка</h3>
+                    <div className="space-y-3">
+                      <h3 className="text-xs font-semibold text-slate-800 uppercase tracking-wider mb-2">Разработка</h3>
                       
                       <Link to="/services/development" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Разработка ПО и игр</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Разработка ПО и игр</h4>
                           <p className="text-xs text-slate-600 mt-1">Мобильные приложения и игры</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/web-platforms" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Веб-платформы</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Веб-платформы</h4>
                           <p className="text-xs text-slate-600 mt-1">Современные веб-решения</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/ar-vr-apps" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">AR/VR приложения</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">AR/VR приложения</h4>
                           <p className="text-xs text-slate-600 mt-1">Дополненная и виртуальная реальность</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/cross-platform" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Кроссплатформенность</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Кроссплатформенность</h4>
                           <p className="text-xs text-slate-600 mt-1">Работа на всех устройствах</p>
                         </div>
                       </Link>
                     </div>
 
                     {/* Колонка 4: Оборудование */}
-                    <div className="space-y-4">
-                      <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider mb-3">Оборудование</h3>
+                    <div className="space-y-3">
+                      <h3 className="text-xs font-semibold text-slate-800 uppercase tracking-wider mb-2">Оборудование</h3>
                       
                       <Link to="/services/equipment-calculation" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Калькулятор аренды</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Калькулятор аренды</h4>
                           <p className="text-xs text-slate-600 mt-1">Расчет стоимости оборудования</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/installation" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Монтаж и установка</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Монтаж и установка</h4>
                           <p className="text-xs text-slate-600 mt-1">Профессиональная установка</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/maintenance" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Техобслуживание</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Техобслуживание</h4>
                           <p className="text-xs text-slate-600 mt-1">Поддержка и ремонт</p>
                         </div>
                       </Link>
                       
                       <Link to="/services/equipment-diagnostics" className="block group">
-                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
-                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Диагностика</h4>
+                        <div className="p-2 rounded hover:bg-slate-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600 text-sm">Диагностика</h4>
                           <p className="text-xs text-slate-600 mt-1">Проверка состояния оборудования</p>
                         </div>
                       </Link>
