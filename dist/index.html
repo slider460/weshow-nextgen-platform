@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=yes" />
@@ -8,24 +8,58 @@
     <meta name="author" content="WESHOW" />
     <meta name="keywords" content="мультимедийные технологии, техническая интеграция, AV системы, проекционный маппинг, корпоративные мероприятия" />
 
+    <!-- Favicon - современная структура -->
+    <link rel="icon" type="image/svg+xml" href="/logo-favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph - современные meta-теги -->
     <meta property="og:title" content="WESHOW - Комплексные мультимедийные решения для бизнеса" />
     <meta property="og:description" content="Профессиональное техническое оснащение, 3D-маппинг, интерактивные инсталляции и организация мероприятий для корпоративных клиентов" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:url" content="https://weshow.su" />
+    <meta property="og:image" content="https://weshow.su/og-image.png" />
+    <meta property="og:site_name" content="WESHOW" />
+    <meta property="og:locale" content="ru_RU" />
 
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:title" content="WESHOW - Мультимедийные решения" />
+    <meta name="twitter:description" content="Профессиональное техническое оснащение и организация мероприятий" />
+    <meta name="twitter:image" content="https://weshow.su/twitter-image.png" />
     
     <!-- Google Fonts - Современная типографика -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-CqHdUF0X.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BMf6Q61b.css">
+    
+    <!-- Preload критических ресурсов -->
+    <link rel="preload" href="/logo-favicon.svg" as="image" type="image/svg+xml">
+    <script type="module" crossorigin src="/assets/index--dTOF3bO.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BxrcyjUm.css">
   </head>
 
   <body>
     <div id="root"></div>
+    
+    <!-- Принудительное обновление favicon -->
+    <script>
+      // Принудительно обновляем favicon при загрузке страницы
+      document.addEventListener('DOMContentLoaded', function() {
+        const favicon = document.querySelector('link[rel="icon"]');
+        if (favicon) {
+          const timestamp = Date.now();
+          const newHref = favicon.href.split('?')[0] + '?v=' + timestamp;
+          favicon.href = newHref;
+          
+          // Также обновляем все остальные favicon ссылки
+          const allFavicons = document.querySelectorAll('link[rel*="icon"]');
+          allFavicons.forEach(link => {
+            if (link.href && !link.href.includes('?')) {
+              link.href = link.href + '?v=' + timestamp;
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>

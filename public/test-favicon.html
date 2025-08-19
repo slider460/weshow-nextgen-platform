@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест фавикона WESHOW</title>
+    
+    <!-- Тестируем разные варианты фавикона -->
+    <link rel="icon" type="image/svg+xml" href="/logo-favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .favicon-preview {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        .favicon-preview img {
+            width: 32px;
+            height: 32px;
+            border: 2px solid white;
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .success { background: rgba(34, 197, 94, 0.3); }
+        .warning { background: rgba(251, 191, 36, 0.3); }
+        .error { background: rgba(239, 68, 68, 0.3); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Тест фавикона WESHOW</h1>
+        
+        <div class="status success">
+            <strong>✅ Статус:</strong> Проверяем корректность отображения фавикона
+        </div>
+        
+        <div class="favicon-preview">
+            <img src="/logo-favicon.svg" alt="SVG Favicon" />
+            <div>
+                <strong>SVG Favicon:</strong> /logo-favicon.svg<br>
+                <small>Основной фавикон в векторном формате</small>
+            </div>
+        </div>
+        
+        <div class="status warning">
+            <strong>⚠️ Важно:</strong> Если фавикон не обновился, попробуйте:
+            <ul>
+                <li>Очистить кэш браузера (Ctrl+F5 или Cmd+Shift+R)</li>
+                <li>Открыть в режиме инкогнито</li>
+                <li>Подождать несколько минут</li>
+            </ul>
+        </div>
+        
+        <div class="status success">
+            <strong>🎯 Цель:</strong> Заменить старый фавикон Lovable на новый логотип WESHOW
+        </div>
+        
+        <script>
+            // Проверяем загрузку фавикона
+            document.addEventListener('DOMContentLoaded', function() {
+                const favicon = document.querySelector('link[rel="icon"]');
+                if (favicon) {
+                    console.log('✅ Favicon найден:', favicon.href);
+                    
+                    // Принудительно обновляем
+                    const timestamp = Date.now();
+                    favicon.href = favicon.href.split('?')[0] + '?v=' + timestamp;
+                    console.log('🔄 Favicon обновлен с timestamp:', timestamp);
+                } else {
+                    console.log('❌ Favicon не найден');
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

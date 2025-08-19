@@ -31,3 +31,4 @@ dist-ssr
 *.webm
 public/showreel.mp4
 public/samsung-event.mp4
+.vercel
