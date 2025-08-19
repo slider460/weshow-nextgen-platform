@@ -13,14 +13,16 @@ import {
   Sparkles,
   Zap,
   Star,
-  ShoppingCart
+  ShoppingCart,
+  Search,
+  ArrowRight
 } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
-import LanguageSwitcher from "./LanguageSwitcher";
-import { useLanguage } from "@/contexts/LanguageContext";
+// import LanguageSwitcher from "./LanguageSwitcher";
+// import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
-  const { t, language, setLanguage } = useLanguage();
+  // const { t, language, setLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -117,7 +119,7 @@ const Header = () => {
                 isActive("/") ? "text-blue-600" : ""
               }`}
             >
-              {t('nav.home')}
+              Главная
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-200 ${
                 isActive("/") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -129,77 +131,176 @@ const Header = () => {
                 className="flex items-center space-x-1 text-slate-700 hover:text-blue-600 hover-no-flicker interactive-optimized transition-colors duration-200 font-medium group"
                 onClick={toggleServices}
               >
-                <span>{t('nav.services')}</span>
+                <span>Услуги</span>
                 <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${
                   isServicesOpen ? "rotate-180" : ""
                 }`} />
               </button>
               
-              <div className={`absolute top-full left-0 mt-2 w-80 bg-white/95 backdrop-blur-optimized border border-slate-200 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-1`}>
-                <div className="p-4">
-                  <div className="mb-4">
-                    <Link to="/services" className="flex items-center px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 font-medium group">
-                      <Sparkles className="w-4 h-4 mr-3 text-blue-600" />
+              <div className={`absolute top-full left-0 mt-2 w-[900px] bg-white/95 backdrop-blur-optimized border border-slate-200 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-1 z-50`}>
+                <div className="p-6">
+                  {/* Верхняя навигация */}
+                  <div className="flex items-center space-x-6 mb-6 pb-4 border-b border-slate-200">
+                    <Link to="/services" className="text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
                       Все услуги
                     </Link>
+                    <Link to="/services/multimedia" className="text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
+                      Мультимедиа
+                    </Link>
+                    <Link to="/services/development" className="text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
+                      Разработка
+                    </Link>
+                    <Link to="/services/equipment-rental" className="text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
+                      Оборудование
+                    </Link>
+                    <Link to="/services/design" className="text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
+                      Дизайн
+                    </Link>
                   </div>
-                  
-                  {/* Основные услуги */}
-                  <div className="grid grid-cols-1 gap-2">
-                    <Link to="/services/multimedia" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                      Мультимедийные решения
-                    </Link>
-                    
-                    <Link to="/services/development" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-                      Разработка ПО и игр
-                    </Link>
-                    
-                    <Link to="/services/design" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-pink-500 rounded-full mr-3"></div>
-                      Дизайн и брендинг
-                    </Link>
-                    
-                    <Link to="/services/technical-support" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                      Техническое сопровождение
-                    </Link>
-                    
-                    <Link to="/services/equipment-rental" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></div>
-                      Аренда оборудования
-                    </Link>
-                    
-                    <Link to="/services/equipment-calculation" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                      Калькулятор аренды
-                    </Link>
-                    
-                    <Link to="/services/kinetic-screen" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-teal-500 rounded-full mr-3"></div>
-                      Кинетические LED экраны
-                    </Link>
-                    
-                    <Link to="/services/complex-solutions" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-orange-500 rounded-full mr-3"></div>
-                      Комплексные решения
-                    </Link>
-                    
-                    <Link to="/services/space-planning" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-indigo-500 rounded-full mr-3"></div>
-                      Пространственное проектирование
-                    </Link>
-                    
-                    <Link to="/services/tech-support" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-cyan-500 rounded-full mr-3"></div>
-                      Техническая поддержка
-                    </Link>
-                    
-                    <Link to="/services/system-integration" className="flex items-center px-4 py-3 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors duration-200 group">
-                      <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
-                      Системная интеграция
-                    </Link>
+
+                  {/* Поиск */}
+                  <div className="mb-6">
+                    <div className="relative">
+                      <input 
+                        type="text" 
+                        placeholder="Найти услугу..." 
+                        className="w-full px-4 py-3 pl-12 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                    </div>
+                  </div>
+
+                  {/* Основной контент в колонках */}
+                  <div className="grid grid-cols-4 gap-8">
+                    {/* Колонка 1: Популярное */}
+                    <div className="space-y-4">
+                      <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider mb-3">Популярное</h3>
+                      
+                      <Link to="/services/equipment-rental" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Аренда оборудования</h4>
+                          <p className="text-xs text-slate-600 mt-1">Готовые решения для мероприятий любого масштаба</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/kinetic-screen" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Кинетические LED экраны</h4>
+                          <p className="text-xs text-slate-600 mt-1">Инновационные решения для создания wow-эффекта</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/complex-solutions" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Комплексные решения</h4>
+                          <p className="text-xs text-slate-600 mt-1">От концепции до реализации под ключ</p>
+                        </div>
+                      </Link>
+                      
+                      <Button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white text-sm">
+                        Все услуги
+                        <ArrowRight className="h-4 w-4 ml-2" />
+                      </Button>
+                    </div>
+
+                    {/* Колонка 2: Мультимедиа */}
+                    <div className="space-y-4">
+                      <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider mb-3">Мультимедиа</h3>
+                      
+                      <Link to="/services/multimedia" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Мультимедийные решения</h4>
+                          <p className="text-xs text-slate-600 mt-1">Видео, аудио, интерактив</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/projection-mapping" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Проекционное маппинг</h4>
+                          <p className="text-xs text-slate-600 mt-1">3D проекции на любые поверхности</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/interactive-games" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Интерактивные игры</h4>
+                          <p className="text-xs text-slate-600 mt-1">Motion tracking и VR/AR</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/holographic-displays" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Голографические дисплеи</h4>
+                          <p className="text-xs text-slate-600 mt-1">3D эффекты без очков</p>
+                        </div>
+                      </Link>
+                    </div>
+
+                    {/* Колонка 3: Разработка */}
+                    <div className="space-y-4">
+                      <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider mb-3">Разработка</h3>
+                      
+                      <Link to="/services/development" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Разработка ПО и игр</h4>
+                          <p className="text-xs text-slate-600 mt-1">Мобильные приложения и игры</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/web-platforms" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Веб-платформы</h4>
+                          <p className="text-xs text-slate-600 mt-1">Современные веб-решения</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/ar-vr-apps" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">AR/VR приложения</h4>
+                          <p className="text-xs text-slate-600 mt-1">Дополненная и виртуальная реальность</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/cross-platform" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Кроссплатформенность</h4>
+                          <p className="text-xs text-slate-600 mt-1">Работа на всех устройствах</p>
+                        </div>
+                      </Link>
+                    </div>
+
+                    {/* Колонка 4: Оборудование */}
+                    <div className="space-y-4">
+                      <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider mb-3">Оборудование</h3>
+                      
+                      <Link to="/services/equipment-calculation" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Калькулятор аренды</h4>
+                          <p className="text-xs text-slate-600 mt-1">Расчет стоимости оборудования</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/installation" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Монтаж и установка</h4>
+                          <p className="text-xs text-slate-600 mt-1">Профессиональная установка</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/maintenance" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Техобслуживание</h4>
+                          <p className="text-xs text-slate-600 mt-1">Поддержка и ремонт</p>
+                        </div>
+                      </Link>
+                      
+                      <Link to="/services/equipment-diagnostics" className="block group">
+                        <div className="p-3 rounded-lg hover:bg-blue-50 transition-colors">
+                          <h4 className="font-medium text-slate-900 group-hover:text-blue-600">Диагностика</h4>
+                          <p className="text-xs text-slate-600 mt-1">Проверка состояния оборудования</p>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -211,7 +312,7 @@ const Header = () => {
                 isActive("/team") ? "text-blue-600" : ""
               }`}
             >
-              {t('nav.team')}
+              Команда
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-200 ${
                 isActive("/team") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -223,7 +324,7 @@ const Header = () => {
                 isActive("/portfolio") ? "text-blue-600" : ""
               }`}
             >
-              {t('nav.portfolio')}
+              Портфолио
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-200 ${
                 isActive("/portfolio") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -235,7 +336,7 @@ const Header = () => {
                 isActive("/news") ? "text-blue-600" : ""
               }`}
             >
-              {t('nav.news')}
+              Новости
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-200 ${
                 isActive("/news") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -247,7 +348,7 @@ const Header = () => {
                 isActive("/blog") ? "text-blue-600" : ""
               }`}
             >
-              {t('nav.blog')}
+              Блог
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-200 ${
                 isActive("/blog") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -259,7 +360,7 @@ const Header = () => {
                 isActive("/contact") ? "text-blue-600" : ""
               }`}
             >
-              {t('nav.contact')}
+              Контакты
               <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-200 ${
                 isActive("/contact") ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
@@ -268,10 +369,7 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-3 flex-shrink-0">
-            <LanguageSwitcher 
-              currentLanguage={language}
-              onLanguageChange={setLanguage}
-            />
+            {/* LanguageSwitcher убран */}
             
             {/* Кнопка корзины */}
             <Button
@@ -319,7 +417,7 @@ const Header = () => {
               onClick={openConsultModal}
               className="text-white px-3 py-2 text-sm"
             >
-              <span className="hidden lg:inline">{t('btn.get-consultation')}</span>
+              <span className="hidden lg:inline">Получить консультацию</span>
               <span className="lg:hidden">Консультация</span>
             </AnimatedButton>
           </div>
@@ -354,13 +452,13 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
-                {t('nav.home')}
+                Главная
               </Link>
               
               {/* Services Section */}
               <div className="space-y-1">
                 <div className="px-3 py-1">
-                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{t('nav.services')}:</h3>
+                  <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Услуги:</h3>
                 </div>
                 
                 <Link 
@@ -469,7 +567,7 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                {t('nav.team')}
+                Команда
               </Link>
               
               <Link 
@@ -478,7 +576,7 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-purple-600 rounded-full mr-3"></span>
-                {t('nav.portfolio')}
+                Портфолио
               </Link>
               
               <Link 
@@ -487,7 +585,7 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                {t('nav.news')}
+                Новости
               </Link>
               
               <Link 
@@ -496,7 +594,7 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                {t('nav.blog')}
+                Блог
               </Link>
               
               <Link 
@@ -505,7 +603,7 @@ const Header = () => {
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-purple-600 rounded-full mr-3"></span>
-                {t('nav.contact')}
+                Контакты
               </Link>
               
               {/* Mobile CTA */}
@@ -556,7 +654,7 @@ const Header = () => {
                   onClick={openConsultModal}
                   className="w-full text-white"
                 >
-                  {t('btn.get-consultation')}
+                  Получить консультацию
                 </AnimatedButton>
               </div>
             </nav>
@@ -568,8 +666,8 @@ const Header = () => {
       <ConsultationModal 
         isOpen={isConsultModalOpen}
         onClose={() => setIsConsultModalOpen(false)}
-        title={t('btn.get-consultation')}
-        triggerText={t('btn.get-consultation')}
+        title="Получить консультацию"
+        triggerText="Получить консультацию"
       />
     </header>
   );
