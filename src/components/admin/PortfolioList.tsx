@@ -259,7 +259,7 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ items, onEdit, onDelete }
                       <div className="flex-shrink-0 h-10 w-10">
                         <img
                           className="h-10 w-10 rounded-lg object-cover"
-                          src={item.thumbnail || item.image}
+                          src={item.thumbnail || item.coverImage}
                           alt={item.title}
                         />
                       </div>

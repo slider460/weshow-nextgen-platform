@@ -25,7 +25,7 @@ import PortfolioStats from '@/components/admin/PortfolioStats';
 import MediaLibrary from '@/components/admin/MediaLibrary';
 
 const AdminDashboardContent: React.FC = () => {
-  const { state, setFilters, setEditing, setSelectedItem } = useAdmin();
+  const { state, setFilters, setEditing, setSelectedItem, deletePortfolioItem } = useAdmin();
   const [activeView, setActiveView] = useState<'list' | 'form' | 'stats' | 'media'>('list');
   const [isCreating, setIsCreating] = useState(false);
 
@@ -51,10 +51,8 @@ const AdminDashboardContent: React.FC = () => {
 
   const handleDelete = (id: string) => {
     if (confirm('Вы уверены, что хотите удалить этот проект?')) {
-      // В реальном приложении здесь был бы API вызов
-      console.log('Удаление проекта:', id);
-      // Обновляем состояние через контекст
-      // deletePortfolioItem(id);
+      deletePortfolioItem(id);
+      console.log('Проект удален:', id);
     }
   };
 

@@ -135,12 +135,25 @@ const PortfolioForm: React.FC = () => {
     const portfolioItem: PortfolioItem = {
       id: state.selectedItem?.id || Date.now().toString(),
       ...formData,
+      thumbnail: formData.coverImage, // Используем coverImage как thumbnail
+      gallery: [...formData.photos, ...formData.videos], // Объединяем фото и видео в галерею
       createdAt: state.selectedItem?.createdAt || new Date(),
       updatedAt: new Date(),
       publishedAt: formData.status === 'published' ? new Date() : undefined,
       author: state.currentUser?.username || 'admin',
       views: state.selectedItem?.views || 0,
       likes: state.selectedItem?.likes || 0,
+      version: (state.selectedItem?.version || 0) + 1,
+      previousVersions: state.selectedItem ? [
+        ...(state.selectedItem.previousVersions || []),
+        {
+          id: Date.now().toString(),
+          version: state.selectedItem.version || 0,
+          data: { ...state.selectedItem },
+          createdAt: new Date(),
+          createdBy: state.currentUser?.username || 'admin',
+        }
+      ] : [],
     };
 
     if (state.selectedItem) {
@@ -174,8 +187,8 @@ const PortfolioForm: React.FC = () => {
         <Card>
           <CardContent className="p-6">
             <div className="aspect-video bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
-              {formData.image ? (
-                <img src={formData.image} alt={formData.title} className="w-full h-full object-cover rounded-lg" />
+              {formData.coverImage ? (
+                <img src={formData.coverImage} alt={formData.title} className="w-full h-full object-cover rounded-lg" />
               ) : (
                 <ImageIcon className="h-12 w-12 text-gray-400" />
               )}
