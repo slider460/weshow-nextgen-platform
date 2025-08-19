@@ -53,6 +53,16 @@ const ModernHeroSection = ({ onShowShowreel }: ModernHeroSectionProps) => {
                     <ArrowRight className="ml-2 h-4 w-4 lg:h-5 lg:w-5" />
                   </Button>
                   
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold bg-white/70 backdrop-blur-sm border-slate-300 text-slate-700 hover:bg-white/90 transition-all duration-300"
+                    onClick={onShowShowreel}
+                  >
+                    <Play className="mr-2 h-4 w-4 lg:h-5 lg:w-5" />
+                    Смотреть шоурил
+                  </Button>
+                  
                   <Button size="lg" variant="outline" className="px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold bg-white/70 backdrop-blur-sm border-slate-300 text-slate-700 hover:bg-white/90 transition-all duration-300" asChild>
                     <a href="/portfolio" className="inline-flex items-center">
                       Наши проекты
