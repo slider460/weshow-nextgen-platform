@@ -38,3 +38,8 @@ public/samsung-event.mp4
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Node.js binaries and archives
+node-*.tar.gz
+node-*/
+
