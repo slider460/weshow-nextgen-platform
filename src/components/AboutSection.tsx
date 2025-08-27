@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { ArrowRight, Users, Award, Clock, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -25,13 +25,7 @@ const AboutSection = () => {
               <div className="inline-flex items-center px-3 py-1 lg:px-4 lg:py-2 rounded-full bg-blue-50 border border-blue-200 text-sm font-medium text-blue-700">
                 🏆 О компании
               </div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-900 leading-tight">
-                Мы создаем
-                <span className="text-gradient bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent block">
-                  инновационные решения
-                </span>
-                для вашего бизнеса
-              </h2>
+
               <p className="text-base lg:text-lg text-slate-600 leading-relaxed">
                 WeShow - это команда профессионалов, специализирующаяся на создании 
                 комплексных мультимедийных решений. Мы помогаем компаниям 

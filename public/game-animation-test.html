@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест анимации Canvas</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        canvas {
+            border: 2px solid #333;
+            background: #87CEEB;
+            display: block;
+            margin: 20px auto;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .status {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px;
+            display: inline-block;
+        }
+        .info {
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 Тест анимации Canvas</h1>
+    
+    <div class="info">
+        <p>Эта страница тестирует базовую анимацию Canvas</p>
+        <p>Если анимация работает здесь, но не работает в React - проблема в React компоненте</p>
+    </div>
+    
+    <button onclick="startAnimation()">Запустить анимацию</button>
+    <button onclick="stopAnimation()">Остановить анимацию</button>
+    <button onclick="testJump()">Тест прыжка</button>
+    
+    <canvas id="testCanvas" width="800" height="400"></canvas>
+    
+    <div class="status">
+        <div id="status">Статус: Ожидание...</div>
+        <div id="fps">FPS: 0</div>
+        <div id="frameCount">Кадры: 0</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('testCanvas');
+        const ctx = canvas.getContext('2d');
+        const statusDiv = document.getElementById('status');
+        const fpsDiv = document.getElementById('fps');
+        const frameCountDiv = document.getElementById('frameCount');
+        
+        let animationId = null;
+        let frameCount = 0;
+        let lastTime = 0;
+        let isAnimating = false;
+        
+        let bikeY = 350;
+        let isJumping = false;
+        let jumpStart = 0;
+        
+        let obstacles = [];
+        let score = 0;
+        let timeLeft = 30;
+        
+        function drawBackground() {
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, '#87CEEB');
+            gradient.addColorStop(1, '#E0F6FF');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 800, 400);
+        }
+        
+        function drawGround() {
+            ctx.fillStyle = '#8FBC8F';
+            ctx.fillRect(0, 350, 800, 50);
+        }
+        
+        function drawBike(x, y) {
+            ctx.strokeStyle = '#E74C3C';
+            ctx.lineWidth = 4;
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + 40, y);
+            ctx.lineTo(x + 20, y - 20);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            
+            ctx.strokeStyle = '#2C3E50';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(x + 10, y, 8, 0, Math.PI * 2);
+            ctx.arc(x + 30, y, 8, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+        
+        function drawObstacle(obstacle) {
+            ctx.fillStyle = '#FF6B6B';
+            ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '12px Arial';
+            ctx.fillText(obstacle.type, obstacle.x + 5, obstacle.y + 20);
+        }
+        
+        function drawUI() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(10, 10, 200, 100);
+            
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '16px Arial';
+            ctx.fillText(`Очки: ${score}`, 20, 30);
+            ctx.fillStyle = '#FFD700';
+            ctx.fillText(`Время: ${timeLeft}s`, 20, 50);
+            ctx.fillStyle = '#00FF00';
+            ctx.fillText(`FPS: ${Math.round(1000 / (Date.now() - lastTime))}`, 20, 70);
+            ctx.fillStyle = '#FF69B4';
+            ctx.fillText(`Кадры: ${frameCount}`, 20, 90);
+        }
+        
+        function updateObstacles() {
+            obstacles = obstacles
+                .map(obstacle => ({
+                    ...obstacle,
+                    x: obstacle.x - 3
+                }))
+                .filter(obstacle => obstacle.x > -obstacle.width);
+            
+            // Добавляем новые препятствия
+            if (Math.random() < 0.02) {
+                const types = ['projector', 'touchpanel', 'computer', 'speaker', 'camera'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                
+                obstacles.push({
+                    id: Date.now(),
+                    x: 800,
+                    y: 310,
+                    width: 40,
+                    height: 40,
+                    type: type
+                });
+            }
+        }
+        
+        function updateJump() {
+            if (isJumping) {
+                const elapsed = Date.now() - jumpStart;
+                const progress = Math.min(elapsed / 500, 1);
+                
+                const jumpHeight = 80 * Math.sin(progress * Math.PI);
+                bikeY = 350 - jumpHeight;
+                
+                if (progress >= 1) {
+                    isJumping = false;
+                    bikeY = 350;
+                }
+            }
+        }
+        
+        function gameLoop(currentTime) {
+            if (!isAnimating) return;
+            
+            frameCount++;
+            
+            // Очистка canvas
+            ctx.clearRect(0, 0, 800, 400);
+            
+            // Отрисовка
+            drawBackground();
+            drawGround();
+            
+            // Обновление и отрисовка препятствий
+            updateObstacles();
+            obstacles.forEach(drawObstacle);
+            
+            // Обновление и отрисовка велосипеда
+            updateJump();
+            drawBike(100, bikeY);
+            
+            // Отрисовка UI
+            drawUI();
+            
+            // Обновление FPS
+            if (lastTime > 0) {
+                const fps = 1000 / (currentTime - lastTime);
+                fpsDiv.textContent = `FPS: ${Math.round(fps)}`;
+            }
+            lastTime = currentTime;
+            
+            frameCountDiv.textContent = `Кадры: ${frameCount}`;
+            
+            // Увеличение счета
+            score++;
+            
+            // Продолжаем анимацию
+            animationId = requestAnimationFrame(gameLoop);
+        }
+        
+        function startAnimation() {
+            if (isAnimating) return;
+            
+            isAnimating = true;
+            frameCount = 0;
+            score = 0;
+            obstacles = [];
+            bikeY = 350;
+            isJumping = false;
+            
+            statusDiv.textContent = 'Статус: Анимация запущена!';
+            statusDiv.style.color = '#00FF00';
+            
+            // Запускаем игровой цикл
+            animationId = requestAnimationFrame(gameLoop);
+            
+            // Таймер
+            const timer = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    stopAnimation();
+                    statusDiv.textContent = 'Статус: Время вышло!';
+                    statusDiv.style.color = '#FF0000';
+                }
+            }, 1000);
+        }
+        
+        function stopAnimation() {
+            isAnimating = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            
+            statusDiv.textContent = 'Статус: Анимация остановлена';
+            statusDiv.style.color = '#FFA500';
+        }
+        
+        function testJump() {
+            if (!isAnimating) return;
+            
+            if (!isJumping) {
+                isJumping = true;
+                jumpStart = Date.now();
+            }
+        }
+        
+        // Обработчик клика на Canvas
+        canvas.addEventListener('click', testJump);
+        
+        // Обработчик клавиш
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space') {
+                event.preventDefault();
+                testJump();
+            }
+        });
+        
+        // Начальная отрисовка
+        drawBackground();
+        drawGround();
+        drawBike(100, 350);
+        
+        statusDiv.textContent = 'Статус: Готов к тестированию';
+        statusDiv.style.color = '#FFFFFF';
+    </script>
+</body>
+</html>

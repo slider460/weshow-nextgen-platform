@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { ArrowRight, Building, Users, Trophy, Globe, Presentation, Store, Construction, Video } from "lucide-react";
 import { Link } from "react-router-dom";
 

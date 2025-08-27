@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { PortfolioItem } from '@/types/admin/portfolio';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { PortfolioItem } from '../../types/admin/portfolio';
+import { Button } from '../ui/button';
+import { Badge } from '../ui/badge';
+import { Card, CardContent, CardHeader } from '../ui/card';
 import { 
   Eye, 
   Edit, 
@@ -18,7 +18,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '../ui/dropdown-menu';
 
 interface PortfolioListProps {
   items: PortfolioItem[];
@@ -85,7 +85,7 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ items, onEdit, onDelete }
               </div>
             </Button>
             <Button
-              variant={viewMode === 'list' ? 'default' : 'outline'}
+              variant={(viewMode as 'grid' | 'list') === 'list' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setViewMode('list')}
             >
@@ -201,7 +201,7 @@ const PortfolioList: React.FC<PortfolioListProps> = ({ items, onEdit, onDelete }
         </h3>
         <div className="flex items-center space-x-2">
           <Button
-            variant={viewMode === 'grid' ? 'default' : 'outline'}
+            variant={(viewMode as 'grid' | 'list') === 'grid' ? 'default' : 'outline'}
             size="sm"
             onClick={() => setViewMode('grid')}
           >

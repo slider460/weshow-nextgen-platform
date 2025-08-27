@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { Play, Pause } from "lucide-react";
-import heroImage from "@/assets/hero-bg.jpg";
+import heroImage from "../assets/hero-bg.jpg";
 import ConsultationModal from "./ConsultationModal";
 
 const HeroSection = () => {

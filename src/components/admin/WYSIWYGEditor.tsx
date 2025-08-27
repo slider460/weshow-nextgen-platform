@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { AlertCircle, CheckCircle } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Alert, AlertDescription } from '../ui/alert';
 
 interface WYSIWYGEditorProps {
   value: string;

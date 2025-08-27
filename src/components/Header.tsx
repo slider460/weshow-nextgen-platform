@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
 import AnimatedButton from "./AnimatedButton";
-import { useEquipmentCart } from "@/hooks/useEquipmentCart";
+import { useEquipmentCart } from "../hooks/useEquipmentCart";
 
 import { 
   Menu, 
@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
 // import LanguageSwitcher from "./LanguageSwitcher";
-// import { useLanguage } from "@/contexts/LanguageContext";
+// import { useLanguage } from "../contexts/LanguageContext";
 
 const Header = () => {
   // const { t, language, setLanguage } = useLanguage();
@@ -409,6 +409,8 @@ const Header = () => {
               )}
             </Button>
             
+
+            
             <AnimatedButton 
               variant="gradient"
               hoverEffect="lift"
@@ -608,6 +610,7 @@ const Header = () => {
               
               {/* Mobile CTA */}
               <div className="pt-4 space-y-3">
+                
                 {/* Кнопка корзины */}
                 <Button
                   variant="outline"

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "../components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
 import { Play, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import ProjectOrderModal from "@/components/ProjectOrderModal";
+import ProjectOrderModal from "../components/ProjectOrderModal";
 
 const BentoGridSection = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);

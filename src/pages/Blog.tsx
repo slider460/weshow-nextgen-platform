@@ -1,15 +1,15 @@
 import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Badge } from "../components/ui/badge";
 import { Calendar, Clock, User, Search, Filter, Tag } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext";
-import NewsletterSubscription from "@/components/NewsletterSubscription";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import AnimatedButton from "@/components/AnimatedButton";
+import { useLanguage } from "../contexts/LanguageContext";
+import NewsletterSubscription from "../components/NewsletterSubscription";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+import AnimatedButton from "../components/AnimatedButton";
 
 const Blog = () => {
   const { t } = useLanguage();

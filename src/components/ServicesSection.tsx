@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { ArrowRight, Monitor, Settings, Calendar, Package, Code, Palette, Layers, ShoppingCart } from "lucide-react";
 const ServicesSection = () => {
   const services = [{

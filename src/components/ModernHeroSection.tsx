@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { Play, ArrowRight } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
 import { Link } from "react-router-dom";

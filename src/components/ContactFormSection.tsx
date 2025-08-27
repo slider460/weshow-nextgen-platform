@@ -1,9 +1,18 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle, AlertCircle, Eye, EyeOff } from "lucide-react";
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  phone?: string;
+  company?: string;
+  service?: string;
+  message?: string;
+}
 
 const ContactFormSection = () => {
   const [formData, setFormData] = useState({
@@ -14,10 +23,106 @@ const ContactFormSection = () => {
     service: "",
     message: ""
   });
+  const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Валидация email
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Валидация телефона (российский формат)
+  const validatePhone = (phone: string): boolean => {
+    // Убираем все нецифровые символы
+    const cleanPhone = phone.replace(/\D/g, '');
+    
+    // Проверяем длину в зависимости от префикса
+    if (cleanPhone.startsWith('7') || cleanPhone.startsWith('8')) {
+      // Для номеров, начинающихся с 7 или 8, проверяем 11 цифр (с кодом страны)
+      return cleanPhone.length === 11;
+    } else {
+      // Для номеров, начинающихся с 9, проверяем 10 цифр (без кода страны)
+      return cleanPhone.length === 10;
+    }
+  };
+
+  // Форматирование телефона при вводе
+  const formatPhone = (value: string): string => {
+    const cleanValue = value.replace(/\D/g, '');
+    
+    if (cleanValue.length === 0) return '';
+    
+    // Если номер начинается с 7, добавляем +7
+    if (cleanValue.startsWith('7')) {
+      if (cleanValue.length === 1) return `+7`;
+      if (cleanValue.length <= 4) return `+7 (${cleanValue.slice(1, 4)}`;
+      if (cleanValue.length <= 7) return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}`;
+      if (cleanValue.length <= 9) return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}`;
+      return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}-${cleanValue.slice(9, 11)}`;
+    }
+    
+    // Если номер начинается с 8, не добавляем код страны
+    if (cleanValue.startsWith('8')) {
+      if (cleanValue.length === 1) return `8`;
+      if (cleanValue.length <= 4) return `8 (${cleanValue.slice(1, 4)}`;
+      if (cleanValue.length <= 7) return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}`;
+      if (cleanValue.length <= 9) return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}`;
+      return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}-${cleanValue.slice(9, 11)}`;
+    }
+    
+    // Для других номеров (начинающихся с 9) добавляем +7
+    if (cleanValue.length === 1) return `+7 (${cleanValue}`;
+    if (cleanValue.length <= 4) return `+7 (${cleanValue.slice(0, 3)}`;
+    if (cleanValue.length <= 7) return `+7 (${cleanValue.slice(0, 3)}) ${cleanValue.slice(3, 6)}`;
+    if (cleanValue.length <= 9) return `+7 (${cleanValue.slice(0, 3)}) ${cleanValue.slice(3, 6)}-${cleanValue.slice(6, 8)}`;
+    return `+7 (${cleanValue.slice(0, 3)}) ${cleanValue.slice(3, 6)}-${cleanValue.slice(6, 8)}-${cleanValue.slice(8, 10)}`;
+  };
+
+  // Валидация всех полей
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    // Валидация имени
+    if (!formData.name.trim()) {
+      newErrors.name = "Имя обязательно для заполнения";
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = "Имя должно содержать минимум 2 символа";
+    }
+
+    // Валидация email
+    if (!formData.email.trim()) {
+      newErrors.email = "Email обязателен для заполнения";
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Введите корректный email адрес";
+    }
+
+    // Валидация телефона
+    if (formData.phone.trim()) {
+      if (!validatePhone(formData.phone)) {
+        newErrors.phone = "Введите корректный номер телефона (7XXXXXXXXXX или 8XXXXXXXXXX или 9XXXXXXXXX)";
+      }
+    }
+
+    // Валидация сообщения
+    if (!formData.message.trim()) {
+      newErrors.message = "Сообщение обязательно для заполнения";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Сообщение должно содержать минимум 10 символов";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
     // Здесь будет логика отправки формы
     console.log("Form submitted:", formData);
     setIsSubmitted(true);
@@ -33,11 +138,39 @@ const ContactFormSection = () => {
         service: "",
         message: ""
       });
+      setErrors({});
     }, 3000);
   };
 
   const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    let processedValue = value;
+    
+    // Специальная обработка для телефона
+    if (field === "phone") {
+      processedValue = formatPhone(value);
+    }
+
+    setFormData(prev => ({ ...prev, [field]: processedValue }));
+    
+    // Очищаем ошибку при вводе
+    if (errors[field as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleBlur = (field: string) => {
+    // Валидация при потере фокуса
+    if (field === "email" && formData.email) {
+      if (!validateEmail(formData.email)) {
+        setErrors(prev => ({ ...prev, email: "Введите корректный email адрес" }));
+      }
+    }
+    
+    if (field === "phone" && formData.phone) {
+      if (!validatePhone(formData.phone)) {
+        setErrors(prev => ({ ...prev, phone: "Введите корректный номер телефона" }));
+      }
+    }
   };
 
   const contactInfo = [
@@ -134,10 +267,17 @@ const ContactFormSection = () => {
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleChange("name", e.target.value)}
+                    onBlur={() => handleBlur("name")}
                     placeholder="Ваше имя"
                     required
-                    className="w-full"
+                    className={`w-full ${errors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {errors.name && (
+                    <div className="flex items-center mt-1 text-sm text-red-600">
+                      <AlertCircle className="h-4 w-4 mr-1" />
+                      {errors.name}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -147,10 +287,17 @@ const ContactFormSection = () => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleChange("email", e.target.value)}
+                    onBlur={() => handleBlur("email")}
                     placeholder="your@email.com"
                     required
-                    className="w-full"
+                    className={`w-full ${errors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {errors.email && (
+                    <div className="flex items-center mt-1 text-sm text-red-600">
+                      <AlertCircle className="h-4 w-4 mr-1" />
+                      {errors.email}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -163,9 +310,19 @@ const ContactFormSection = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleChange("phone", e.target.value)}
+                    onBlur={() => handleBlur("phone")}
                     placeholder="+7 (___) ___-__-__"
-                    className="w-full"
+                    className={`w-full ${errors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {errors.phone && (
+                    <div className="flex items-center mt-1 text-sm text-red-600">
+                      <AlertCircle className="h-4 w-4 mr-1" />
+                      {errors.phone}
+                    </div>
+                  )}
+                  <p className="text-xs text-slate-500 mt-1">
+                    Формат: +7 (XXX) XXX-XX-XX или 8 (XXX) XXX-XX-XX
+                  </p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -211,8 +368,17 @@ const ContactFormSection = () => {
                   placeholder="Опишите ваш проект или задайте вопрос..."
                   required
                   rows={4}
-                  className="w-full"
+                  className={`w-full ${errors.message ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                 />
+                {errors.message && (
+                  <div className="flex items-center mt-1 text-sm text-red-600">
+                    <AlertCircle className="h-4 w-4 mr-1" />
+                    {errors.message}
+                  </div>
+                )}
+                <p className="text-xs text-slate-500 mt-1">
+                  Минимум 10 символов
+                </p>
               </div>
 
               <Button 

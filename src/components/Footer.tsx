@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { Button } from "./ui/button";
+import { useLanguage } from "../contexts/LanguageContext";
 import { 
   Phone, 
   Mail, 
@@ -14,7 +14,8 @@ import {
   ArrowUp,
   Sparkles,
   Zap,
-  Star
+  Star,
+  Bike
 } from "lucide-react";
 
 const Footer = () => {
@@ -153,6 +154,32 @@ const Footer = () => {
                   </Link>
                 </li>
               </ul>
+            </div>
+
+            {/* Game Section */}
+            <div>
+                              <h3 className="text-lg font-semibold mb-6 text-white">🚴‍♂️ Велосипедные гонки</h3>
+              <div className="space-y-4">
+                <div className="mb-4">
+                  <p className="text-slate-300 text-sm mb-3">
+                    Гоняйте на велосипеде и выигрывайте скидки до 25% на наши услуги!
+                  </p>
+                  <Link 
+                    to="/game"
+                    className="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold text-sm rounded-lg transition-all duration-200 hover:scale-105"
+                  >
+                    <Bike className="w-4 h-4 mr-2" />
+                    Начать гонку
+                  </Link>
+                </div>
+                <div className="text-xs text-slate-400 space-y-1">
+                  <div>• Скидка 5% - от 100 очков</div>
+                  <div>• Скидка 10% - от 250 очков</div>
+                  <div>• Скидка 15% - от 500 очков</div>
+                  <div>• Скидка 20% - от 750 очков</div>
+                  <div>• Скидка 25% - от 1000 очков</div>
+                </div>
+              </div>
             </div>
 
             {/* Services */}

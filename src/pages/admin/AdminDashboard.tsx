@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { AdminProvider, useAdmin } from '@/contexts/admin/AdminContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AdminProvider, useAdmin } from '../../contexts/admin/AdminContext';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { 
   Plus, 
   Search, 
@@ -19,10 +19,10 @@ import {
   Calendar,
   TrendingUp
 } from 'lucide-react';
-import PortfolioList from '@/components/admin/PortfolioList';
-import PortfolioForm from '@/components/admin/PortfolioForm';
-import PortfolioStats from '@/components/admin/PortfolioStats';
-import MediaLibrary from '@/components/admin/MediaLibrary';
+import PortfolioList from '../../components/admin/PortfolioList';
+import PortfolioForm from '../../components/admin/PortfolioForm';
+import PortfolioStats from '../../components/admin/PortfolioStats';
+import MediaLibrary from '../../components/admin/MediaLibrary';
 
 const AdminDashboardContent: React.FC = () => {
   const { state, setFilters, setEditing, setSelectedItem, deletePortfolioItem } = useAdmin();

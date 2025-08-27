@@ -1,7 +1,7 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { Users, Award, Star, Linkedin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 
 const Team = () => {
   const teamMembers = [

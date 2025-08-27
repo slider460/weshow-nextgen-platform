@@ -1,6 +1,6 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import { Button } from "../../components/ui/button";
 import { ArrowLeft, Grid3X3, Zap, Monitor, Users, Calendar, Phone, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 

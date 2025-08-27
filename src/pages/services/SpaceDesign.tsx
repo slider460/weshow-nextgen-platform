@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "../../components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
+import { Badge } from "../../components/ui/badge";
 import { ArrowLeft, CheckCircle, Lightbulb, Palette, Ruler, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 

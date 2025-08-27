@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { 
   ShoppingCart, 
   X, 
@@ -13,7 +13,7 @@ import {
   AlertTriangle
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useEquipmentCart } from "@/hooks/useEquipmentCart";
+import { useEquipmentCart } from "../hooks/useEquipmentCart";
 
 interface EquipmentCartProps {
   isOpen: boolean;

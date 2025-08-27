@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { Play, MapPin, Calendar, ArrowRight } from "lucide-react";
 
 const ShowreelSection = () => {

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { 
   Calendar, 
   Users, 
@@ -19,9 +19,9 @@ import {
   Zap,
   Video
 } from "lucide-react";
-import ConsultationModal from "@/components/ConsultationModal";
-import ProjectOrderModal from "@/components/ProjectOrderModal";
-import ShowreelPlayer from "@/components/ShowreelPlayer";
+import ConsultationModal from "../components/ConsultationModal";
+import ProjectOrderModal from "../components/ProjectOrderModal";
+import ShowreelPlayer from "../components/ShowreelPlayer";
 
 const SamsungEvent = () => {
   const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);

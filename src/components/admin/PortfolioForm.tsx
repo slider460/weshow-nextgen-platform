@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useAdmin } from '@/contexts/admin/AdminContext';
-import { PortfolioFormData, PortfolioItem, PORTFOLIO_LIMITS } from '@/types/admin/portfolio';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { useAdmin } from '../../contexts/admin/AdminContext';
+import { PortfolioFormData, PortfolioItem, PORTFOLIO_LIMITS } from '../../types/admin/portfolio';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Textarea } from '../ui/textarea';
 import WYSIWYGEditor from './WYSIWYGEditor';
 import SortableMediaGallery from './SortableMediaGallery';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Badge } from '../ui/badge';
+import { Label } from '../ui/label';
 import { 
   Save, 
   Eye, 
@@ -29,8 +29,8 @@ import {
   Tag,
   Star
 } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Switch } from '@/components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import { Switch } from '../ui/switch';
 
 const PortfolioForm: React.FC = () => {
   const { state, updatePortfolioItem, addPortfolioItem, setEditing } = useAdmin();
@@ -97,26 +97,44 @@ const PortfolioForm: React.FC = () => {
   };
 
   const handleArrayFieldChange = (field: string, index: number, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: prev[field as keyof PortfolioFormData].map((item: any, i: number) => 
-        i === index ? value : item
-      )
-    }));
+    setFormData(prev => {
+      const currentValue = prev[field as keyof PortfolioFormData];
+      if (Array.isArray(currentValue)) {
+        return {
+          ...prev,
+          [field]: currentValue.map((item: any, i: number) => 
+            i === index ? value : item
+          )
+        };
+      }
+      return prev;
+    });
   };
 
   const addArrayFieldItem = (field: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: [...prev[field as keyof PortfolioFormData], '']
-    }));
+    setFormData(prev => {
+      const currentValue = prev[field as keyof PortfolioFormData];
+      if (Array.isArray(currentValue)) {
+        return {
+          ...prev,
+          [field]: [...currentValue, '']
+        };
+      }
+      return prev;
+    });
   };
 
   const removeArrayFieldItem = (field: string, index: number) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: prev[field as keyof PortfolioFormData].filter((_: any, i: number) => i !== index)
-    }));
+    setFormData(prev => {
+      const currentValue = prev[field as keyof PortfolioFormData];
+      if (Array.isArray(currentValue)) {
+        return {
+          ...prev,
+          [field]: currentValue.filter((_: any, i: number) => i !== index)
+        };
+      }
+      return prev;
+    });
   };
 
   const generateSlug = () => {

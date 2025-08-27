@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-import { PortfolioItem, PortfolioCategory, MediaFile, AdminUser } from '@/types/admin/portfolio';
+import React, { createContext, useContext, useReducer, useMemo, useCallback, ReactNode } from 'react';
+import { PortfolioItem, PortfolioCategory, MediaFile, AdminUser } from '../../types/admin/portfolio';
 
 interface AdminState {
   currentUser: AdminUser | null;
@@ -223,35 +223,37 @@ const AdminContext = createContext<AdminContextType | undefined>(undefined);
 export function AdminProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(adminReducer, initialState);
 
-  const addPortfolioItem = (item: PortfolioItem) => {
+  // ✅ Context7 оптимизация: мемоизация всех методов
+  const addPortfolioItem = useCallback((item: PortfolioItem) => {
     dispatch({ type: 'ADD_PORTFOLIO_ITEM', payload: item });
-  };
+  }, []);
 
-  const updatePortfolioItem = (item: PortfolioItem) => {
+  const updatePortfolioItem = useCallback((item: PortfolioItem) => {
     dispatch({ type: 'UPDATE_PORTFOLIO_ITEM', payload: item });
-  };
+  }, []);
 
-  const deletePortfolioItem = (id: string) => {
+  const deletePortfolioItem = useCallback((id: string) => {
     dispatch({ type: 'DELETE_PORTFOLIO_ITEM', payload: id });
-  };
+  }, []);
 
-  const setSelectedItem = (item: PortfolioItem | null) => {
+  const setSelectedItem = useCallback((item: PortfolioItem | null) => {
     dispatch({ type: 'SET_SELECTED_ITEM', payload: item });
-  };
+  }, []);
 
-  const setEditing = (editing: boolean) => {
+  const setEditing = useCallback((editing: boolean) => {
     dispatch({ type: 'SET_EDITING', payload: editing });
-  };
+  }, []);
 
-  const setFilters = (filters: Partial<AdminState['filters']>) => {
+  const setFilters = useCallback((filters: Partial<AdminState['filters']>) => {
     dispatch({ type: 'SET_FILTERS', payload: filters });
-  };
+  }, []);
 
-  const resetState = () => {
+  const resetState = useCallback(() => {
     dispatch({ type: 'RESET_STATE' });
-  };
+  }, []);
 
-  const value: AdminContextType = {
+  // ✅ Context7 оптимизация: мемоизация значения контекста
+  const value: AdminContextType = useMemo(() => ({
     state,
     dispatch,
     addPortfolioItem,
@@ -261,7 +263,16 @@ export function AdminProvider({ children }: { children: ReactNode }) {
     setEditing,
     setFilters,
     resetState,
-  };
+  }), [
+    state,
+    addPortfolioItem,
+    updatePortfolioItem,
+    deletePortfolioItem,
+    setSelectedItem,
+    setEditing,
+    setFilters,
+    resetState
+  ]);
 
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;
 }

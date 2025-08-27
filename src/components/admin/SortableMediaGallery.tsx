@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MediaFile } from '@/types/admin/portfolio';
-import { PORTFOLIO_LIMITS } from '@/types/admin/portfolio';
+import { MediaFile } from '../../types/admin/portfolio';
+import { PORTFOLIO_LIMITS } from '../../types/admin/portfolio';
 import Sortable from 'sortablejs';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/card';
+import { Badge } from '../ui/badge';
 import { 
   Image as ImageIcon, 
   Video, 
@@ -14,7 +14,7 @@ import {
   GripVertical,
   AlertCircle
 } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Alert, AlertDescription } from '../ui/alert';
 
 interface SortableMediaGalleryProps {
   type: 'photos' | 'videos';

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { LogosProvider } from "./contexts/LogosContext";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -57,6 +58,9 @@ import Maintenance from "./pages/services/Maintenance";
 import EquipmentCalculation from "./pages/services/EquipmentCalculation";
 import DebugCart from "./pages/DebugCart";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import LogosManagement from "./pages/LogosManagement";
+import Game from "./pages/Game";
+import GameSimple from './pages/GameSimple';
 
 // Страницы комплексных решений
 import SystemIntegration from "./pages/services/SystemIntegration";
@@ -74,9 +78,10 @@ import TechnicalDocumentation from "./pages/services/TechnicalDocumentation";
 
 const App = () => (
   <LanguageProvider>
-    <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
+    <LogosProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
@@ -89,6 +94,9 @@ const App = () => (
         <Route path="/equipment" element={<Equipment />} />
         <Route path="/debug-cart" element={<DebugCart />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/logos" element={<LogosManagement />} />
+        <Route path="/game" element={<Game />} />
+        <Route path="/game-simple" element={<GameSimple />} />
         <Route path="/portfolio/samara-stand" element={<CaseSamaraStand />} />
         <Route path="/portfolio/samsung-event" element={<SamsungEvent />} />
         {/* Основные страницы услуг */}
@@ -145,9 +153,10 @@ const App = () => (
         <Route path="/services/space-implementation" element={<SpaceImplementation />} />
         <Route path="/services/3d-modeling" element={<ThreeDModeling />} />
         <Route path="/services/technical-documentation" element={<TechnicalDocumentation />} />
-      </Routes>
-    </BrowserRouter>
-  </LanguageProvider>
-);
+              </Routes>
+      </BrowserRouter>
+    </LogosProvider>
+    </LanguageProvider>
+  );
 
 export default App;

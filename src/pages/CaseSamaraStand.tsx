@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { Button } from "../components/ui/button";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../components/ui/breadcrumb";
 import { Link } from "react-router-dom";
-import ConsultationModal from "@/components/ConsultationModal";
-import ProjectOrderModal from "@/components/ProjectOrderModal";
-import ClickableKeyword from "@/components/ClickableKeyword";
+import ConsultationModal from "../components/ConsultationModal";
+import ProjectOrderModal from "../components/ProjectOrderModal";
+import ClickableKeyword from "../components/ClickableKeyword";
 
 const CaseSamaraStand: React.FC = () => {
   // SEO: title, meta, canonical, breadcrumbs JSON-LD

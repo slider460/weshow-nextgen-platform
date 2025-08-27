@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
 import AnimatedButton from './AnimatedButton';
-import { useScrollAnimation, useScrollAnimationDirection } from '@/hooks/useScrollAnimation';
+import { useScrollAnimation, useScrollAnimationDirection } from '../hooks/useScrollAnimation';
 import { 
   Zap, 
   Sparkles, 

@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import EquipmentRentalCalculator from "@/components/EquipmentRentalCalculator";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import EquipmentRentalCalculator from "../../components/EquipmentRentalCalculator";
 
 const EquipmentCalculation: React.FC = () => {
   return (

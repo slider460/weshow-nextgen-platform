@@ -1,9 +1,9 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { ExternalLink, ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
-import vdnhStand from "@/assets/office-building.jpg";
+import vdnhStand from "../assets/office-building.jpg";
 import ProjectOrderModal from "./ProjectOrderModal";
 
 

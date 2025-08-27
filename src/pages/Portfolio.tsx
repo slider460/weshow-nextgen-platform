@@ -1,10 +1,10 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { Button } from "../components/ui/button";
 import { ArrowRight, Play, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
-import ShowreelModal from "@/components/ShowreelModal";
-import ClickableKeyword from "@/components/ClickableKeyword";
+import ShowreelModal from "../components/ShowreelModal";
+import ClickableKeyword from "../components/ClickableKeyword";
 
 import { useState } from "react";
 

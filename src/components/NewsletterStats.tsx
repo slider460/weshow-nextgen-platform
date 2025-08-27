@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
 import { Users, Mail, Globe, TrendingUp, BarChart3 } from 'lucide-react';
-import { useNewsletterAPI } from '@/api/newsletter';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useNewsletterAPI } from '../api/newsletter';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const NewsletterStats = () => {
   const { t } = useLanguage();
@@ -138,7 +138,7 @@ const NewsletterStats = () => {
                       ></div>
                     </div>
                     <span className="text-sm font-medium text-slate-700 w-8 text-right">
-                      {count}
+                      {String(count)}
                     </span>
                   </div>
                 </div>
@@ -178,9 +178,9 @@ const NewsletterStats = () => {
                           style={{ width: `${(count as number / stats.active) * 100}%` }}
                         ></div>
                       </div>
-                      <span className="text-sm font-medium text-slate-700 w-8 text-right">
-                        {count}
-                      </span>
+                                              <span className="text-sm font-medium text-slate-700 w-8 text-right">
+                          {String(count)}
+                        </span>
                     </div>
                   </div>
                 ))}

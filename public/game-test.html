@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест игры</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 2px solid #333;
+            background: #87CEEB;
+            display: block;
+            margin: 20px auto;
+        }
+        .info {
+            text-align: center;
+            margin: 20px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .status {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h1>🚴‍♂️ Тест игры Велосипедные гонки</h1>
+        <p>Проверяем работу Canvas и игровой логики</p>
+        <button onclick="startGame()">Начать игру</button>
+        <button onclick="stopGame()">Остановить игру</button>
+        <button onclick="jump()">Прыжок</button>
+    </div>
+    
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    
+    <div class="status">
+        <div id="gameStatus">Статус: Ожидание...</div>
+        <div id="score">Очки: 0</div>
+        <div id="time">Время: 30s</div>
+        <div id="combo">Комбо: 0x</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let gameState = {
+            isPlaying: false,
+            score: 0,
+            timeLeft: 30,
+            combo: 0,
+            bikeY: 300,
+            bikeX: 100,
+            obstacles: [],
+            gameLoop: null,
+            obstacleSpawn: null
+        };
+
+        function drawBackground() {
+            // Градиентное небо
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, '#87CEEB');
+            gradient.addColorStop(1, '#E0F6FF');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 800, 400);
+
+            // Облака
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.beginPath();
+            ctx.arc(100, 80, 30, 0, Math.PI * 2);
+            ctx.arc(130, 80, 25, 0, Math.PI * 2);
+            ctx.arc(160, 80, 30, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawGround() {
+            // Земля
+            ctx.fillStyle = '#8FBC8F';
+            ctx.fillRect(0, 300, 800, 100);
+            
+            // Дорога
+            ctx.fillStyle = '#696969';
+            ctx.fillRect(0, 320, 800, 60);
+            
+            // Разметка дороги
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.setLineDash([20, 20]);
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(0, 350);
+            ctx.lineTo(800, 350);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function drawBike(x, y) {
+            // Рама велосипеда
+            ctx.strokeStyle = '#E74C3C';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + 40, y);
+            ctx.lineTo(x + 20, y - 20);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            
+            // Колеса
+            ctx.strokeStyle = '#2C3E50';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(x + 10, y + 10, 12, 0, Math.PI * 2);
+            ctx.arc(x + 30, y + 10, 12, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+
+        function drawObstacle(obstacle) {
+            ctx.fillStyle = '#FF0000';
+            ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '12px Arial';
+            ctx.fillText(obstacle.type, obstacle.x, obstacle.y + obstacle.height + 15);
+        }
+
+        function drawUI() {
+            // Фон для UI
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(10, 10, 200, 100);
+            
+            // Текст UI
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '16px Arial';
+            ctx.fillText(`Очки: ${gameState.score}`, 20, 30);
+            ctx.fillText(`Время: ${gameState.timeLeft}s`, 20, 50);
+            ctx.fillText(`Комбо: ${gameState.combo}x`, 20, 70);
+            ctx.fillText(`Уровень: ${Math.floor(gameState.score / 200) + 1}`, 20, 90);
+        }
+
+        function gameLoop() {
+            if (!gameState.isPlaying) return;
+
+            // Очистка canvas
+            ctx.clearRect(0, 0, 800, 400);
+
+            // Отрисовка
+            drawBackground();
+            drawGround();
+            
+            // Отрисовка препятствий
+            gameState.obstacles.forEach(obstacle => {
+                drawObstacle(obstacle);
+            });
+            
+            // Отрисовка велосипеда
+            drawBike(gameState.bikeX, gameState.bikeY);
+            
+            // Отрисовка UI
+            drawUI();
+
+            // Обновление позиций препятствий
+            gameState.obstacles = gameState.obstacles
+                .map(obstacle => ({
+                    ...obstacle,
+                    x: obstacle.x - 3
+                }))
+                .filter(obstacle => obstacle.x > -obstacle.width);
+
+            // Продолжаем игровой цикл
+            gameState.gameLoop = requestAnimationFrame(gameLoop);
+        }
+
+        function spawnObstacles() {
+            if (!gameState.isPlaying) return;
+
+            const types = ['Проектор', 'Панель', 'Компьютер', 'Колонка', 'Камера'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            
+            const newObstacle = {
+                x: 800,
+                y: 300 - 40,
+                width: 40,
+                height: 40,
+                type: type
+            };
+            
+            gameState.obstacles.push(newObstacle);
+            
+            // Планируем следующий спавн
+            gameState.obstacleSpawn = setTimeout(spawnObstacles, 2000);
+        }
+
+        function startGame() {
+            console.log('Starting game...');
+            gameState.isPlaying = true;
+            gameState.score = 0;
+            gameState.timeLeft = 30;
+            gameState.combo = 0;
+            gameState.obstacles = [];
+            
+            document.getElementById('gameStatus').textContent = 'Статус: Игра идет!';
+            
+            // Запускаем игровой цикл
+            gameLoop();
+            
+            // Запускаем спавн препятствий
+            spawnObstacles();
+            
+            // Запускаем таймер
+            const timer = setInterval(() => {
+                gameState.timeLeft--;
+                document.getElementById('time').textContent = `Время: ${gameState.timeLeft}s`;
+                
+                if (gameState.timeLeft <= 0) {
+                    clearInterval(timer);
+                    stopGame();
+                }
+            }, 1000);
+            
+            // Увеличиваем счет каждую секунду
+            const scoreTimer = setInterval(() => {
+                if (gameState.isPlaying) {
+                    gameState.score++;
+                    gameState.combo++;
+                    document.getElementById('score').textContent = `Очки: ${gameState.score}`;
+                    document.getElementById('combo').textContent = `Комбо: ${gameState.combo}x`;
+                } else {
+                    clearInterval(scoreTimer);
+                }
+            }, 1000);
+        }
+
+        function stopGame() {
+            console.log('Stopping game...');
+            gameState.isPlaying = false;
+            
+            if (gameState.gameLoop) {
+                cancelAnimationFrame(gameState.gameLoop);
+            }
+            if (gameState.obstacleSpawn) {
+                clearTimeout(gameState.obstacleSpawn);
+            }
+            
+            document.getElementById('gameStatus').textContent = 'Статус: Игра остановлена';
+        }
+
+        function jump() {
+            if (!gameState.isPlaying) return;
+            
+            console.log('Jump!');
+            gameState.bikeY = 200; // Прыжок
+            
+            // Возвращаемся на землю через 500мс
+            setTimeout(() => {
+                gameState.bikeY = 300;
+            }, 500);
+        }
+
+        // Инициализация при загрузке
+        window.onload = function() {
+            console.log('Game test page loaded');
+            drawBackground();
+            drawGround();
+            drawBike(100, 300);
+            drawUI();
+        };
+    </script>
+</body>
+</html>

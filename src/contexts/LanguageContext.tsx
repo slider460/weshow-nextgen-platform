@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback, ReactNode } from 'react';
 
 interface LanguageContextType {
   language: string;
@@ -173,17 +173,26 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     }
   }, []);
 
-  const handleLanguageChange = (newLanguage: string) => {
+  // ✅ Context7 оптимизация: мемоизация функции
+  const handleLanguageChange = useCallback((newLanguage: string) => {
     setLanguage(newLanguage);
     localStorage.setItem('language', newLanguage);
-  };
+  }, []);
 
-  const t = (key: string): string => {
+  // ✅ Context7 оптимизация: мемоизация функции перевода
+  const t = useCallback((key: string): string => {
     return translations[language as keyof typeof translations]?.[key as keyof typeof translations.ru] || key;
-  };
+  }, [language]);
+
+  // ✅ Context7 оптимизация: мемоизация значения контекста
+  const contextValue = useMemo(() => ({
+    language,
+    setLanguage: handleLanguageChange,
+    t
+  }), [language, handleLanguageChange, t]);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: handleLanguageChange, t }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );

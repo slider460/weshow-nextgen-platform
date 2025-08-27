@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "node",
+      "args": ["src/lib/mcp-stable-server.js"],
+      "cwd": ".",
+      "env": {
+        "PATH": "./node-v22.12.0-darwin-arm64/bin:/usr/local/bin:/usr/bin:/bin"
+      }
+    }
+  }
+}

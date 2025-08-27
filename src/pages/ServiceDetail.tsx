@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { Button } from "../components/ui/button";
 import { ArrowRight, Check, Star, Clock, Users } from "lucide-react";
 import { useState } from "react";
-import ConsultationModal from "@/components/ConsultationModal";
+import ConsultationModal from "../components/ConsultationModal";
 
 const ServiceDetail = () => {
   const { serviceId } = useParams();

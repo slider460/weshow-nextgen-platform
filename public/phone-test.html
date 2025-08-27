@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест форматирования телефона</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        .result {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        .success {
+            color: green;
+            font-size: 14px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .test-cases {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Тест форматирования телефона</h1>
+    
+    <div class="test-section">
+        <h2>📱 Текущая логика (исправленная)</h2>
+        <input type="tel" id="phone1" placeholder="Введите номер телефона" />
+        <div class="result" id="result1">Результат: </div>
+        <div class="error" id="error1"></div>
+        
+        <h3>Тестовые случаи:</h3>
+        <div class="test-cases">
+            <div>
+                <h4>Номер 7:</h4>
+                <button onclick="testNumber('phone1', '79151234567')">79151234567</button>
+                <button onclick="testNumber('phone1', '7915123456')">7915123456</button>
+                <button onclick="testNumber('phone1', '791512345')">791512345</button>
+                <button onclick="testNumber('phone1', '79151234')">79151234</button>
+                <button onclick="testNumber('phone1', '7915123')">7915123</button>
+                <button onclick="testNumber('phone1', '791512')">791512</button>
+                <button onclick="testNumber('phone1', '79151')">79151</button>
+                <button onclick="testNumber('phone1', '7915')">7915</button>
+                <button onclick="testNumber('phone1', '791')">791</button>
+                <button onclick="testNumber('phone1', '79')">79</button>
+                <button onclick="testNumber('phone1', '7')">7</button>
+                <button onclick="testNumber('phone1', '')">Очистить</button>
+            </div>
+            <div>
+                <h4>Номер 8:</h4>
+                <button onclick="testNumber('phone1', '89151234567')">89151234567</button>
+                <button onclick="testNumber('phone1', '8915123456')">8915123456</button>
+                <button onclick="testNumber('phone1', '891512345')">891512345</button>
+                <button onclick="testNumber('phone1', '89151234')">89151234</button>
+                <button onclick="testNumber('phone1', '8915123')">8915123</button>
+                <button onclick="testNumber('phone1', '891512')">891512</button>
+                <button onclick="testNumber('phone1', '89151')">89151</button>
+                <button onclick="testNumber('phone1', '8915')">8915</button>
+                <button onclick="testNumber('phone1', '891')">891</button>
+                <button onclick="testNumber('phone1', '89')">89</button>
+                <button onclick="testNumber('phone1', '8')">8</button>
+                <button onclick="testNumber('phone1', '')">Очистить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 Исправленная логика</h2>
+        <input type="tel" id="phone2" placeholder="Введите номер телефона" />
+        <div class="result" id="result2">Результат: </div>
+        <div class="error" id="error2"></div>
+        
+        <h3>Тестовые случаи:</h3>
+        <div class="test-cases">
+            <div>
+                <h4>Номер 7:</h4>
+                <button onclick="testNumber('phone2', '79151234567')">79151234567</button>
+                <button onclick="testNumber('phone2', '7915123456')">7915123456</button>
+                <button onclick="testNumber('phone2', '791512345')">791512345</button>
+                <button onclick="testNumber('phone2', '79151234')">79151234</button>
+                <button onclick="testNumber('phone2', '7915123')">7915123</button>
+                <button onclick="testNumber('phone2', '791512')">791512</button>
+                <button onclick="testNumber('phone2', '79151')">79151</button>
+                <button onclick="testNumber('phone2', '7915')">7915</button>
+                <button onclick="testNumber('phone2', '791')">791</button>
+                <button onclick="testNumber('phone2', '79')">79</button>
+                <button onclick="testNumber('phone2', '7')">7</button>
+                <button onclick="testNumber('phone2', '')">Очистить</button>
+            </div>
+            <div>
+                <h4>Номер 8:</h4>
+                <button onclick="testNumber('phone2', '89151234567')">89151234567</button>
+                <button onclick="testNumber('phone2', '8915123456')">8915123456</button>
+                <button onclick="testNumber('phone2', '891512345')">891512345</button>
+                <button onclick="testNumber('phone2', '89151234')">89151234</button>
+                <button onclick="testNumber('phone2', '8915123')">8915123</button>
+                <button onclick="testNumber('phone2', '891512')">891512</button>
+                <button onclick="testNumber('phone2', '89151')">89151</button>
+                <button onclick="testNumber('phone2', '8915')">8915</button>
+                <button onclick="testNumber('phone2', '891')">891</button>
+                <button onclick="testNumber('phone2', '89')">89</button>
+                <button onclick="testNumber('phone2', '8')">8</button>
+                <button onclick="testNumber('phone2', '')">Очистить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Текущая проблемная логика (исправленная)
+        function formatPhoneOld(value) {
+            const cleanValue = value.replace(/\D/g, '');
+            
+            if (cleanValue.length === 0) return '';
+            
+            // Если номер начинается с 7, добавляем +7
+            if (cleanValue.startsWith('7')) {
+                if (cleanValue.length === 1) return `+7`;
+                if (cleanValue.length <= 4) return `+7 (${cleanValue.slice(1, 4)}`;
+                if (cleanValue.length <= 7) return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}`;
+                if (cleanValue.length <= 9) return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}`;
+                return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}-${cleanValue.slice(9, 11)}`;
+            }
+            
+            // Если номер начинается с 8, не добавляем код страны
+            if (cleanValue.startsWith('8')) {
+                if (cleanValue.length === 1) return `8`;
+                if (cleanValue.length <= 4) return `8 (${cleanValue.slice(1, 4)}`;
+                if (cleanValue.length <= 7) return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}`;
+                if (cleanValue.length <= 9) return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}`;
+                return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}-${cleanValue.slice(9, 11)}`;
+            }
+            
+            // Для других номеров (начинающихся с 9) добавляем +7
+            if (cleanValue.length === 1) return `+7 (${cleanValue}`;
+            if (cleanValue.length <= 4) return `+7 (${cleanValue.slice(0, 3)}`;
+            if (cleanValue.length <= 7) return `+7 (${cleanValue.slice(0, 3)}) ${cleanValue.slice(3, 6)}`;
+            if (cleanValue.length <= 9) return `+7 (${cleanValue.slice(0, 3)}) ${cleanValue.slice(3, 6)}-${cleanValue.slice(6, 8)}`;
+            return `+7 (${cleanValue.slice(0, 3)}) ${cleanValue.slice(3, 6)}-${cleanValue.slice(6, 8)}-${cleanValue.slice(8, 10)}`;
+        }
+
+        // Исправленная логика
+        function formatPhoneNew(value) {
+            const cleanValue = value.replace(/\D/g, '');
+            
+            if (cleanValue.length === 0) return '';
+            
+            // Если номер начинается с 7, добавляем +7
+            if (cleanValue.startsWith('7')) {
+                if (cleanValue.length <= 1) return `+7 (${cleanValue.slice(1)}`;
+                if (cleanValue.length <= 4) return `+7 (${cleanValue.slice(1, 4)}`;
+                if (cleanValue.length <= 7) return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}`;
+                if (cleanValue.length <= 9) return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}`;
+                return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}-${cleanValue.slice(9, 11)}`;
+            }
+            
+            // Если номер начинается с 8, не добавляем код страны
+            if (cleanValue.startsWith('8')) {
+                if (cleanValue.length <= 1) return `8`;
+                if (cleanValue.length <= 4) return `8 (${cleanValue.slice(1, 4)}`;
+                if (cleanValue.length <= 7) return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}`;
+                if (cleanValue.length <= 9) return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}`;
+                return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}-${cleanValue.slice(9, 11)}`;
+            }
+            
+            // Для других номеров (начинающихся с 9) добавляем +7
+            if (cleanValue.length <= 1) return `+7 (${cleanValue}`;
+            if (cleanValue.length <= 4) return `+7 (${cleanValue.slice(0, 3)}`;
+            if (cleanValue.length <= 7) return `+7 (${cleanValue.slice(0, 3)}) ${cleanValue.slice(3, 6)}`;
+            if (cleanValue.length <= 9) return `+7 (${cleanValue.slice(0, 3)}) ${cleanValue.slice(3, 6)}-${cleanValue.slice(6, 8)}`;
+            return `+7 (${cleanValue.slice(0, 3)}) ${cleanValue.slice(3, 6)}-${cleanValue.slice(6, 8)}-${cleanValue.slice(8, 10)}`;
+        }
+
+        // Обработчики событий
+        document.getElementById('phone1').addEventListener('input', function(e) {
+            const result = formatPhoneOld(e.target.value);
+            document.getElementById('result1').textContent = 'Результат: ' + result;
+            document.getElementById('error1').textContent = '';
+        });
+
+        document.getElementById('phone2').addEventListener('input', function(e) {
+            const result = formatPhoneNew(e.target.value);
+            document.getElementById('result2').textContent = 'Результат: ' + result;
+            document.getElementById('error2').textContent = '';
+        });
+
+        function testNumber(inputId, number) {
+            const input = document.getElementById(inputId);
+            input.value = number;
+            input.dispatchEvent(new Event('input'));
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Тест форматирования телефона загружен');
+        });
+    </script>
+</body>
+</html>

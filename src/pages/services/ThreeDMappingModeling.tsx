@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Box, Cube, Eye, Layers, Palette, Zap } from "lucide-react";
+import { Button } from "../../components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
+import { Badge } from "../../components/ui/badge";
+import { ArrowLeft, Box, Box3d, Eye, Layers, Palette, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ThreeDMappingModeling: React.FC = () => {
@@ -28,7 +28,7 @@ const ThreeDMappingModeling: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center">
           <Badge variant="secondary" className="mb-4">
-            <Cube className="h-4 w-4 mr-2" />
+            <Box3d className="h-4 w-4 mr-2" />
             3D технологии
           </Badge>
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">

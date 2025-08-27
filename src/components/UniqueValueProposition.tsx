@@ -55,10 +55,7 @@ const UniqueValueProposition = () => {
               именно нас
             </span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Мы не просто выполняем задачи - мы создаем ценность для вашего бизнеса, 
-            используя инновационные подходы и проверенные технологии
-          </p>
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

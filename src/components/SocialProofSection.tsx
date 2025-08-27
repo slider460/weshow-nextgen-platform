@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Award, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
+import { useLogos } from "../contexts/LogosContext";
+import LogosDisplay from "./LogosDisplay";
 
-const SocialProofSection = () => {
+const SocialProofSection = React.memo(() => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { getActiveLogos } = useLogos();
 
-  const documents = [
+  const documents = useMemo(() => [
     {
       id: 1,
       title: "Благодарственное письмо от ВТБ",
@@ -30,31 +33,20 @@ const SocialProofSection = () => {
       type: "letter",
       year: "2024"
     }
-  ];
+  ], []);
 
-  const clients = [
-    { name: "ВТБ", logo: "/placeholder.svg" },
-    { name: "Сбербанк", logo: "/placeholder.svg" },
-    { name: "Газпром", logo: "/placeholder.svg" },
-    { name: "МТС", logo: "/placeholder.svg" },
-    { name: "Лукойл", logo: "/placeholder.svg" },
-    { name: "Ростелеком", logo: "/placeholder.svg" },
-    { name: "Аэрофлот", logo: "/placeholder.svg" },
-    { name: "Яндекс", logo: "/placeholder.svg" }
-  ];
-
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % documents.length);
-  };
+  }, [documents.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + documents.length) % documents.length);
-  };
+  }, [documents.length]);
 
   useEffect(() => {
     const timer = setInterval(nextSlide, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [nextSlide]);
 
   return (
     <section className="py-20 bg-white">
@@ -86,16 +78,7 @@ const SocialProofSection = () => {
             Нам доверяют
           </h2>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
-            {clients.map((client, index) => (
-              <div key={index} className="bg-white border border-slate-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 flex flex-col items-center justify-center">
-                <div className="w-16 h-16 bg-slate-100 rounded-lg flex items-center justify-center mb-3">
-                  <span className="text-xs font-medium text-slate-600">LOGO</span>
-                </div>
-                <div className="text-xs text-slate-600 font-medium text-center">{client.name}</div>
-              </div>
-            ))}
-          </div>
+          <LogosDisplay showEditButton={true} />
         </div>
 
         {/* Documents Carousel */}
@@ -183,6 +166,6 @@ const SocialProofSection = () => {
       </div>
     </section>
   );
-};
+});
 
 export default SocialProofSection;

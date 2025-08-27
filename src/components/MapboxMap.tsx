@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import { Label } from "../components/ui/label";
 import { MapPin, Navigation, Phone, Mail, Clock, ExternalLink } from "lucide-react";
 
 interface MapboxMapProps {

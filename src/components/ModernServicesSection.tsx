@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { ArrowRight, Sparkles, Monitor, Smartphone, Users, Settings, Palette, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import ConsultationModal from "./ConsultationModal";
@@ -76,10 +76,7 @@ const ModernServicesSection = () => {
               мультимедийные решения
             </span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            От концепции до реализации - мы создаем инновационные решения, 
-            которые помогают вашему бизнесу выделиться и достичь новых высот
-          </p>
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -146,7 +143,6 @@ const ModernServicesSection = () => {
                 Нужен индивидуальный подход?
               </h3>
               <p className="text-white/90 mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
-                Мы создаем уникальные решения под ваши задачи. 
                 Свяжитесь с нами для бесплатной консультации и разработки персонального предложения.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

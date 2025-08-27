@@ -1,8 +1,8 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
 import { 
   ArrowLeft, 
   Move, 
@@ -30,12 +30,12 @@ import {
   Trash2
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import EquipmentCart from "@/components/EquipmentCart";
+import EquipmentCart from "../components/EquipmentCart";
 import { useState, useEffect } from "react";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "../components/ui/badge";
 import { Calculator } from "lucide-react";
-import ConsultationModal from "@/components/ConsultationModal";
-import { useEquipmentCart } from "@/hooks/useEquipmentCart";
+import ConsultationModal from "../components/ConsultationModal";
+import { useEquipmentCart } from "../hooks/useEquipmentCart";
 
 const Equipment = () => {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);

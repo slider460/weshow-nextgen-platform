@@ -1,14 +1,14 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import MapboxMap from "@/components/MapboxMap";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import MapboxMap from "../components/MapboxMap";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Textarea } from "../components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { Phone, Mail, MapPin, Clock, Send, Navigation, Building, Car, Train } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "../hooks/use-toast";
 
 const Contact = () => {
   const { toast } = useToast();

@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { useAdmin } from '@/contexts/admin/AdminContext';
-import { MediaFile } from '@/types/admin/portfolio';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { useAdmin } from '../../contexts/admin/AdminContext';
+import { MediaFile } from '../../types/admin/portfolio';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Badge } from '../ui/badge';
 import { 
   Upload, 
   Image as ImageIcon, 
@@ -27,7 +27,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '../ui/dropdown-menu';
 
 const MediaLibrary: React.FC = () => {
   const { state, dispatch } = useAdmin();

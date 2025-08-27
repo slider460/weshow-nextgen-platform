@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import AnimatedButton from '@/components/AnimatedButton';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '../components/ui/button';
+import AnimatedButton from '../components/AnimatedButton';
+import { Input } from '../components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
 import { Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useNewsletterAPI } from '@/api/newsletter';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useNewsletterAPI } from '../api/newsletter';
 
 interface NewsletterSubscriptionProps {
   className?: string;

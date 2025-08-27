@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "../components/ui/dialog";
+import { Button } from "../components/ui/button";
 import { X, Play, Pause, Volume2, VolumeX, Maximize2, RotateCcw } from "lucide-react";
 
 interface ShowreelModalProps {

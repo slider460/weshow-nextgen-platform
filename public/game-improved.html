@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚴‍♂️ Велосипедные гонки - Улучшенная версия</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.8/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            min-height: 100vh;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+        }
+        
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .return-btn {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+        }
+        
+        .stats {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #ccc;
+            margin-top: 5px;
+        }
+        
+        .game-over {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            border: 2px solid #4CAF50;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .discount-code {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .instructions h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ul {
+            text-align: left;
+            line-height: 1.6;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .controls { flex-direction: column; }
+            .stats { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <h1>🚴‍♂️ Велосипедные гонки</h1>
+    <p class="subtitle">Перепрыгивайте мультимедийную технику и собирайте скидки!</p>
+    
+    <div class="game-container">
+        <div class="controls">
+            <button id="startBtn" onclick="startGame()">🎮 Начать гонку</button>
+            <button id="pauseBtn" onclick="pauseGame()" disabled>⏸️ Пауза</button>
+            <button class="return-btn" onclick="window.location.href='/'">🏠 Вернуться на сайт</button>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value" id="score">0</div>
+                <div class="stat-label">Очки</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="timeLeft">30</div>
+                <div class="stat-label">Время</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="combo">0x</div>
+                <div class="stat-label">Комбо</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="level">1</div>
+                <div class="stat-label">Уровень</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="successfulJumps">0</div>
+                <div class="stat-label">Успешные прыжки</div>
+            </div>
+        </div>
+        
+        <div id="gameCanvas"></div>
+        
+        <div class="instructions">
+            <h3>🎯 Как играть:</h3>
+            <ul>
+                <li><strong>Мышь:</strong> Кликните для прыжка</li>
+                <li><strong>Клавиатура:</strong> Нажмите ПРОБЕЛ для прыжка</li>
+                <li><strong>Цель:</strong> Перепрыгивайте препятствия и собирайте очки</li>
+                <li><strong>Физика:</strong> Препятствия имеют реальные размеры и коллизии</li>
+                <li><strong>Время:</strong> У вас есть 30 секунд!</li>
+                <li><strong>Скидки:</strong> 100+ очков = 5%, 200+ = 10%, 500+ = 15%, 1000+ = 25%</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="game-over" id="gameOverModal">
+        <h2>🎉 Игра окончена!</h2>
+        <div id="finalScore"></div>
+        <div id="discountCode" class="discount-code" style="display: none;"></div>
+        <button onclick="restartGame()">🔄 Играть снова</button>
+    </div>
+
+    <script>
+        // Игровые переменные
+        let gameState = {
+            isPlaying: false,
+            isPaused: false,
+            score: 0,
+            timeLeft: 30,
+            level: 1,
+            combo: 0,
+            maxCombo: 0,
+            gameSpeed: 1,
+            successfulJumps: 0,
+            totalObstacles: 0
+        };
+        
+        let bike = {
+            x: 100,
+            y: 350,
+            width: 40,
+            height: 25,
+            isJumping: false,
+            jumpStart: 0,
+            jumpHeight: 100,
+            jumpDuration: 600,
+            baseY: 350
+        };
+        
+        let obstacles = [];
+        let obstacleId = 0;
+        let gameTimer;
+        let obstacleTimer;
+        
+        // p5.js функции
+        function setup() {
+            const canvas = createCanvas(800, 400);
+            canvas.parent('gameCanvas');
+            frameRate(60);
+            
+            // Начальная отрисовка
+            drawBackground();
+            drawGround();
+            drawBike();
+            drawInstructions();
+        }
+        
+        function draw() {
+            if (!gameState.isPlaying || gameState.isPaused) return;
+            
+            // Очистка и отрисовка фона
+            drawBackground();
+            drawGround();
+            
+            // Обновление и отрисовка препятствий
+            updateObstacles();
+            obstacles.forEach(drawObstacle);
+            
+            // Обновление и отрисовка велосипеда
+            updateBike();
+            drawBike();
+            
+            // Обновление UI
+            updateUI();
+            
+            // Проверка коллизий
+            checkCollisions();
+            
+            // Увеличение счета
+            gameState.score++;
+            
+            // Обновление уровня
+            const newLevel = Math.floor(gameState.score / 200) + 1;
+            if (newLevel > gameState.level) {
+                gameState.level = newLevel;
+                gameState.gameSpeed = 1 + (newLevel - 1) * 0.2;
+            }
+        }
+        
+        function drawBackground() {
+            // Градиентный фон
+            for (let y = 0; y < height; y++) {
+                let inter = map(y, 0, height, 0, 1);
+                let c = lerpColor(color(135, 206, 235), color(224, 246, 255), inter);
+                stroke(c);
+                line(0, y, width, y);
+            }
+        }
+        
+        function drawGround() {
+            fill(143, 188, 143);
+            noStroke();
+            rect(0, 350, width, 50);
+            
+            // Добавляем текстуру земли
+            fill(34, 139, 34);
+            for (let x = 0; x < width; x += 20) {
+                rect(x, 350, 10, 50);
+            }
+        }
+        
+        function drawBike() {
+            // Тень велосипеда
+            fill(0, 0, 0, 50);
+            noStroke();
+            ellipse(bike.x + 20, bike.baseY + 5, 50, 10);
+            
+            // Рама велосипеда
+            stroke(231, 76, 60);
+            strokeWeight(4);
+            noFill();
+            
+            // Основная рама
+            beginShape();
+            vertex(bike.x, bike.y);
+            vertex(bike.x + 40, bike.y);
+            vertex(bike.x + 20, bike.y - 20);
+            vertex(bike.x, bike.y);
+            endShape();
+            
+            // Дополнительные детали
+            stroke(200, 50, 40);
+            strokeWeight(2);
+            line(bike.x + 5, bike.y - 10, bike.x + 35, bike.y - 10);
+            
+            // Колеса
+            stroke(44, 62, 80);
+            strokeWeight(3);
+            fill(255, 255, 255);
+            circle(bike.x + 10, bike.y, 18);
+            circle(bike.x + 30, bike.y, 18);
+            
+            // Спицы колес
+            stroke(100, 100, 100);
+            strokeWeight(1);
+            for (let i = 0; i < 8; i++) {
+                let angle = (i * PI) / 4;
+                let x1 = bike.x + 10 + cos(angle) * 8;
+                let y1 = bike.y + sin(angle) * 8;
+                let x2 = bike.x + 10 + cos(angle) * 16;
+                let y2 = bike.y + sin(angle) * 16;
+                line(x1, y1, x2, y2);
+                
+                x1 = bike.x + 30 + cos(angle) * 8;
+                x2 = bike.x + 30 + cos(angle) * 16;
+                line(x1, y1, x2, y2);
+            }
+            
+            // Руль
+            stroke(231, 76, 60);
+            strokeWeight(3);
+            line(bike.x + 20, bike.y - 20, bike.x + 20, bike.y - 30);
+            circle(bike.x + 20, bike.y - 30, 8);
+        }
+        
+        function drawObstacle(obstacle) {
+            // Тень препятствия
+            fill(0, 0, 0, 30);
+            noStroke();
+            ellipse(obstacle.x + obstacle.width/2, obstacle.y + obstacle.height + 5, obstacle.width + 10, 8);
+            
+            // Основное препятствие с градиентом
+            let gradient = drawingContext.createLinearGradient(obstacle.x, obstacle.y, obstacle.x, obstacle.y + obstacle.height);
+            
+            switch(obstacle.type) {
+                case 'projector':
+                    gradient.addColorStop(0, '#2c3e50');
+                    gradient.addColorStop(1, '#34495e');
+                    break;
+                case 'touchpanel':
+                    gradient.addColorStop(0, '#3498db');
+                    gradient.addColorStop(1, '#2980b9');
+                    break;
+                case 'computer':
+                    gradient.addColorStop(0, '#95a5a6');
+                    gradient.addColorStop(1, '#7f8c8d');
+                    break;
+                case 'speaker':
+                    gradient.addColorStop(0, '#e74c3c');
+                    gradient.addColorStop(1, '#c0392b');
+                    break;
+                case 'camera':
+                    gradient.addColorStop(0, '#9b59b6');
+                    gradient.addColorStop(1, '#8e44ad');
+                    break;
+            }
+            
+            drawingContext.fillStyle = gradient;
+            rect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            
+            // Детали препятствия
+            fill(255, 255, 255);
+            noStroke();
+            textSize(10);
+            textAlign(CENTER, CENTER);
+            text(obstacle.type, obstacle.x + obstacle.width/2, obstacle.y + obstacle.height/2);
+            
+            // Добавляем фотореалистичные детали
+            drawObstacleDetails(obstacle);
+        }
+        
+        function drawObstacleDetails(obstacle) {
+            switch(obstacle.type) {
+                case 'projector':
+                    // Объектив проектора
+                    fill(0, 0, 0);
+                    circle(obstacle.x + obstacle.width/2, obstacle.y + obstacle.height/2, 15);
+                    fill(255, 255, 255);
+                    circle(obstacle.x + obstacle.width/2, obstacle.y + obstacle.height/2, 8);
+                    // Кнопки
+                    fill(100, 100, 100);
+                    circle(obstacle.x + 8, obstacle.y + 8, 4);
+                    circle(obstacle.x + obstacle.width - 8, obstacle.y + 8, 4);
+                    break;
+                    
+                case 'touchpanel':
+                    // Экран
+                    fill(0, 0, 0);
+                    rect(obstacle.x + 3, obstacle.y + 3, obstacle.width - 6, obstacle.height - 6);
+                    // Индикаторы
+                    fill(0, 255, 0);
+                    circle(obstacle.x + 8, obstacle.y + obstacle.height - 8, 3);
+                    break;
+                    
+                case 'computer':
+                    // Монитор
+                    fill(0, 0, 0);
+                    rect(obstacle.x + 2, obstacle.y + 2, obstacle.width - 4, obstacle.height - 4);
+                    // Кнопка питания
+                    fill(255, 0, 0);
+                    circle(obstacle.x + obstacle.width - 8, obstacle.y + 8, 3);
+                    break;
+                    
+                case 'speaker':
+                    // Динамик
+                    fill(0, 0, 0);
+                    circle(obstacle.x + obstacle.width/2, obstacle.y + obstacle.height/2, 20);
+                    fill(100, 100, 100);
+                    circle(obstacle.x + obstacle.width/2, obstacle.y + obstacle.height/2, 15);
+                    fill(0, 0, 0);
+                    circle(obstacle.x + obstacle.width/2, obstacle.y + obstacle.height/2, 8);
+                    break;
+                    
+                case 'camera':
+                    // Объектив камеры
+                    fill(0, 0, 0);
+                    circle(obstacle.x + obstacle.width/2, obstacle.y + obstacle.height/2, 18);
+                    fill(50, 50, 50);
+                    circle(obstacle.x + obstacle.width/2, obstacle.y + obstacle.height/2, 12);
+                    fill(0, 0, 0);
+                    circle(obstacle.x + obstacle.width/2, obstacle.y + obstacle.height/2, 6);
+                    // Индикатор записи
+                    fill(255, 0, 0);
+                    circle(obstacle.x + 8, obstacle.y + 8, 4);
+                    break;
+            }
+        }
+        
+        function drawInstructions() {
+            fill(255);
+            textSize(18);
+            textAlign(CENTER, CENTER);
+            text('Нажмите "Начать гонку" для старта!', width/2, height/2);
+        }
+        
+        function updateBike() {
+            if (bike.isJumping) {
+                const elapsed = millis() - bike.jumpStart;
+                const progress = min(elapsed / bike.jumpDuration, 1);
+                
+                // Улучшенная траектория прыжка (парабола)
+                const jumpHeight = bike.jumpHeight * sin(progress * PI);
+                bike.y = bike.baseY - jumpHeight;
+                
+                if (progress >= 1) {
+                    bike.isJumping = false;
+                    bike.y = bike.baseY;
+                }
+            }
+        }
+        
+        function updateObstacles() {
+            // Движение препятствий
+            obstacles = obstacles
+                .map(obstacle => ({
+                    ...obstacle,
+                    x: obstacle.x - 3 * gameState.gameSpeed
+                }))
+                .filter(obstacle => obstacle.x > -obstacle.width);
+        }
+        
+        function updateUI() {
+            document.getElementById('score').textContent = gameState.score;
+            document.getElementById('timeLeft').textContent = gameState.timeLeft;
+            document.getElementById('combo').textContent = gameState.combo + 'x';
+            document.getElementById('level').textContent = gameState.level;
+            document.getElementById('successfulJumps').textContent = gameState.successfulJumps;
+        }
+        
+        function checkCollisions() {
+            let collision = false;
+            
+            obstacles.forEach(obstacle => {
+                // Улучшенная проверка коллизий с учетом размеров
+                if (bike.x < obstacle.x + obstacle.width &&
+                    bike.x + bike.width > obstacle.x &&
+                    bike.y < obstacle.y + obstacle.height &&
+                    bike.y + bike.height > obstacle.y) {
+                    
+                    collision = true;
+                    // Коллизия - сброс комбо
+                    gameState.combo = 0;
+                    obstacles = obstacles.filter(o => o.id !== obstacle.id);
+                }
+            });
+            
+            // Если нет коллизий и велосипед не прыгает, увеличиваем комбо
+            if (!collision && !bike.isJumping && obstacles.length > 0) {
+                // Проверяем, прошел ли велосипед препятствие
+                obstacles.forEach(obstacle => {
+                    if (bike.x + bike.width > obstacle.x + obstacle.width && 
+                        !obstacle.passed) {
+                        obstacle.passed = true;
+                        gameState.successfulJumps++;
+                        gameState.combo++;
+                        gameState.maxCombo = max(gameState.maxCombo, gameState.combo);
+                        
+                        // Бонус за успешный прыжок
+                        gameState.score += 10;
+                    }
+                });
+            }
+        }
+        
+        function spawnObstacle() {
+            if (!gameState.isPlaying) return;
+            
+            const types = ['projector', 'touchpanel', 'computer', 'speaker', 'camera'];
+            const type = types[floor(random(types.length))];
+            
+            // Разные размеры для разных типов препятствий
+            let obstacleWidth, obstacleHeight;
+            switch(type) {
+                case 'projector':
+                    obstacleWidth = 45;
+                    obstacleHeight = 35;
+                    break;
+                case 'touchpanel':
+                    obstacleWidth = 40;
+                    obstacleHeight = 50;
+                    break;
+                case 'computer':
+                    obstacleWidth = 50;
+                    obstacleHeight = 40;
+                    break;
+                case 'speaker':
+                    obstacleWidth = 35;
+                    obstacleHeight = 45;
+                    break;
+                case 'camera':
+                    obstacleWidth = 30;
+                    obstacleHeight = 30;
+                    break;
+                default:
+                    obstacleWidth = 40;
+                    obstacleHeight = 40;
+            }
+            
+            obstacles.push({
+                id: obstacleId++,
+                x: width,
+                y: 350 - obstacleHeight,
+                width: obstacleWidth,
+                height: obstacleHeight,
+                type: type,
+                passed: false
+            });
+            
+            gameState.totalObstacles++;
+            
+            // Планируем следующий спавн
+            obstacleTimer = setTimeout(spawnObstacle, 2000 / gameState.gameSpeed);
+        }
+        
+        function startGame() {
+            if (gameState.isPlaying) return;
+            
+            // Сброс состояния
+            gameState.isPlaying = true;
+            gameState.isPaused = false;
+            gameState.score = 0;
+            gameState.timeLeft = 30;
+            gameState.level = 1;
+            gameState.combo = 0;
+            gameState.maxCombo = 0;
+            gameState.gameSpeed = 1;
+            gameState.successfulJumps = 0;
+            gameState.totalObstacles = 0;
+            
+            bike.y = bike.baseY;
+            bike.isJumping = false;
+            obstacles = [];
+            obstacleId = 0;
+            
+            // Обновление UI
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('pauseBtn').disabled = false;
+            document.getElementById('gameOverModal').style.display = 'none';
+            
+            // Запуск таймеров
+            gameTimer = setInterval(() => {
+                gameState.timeLeft--;
+                if (gameState.timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+            
+            // Первый спавн препятствий
+            obstacleTimer = setTimeout(spawnObstacle, 1000);
+            
+            console.log('Игра запущена!');
+        }
+        
+        function pauseGame() {
+            if (!gameState.isPlaying) return;
+            
+            gameState.isPaused = !gameState.isPaused;
+            
+            if (gameState.isPaused) {
+                document.getElementById('pauseBtn').textContent = '▶️ Продолжить';
+                clearInterval(gameTimer);
+                clearTimeout(obstacleTimer);
+            } else {
+                document.getElementById('pauseBtn').textContent = '⏸️ Пауза';
+                gameTimer = setInterval(() => {
+                    gameState.timeLeft--;
+                    if (gameState.timeLeft <= 0) {
+                        endGame();
+                    }
+                }, 1000);
+                obstacleTimer = setTimeout(spawnObstacle, 1000);
+            }
+        }
+        
+        function endGame() {
+            gameState.isPlaying = false;
+            gameState.isPaused = false;
+            
+            clearInterval(gameTimer);
+            clearTimeout(obstacleTimer);
+            
+            // Обновление UI
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('pauseBtn').textContent = '⏸️ Пауза';
+            
+            // Показ результатов
+            document.getElementById('finalScore').innerHTML = `
+                <p>Финальный счет: <strong>${gameState.score}</strong></p>
+                <p>Успешные прыжки: <strong>${gameState.successfulJumps}/${gameState.totalObstacles}</strong></p>
+                <p>Максимальное комбо: <strong>${gameState.maxCombo}x</strong></p>
+                <p>Уровень: <strong>${gameState.level}</strong></p>
+                <p>Точность: <strong>${gameState.totalObstacles > 0 ? Math.round((gameState.successfulJumps / gameState.totalObstacles) * 100) : 0}%</strong></p>
+            `;
+            
+            // Генерация кода скидки
+            const discountCode = generateDiscountCode(gameState.score, gameState.maxCombo);
+            if (discountCode) {
+                document.getElementById('discountCode').textContent = discountCode;
+                document.getElementById('discountCode').style.display = 'block';
+            }
+            
+            document.getElementById('gameOverModal').style.display = 'block';
+        }
+        
+        function restartGame() {
+            document.getElementById('gameOverModal').style.display = 'none';
+            startGame();
+        }
+        
+        function generateDiscountCode(score, maxCombo) {
+            let discount = 0;
+            if (score >= 1000) discount = 25;
+            else if (score >= 500) discount = 15;
+            else if (score >= 200) discount = 10;
+            else if (score >= 100) discount = 5;
+            
+            if (maxCombo >= 50) discount += 5;
+            if (maxCombo >= 100) discount += 10;
+            
+            return discount > 0 ? `WESHOW${discount}OFF` : null;
+        }
+        
+        // Обработчики событий
+        function mousePressed() {
+            if (gameState.isPlaying && !gameState.isPaused) {
+                jump();
+            }
+        }
+        
+        function keyPressed() {
+            if (key === ' ' && gameState.isPlaying && !gameState.isPaused) {
+                jump();
+                return false; // Предотвращаем прокрутку страницы
+            }
+        }
+        
+        function jump() {
+            if (bike.isJumping) return;
+            
+            bike.isJumping = true;
+            bike.jumpStart = millis();
+        }
+        
+        // Утилиты
+        function map(value, start1, stop1, start2, stop2) {
+            return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
+        }
+        
+        function min(a, b) {
+            return a < b ? a : b;
+        }
+        
+        function max(a, b) {
+            return a > b ? a : b;
+        }
+        
+        function floor(value) {
+            return Math.floor(value);
+        }
+        
+        function random(max) {
+            return Math.random() * max;
+        }
+        
+        function sin(angle) {
+            return Math.sin(angle);
+        }
+        
+        function PI() {
+            return Math.PI;
+        }
+        
+        function cos(angle) {
+            return Math.cos(angle);
+        }
+        
+        // Инициализация
+        window.onload = function() {
+            console.log('Улучшенная игра "Велосипедные гонки" загружена!');
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 2px solid #333;
+            background: #87CEEB;
+            display: block;
+            margin: 20px auto;
+        }
+        .info {
+            text-align: center;
+            margin: 20px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h1>Тест Canvas</h1>
+        <p>Проверяем работу Canvas API</p>
+        <button onclick="testCanvas()">Тест Canvas</button>
+        <button onclick="clearCanvas()">Очистить</button>
+        <button onclick="checkData()">Проверить данные</button>
+    </div>
+    
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    
+    <div class="info">
+        <div id="status">Статус: Ожидание...</div>
+        <div id="data">Данные: Не проверено</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const statusDiv = document.getElementById('status');
+        const dataDiv = document.getElementById('data');
+
+        function testCanvas() {
+            statusDiv.textContent = 'Статус: Рисуем...';
+            
+            // Очищаем canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Рисуем фон
+            ctx.fillStyle = '#87CEEB';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Рисуем текст
+            ctx.fillStyle = '#000000';
+            ctx.font = '24px Arial';
+            ctx.fillText('Canvas работает!', 300, 200);
+            
+            // Рисуем фигуры
+            ctx.fillStyle = '#FF0000';
+            ctx.fillRect(100, 100, 100, 100);
+            
+            ctx.strokeStyle = '#00FF00';
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.arc(400, 200, 50, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            statusDiv.textContent = 'Статус: Рисование завершено';
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            statusDiv.textContent = 'Статус: Canvas очищен';
+        }
+
+        function checkData() {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const hasData = imageData.data.some(pixel => pixel !== 0);
+            
+            dataDiv.textContent = `Данные: ${hasData ? 'Есть данные' : 'Нет данных'} (${canvas.width}x${canvas.height})`;
+            
+            // Показываем первые несколько пикселей
+            const pixels = imageData.data.slice(0, 20);
+            console.log('Первые пиксели:', pixels);
+        }
+
+        // Автоматический тест при загрузке
+        window.onload = function() {
+            setTimeout(testCanvas, 500);
+        };
+    </script>
+</body>
+</html>
