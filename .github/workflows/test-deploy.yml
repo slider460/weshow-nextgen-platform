@@ -1,0 +1,41 @@
+name: 🧪 Test GitHub Actions
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: 📚 Install dependencies
+        run: npm ci
+        
+      - name: 🔨 Build project
+        run: npm run build
+        
+      - name: ✅ Test build
+        run: |
+          echo "✅ Проект успешно собран!"
+          echo "📁 Содержимое dist/:"
+          ls -la dist/
+          echo "📄 Размер index.html:"
+          wc -l dist/index.html
+          
+      - name: 📧 Success notification
+        if: success()
+        run: |
+          echo "🎉 Тест прошел успешно!"
+          echo "📅 Время: $(date)"
+          echo "🔄 Следующий шаг: настроить Vercel деплой"
