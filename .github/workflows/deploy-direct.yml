@@ -1,0 +1,55 @@
+name: 🚀 Direct Vercel Deployment
+
+on:
+  workflow_dispatch: # Только ручной запуск
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: 📚 Install dependencies
+        run: npm ci
+        
+      - name: 🔨 Build project
+        run: npm run build
+        
+      - name: 📦 Install Vercel CLI
+        run: npm install -g vercel
+        
+      - name: 🔑 Set Vercel environment
+        run: |
+          echo "🔑 Настраиваем переменные Vercel:"
+          echo "VERCEL_TOKEN: ${VERCEL_TOKEN:0:10}..." # Показываем только начало токена
+          echo "VERCEL_ORG_ID: $VERCEL_ORG_ID"
+          echo "VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID"
+          
+      - name: 🚀 Deploy with Vercel CLI
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          echo "🚀 Запускаем деплой через Vercel CLI..."
+          vercel --prod --yes --token $VERCEL_TOKEN
+          
+      - name: ✅ Success notification
+        if: success()
+        run: |
+          echo "🎉 Сайт успешно развернут!"
+          echo "🌐 Проверьте: https://weshow-nextgen-platform.vercel.app"
+          
+      - name: ❌ Error details
+        if: failure()
+        run: |
+          echo "❌ Ошибка при деплое!"
+          echo "🔍 Проверьте логи выше для деталей"

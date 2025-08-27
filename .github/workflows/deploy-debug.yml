@@ -1,0 +1,70 @@
+name: 🔍 Debug Vercel Deployment
+
+on:
+  workflow_dispatch: # Только ручной запуск
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: 📚 Install dependencies
+        run: npm ci
+        
+      - name: 🔨 Build project
+        run: npm run build
+        
+      - name: 🔍 Check build output
+        run: |
+          echo "📁 Содержимое dist/:"
+          ls -la dist/
+          echo "📄 Проверяем index.html:"
+          head -20 dist/index.html
+          
+      - name: 🔑 Check Vercel secrets
+        run: |
+          echo "🔑 Проверяем секреты Vercel:"
+          if [ -n "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "✅ VERCEL_TOKEN: Установлен (длина: ${#VERCEL_TOKEN})"
+          else
+            echo "❌ VERCEL_TOKEN: НЕ УСТАНОВЛЕН"
+          fi
+          
+          if [ -n "${{ secrets.VERCEL_ORG_ID }}" ]; then
+            echo "✅ VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}"
+          else
+            echo "❌ VERCEL_ORG_ID: НЕ УСТАНОВЛЕН"
+          fi
+          
+          if [ -n "${{ secrets.VERCEL_PROJECT_ID }}" ]; then
+            echo "✅ VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}"
+          else
+            echo "❌ VERCEL_PROJECT_ID: НЕ УСТАНОВЛЕН"
+          fi
+          
+      - name: 🚀 Test Vercel deployment
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+        continue-on-error: true
+        
+      - name: 📊 Final status
+        run: |
+          echo "📊 Статус выполнения:"
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✅ УСПЕХ! Сайт развернут"
+          else
+            echo "❌ ОШИБКА! Проверьте логи выше"
+          fi
