@@ -168,3 +168,4 @@ npm run preview
 MIT License - см. [LICENSE](LICENSE) файл для деталей.
 # Last updated: Wed Aug 27 15:42:48 MSK 2025
 # Vercel secrets configured - testing deployment
+# Vercel secrets configured - testing deployment again
