@@ -1,111 +1,126 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { ArrowRight, Monitor, Speaker, Eye, Projector, Gamepad, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "../config/supabase";
 
 const RentalEquipmentSection = () => {
   const [showAll, setShowAll] = useState(false);
 
-  const equipmentItems = [
-    {
-      id: 1,
-      title: "Кинетический экран",
-      description: "Движущиеся интерактивные поверхности",
-      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-purple",
-      link: "/services/kinetic-screen"
-    },
-    {
-      id: 2,
-      title: "Матричный экран",
-      description: "Многосегментные LED дисплеи",
-      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-blue",
-      link: "/services/matrix-screen"
-    },
-    {
-      id: 3,
-      title: "Прозрачный экран",
-      description: "Полупрозрачные дисплеи",
-      icon: <Eye className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-cyan",
-      link: "/services/transparent-screen"
-    },
-    {
-      id: 4,
-      title: "Информационные панели",
-      description: "Цифровые вывески",
-      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-dark",
-      link: "/services/info-panels"
-    },
-    {
-      id: 5,
-      title: "Проектора (от 10000 люмен)",
-      description: "Высокояркостная проекция",
-      icon: <Projector className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-purple",
-      link: "/services/projectors"
-    },
-    {
-      id: 6,
-      title: "Гибкий неон",
-      description: "Эластичная LED подсветка",
-      icon: <Zap className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-blue",
-      link: "/services/flexible-neon"
-    },
-    {
-      id: 7,
-      title: "Проекционные сетки",
-      description: "Специальные поверхности для проекции",
-      icon: <Projector className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-cyan",
-      link: "/services/projection-screens"
-    },
-    {
-      id: 8,
-      title: "Голографические вентиляторы",
-      description: "3D голограммы в воздухе",
-      icon: <Zap className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-dark",
-      link: "/services/holographic-fans"
-    },
-    {
-      id: 9,
-      title: "Очки дополненной реальности",
-      description: "AR технологии",
-      icon: <Eye className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-purple",
-      link: "/services/ar-glasses"
-    },
-    {
-      id: 10,
-      title: "Игры на базе Kinect",
-      description: "Интерактивные игровые решения",
-      icon: <Gamepad className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-blue",
-      link: "/services/interactive-games"
-    },
-    {
-      id: 11,
-      title: "VR кинотеатр",
-      description: "Виртуальная реальность для просмотра",
-      icon: <Gamepad className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-cyan",
-      link: "/services/ar-vr-apps"
-    },
-    {
-      id: 12,
-      title: "Прозрачные телевизоры",
-      description: "Современные прозрачные дисплеи",
-      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
-      gradient: "gradient-card-purple",
-      link: "/services/transparent-screen"
+  const [equipmentItems, setEquipmentItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Иконки для маппинга
+  const iconMap = {
+    Monitor: Monitor,
+    Speaker: Speaker,
+    Eye: Eye,
+    Projector: Projector,
+    Gamepad: Gamepad,
+    Zap: Zap
+  };
+
+  useEffect(() => {
+    loadEquipmentItems();
+  }, []);
+
+  const loadEquipmentItems = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('homepage_equipment')
+        .select('*')
+        .eq('is_visible', true)
+        .order('sort_order', { ascending: true });
+
+      if (error) throw error;
+
+      // Преобразуем данные из базы в формат компонента
+      const formattedItems = (data || []).map(item => {
+        const IconComponent = iconMap[item.icon as keyof typeof iconMap] || Monitor;
+        return {
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          icon: <IconComponent className="h-6 w-6 lg:h-8 lg:w-8" />,
+          gradient: item.gradient,
+          link: item.link
+        };
+      });
+
+      setEquipmentItems(formattedItems);
+    } catch (err) {
+      console.error('Ошибка загрузки блоков оборудования:', err);
+      // Fallback к статическим данным в случае ошибки
+      setEquipmentItems([
+        {
+          id: 1,
+          title: "Кинетический экран",
+          description: "Движущиеся интерактивные поверхности",
+          icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
+          gradient: "gradient-card-purple",
+          link: "/services/kinetic-screen"
+        },
+        {
+          id: 2,
+          title: "Матричный экран",
+          description: "Многосегментные LED дисплеи",
+          icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
+          gradient: "gradient-card-blue",
+          link: "/services/matrix-screen"
+        },
+        {
+          id: 3,
+          title: "Прозрачный экран",
+          description: "Полупрозрачные дисплеи",
+          icon: <Eye className="h-6 w-6 lg:h-8 lg:w-8" />,
+          gradient: "gradient-card-cyan",
+          link: "/services/transparent-screen"
+        },
+        {
+          id: 4,
+          title: "Информационные панели",
+          description: "Цифровые вывески",
+          icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
+          gradient: "gradient-card-dark",
+          link: "/services/info-panels"
+        },
+        {
+          id: 5,
+          title: "Проектора (от 10000 люмен)",
+          description: "Высокояркостная проекция",
+          icon: <Projector className="h-6 w-6 lg:h-8 lg:w-8" />,
+          gradient: "gradient-card-purple",
+          link: "/services/projectors"
+        },
+        {
+          id: 6,
+          title: "Гибкий неон",
+          description: "Эластичная LED подсветка",
+          icon: <Zap className="h-6 w-6 lg:h-8 lg:w-8" />,
+          gradient: "gradient-card-blue",
+          link: "/services/flexible-neon"
+        }
+      ]);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   const visibleItems = showAll ? equipmentItems : equipmentItems.slice(0, 6);
+
+  if (loading) {
+    return (
+      <section className="py-12 lg:py-24 bg-slate-50 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center">
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">Загрузка оборудования...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-12 lg:py-24 bg-slate-50 relative overflow-hidden">

@@ -11,9 +11,10 @@ import {
   FileText,
   X,
   Check,
-  AlertCircle
+  AlertCircle,
+  RefreshCw
 } from 'lucide-react';
-import { useLogos } from '../contexts/LogosContext';
+import { useLogos } from '../contexts/LogosContextDB';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -31,15 +32,14 @@ const LogosManager = React.memo(() => {
     uploadLogo,
     getActiveLogos, 
     clearError,
-    exportLogos,
-    importLogos,
-    resetToDefaults
+    forceRefresh
   } = useLogos();
   
   const [isAddingLogo, setIsAddingLogo] = useState(false);
   const [editingLogo, setEditingLogo] = useState<string | null>(null);
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [newLogoData, setNewLogoData] = useState({
@@ -72,6 +72,30 @@ const LogosManager = React.memo(() => {
     clearError();
   }, [clearError]);
 
+  const handleSync = useCallback(async () => {
+    setIsSyncing(true);
+    try {
+      await forceRefresh();
+      console.log('LogosManager: Данные синхронизированы');
+    } catch (error) {
+      console.error('LogosManager: Ошибка синхронизации:', error);
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [forceRefresh]);
+
+  const handleToggleActive = useCallback(async (logoId: string) => {
+    setIsSyncing(true);
+    try {
+      await toggleLogoActive(logoId);
+      console.log('LogosManager: Статус логотипа изменен, синхронизация завершена');
+    } catch (error) {
+      console.error('LogosManager: Ошибка изменения статуса:', error);
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [toggleLogoActive]);
+
   const handleCancelAdd = useCallback(() => {
     setIsAddingLogo(false);
     setNewLogoData({
@@ -96,6 +120,7 @@ const LogosManager = React.memo(() => {
       return;
     }
 
+    setIsSyncing(true);
     try {
       await uploadLogo(file, {
         ...newLogoData,
@@ -114,9 +139,15 @@ const LogosManager = React.memo(() => {
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
+      
+      // Показываем индикатор синхронизации
+      setTimeout(() => {
+        setIsSyncing(false);
+      }, 1000);
     } catch (error) {
       console.error('Error uploading logo:', error);
       alert('Ошибка при загрузке логотипа. Попробуйте еще раз.');
+      setIsSyncing(false);
     }
   }, [newLogoData, uploadLogo]);
 
@@ -124,18 +155,39 @@ const LogosManager = React.memo(() => {
     setEditingLogo(logoId);
   }, []);
 
-  const handleSaveEdit = useCallback((logoId: string, updates: any) => {
-    updateLogo(logoId, updates);
-    setEditingLogo(null);
+  const handleSaveEdit = useCallback(async (logoId: string, updates: any) => {
+    setIsSyncing(true);
+    try {
+      await updateLogo(logoId, updates);
+      setEditingLogo(null);
+      console.log('LogosManager: Логотип обновлен, синхронизация завершена');
+      
+      // Показываем индикатор синхронизации немного дольше
+      setTimeout(() => {
+        setIsSyncing(false);
+      }, 1000);
+    } catch (error) {
+      console.error('LogosManager: Ошибка обновления:', error);
+      setIsSyncing(false);
+    }
   }, [updateLogo]);
 
   const handleCancelEdit = useCallback(() => {
     setEditingLogo(null);
   }, []);
 
-  const handleDeleteLogo = useCallback((logoId: string) => {
+  const handleDeleteLogo = useCallback(async (logoId: string) => {
     if (window.confirm('Вы уверены, что хотите удалить этот логотип?')) {
-      deleteLogo(logoId);
+      setIsSyncing(true);
+      try {
+        await deleteLogo(logoId);
+        console.log('LogosManager: Логотип удален');
+        // НЕ вызываем принудительную синхронизацию после удаления
+      } catch (error) {
+        console.error('LogosManager: Ошибка удаления:', error);
+      } finally {
+        setIsSyncing(false);
+      }
     }
   }, [deleteLogo]);
 
@@ -272,7 +324,7 @@ const LogosManager = React.memo(() => {
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => toggleLogoActive(logo.id)}
+                onClick={() => handleToggleActive(logo.id)}
                 className={`h-8 w-8 p-0 ${logo.isActive ? 'text-green-600' : 'text-slate-400'}`}
               >
                 {logo.isActive ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
@@ -290,7 +342,7 @@ const LogosManager = React.memo(() => {
         )}
       </div>
     );
-  }, [editingLogo, dragIndex, dragOverIndex, categories, updateLogo, toggleLogoActive, handleEditLogo, handleSaveEdit, handleCancelEdit, handleDeleteLogo, handleDragStart, handleDragOver, handleDrop, handleDragEnd]);
+  }, [editingLogo, dragIndex, dragOverIndex, categories, updateLogo, handleToggleActive, handleEditLogo, handleSaveEdit, handleCancelEdit, handleDeleteLogo, handleDragStart, handleDragOver, handleDrop, handleDragEnd]);
 
   return (
     <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
@@ -300,18 +352,26 @@ const LogosManager = React.memo(() => {
           <p className="text-slate-600">Добавляйте, редактируйте и упорядочивайте логотипы партнеров</p>
           <div className="text-sm text-green-600 mt-1 flex items-center">
             <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-            Автосохранение включено - все изменения сохраняются автоматически
+            {isSyncing ? 'Синхронизация с базой данных...' : 'Автосохранение включено - все изменения сохраняются автоматически'}
           </div>
         </div>
         <div className="flex items-center space-x-3">
-          <Button onClick={exportLogos} variant="outline" size="sm">
-            📤 Экспорт
+          <Button 
+            onClick={handleSync} 
+            variant="outline" 
+            size="sm"
+            disabled={isSyncing}
+            className="text-green-600 hover:text-green-700 disabled:opacity-50"
+          >
+            <RefreshCw className={`w-4 h-4 mr-2 ${isSyncing ? 'animate-spin' : ''}`} />
+            {isSyncing ? 'Синхронизация...' : 'Обновить из БД'}
           </Button>
-          <Button onClick={() => document.getElementById('import-input')?.click()} variant="outline" size="sm">
-            📥 Импорт
-          </Button>
-          <Button onClick={resetToDefaults} variant="outline" size="sm" className="text-orange-600 hover:text-orange-700">
-            🔄 Сброс
+          <Button 
+            onClick={() => window.open('/force-remove-all-logos', '_blank')} 
+            className="text-red-600 hover:text-red-700"
+          >
+            <Trash2 className="w-4 h-4 mr-2" />
+            Удалить ВСЕ логотипы
           </Button>
           <Button onClick={handleAddLogo} className="bg-blue-600 hover:bg-blue-700">
             <Plus className="w-4 h-4 mr-2" />Добавить логотип
@@ -319,20 +379,6 @@ const LogosManager = React.memo(() => {
         </div>
       </div>
       
-      {/* Скрытый input для импорта */}
-      <input 
-        id="import-input"
-        type="file" 
-        accept=".json" 
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) {
-            importLogos(file);
-            e.target.value = '';
-          }
-        }} 
-        className="hidden" 
-      />
 
       {/* Add Logo Form */}
       {isAddingLogo && (

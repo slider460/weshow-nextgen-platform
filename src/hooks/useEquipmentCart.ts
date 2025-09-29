@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface CartItem {
   id: string;
@@ -14,7 +14,7 @@ export const useEquipmentCart = () => {
   const [cartCount, setCartCount] = useState(0);
 
   // Загружаем корзину из localStorage
-  const loadCart = () => {
+  const loadCart = useCallback(() => {
     try {
       const storedCart = localStorage.getItem('equipmentCart');
       if (storedCart) {
@@ -47,7 +47,7 @@ export const useEquipmentCart = () => {
       setCartCount(0);
       localStorage.removeItem('equipmentCart');
     }
-  };
+  }, []);
 
   // Добавляем товар в корзину
   const addToCart = (equipment: any) => {

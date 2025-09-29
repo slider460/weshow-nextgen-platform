@@ -113,17 +113,6 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-6 ml-8 flex-shrink-0">
-            <Link 
-              to="/" 
-              className={`relative text-slate-700 hover:text-blue-600 hover-no-flicker interactive-optimized transition-colors duration-200 font-medium group ${
-                isActive("/") ? "text-blue-600" : ""
-              }`}
-            >
-              Главная
-              <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-200 ${
-                isActive("/") ? "w-full" : "w-0 group-hover:w-full"
-              }`}></span>
-            </Link>
 
             {/* Services Dropdown */}
             <div className="relative group">
@@ -599,13 +588,22 @@ const Header = () => {
                 Блог
               </Link>
               
-              <Link 
+              <Link
                 to="/contact" 
                 className="flex items-center px-4 py-3 text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors duration-200" 
                 onClick={closeMenu}
               >
                 <span className="w-2 h-2 bg-purple-600 rounded-full mr-3"></span>
                 Контакты
+              </Link>
+              
+              <Link
+                to="/test-figma" 
+                className="flex items-center px-4 py-3 text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors duration-200" 
+                onClick={closeMenu}
+              >
+                <span className="w-2 h-2 bg-cyan-600 rounded-full mr-3"></span>
+                Тест Figma
               </Link>
               
               {/* Mobile CTA */}

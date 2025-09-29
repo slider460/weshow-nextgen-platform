@@ -36,11 +36,18 @@ import { Badge } from "../components/ui/badge";
 import { Calculator } from "lucide-react";
 import ConsultationModal from "../components/ConsultationModal";
 import { useEquipmentCart } from "../hooks/useEquipmentCart";
+import { getEquipment, getCategories } from "../api/equipment";
 
 const Equipment = () => {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { cartCount, addToCart, forceClearCart } = useEquipmentCart();
+  
+  // Состояние для данных из базы
+  const [dbEquipment, setDbEquipment] = useState<any[]>([]);
+  const [dbCategories, setDbCategories] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Добавляем CSS стили для уведомлений
   useEffect(() => {
@@ -73,6 +80,30 @@ const Equipment = () => {
     return () => {
       window.removeEventListener('openEquipmentCart', handleOpenCart);
     };
+  }, []);
+
+  // Загружаем данные из базы
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const [equipmentData, categoriesData] = await Promise.all([
+          getEquipment(),
+          getCategories()
+        ]);
+        
+        setDbEquipment(equipmentData);
+        setDbCategories(categoriesData);
+        setError(null);
+      } catch (err) {
+        console.error('Ошибка загрузки данных:', err);
+        setError(err instanceof Error ? err.message : 'Неизвестная ошибка');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
   }, []);
 
 
@@ -144,7 +175,51 @@ const Equipment = () => {
     }
   };
 
+  // Преобразуем данные из базы в формат для отображения
+  const getEquipmentByCategory = (categorySlug: string) => {
+    return dbEquipment.filter(item => 
+      item.equipment_categories?.slug === categorySlug
+    ).map(item => ({
+      id: item.id,
+      name: item.name,
+      specs: item.description || 'Описание отсутствует',
+      price: `от ${item.price_per_day}₽/день`,
+      priceValue: item.price_per_day,
+      category: categorySlug,
+      stock_quantity: item.stock_quantity
+    }));
+  };
+
+  // Создаем категории оборудования с данными из базы
   const equipmentCategories = [
+    {
+      icon: <Projector className="h-8 w-8" />,
+      title: "Проекционное оборудование",
+      description: "Проекторы, экраны и аксессуары для презентаций",
+      items: getEquipmentByCategory('projectors'),
+      gradient: "gradient-card-purple"
+    },
+    {
+      icon: <Speaker className="h-8 w-8" />,
+      title: "Аудиооборудование",
+      description: "Микрофоны, колонки, микшеры и звуковое оборудование",
+      items: getEquipmentByCategory('audio'),
+      gradient: "gradient-card-cyan"
+    },
+    {
+      icon: <Lightbulb className="h-8 w-8" />,
+      title: "Световое оборудование",
+      description: "Прожекторы, стробоскопы, лазеры и световые эффекты",
+      items: getEquipmentByCategory('lighting'),
+      gradient: "gradient-card-dark"
+    },
+    {
+      icon: <Monitor className="h-8 w-8" />,
+      title: "Видеооборудование",
+      description: "Камеры, видеомикшеры, мониторы и видеотехника",
+      items: getEquipmentByCategory('video'),
+      gradient: "gradient-card-blue"
+    },
     {
       icon: <Tv className="h-8 w-8" />,
       title: "LED-панели и видеостены",
@@ -448,8 +523,29 @@ const Equipment = () => {
         {/* Equipment Categories */}
         <section className="py-12 lg:py-16">
           <div className="container mx-auto px-4">
-            <div className="space-y-12 lg:space-y-16">
-              {equipmentCategories.map((category, categoryIndex) => (
+            {loading && (
+              <div className="text-center py-12">
+                <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium mb-4">
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-3"></div>
+                  Загрузка оборудования...
+                </div>
+              </div>
+            )}
+            
+            {error && (
+              <div className="text-center py-12">
+                <div className="inline-flex items-center px-6 py-3 bg-red-500/20 backdrop-blur-sm text-red-200 rounded-full text-sm font-medium mb-4">
+                  ❌ Ошибка загрузки: {error}
+                </div>
+                <p className="text-white/70 text-sm">
+                  Попробуйте обновить страницу или обратитесь к администратору
+                </p>
+              </div>
+            )}
+            
+            {!loading && !error && (
+              <div className="space-y-12 lg:space-y-16">
+                {equipmentCategories.map((category, categoryIndex) => (
                 <div key={categoryIndex} className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                   {/* Category Card */}
                   <div className={`${category.gradient} rounded-2xl lg:rounded-3xl p-6 lg:p-8 text-white shadow-lg`}>
@@ -510,8 +606,9 @@ const Equipment = () => {
                     ))}
                   </div>
                 </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 

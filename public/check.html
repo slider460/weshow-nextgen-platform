@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .test-link {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .test-link:hover {
+            background: #0056b3;
+        }
+        .status {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Проверка сервера</h1>
+        
+        <div class="status">
+            <h3>✅ Статус: Сервер работает на порту 8083</h3>
+            <p>Если вы видите эту страницу, значит сервер отвечает корректно.</p>
+        </div>
+        
+        <h2>Тестовые страницы:</h2>
+        
+        <a href="/simple-test.html" class="test-link">HTML тест</a>
+        <a href="/minimal-test" class="test-link">React минимальный тест</a>
+        <a href="/figma-inline" class="test-link">Figma inline версия</a>
+        <a href="/test-inline" class="test-link">React inline тест</a>
+        <a href="/simple-test" class="test-link">React простой тест</a>
+        
+        <h2>Информация:</h2>
+        <p><strong>Порт:</strong> 8083</p>
+        <p><strong>Время:</strong> <span id="time"></span></p>
+        <p><strong>URL:</strong> <span id="url"></span></p>
+        
+        <h2>Инструкции:</h2>
+        <ol>
+            <li>Нажмите на любую ссылку выше</li>
+            <li>Если страница белая, откройте консоль браузера (F12)</li>
+            <li>Проверьте ошибки в консоли</li>
+        </ol>
+    </div>
+    
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString();
+        document.getElementById('url').textContent = window.location.href;
+    </script>
+</body>
+</html>
+
+
+

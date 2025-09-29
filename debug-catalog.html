@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Catalog</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .item { border: 1px solid #ccc; margin: 10px 0; padding: 10px; }
+        .loading { color: blue; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Debug: Загрузка товаров из Supabase</h1>
+    <div id="status" class="loading">Загружаем...</div>
+    <div id="results"></div>
+    
+    <script>
+        async function loadEquipment() {
+            const statusDiv = document.getElementById('status');
+            const resultsDiv = document.getElementById('results');
+            
+            try {
+                statusDiv.textContent = 'Отправляем запрос к Supabase...';
+                statusDiv.className = 'loading';
+                
+                const response = await fetch('https://zbykhdjqrtqftfitbvbt.supabase.co/rest/v1/equipment_catalog?select=name,price_per_day,created_at&order=created_at.desc&limit=15', {
+                    method: 'GET',
+                    headers: {
+                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE',
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE',
+                        'Content-Type': 'application/json'
+                    },
+                    mode: 'cors'
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Получено товаров:', data.length);
+                
+                statusDiv.textContent = `Успешно загружено ${data.length} товаров`;
+                statusDiv.className = 'success';
+                
+                resultsDiv.innerHTML = `
+                    <h2>Последние созданные товары:</h2>
+                    ${data.map((item, index) => `
+                        <div class="item">
+                            <h3>${index + 1}. ${item.name}</h3>
+                            <p><strong>Цена:</strong> ${item.price_per_day} руб/день</p>
+                            <p><strong>Создан:</strong> ${new Date(item.created_at).toLocaleString('ru-RU')}</p>
+                        </div>
+                    `).join('')}
+                `;
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                statusDiv.textContent = `Ошибка: ${error.message}`;
+                statusDiv.className = 'error';
+                resultsDiv.innerHTML = `<p>Проверьте консоль браузера для подробностей.</p>`;
+            }
+        }
+        
+        loadEquipment();
+    </script>
+</body>
+</html>

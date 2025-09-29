@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Простой тест</title>
+</head>
+<body>
+    <h1>Тест загрузки товаров</h1>
+    <div id="results"></div>
+    
+    <script>
+        // Тест прямого запроса к Supabase
+        fetch('https://zbykhdjqrtqftfitbvbt.supabase.co/rest/v1/equipment_catalog?select=name,price_per_day&limit=5', {
+            headers: {
+                'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE',
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Данные получены:', data);
+            document.getElementById('results').innerHTML = `
+                <h2>Найдено товаров: ${data.length}</h2>
+                <ul>
+                    ${data.map(item => `<li>${item.name} - ${item.price_per_day} руб/день</li>`).join('')}
+                </ul>
+            `;
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            document.getElementById('results').innerHTML = `<p style="color: red;">Ошибка: ${error.message}</p>`;
+        });
+    </script>
+</body>
+</html>

@@ -5,6 +5,7 @@ import { ExternalLink, ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import vdnhStand from "../assets/office-building.jpg";
 import ProjectOrderModal from "./ProjectOrderModal";
+import useCases from "../hooks/useCases";
 
 
 interface ModernPortfolioSectionProps {
@@ -13,39 +14,51 @@ interface ModernPortfolioSectionProps {
 
 const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps) => {
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  
+  // Загружаем кейсы из базы данных
+  const { cases, loading, error } = useCases();
 
-  const projects = [{
-    title: "Мультимедийная инсталляция для банка ВТБ",
-    client: "ВТБ",
-    date: "2024",
-    description: "Комплексное оснащение головного офиса интерактивными LED-панелями и системами управления",
-    image: vdnhStand,
-    results: ["Увеличение клиентского трафика на 35%", "Сокращение времени ожидания на 50%"],
-    tech: ["LED-видеостены", "Интерактивные киоски", "Система управления контентом"],
-    gradient: "gradient-card-purple"
-  }, {
-    title: "3D-маппинг для корпоративного мероприятия Сбербанка",
-    client: "Сбербанк",
-    date: "2024",
-    description: "Проекционный маппинг для презентации новых технологических решений на конференции",
-    image: vdnhStand,
-    results: ["5000+ участников", "100% выполнение технических требований"],
-    tech: ["Проекционный маппинг", "Синхронизация звука", "Интерактивное управление"],
-    gradient: "gradient-card-cyan"
-  }, {
-    title: "Стенд Самарской области на выставке-форуме «Россия»",
-    client: "ВДНХ",
-    date: "2024",
-    description: "Интерактивный мультимедийный стенд с цифровыми решениями для представления региона",
-    image: vdnhStand,
-    results: ["Более 10,000 посетителей", "Интерактивное взаимодействие с контентом"],
-    tech: ["Интерактивные дисплеи", "Мультимедийный контент", "Система презентаций"],
-    gradient: "gradient-card-cyan"
-  }];
+  // Преобразуем кейсы из базы данных в формат для отображения
+  const projects = cases.map(caseItem => {
+    // Обрабатываем results - может быть строкой JSON, массивом или обычной строкой
+    let results = [];
+    if (Array.isArray(caseItem.results)) {
+      results = caseItem.results;
+    } else if (typeof caseItem.results === 'string' && caseItem.results.trim()) {
+      try {
+        // Пытаемся распарсить как JSON массив
+        const parsed = JSON.parse(caseItem.results);
+        if (Array.isArray(parsed)) {
+          results = parsed;
+        } else {
+          // Если не массив, разбиваем по переносам строк или запятым
+          results = caseItem.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
+        }
+      } catch {
+        // Если не JSON, разбиваем по переносам строк или запятым
+        results = caseItem.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
+      }
+    }
+    
+    return {
+      title: caseItem.title,
+      client: caseItem.client || 'Клиент не указан',
+      date: caseItem.year?.toString() || 'Год не указан',
+      description: caseItem.description,
+      image: caseItem.image_url || "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      results: results,
+      tech: [] // В таблице нет поля technologies
+    };
+  });
+
+  // Отладочная информация
+  console.log('ModernPortfolioSection: Загружено кейсов:', cases.length);
+  console.log('ModernPortfolioSection: Обработано проектов:', projects.length);
+  console.log('ModernPortfolioSection: Первый проект:', projects[0]);
 
   return (
-    <section className="py-20 bg-slate-50">
-      <div className="container mx-auto px-4">
+    <section className="py-20 bg-slate-50 relative z-10 min-h-screen">
+      <div className="container mx-auto px-4 max-w-7xl relative">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
             Наши проекты
@@ -55,9 +68,35 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
-          {projects.map((project, index) => (
-            <div key={index} className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
+        {loading && (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <p className="mt-4 text-slate-600">Загрузка проектов...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center py-12">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
+              <p className="text-red-600">Ошибка загрузки проектов: {error}</p>
+              <p className="text-sm text-red-500 mt-2">Обратитесь к администратору</p>
+            </div>
+          </div>
+        )}
+
+        {!loading && !error && cases.length === 0 && (
+          <div className="text-center py-12">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-md mx-auto">
+              <p className="text-blue-600">Проекты будут добавлены в ближайшее время</p>
+              <p className="text-sm text-blue-500 mt-2">Следите за обновлениями</p>
+            </div>
+          </div>
+        )}
+
+        {!loading && !error && cases.length > 0 && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
+            {projects.map((project, index) => (
+            <div key={index} className="bg-white rounded-3xl overflow-visible shadow-lg hover:shadow-xl transition-all duration-300 group h-full flex flex-col min-h-[700px]">
               <div className="relative overflow-hidden h-64">
                 <img 
                   src={project.image} 
@@ -74,21 +113,21 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
                 </Button>
               </div>
               
-              <div className="p-8">
-                <h3 className="text-xl font-bold text-slate-900 mb-3">
+              <div className="p-8 flex flex-col flex-grow">
+                <h3 className="text-xl font-bold text-slate-900 mb-4">
                   {project.title}
                 </h3>
                 <p className="text-slate-600 mb-6 leading-relaxed">
                   {project.description}
                 </p>
                 
-                <div className="mb-6">
+                <div className="mb-6 flex-grow">
                   <h4 className="text-sm font-semibold text-slate-900 mb-3">Результаты:</h4>
                   <ul className="space-y-2">
                     {project.results.map((result, resultIndex) => (
                       <li key={resultIndex} className="flex items-start text-sm text-slate-600">
                         <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-3 mt-2 flex-shrink-0" />
-                        {result}
+                        <span>{result}</span>
                       </li>
                     ))}
                   </ul>
@@ -105,8 +144,8 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
                   </div>
                 </div>
                 
-                <Button className="w-full" variant="default" asChild>
-                  <Link to={index === 2 ? "/portfolio/samara-stand" : "/portfolio"}>
+                <Button className="w-full mt-auto py-3" variant="default" asChild>
+                  <Link to={`/case/${cases[index].id}`}>
                     Подробнее о проекте
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -114,7 +153,8 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
 
         <div className="text-center">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -5,13 +5,17 @@ import { ArrowRight, Play, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import ShowreelModal from "../components/ShowreelModal";
 import ClickableKeyword from "../components/ClickableKeyword";
+import useCases from "../hooks/useCases";
 
 import { useState } from "react";
 
 const Portfolio = () => {
   const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
   
-  const projects = [
+  // Загружаем кейсы из базы данных
+  const { cases, loading, error } = useCases();
+  
+  const staticProjects = [
     {
       title: "Интерактивная выставка 'Цифровое будущее'",
       category: "3D Mapping / Interactive",
@@ -68,29 +72,49 @@ const Portfolio = () => {
     }
   ];
 
-  const extendedProjects = [
-    {
-      title: "Особенный Новый год Samsung",
-      category: "Corporate Events / 3D Mapping",
-      description: "Новогоднее мероприятие с 3D-проекциями, digital зонами и интерактивными решениями для корпоративного праздника",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      year: "2020",
-      link: "/portfolio/samsung-event",
-      results: ["500+ участников", "Уникальный новогодний контент", "Полное техническое сопровождение"],
-      tech: ["3D-маппинг", "Интерактивные зоны", "Проекционные сетки", "Digital почтовый ящик"]
-    },
-    {
-      title: "Стенд Самарской области на форуме «Россия»",
-      category: "Exhibition / Interactive",
-      description: "Мультимедийный стенд с Naked Eye технологиями, Kinect‑играми, VR/AR зонами и кинетическим экраном",
-      image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
-      year: "2023–2024",
-      link: "/portfolio/samara-stand",
-      results: ["10,000+ посетителей", "Высокая интерактивность", "Положительные отзывы от руководства"],
-      tech: ["Naked Eye", "Kinect-игры", "VR/AR", "Кинетический экран"]
-    },
-    ...projects,
-  ];
+  // Преобразуем кейсы из базы данных в формат для отображения
+  const dbProjects = cases.map(caseItem => {
+    // Обрабатываем results - может быть строкой JSON, массивом или обычной строкой
+    let results = [];
+    if (Array.isArray(caseItem.results)) {
+      results = caseItem.results;
+    } else if (typeof caseItem.results === 'string' && caseItem.results.trim()) {
+      try {
+        // Пытаемся распарсить как JSON массив
+        const parsed = JSON.parse(caseItem.results);
+        if (Array.isArray(parsed)) {
+          results = parsed;
+        } else {
+          // Если не массив, разбиваем по переносам строк или запятым
+          results = caseItem.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
+        }
+      } catch {
+        // Если не JSON, разбиваем по переносам строк или запятым
+        results = caseItem.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
+      }
+    }
+    
+    // Обрабатываем technologies - в таблице нет этого поля, используем пустой массив
+    let technologies = [];
+    
+    return {
+      title: caseItem.title,
+      category: "Наши проекты",
+      description: caseItem.description,
+      image: caseItem.image_url || "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      year: caseItem.year,
+      results: results,
+      tech: technologies
+    };
+  });
+
+  // Используем только кейсы из базы данных
+  const extendedProjects = dbProjects;
+  
+  // Отладочная информация
+  console.log('Portfolio: Загружено кейсов:', cases.length);
+  console.log('Portfolio: Обработано проектов:', dbProjects.length);
+  console.log('Portfolio: Первый проект:', dbProjects[0]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200">
@@ -130,7 +154,33 @@ const Portfolio = () => {
       <section className="py-20 relative">
         <div className="absolute inset-0 bg-gradient-to-br from-white to-slate-50"></div>
         <div className="container mx-auto px-4 relative">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {loading && (
+            <div className="text-center py-12">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              <p className="mt-4 text-slate-600">Загрузка проектов...</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="text-center py-12">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
+                <p className="text-red-600">Ошибка загрузки проектов: {error}</p>
+                <p className="text-sm text-red-500 mt-2">Обратитесь к администратору</p>
+              </div>
+            </div>
+          )}
+
+          {!loading && !error && cases.length === 0 && (
+            <div className="text-center py-12">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-md mx-auto">
+                <p className="text-blue-600">Проекты будут добавлены в ближайшее время</p>
+                <p className="text-sm text-blue-500 mt-2">Следите за обновлениями</p>
+              </div>
+            </div>
+          )}
+
+          {!loading && !error && cases.length > 0 && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {extendedProjects.map((project: any, index: number) => {
               const card = (
                 <div className="group bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative">
@@ -204,15 +254,14 @@ const Portfolio = () => {
                 </div>
               );
 
-              return project.link ? (
-                <Link key={index} to={project.link} className="group cursor-pointer block" aria-label={`${project.title} — подробнее`}>
+              return (
+                <Link key={index} to={`/case/${cases[index].id}`} className="group cursor-pointer block" aria-label={`${project.title} — подробнее`}>
                   {card}
                 </Link>
-              ) : (
-                <div key={index} className="group cursor-pointer">{card}</div>
               );
             })}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Award, FileText } from "lucide-react";
 import { Button } from "../components/ui/button";
-import { useLogos } from "../contexts/LogosContext";
+import { useLogos } from "../contexts/LogosContextDB";
 import LogosDisplay from "./LogosDisplay";
 
 const SocialProofSection = React.memo(() => {
@@ -74,11 +74,13 @@ const SocialProofSection = React.memo(() => {
 
         {/* Clients Section */}
         <div className="mb-20">
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 text-center mb-12">
-            Нам доверяют
-          </h2>
+          <div className="flex justify-center items-center mb-12">
+            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900">
+              Нам доверяют
+            </h2>
+          </div>
           
-          <LogosDisplay showEditButton={true} />
+          <LogosDisplay showEditButton={false} />
         </div>
 
         {/* Documents Carousel */}

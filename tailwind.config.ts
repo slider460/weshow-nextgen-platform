@@ -18,6 +18,12 @@ export default {
 			}
 		},
 		extend: {
+			spacing: {
+				'safe-area-inset-bottom': 'env(safe-area-inset-bottom)',
+				'safe-area-inset-top': 'env(safe-area-inset-top)',
+				'safe-area-inset-left': 'env(safe-area-inset-left)',
+				'safe-area-inset-right': 'env(safe-area-inset-right)',
+			},
 			fontFamily: {
 				sans: ['SF Pro Display', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
 				mono: ['SF Mono', 'JetBrains Mono', 'Monaco', 'monospace'],
@@ -182,5 +188,27 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		// Добавим custom утилиты для safe area
+		function({ addUtilities }: any) {
+			addUtilities({
+				'.safe-area-pb': {
+					'padding-bottom': 'env(safe-area-inset-bottom)'
+				},
+				'.safe-area-pt': {
+					'padding-top': 'env(safe-area-inset-top)'
+				},
+				'.safe-area-pl': {
+					'padding-left': 'env(safe-area-inset-left)'
+				},
+				'.safe-area-pr': {
+					'padding-right': 'env(safe-area-inset-right)'
+				},
+				'.h-safe-area-inset-bottom': {
+					height: 'env(safe-area-inset-bottom)'
+				}
+			});
+		}
+	],
 } satisfies Config;

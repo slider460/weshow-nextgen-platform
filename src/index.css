@@ -26,6 +26,85 @@
   }
 }
 
+@keyframes float-enhanced {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.6), 0 0 60px rgba(139, 92, 246, 0.4);
+  }
+}
+
+@keyframes shimmer-effect {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes scale-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes particle-float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-40px) translateX(-5px);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translateY(-20px) translateX(-10px);
+    opacity: 0.7;
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes icon-spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes pulse-glow {
   0%, 100% {
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
@@ -114,6 +193,52 @@
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-enhanced {
+  animation: float-enhanced 4s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-shimmer-effect {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer-effect 2s infinite;
+}
+
+.animate-scale-bounce {
+  animation: scale-bounce 2s ease-in-out infinite;
+}
+
+.animate-particle-float {
+  animation: particle-float 4s ease-in-out infinite;
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.animate-icon-spin-slow {
+  animation: icon-spin-slow 3s linear infinite;
+}
+
+@keyframes fade-in-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.3s ease-out;
 }
 
 .animate-pulse-glow {
@@ -721,66 +846,79 @@
 
 /* Hover effects for gradient cards */
 .gradient-card-purple:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.4);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 .gradient-card-purple-dark:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(88, 28, 135, 0.5);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 .gradient-card-purple-dark:hover::before {
   transform: scale(1.1) rotate(5deg);
+  animation: float-enhanced 2s ease-in-out infinite;
 }
 
 .gradient-card-purple-dark:hover::after {
   transform: scale(1.1) rotate(-5deg);
+  animation: float-enhanced 2s ease-in-out infinite reverse;
 }
 
 .gradient-card-blue:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.4);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 .gradient-card-cyan:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.4);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 .gradient-card-dark:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(30, 41, 59, 0.4);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 .gradient-card-orange:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(249, 115, 22, 0.4);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 .gradient-card-pink:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(236, 72, 153, 0.4);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 .gradient-card-green:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.4);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 .gradient-card-yellow:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.4);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 .gradient-card-indigo:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.4);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 .gradient-card-red:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: 0 25px 50px -12px rgba(239, 68, 68, 0.4);
+  animation: glow-pulse 1s ease-in-out infinite;
 }
 
 /* Smooth transitions for all gradient cards */

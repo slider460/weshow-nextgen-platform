@@ -37,16 +37,7 @@ type LogosAction =
   | { type: 'TOGGLE_LOGO_ACTIVE'; payload: string };
 
 const initialState: LogosState = {
-  logos: [
-    { id: '1', name: 'ВТБ', logoUrl: '/placeholder.svg', category: 'banking', isActive: true, order: 1, createdAt: new Date(), updatedAt: new Date() },
-    { id: '2', name: 'Сбербанк', logoUrl: '/placeholder.svg', category: 'banking', isActive: true, order: 2, createdAt: new Date(), updatedAt: new Date() },
-    { id: '3', name: 'Газпром', logoUrl: '/placeholder.svg', category: 'energy', isActive: true, order: 3, createdAt: new Date(), updatedAt: new Date() },
-    { id: '4', name: 'МТС', logoUrl: '/placeholder.svg', category: 'telecom', isActive: true, order: 4, createdAt: new Date(), updatedAt: new Date() },
-    { id: '5', name: 'Лукойл', logoUrl: '/placeholder.svg', category: 'energy', isActive: true, order: 5, createdAt: new Date(), updatedAt: new Date() },
-    { id: '6', name: 'Ростелеком', logoUrl: '/placeholder.svg', category: 'telecom', isActive: true, order: 6, createdAt: new Date(), updatedAt: new Date() },
-    { id: '7', name: 'Аэрофлот', logoUrl: '/placeholder.svg', category: 'aviation', isActive: true, order: 7, createdAt: new Date(), updatedAt: new Date() },
-    { id: '8', name: 'Яндекс', logoUrl: '/placeholder.svg', category: 'tech', isActive: true, order: 8, createdAt: new Date(), updatedAt: new Date() }
-  ],
+  logos: [],
   isLoading: false,
   error: null,
   selectedLogo: null,

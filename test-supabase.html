@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Тест Supabase</title>
+</head>
+<body>
+    <h1>Тест загрузки товаров из Supabase</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function testSupabase() {
+            try {
+                console.log('Загружаем товары...');
+                
+                const response = await fetch('https://zbykhdjqrtqftfitbvbt.supabase.co/rest/v1/equipment_catalog?select=name,price_per_day&limit=10', {
+                    method: 'GET',
+                    headers: {
+                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE',
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE',
+                        'Content-Type': 'application/json'
+                    },
+                    mode: 'cors'
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Получено товаров:', data.length);
+                
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = `
+                    <h2>Найдено товаров: ${data.length}</h2>
+                    <ul>
+                        ${data.map(item => `<li><strong>${item.name}</strong> - ${item.price_per_day} руб/день</li>`).join('')}
+                    </ul>
+                `;
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                document.getElementById('results').innerHTML = `<p style="color: red;">Ошибка: ${error.message}</p>`;
+            }
+        }
+        
+        testSupabase();
+    </script>
+</body>
+</html>

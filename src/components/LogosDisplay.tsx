@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback, useState } from 'react';
-import { Edit, Settings, Plus } from 'lucide-react';
-import { useLogos } from '../contexts/LogosContext';
+import { Edit, Plus } from 'lucide-react';
+import { useLogos } from '../contexts/LogosContextDB';
 import { Button } from './ui/button';
 
 interface LogosDisplayProps {
@@ -17,13 +17,31 @@ const LogosDisplay = React.memo<LogosDisplayProps>(({
   const { getActiveLogos } = useLogos();
   const [isHovered, setIsHovered] = useState(false);
 
-  const activeLogos = useMemo(() => getActiveLogos(), [getActiveLogos]);
+  const activeLogos = useMemo(() => {
+    const logos = getActiveLogos();
+    console.log('LogosDisplay: Активные логотипы:', logos.length, logos);
+    console.log('LogosDisplay: showEditButton:', showEditButton);
+    console.log('LogosDisplay: className:', className);
+    
+    // Дополнительная проверка каждого логотипа
+    logos.forEach((logo, index) => {
+      console.log(`LogosDisplay: Логотип ${index + 1}:`, {
+        id: logo.id,
+        name: logo.name,
+        logo_url: logo.logo_url,
+        is_active: logo.is_active,
+        category: logo.category
+      });
+    });
+    
+    return logos;
+  }, [getActiveLogos, showEditButton, className]);
 
   const handleEditClick = useCallback(() => {
     if (onEditClick) {
       onEditClick();
     } else {
-      window.location.href = '/logos';
+      window.location.href = '/admin/logos';
     }
   }, [onEditClick]);
 
@@ -36,17 +54,9 @@ const LogosDisplay = React.memo<LogosDisplayProps>(({
         <h4 className="text-lg font-medium text-slate-600 mb-2">
           Логотипы партнеров
         </h4>
-        <p className="text-slate-500 mb-4">
+        <p className="text-slate-500">
           Добавьте логотипы ваших партнеров
         </p>
-        <Button 
-          onClick={handleEditClick}
-          variant="outline"
-          size="sm"
-        >
-          <Settings className="w-4 h-4 mr-2" />
-          Управление
-        </Button>
       </div>
     );
   }
@@ -84,14 +94,20 @@ const LogosDisplay = React.memo<LogosDisplayProps>(({
           >
             {/* Logo Image */}
             <div className="w-16 h-16 bg-slate-100 rounded-lg flex items-center justify-center mb-3 overflow-hidden">
-              {logo.logoUrl && logo.logoUrl !== '/placeholder.svg' ? (
+              {(logo.logo_url || logo.logoUrl) && (logo.logo_url !== '/placeholder.svg' && logo.logoUrl !== '/placeholder.svg') ? (
                 <img 
-                  src={logo.logoUrl} 
+                  src={logo.logo_url || logo.logoUrl} 
                   alt={logo.name}
                   className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                  onError={(e) => {
+                    console.log('LogosDisplay: Ошибка загрузки изображения для', logo.name, logo.logo_url);
+                    e.currentTarget.style.display = 'none';
+                  }}
                 />
               ) : (
-                <span className="text-xs font-medium text-slate-600">LOGO</span>
+                <div className="text-xs font-medium text-slate-600 text-center">
+                  {logo.name ? logo.name.substring(0, 3).toUpperCase() : 'LOGO'}
+                </div>
               )}
             </div>
             
@@ -106,20 +122,7 @@ const LogosDisplay = React.memo<LogosDisplayProps>(({
         ))}
       </div>
 
-      {/* Quick Edit Hint */}
-      {!showEditButton && isHovered && (
-        <div className="absolute bottom-0 right-0">
-          <Button
-            onClick={handleEditClick}
-            variant="ghost"
-            size="sm"
-            className="text-slate-500 hover:text-slate-700"
-          >
-            <Settings className="w-4 h-4 mr-1" />
-            Настроить
-          </Button>
-        </div>
-      )}
+      {/* Quick Edit Hint - убрано для обычных пользователей */}
     </div>
   );
 });
