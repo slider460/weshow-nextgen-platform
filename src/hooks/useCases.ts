@@ -29,7 +29,16 @@ export const useCases = () => {
       fetchCases();
     }, 100);
 
-    return () => clearTimeout(timer);
+    // Принудительное завершение загрузки через 3 секунды
+    const timeout = setTimeout(() => {
+      console.log('Принудительное завершение загрузки кейсов');
+      setLoading(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(timeout);
+    };
   }, []);
 
   const fetchCases = async () => {

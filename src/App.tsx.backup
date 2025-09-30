@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { LogosProvider } from "./contexts/LogosContextDB";
+import { SupabaseProvider } from "./contexts/SupabaseContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -17,8 +18,12 @@ import Equipment from "./pages/Equipment";
 import CaseSamaraStand from "./pages/CaseSamaraStand";
 import SamsungEvent from "./pages/SamsungEvent";
 import TestPage from "./pages/TestPage";
-import TestSimple from "./pages/TestSimple";
-import TestMinimal from "./pages/TestMinimal";
+import TestAPI from "./pages/TestAPI";
+import TestImageUpload from "./pages/TestImageUpload";
+import TestExternalImages from "./pages/TestExternalImages";
+import TestBlobImages from "./pages/TestBlobImages";
+import TestBlobImagesSimple from "./pages/TestBlobImagesSimple";
+import TestWhiteScreen from "./pages/TestWhiteScreen";
 import SupabaseConnectionTest from "./pages/SupabaseConnectionTest";
 import EquipmentTest from "./pages/EquipmentTest";
 import EquipmentCatalogAdmin from "./pages/admin/EquipmentCatalogAdmin";
@@ -122,11 +127,6 @@ import ForceClearLogos from "./pages/ForceClearLogos";
 import ExecuteForceClearSQL from "./pages/ExecuteForceClearSQL";
 import QuickClearLogos from "./pages/QuickClearLogos";
 import ForceRemoveAllLogos from "./pages/ForceRemoveAllLogos";
-import { Profile } from "./pages/Profile";
-import { AccessDenied } from "./pages/AccessDenied";
-import { AuthTest } from "./pages/AuthTest";
-import { SimpleAuthTest } from "./pages/SimpleAuthTest";
-import { WorkingAuthTest } from "./pages/WorkingAuthTest";
 
 // Страницы пространственного проектирования
 import SpacePlanning from "./pages/services/SpacePlanning";
@@ -138,8 +138,9 @@ import TechnicalDocumentation from "./pages/services/TechnicalDocumentation";
 const App = () => (
   <LanguageProvider>
     <LogosProvider>
-      <AuthProvider>
-        <BrowserRouter>
+      <SupabaseProvider>
+        <AuthProvider>
+          <BrowserRouter>
         <ScrollToTop />
         <Routes>
         <Route path="/" element={<Index />} />
@@ -158,9 +159,13 @@ const App = () => (
         <Route path="/game" element={<Game />} />
         <Route path="/game-simple" element={<GameSimple />} />
         <Route path="/test" element={<TestPage />} />
-        <Route path="/test-simple" element={<TestSimple />} />
-        <Route path="/test-minimal" element={<TestMinimal />} />
+        <Route path="/test-api" element={<TestAPI />} />
         <Route path="/test-page" element={<TestPage />} />
+        <Route path="/test-image-upload" element={<TestImageUpload />} />
+        <Route path="/test-external-images" element={<TestExternalImages />} />
+        <Route path="/test-blob-images" element={<TestBlobImages />} />
+        <Route path="/test-blob-simple" element={<TestBlobImagesSimple />} />
+        <Route path="/test-white-screen" element={<TestWhiteScreen />} />
         <Route path="/simple" element={<SimpleTest />} />
         <Route path="/supabase-test" element={<SupabaseConnectionTest />} />
         <Route path="/test-figma" element={<TestFigmaPage />} />
@@ -209,11 +214,6 @@ const App = () => (
         <Route path="/execute-force-clear-sql" element={<ExecuteForceClearSQL />} />
         <Route path="/quick-clear-logos" element={<QuickClearLogos />} />
         <Route path="/force-remove-all-logos" element={<ForceRemoveAllLogos />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/access-denied" element={<AccessDenied />} />
-        <Route path="/auth-test" element={<AuthTest />} />
-        <Route path="/simple-auth-test" element={<SimpleAuthTest />} />
-        <Route path="/working-auth-test" element={<WorkingAuthTest />} />
         <Route path="/test-inline" element={
           <div style={{ 
             minHeight: '100vh', 
@@ -467,7 +467,8 @@ const App = () => (
         <Route path="/services/technical-documentation" element={<TechnicalDocumentation />} />
         </Routes>
         </BrowserRouter>
-      </AuthProvider>
+        </AuthProvider>
+      </SupabaseProvider>
     </LogosProvider>
   </LanguageProvider>
 );

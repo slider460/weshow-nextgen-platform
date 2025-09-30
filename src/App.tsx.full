@@ -1,0 +1,42 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Простой компонент для тестирования
+const SimpleHome: React.FC = () => {
+  return (
+    <div style={{ 
+      padding: '20px', 
+      fontFamily: 'Arial, sans-serif',
+      backgroundColor: '#f0f0f0',
+      minHeight: '100vh'
+    }}>
+      <h1 style={{ color: '#4F46E5' }}>🎉 Сайт работает!</h1>
+      <p>Если вы видите этот текст, то React загрузился успешно.</p>
+      <div style={{ 
+        backgroundColor: '#4F46E5', 
+        color: 'white', 
+        padding: '20px', 
+        borderRadius: '10px',
+        marginTop: '20px'
+      }}>
+        <h2>✅ Проблема белого экрана решена!</h2>
+        <p>Теперь можно постепенно добавлять функциональность обратно.</p>
+      </div>
+    </div>
+  );
+};
+
+const AppSimple: React.FC = () => {
+  console.log('🚀 AppSimple is rendering');
+  
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SimpleHome />} />
+        <Route path="/test" element={<SimpleHome />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default AppSimple;

@@ -4,6 +4,9 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import AnimatedButton from "./AnimatedButton";
 import { useEquipmentCart } from "../hooks/useEquipmentCart";
+import { useAuth } from "../contexts/AuthContext";
+import { AuthModal } from "./auth/AuthModal";
+import { UserMenu } from "./auth/UserMenu";
 
 import { 
   Menu, 
@@ -27,8 +30,11 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'signin' | 'signup' | 'reset'>('signin');
   const location = useLocation();
   const { cartCount } = useEquipmentCart();
+  const { user, profile, loading } = useAuth();
 
   useEffect(() => {
     let ticking = false;
@@ -67,6 +73,16 @@ const Header = () => {
   const openConsultModal = () => {
     setIsConsultModalOpen(true);
     closeMenu();
+  };
+
+  const openAuthModal = (mode: 'signin' | 'signup' | 'reset' = 'signin') => {
+    setAuthMode(mode);
+    setIsAuthModalOpen(true);
+    closeMenu();
+  };
+
+  const closeAuthModal = () => {
+    setIsAuthModalOpen(false);
   };
 
   const isActive = (path: string) => location.pathname === path;
@@ -397,8 +413,61 @@ const Header = () => {
                 </Badge>
               )}
             </Button>
-            
 
+            {/* Кнопки авторизации или меню пользователя */}
+            {loading ? (
+              <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+            ) : user && profile ? (
+              <UserMenu />
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => openAuthModal('signin')}
+                  className="border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-200"
+                >
+                  Войти
+                </Button>
+                <Button
+                  variant="default"
+                  size="sm"
+                  onClick={() => openAuthModal('signup')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200"
+                >
+                  Регистрация
+                </Button>
+              </div>
+            )}
+            
+            {/* Принудительное отображение кнопок, если loading застрял */}
+            {loading && (
+              <div className="flex items-center space-x-2 ml-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => openAuthModal('signin')}
+                  className="border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-200"
+                >
+                  Войти
+                </Button>
+                <Button
+                  variant="default"
+                  size="sm"
+                  onClick={() => openAuthModal('signup')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200"
+                >
+                  Регистрация
+                </Button>
+              </div>
+            )}
+            
+            {/* Отладочная информация */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className="text-xs text-gray-500 ml-2">
+                Loading: {loading ? 'true' : 'false'}, User: {user ? 'yes' : 'no'}, Profile: {profile ? 'yes' : 'no'}
+              </div>
+            )}
             
             <AnimatedButton 
               variant="gradient"
@@ -646,6 +715,48 @@ const Header = () => {
                     </Badge>
                   )}
                 </Button>
+
+                {/* Кнопки авторизации для мобильных */}
+                {loading ? (
+                  <div className="w-full h-12 bg-gray-200 rounded-lg animate-pulse"></div>
+                ) : user && profile ? (
+                  <div className="space-y-2">
+                    <div className="p-3 bg-blue-50 rounded-lg">
+                      <p className="text-sm font-medium text-blue-900">{profile.company_name || profile.full_name}</p>
+                      <p className="text-xs text-blue-600">{user.email}</p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => {
+                        closeMenu();
+                        window.location.href = '/profile';
+                      }}
+                      className="w-full"
+                    >
+                      Личный кабинет
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => openAuthModal('signin')}
+                      className="w-full"
+                    >
+                      Войти
+                    </Button>
+                    <Button
+                      variant="default"
+                      size="lg"
+                      onClick={() => openAuthModal('signup')}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                      Регистрация
+                    </Button>
+                  </div>
+                )}
                 
                 <AnimatedButton 
                   variant="gradient"
@@ -669,6 +780,13 @@ const Header = () => {
         onClose={() => setIsConsultModalOpen(false)}
         title="Получить консультацию"
         triggerText="Получить консультацию"
+      />
+
+      {/* Auth Modal */}
+      <AuthModal 
+        isOpen={isAuthModalOpen}
+        onClose={closeAuthModal}
+        initialMode={authMode}
       />
     </header>
   );

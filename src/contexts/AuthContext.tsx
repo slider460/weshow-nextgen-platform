@@ -1,104 +1,261 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
-import { supabase } from '../config/supabase'
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { User as SupabaseUser } from '@supabase/supabase-js';
+import { UserProfile, AuthContextType, SignUpData, SignInData, ResetPasswordData } from '../types/auth';
+import { supabase } from '../config/supabase';
 
-interface User {
-  id: string
-  name: string
-  email: string
-  role: 'admin' | 'manager' | 'client'
-  company_name?: string
-}
+// Создаем алиас для избежания конфликтов типов
+type User = SupabaseUser;
 
-interface AuthContextType {
-  user: User | null
-  login: (email: string, password: string) => Promise<boolean>
-  logout: () => void
-  isLoading: boolean
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider')
+    throw new Error('useAuth must be used within an AuthProvider');
   }
-  return context
+  return context;
+};
+
+interface AuthProviderProps {
+  children: React.ReactNode;
 }
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Проверяем, есть ли сохраненный пользователь в localStorage
-    const savedUser = localStorage.getItem('weshow_user')
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser))
-      } catch (error) {
-        console.error('Error parsing saved user:', error)
-        localStorage.removeItem('weshow_user')
-      }
-    } else {
-      // Временно устанавливаем тестового пользователя для разработки
-      const testUser: User = {
-        id: '00000000-0000-0000-0000-000000000001',
-        name: 'Тестовый менеджер',
-        email: 'manager@weshow.ru',
-        role: 'manager',
-        company_name: 'WESHOW'
-      }
-      setUser(testUser)
-      localStorage.setItem('weshow_user', JSON.stringify(testUser))
-    }
-    setIsLoading(false)
-  }, [])
-
-  const login = async (email: string, password: string): Promise<boolean> => {
-    setIsLoading(true)
-    
+  // Загрузка профиля пользователя
+  const fetchProfile = async (userId: string) => {
     try {
-      // Простая проверка для демо
-      if (password === 'password' && (email === 'admin@weshow.ru' || email === 'manager@weshow.ru')) {
-        const demoUser = {
-          id: email === 'admin@weshow.ru' ? '00000000-0000-0000-0000-000000000001' : '00000000-0000-0000-0000-000000000002',
-          name: email === 'admin@weshow.ru' ? 'Администратор' : 'Менеджер',
-          email,
-          role: email === 'admin@weshow.ru' ? 'admin' : 'manager' as 'admin' | 'manager',
-          company_name: 'WESHOW'
-        }
-        
-        setUser(demoUser)
-        localStorage.setItem('weshow_user', JSON.stringify(demoUser))
-        setIsLoading(false)
-        return true
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return null;
       }
 
-      setIsLoading(false)
-      return false
+      return data as UserProfile;
     } catch (error) {
-      console.error('Login error:', error)
-      setIsLoading(false)
-      return false
+      console.error('Error fetching profile:', error);
+      return null;
     }
-  }
+  };
 
-  const logout = () => {
-    setUser(null)
-    localStorage.removeItem('weshow_user')
-  }
+  // Регистрация
+  const signUp = async (email: string, password: string, userData: SignUpData) => {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: userData.full_name,
+            company_name: userData.company_name,
+            phone: userData.phone || '',
+            role: userData.role || 'client'
+          }
+        }
+      });
 
-  const value = {
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error signing up:', error);
+      throw error;
+    }
+  };
+
+  // Вход
+  const signIn = async (email: string, password: string) => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error signing in:', error);
+      throw error;
+    }
+  };
+
+  // Вход через Google
+  const signInWithGoogle = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/profile`
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+      throw error;
+    }
+  };
+
+  // Выход
+  const signOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error('Error signing out:', error);
+      throw error;
+    }
+  };
+
+  // Восстановление пароля
+  const resetPassword = async (email: string) => {
+    try {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      throw error;
+    }
+  };
+
+  // Обновление профиля
+  const updateProfile = async (data: Partial<UserProfile>) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('user_profiles')
+        .update(data)
+        .eq('id', user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      // Обновляем локальное состояние
+      if (profile) {
+        setProfile({ ...profile, ...data });
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      throw error;
+    }
+  };
+
+  // Инициализация аутентификации
+  useEffect(() => {
+    const initializeAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session?.user) {
+          setUser(session.user as User);
+          const userProfile = await fetchProfile(session.user.id);
+          setProfile(userProfile);
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Устанавливаем таймаут для принудительного завершения загрузки
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    initializeAuth();
+
+    return () => clearTimeout(timeout);
+
+    // Слушаем изменения состояния аутентификации
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session?.user) {
+          setUser(session.user as User);
+          let userProfile = await fetchProfile(session.user.id);
+          
+          // Если профиль не найден (например, при Google авторизации), создаем его
+          if (!userProfile) {
+            console.log('Profile not found, creating new profile for Google user');
+            try {
+              const { data, error } = await supabase
+                .from('user_profiles')
+                .insert({
+                  id: session.user.id,
+                  full_name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'Пользователь',
+                  company_name: session.user.user_metadata?.company_name || 'Не указано',
+                  phone_number: session.user.user_metadata?.phone_number || null,
+                  role: 'client'
+                })
+                .select()
+                .single();
+
+              if (error) {
+                console.error('Error creating profile:', error);
+              } else {
+                userProfile = data as UserProfile;
+                console.log('Profile created successfully:', userProfile);
+              }
+            } catch (error) {
+              console.error('Error creating profile:', error);
+            }
+          }
+          
+          setProfile(userProfile);
+        } else {
+          setUser(null);
+          setProfile(null);
+        }
+        setLoading(false);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const value: AuthContextType = {
     user,
-    login,
-    logout,
-    isLoading
-  }
+    profile,
+    loading,
+    signUp,
+    signIn,
+    signInWithGoogle,
+    signOut,
+    resetPassword,
+    updateProfile
+  };
 
   return (
     <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};

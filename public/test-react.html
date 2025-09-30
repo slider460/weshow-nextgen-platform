@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест React</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .test-box {
+            background-color: #4F46E5;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .error-box {
+            background-color: #dc2626;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .success-box {
+            background-color: #059669;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Тест React</h1>
+    
+    <div class="test-box">
+        <h2>1. HTML загружен</h2>
+        <p>✅ Если вы видите этот текст, то HTML работает правильно.</p>
+    </div>
+    
+    <div id="react-test">
+        <h2>2. React тест</h2>
+        <p>⏳ Проверяем загрузку React...</p>
+    </div>
+    
+    <div id="main-test">
+        <h2>3. Main.tsx тест</h2>
+        <p>⏳ Проверяем загрузку main.tsx...</p>
+    </div>
+    
+    <div id="app-test">
+        <h2>4. App.tsx тест</h2>
+        <p>⏳ Проверяем загрузку App.tsx...</p>
+    </div>
+    
+    <script>
+        console.log('🔍 Тест React запущен');
+        
+        // Проверяем загрузку React
+        setTimeout(() => {
+            const reactTest = document.getElementById('react-test');
+            if (reactTest && reactTest.innerHTML.includes('⏳ Проверяем загрузку React')) {
+                reactTest.innerHTML = '<h2>2. React тест</h2><div class="error-box">❌ React не загрузился за 3 секунды</div>';
+            }
+        }, 3000);
+        
+        // Проверяем загрузку main.tsx
+        setTimeout(() => {
+            const mainTest = document.getElementById('main-test');
+            if (mainTest && mainTest.innerHTML.includes('⏳ Проверяем загрузку main.tsx')) {
+                mainTest.innerHTML = '<h2>3. Main.tsx тест</h2><div class="error-box">❌ main.tsx не загрузился за 5 секунд</div>';
+            }
+        }, 5000);
+        
+        // Проверяем загрузку App.tsx
+        setTimeout(() => {
+            const appTest = document.getElementById('app-test');
+            if (appTest && appTest.innerHTML.includes('⏳ Проверяем загрузку App.tsx')) {
+                appTest.innerHTML = '<h2>4. App.tsx тест</h2><div class="error-box">❌ App.tsx не загрузился за 7 секунд</div>';
+            }
+        }, 7000);
+        
+        // Проверяем, что React загрузился
+        let reactLoaded = false;
+        const checkReact = setInterval(() => {
+            if (window.React || document.querySelector('[data-reactroot]')) {
+                reactLoaded = true;
+                clearInterval(checkReact);
+                const reactTest = document.getElementById('react-test');
+                if (reactTest) {
+                    reactTest.innerHTML = '<h2>2. React тест</h2><div class="success-box">✅ React загружен успешно</div>';
+                }
+            }
+        }, 100);
+        
+        // Проверяем, что main.tsx загрузился
+        let mainLoaded = false;
+        const checkMain = setInterval(() => {
+            if (window.React && document.querySelector('[data-reactroot]')) {
+                mainLoaded = true;
+                clearInterval(checkMain);
+                const mainTest = document.getElementById('main-test');
+                if (mainTest) {
+                    mainTest.innerHTML = '<h2>3. Main.tsx тест</h2><div class="success-box">✅ main.tsx загружен успешно</div>';
+                }
+            }
+        }, 100);
+        
+        // Проверяем, что App.tsx загрузился
+        let appLoaded = false;
+        const checkApp = setInterval(() => {
+            if (window.React && document.querySelector('[data-reactroot]')) {
+                appLoaded = true;
+                clearInterval(checkApp);
+                const appTest = document.getElementById('app-test');
+                if (appTest) {
+                    appTest.innerHTML = '<h2>4. App.tsx тест</h2><div class="success-box">✅ App.tsx загружен успешно</div>';
+                }
+            }
+        }, 100);
+        
+        // Останавливаем проверку через 15 секунд
+        setTimeout(() => {
+            if (!reactLoaded) {
+                clearInterval(checkReact);
+                const reactTest = document.getElementById('react-test');
+                if (reactTest && reactTest.innerHTML.includes('⏳ Проверяем загрузку React')) {
+                    reactTest.innerHTML = '<h2>2. React тест</h2><div class="error-box">❌ React не загрузился за 15 секунд</div>';
+                }
+            }
+            if (!mainLoaded) {
+                clearInterval(checkMain);
+                const mainTest = document.getElementById('main-test');
+                if (mainTest && mainTest.innerHTML.includes('⏳ Проверяем загрузку main.tsx')) {
+                    mainTest.innerHTML = '<h2>3. Main.tsx тест</h2><div class="error-box">❌ main.tsx не загрузился за 15 секунд</div>';
+                }
+            }
+            if (!appLoaded) {
+                clearInterval(checkApp);
+                const appTest = document.getElementById('app-test');
+                if (appTest && appTest.innerHTML.includes('⏳ Проверяем загрузку App.tsx')) {
+                    appTest.innerHTML = '<h2>4. App.tsx тест</h2><div class="error-box">❌ App.tsx не загрузился за 15 секунд</div>';
+                }
+            }
+        }, 15000);
+    </script>
+</body>
+</html>

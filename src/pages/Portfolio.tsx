@@ -108,13 +108,16 @@ const Portfolio = () => {
     };
   });
 
-  // Используем только кейсы из базы данных
-  const extendedProjects = dbProjects;
+  // Используем кейсы из базы данных, если они есть, иначе статические проекты
+  const extendedProjects = dbProjects.length > 0 ? dbProjects : staticProjects;
   
   // Отладочная информация
   console.log('Portfolio: Загружено кейсов:', cases.length);
   console.log('Portfolio: Обработано проектов:', dbProjects.length);
-  console.log('Portfolio: Первый проект:', dbProjects[0]);
+  console.log('Portfolio: Статических проектов:', staticProjects.length);
+  console.log('Portfolio: Итоговых проектов:', extendedProjects.length);
+  console.log('Portfolio: Loading:', loading);
+  console.log('Portfolio: Error:', error);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200">
@@ -170,7 +173,7 @@ const Portfolio = () => {
             </div>
           )}
 
-          {!loading && !error && cases.length === 0 && (
+          {!loading && !error && extendedProjects.length === 0 && (
             <div className="text-center py-12">
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-md mx-auto">
                 <p className="text-blue-600">Проекты будут добавлены в ближайшее время</p>
@@ -179,7 +182,7 @@ const Portfolio = () => {
             </div>
           )}
 
-          {!loading && !error && cases.length > 0 && (
+          {!loading && !error && extendedProjects.length > 0 && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {extendedProjects.map((project: any, index: number) => {
               const card = (

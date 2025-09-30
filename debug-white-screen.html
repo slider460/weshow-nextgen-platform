@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диагностика белого экрана</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .test-box {
+            background-color: #4F46E5;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .error-box {
+            background-color: #dc2626;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .success-box {
+            background-color: #059669;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Диагностика белого экрана</h1>
+    
+    <div class="test-box">
+        <h2>1. HTML загружен</h2>
+        <p>✅ Если вы видите этот текст, то HTML работает правильно.</p>
+    </div>
+    
+    <div id="react-test">
+        <h2>2. React тест</h2>
+        <p>⏳ Проверяем загрузку React...</p>
+    </div>
+    
+    <div id="console-test">
+        <h2>3. Консоль тест</h2>
+        <p>⏳ Проверяем консоль браузера...</p>
+    </div>
+    
+    <div id="network-test">
+        <h2>4. Сетевой тест</h2>
+        <p>⏳ Проверяем загрузку ресурсов...</p>
+    </div>
+    
+    <script>
+        console.log('🔍 Диагностика белого экрана запущена');
+        
+        // Проверяем загрузку React
+        setTimeout(() => {
+            const reactTest = document.getElementById('react-test');
+            if (reactTest && reactTest.innerHTML.includes('⏳ Проверяем загрузку React')) {
+                reactTest.innerHTML = '<h2>2. React тест</h2><div class="error-box">❌ React не загрузился за 3 секунды</div>';
+            }
+        }, 3000);
+        
+        // Проверяем консоль
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        let errorCount = 0;
+        let warnCount = 0;
+        
+        console.error = function(...args) {
+            errorCount++;
+            originalError.apply(console, args);
+            updateConsoleTest();
+        };
+        
+        console.warn = function(...args) {
+            warnCount++;
+            originalWarn.apply(console, args);
+            updateConsoleTest();
+        };
+        
+        function updateConsoleTest() {
+            const consoleTest = document.getElementById('console-test');
+            if (consoleTest) {
+                consoleTest.innerHTML = `
+                    <h2>3. Консоль тест</h2>
+                    <div class="test-box">
+                        <p>Ошибки: ${errorCount}</p>
+                        <p>Предупреждения: ${warnCount}</p>
+                        <p>Откройте консоль браузера (F12) для подробностей</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Проверяем сеть
+        setTimeout(() => {
+            const networkTest = document.getElementById('network-test');
+            if (networkTest) {
+                const resources = performance.getEntriesByType('resource');
+                const failedResources = resources.filter(r => r.name.includes('localhost:8082'));
+                
+                networkTest.innerHTML = `
+                    <h2>4. Сетевой тест</h2>
+                    <div class="test-box">
+                        <p>Загружено ресурсов: ${resources.length}</p>
+                        <p>Неудачных загрузок: ${failedResources.length}</p>
+                        <p>Проверьте вкладку Network в консоли браузера</p>
+                    </div>
+                `;
+            }
+        }, 2000);
+        
+        // Проверяем, что React загрузился
+        let reactLoaded = false;
+        const checkReact = setInterval(() => {
+            if (window.React || document.querySelector('[data-reactroot]')) {
+                reactLoaded = true;
+                clearInterval(checkReact);
+                const reactTest = document.getElementById('react-test');
+                if (reactTest) {
+                    reactTest.innerHTML = '<h2>2. React тест</h2><div class="success-box">✅ React загружен успешно</div>';
+                }
+            }
+        }, 100);
+        
+        // Останавливаем проверку через 10 секунд
+        setTimeout(() => {
+            if (!reactLoaded) {
+                clearInterval(checkReact);
+                const reactTest = document.getElementById('react-test');
+                if (reactTest && reactTest.innerHTML.includes('⏳ Проверяем загрузку React')) {
+                    reactTest.innerHTML = '<h2>2. React тест</h2><div class="error-box">❌ React не загрузился за 10 секунд</div>';
+                }
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
