@@ -21,6 +21,7 @@ import TestSimple from "./pages/TestSimple";
 import TestMinimal from "./pages/TestMinimal";
 import SupabaseConnectionTest from "./pages/SupabaseConnectionTest";
 import EquipmentTest from "./pages/EquipmentTest";
+import { SupabaseDiagnostic } from "./pages/SupabaseDiagnostic";
 import EquipmentCatalogAdmin from "./pages/admin/EquipmentCatalogAdmin";
 import QuickAddEquipment from "./pages/QuickAddEquipment";
 import CSVImportEquipment from "./pages/CSVImportEquipment";
@@ -240,6 +241,7 @@ const App = () => (
         <Route path="/rest-api-test" element={<RestApiTest />} />
         <Route path="/test-rest-logos" element={<TestRestLogos />} />
         <Route path="/test-rest-api" element={<TestRestApi />} />
+        <Route path="/supabase-diagnostic" element={<SupabaseDiagnostic />} />
         <Route path="/test-inline" element={
           <div style={{ 
             minHeight: '100vh', 
