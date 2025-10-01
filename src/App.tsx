@@ -127,6 +127,16 @@ import { AccessDenied } from "./pages/AccessDenied";
 import { AuthTest } from "./pages/AuthTest";
 import { SimpleAuthTest } from "./pages/SimpleAuthTest";
 import { WorkingAuthTest } from "./pages/WorkingAuthTest";
+import CreateAdminUser from "./pages/CreateAdminUser";
+import DiagnoseAdmin from "./pages/DiagnoseAdmin";
+import FixAdminEmail from "./pages/FixAdminEmail";
+import TestLogosLoad from "./pages/TestLogosLoad";
+import SimpleDbTest from "./pages/SimpleDbTest";
+import DirectSupabaseTest from "./pages/DirectSupabaseTest";
+import UltraSimpleTest from "./pages/UltraSimpleTest";
+import RestApiTest from "./pages/RestApiTest";
+import TestRestLogos from "./pages/TestRestLogos";
+import TestRestApi from "./pages/TestRestApi";
 
 // Страницы пространственного проектирования
 import SpacePlanning from "./pages/services/SpacePlanning";
@@ -139,7 +149,12 @@ const App = () => (
   <LanguageProvider>
     <LogosProvider>
       <AuthProvider>
-        <BrowserRouter>
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true
+          }}
+        >
         <ScrollToTop />
         <Routes>
         <Route path="/" element={<Index />} />
@@ -215,6 +230,16 @@ const App = () => (
         <Route path="/auth-test" element={<AuthTest />} />
         <Route path="/simple-auth-test" element={<SimpleAuthTest />} />
         <Route path="/working-auth-test" element={<WorkingAuthTest />} />
+        <Route path="/create-admin" element={<CreateAdminUser />} />
+        <Route path="/diagnose-admin" element={<DiagnoseAdmin />} />
+        <Route path="/fix-admin-email" element={<FixAdminEmail />} />
+        <Route path="/test-logos-load" element={<TestLogosLoad />} />
+        <Route path="/simple-db-test" element={<SimpleDbTest />} />
+        <Route path="/direct-supabase-test" element={<DirectSupabaseTest />} />
+        <Route path="/ultra-simple-test" element={<UltraSimpleTest />} />
+        <Route path="/rest-api-test" element={<RestApiTest />} />
+        <Route path="/test-rest-logos" element={<TestRestLogos />} />
+        <Route path="/test-rest-api" element={<TestRestApi />} />
         <Route path="/test-inline" element={
           <div style={{ 
             minHeight: '100vh', 

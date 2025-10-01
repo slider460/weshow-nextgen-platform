@@ -52,11 +52,12 @@ export interface AuthContextType {
   user: User | null;
   profile: UserProfile | null;
   loading: boolean;
-  signUp: (email: string, password: string, userData: SignUpData) => Promise<void>;
-  signIn: (email: string, password: string) => Promise<void>;
-  signInWithGoogle: () => Promise<void>;
+  signUp: (email: string, password: string, userData: SignUpData) => Promise<any>;
+  signIn: (email: string, password: string) => Promise<any>;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  signInWithGoogle: () => Promise<any>;
   signOut: () => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
+  resetPassword: (email: string) => Promise<any>;
   updateProfile: (data: Partial<UserProfile>) => Promise<void>;
 }
 

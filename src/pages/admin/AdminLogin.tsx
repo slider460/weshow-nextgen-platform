@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { logger } from '../../utils/logger'
 
 const AdminLogin: React.FC = () => {
-  const { user, login, isLoading } = useAuth()
+  const { user, profile, login, loading } = useAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -12,32 +13,39 @@ const AdminLogin: React.FC = () => {
 
   // Перенаправление если уже авторизован
   useEffect(() => {
-    if (user && (user.role === 'admin' || user.role === 'manager')) {
+    if (user && profile && (profile.role === 'admin' || profile.role === 'manager')) {
       navigate('/admin/')
     }
-  }, [user, navigate])
+  }, [user, profile, navigate])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     setError('')
 
+    logger.info('🚀 Form submitted, attempting login...')
+
     try {
-      const success = await login(email, password)
+      const result = await login(email, password)
+      logger.info('📊 Login result:', result)
       
-      if (success) {
+      if (result.success) {
+        logger.info('✅ Login successful, navigating to /admin/')
         navigate('/admin/')
       } else {
-        setError('Неверный email или пароль')
+        logger.warn('❌ Login failed:', result.error)
+        setError(result.error || 'Неверный email или пароль. Проверьте правильность данных.')
       }
     } catch (err) {
-      setError('Произошла ошибка при входе')
+      logger.error('❌ Login exception:', err)
+      setError(`Произошла ошибка при входе: ${err instanceof Error ? err.message : 'Неизвестная ошибка'}`)
     } finally {
+      logger.debug('🏁 Login process finished')
       setIsSubmitting(false)
     }
   }
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div style={{ 
         minHeight: '100vh', 

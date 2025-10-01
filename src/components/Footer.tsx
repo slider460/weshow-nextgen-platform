@@ -14,8 +14,7 @@ import {
   ArrowUp,
   Sparkles,
   Zap,
-  Star,
-  Bike
+  Star
 } from "lucide-react";
 
 const Footer = () => {
@@ -95,9 +94,9 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Quick Links */}
+            {/* Основные разделы */}
             <div>
-              <h3 className="text-lg font-semibold mb-6 text-white">Quick Links</h3>
+              <h3 className="text-lg font-semibold mb-6 text-white">Разделы</h3>
               <ul className="space-y-3">
                 <li>
                   <Link 
@@ -105,7 +104,7 @@ const Footer = () => {
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    {t('nav.about')}
+                    О нас
                   </Link>
                 </li>
                 <li>
@@ -114,7 +113,7 @@ const Footer = () => {
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-purple-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    {t('nav.services')}
+                    Услуги
                   </Link>
                 </li>
                 <li>
@@ -123,7 +122,7 @@ const Footer = () => {
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-pink-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    {t('nav.portfolio')}
+                    Портфолио
                   </Link>
                 </li>
                 <li>
@@ -132,7 +131,7 @@ const Footer = () => {
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-green-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    {t('nav.team')}
+                    Команда
                   </Link>
                 </li>
                 <li>
@@ -144,48 +143,22 @@ const Footer = () => {
                     Карьера
                   </Link>
                 </li>
-                {/* Скрытая ссылка на Новости */}
-                <li className="hidden">
+                <li>
                   <Link 
-                    to="/news" 
+                    to="/contact" 
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-cyan-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    Новости
+                    Контакты
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Game Section */}
-            <div>
-                              <h3 className="text-lg font-semibold mb-6 text-white">🚴‍♂️ Велосипедные гонки</h3>
-              <div className="space-y-4">
-                <div className="mb-4">
-                  <p className="text-slate-300 text-sm mb-3">
-                    Гоняйте на велосипеде и выигрывайте скидки до 25% на наши услуги!
-                  </p>
-                  <Link 
-                    to="/game"
-                    className="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold text-sm rounded-lg transition-all duration-200 hover:scale-105"
-                  >
-                    <Bike className="w-4 h-4 mr-2" />
-                    Начать гонку
-                  </Link>
-                </div>
-                <div className="text-xs text-slate-400 space-y-1">
-                  <div>• Скидка 5% - от 100 очков</div>
-                  <div>• Скидка 10% - от 250 очков</div>
-                  <div>• Скидка 15% - от 500 очков</div>
-                  <div>• Скидка 20% - от 750 очков</div>
-                  <div>• Скидка 25% - от 1000 очков</div>
-                </div>
-              </div>
-            </div>
 
-            {/* Services */}
+            {/* Услуги */}
             <div>
-              <h3 className="text-lg font-semibold mb-6 text-white">{t('nav.services')}</h3>
+              <h3 className="text-lg font-semibold mb-6 text-white">Услуги</h3>
               <ul className="space-y-3">
                 <li>
                   <Link 
@@ -220,7 +193,7 @@ const Footer = () => {
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-yellow-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    Аренда
+                    Аренда оборудования
                   </Link>
                 </li>
                 <li>
@@ -238,7 +211,7 @@ const Footer = () => {
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-1 h-1 bg-green-500 rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    Поддержка
+                    Техподдержка
                   </Link>
                 </li>
               </ul>
@@ -320,21 +293,9 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="border-t border-slate-700/50 py-8">
-          <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
+          <div className="flex flex-col lg:flex-row items-center justify-center space-y-4 lg:space-y-0">
             <div className="flex items-center space-x-2 text-slate-400">
               <span>© {currentYear} WESHOW. Все права защищены.</span>
-            </div>
-            
-            <div className="flex items-center space-x-6 text-sm">
-              <Link to="/privacy" className="text-slate-400 hover:text-blue-400 transition-colors duration-300">
-                Политика конфиденциальности
-              </Link>
-              <Link to="/terms" className="text-slate-400 hover:text-blue-400 transition-colors duration-300">
-                Условия использования
-              </Link>
-              <Link to="/cookies" className="text-slate-400 hover:text-blue-400 transition-colors duration-300">
-                Cookies
-              </Link>
             </div>
           </div>
         </div>

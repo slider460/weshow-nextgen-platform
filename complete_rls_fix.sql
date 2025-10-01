@@ -1,150 +1,139 @@
--- ПОЛНОЕ ИСПРАВЛЕНИЕ RLS ПОЛИТИК
--- Сначала удаляем ВСЕ существующие политики
+-- ПОЛНОЕ ИСПРАВЛЕНИЕ RLS ПОЛИТИК ДЛЯ ВСЕХ ТАБЛИЦ
+-- Выполните этот скрипт в Supabase SQL Editor
 
--- Удаляем все политики для users
-DROP POLICY IF EXISTS "Users can view own profile" ON users;
-DROP POLICY IF EXISTS "Users can update own profile" ON users;
-DROP POLICY IF EXISTS "Managers can view all users" ON users;
-DROP POLICY IF EXISTS "Admins can manage users" ON users;
+-- ==============================================
+-- 1. ИСПРАВЛЕНИЕ ТАБЛИЦЫ HOMEPAGE_EQUIPMENT
+-- ==============================================
 
--- Удаляем все политики для equipment_catalog
-DROP POLICY IF EXISTS "Anyone can view equipment" ON equipment_catalog;
-DROP POLICY IF EXISTS "Managers can manage equipment" ON equipment_catalog;
-DROP POLICY IF EXISTS "Public read access for equipment" ON equipment_catalog;
-DROP POLICY IF EXISTS "Admins can manage equipment" ON equipment_catalog;
+-- Удаляем существующие политики
+DROP POLICY IF EXISTS "Allow anonymous read access" ON homepage_equipment;
+DROP POLICY IF EXISTS "Allow authenticated full access" ON homepage_equipment;
+DROP POLICY IF EXISTS "Public read access for homepage_equipment" ON homepage_equipment;
+DROP POLICY IF EXISTS "Authenticated users can manage homepage_equipment" ON homepage_equipment;
 
--- Удаляем все политики для equipment_categories
-DROP POLICY IF EXISTS "Anyone can view categories" ON equipment_categories;
-DROP POLICY IF EXISTS "Managers can manage categories" ON equipment_categories;
-DROP POLICY IF EXISTS "Public read access for equipment_categories" ON equipment_categories;
-DROP POLICY IF EXISTS "Admins can manage equipment_categories" ON equipment_categories;
-
--- Удаляем все политики для estimates
-DROP POLICY IF EXISTS "Users can view own estimates" ON estimates;
-DROP POLICY IF EXISTS "Users can create estimates" ON estimates;
-DROP POLICY IF EXISTS "Users can update own estimates" ON estimates;
-DROP POLICY IF EXISTS "Managers can view all estimates" ON estimates;
-DROP POLICY IF EXISTS "Managers can update all estimates" ON estimates;
-DROP POLICY IF EXISTS "Public read access for estimates" ON estimates;
-DROP POLICY IF EXISTS "Admins can manage estimates" ON estimates;
-
--- Удаляем все политики для estimate_items
-DROP POLICY IF EXISTS "Users can view own estimate items" ON estimate_items;
-DROP POLICY IF EXISTS "Users can create estimate items" ON estimate_items;
-DROP POLICY IF EXISTS "Users can update own estimate items" ON estimate_items;
-DROP POLICY IF EXISTS "Users can delete own estimate items" ON estimate_items;
-DROP POLICY IF EXISTS "Managers can manage all estimate items" ON estimate_items;
-DROP POLICY IF EXISTS "Public read access for estimate_items" ON estimate_items;
-DROP POLICY IF EXISTS "Admins can manage estimate_items" ON estimate_items;
-
--- Удаляем все политики для articles
-DROP POLICY IF EXISTS "Anyone can view published articles" ON articles;
-DROP POLICY IF EXISTS "Authors can view own articles" ON articles;
-DROP POLICY IF EXISTS "Managers can create articles" ON articles;
-DROP POLICY IF EXISTS "Authors can update own articles" ON articles;
-DROP POLICY IF EXISTS "Managers can update all articles" ON articles;
-DROP POLICY IF EXISTS "Public read access for articles" ON articles;
-DROP POLICY IF EXISTS "Admins can manage articles" ON articles;
-
--- Удаляем все политики для article_categories
-DROP POLICY IF EXISTS "Anyone can view article categories" ON article_categories;
-DROP POLICY IF EXISTS "Managers can manage article categories" ON article_categories;
-DROP POLICY IF EXISTS "Public read access for article_categories" ON article_categories;
-DROP POLICY IF EXISTS "Admins can manage article_categories" ON article_categories;
-
--- Удаляем проблемные функции
-DROP FUNCTION IF EXISTS get_user_role() CASCADE;
-DROP FUNCTION IF EXISTS is_manager_or_admin() CASCADE;
-
--- Теперь создаем простые политики без рекурсии
-
--- 1. USERS - только админы могут управлять
-CREATE POLICY "Admins can manage users" ON users
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM users 
-            WHERE id = auth.uid() 
-            AND role = 'admin'
-        )
-    );
-
--- 2. EQUIPMENT_CATALOG - все могут читать, админы управляют
-CREATE POLICY "Public read access for equipment" ON equipment_catalog
+-- Создаем новые политики
+CREATE POLICY "Public read access for homepage_equipment" ON homepage_equipment
     FOR SELECT USING (true);
 
-CREATE POLICY "Admins can manage equipment" ON equipment_catalog
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM users 
-            WHERE id = auth.uid() 
-            AND role = 'admin'
-        )
-    );
+CREATE POLICY "Authenticated users can manage homepage_equipment" ON homepage_equipment
+    FOR ALL USING (auth.uid() IS NOT NULL);
 
--- 3. EQUIPMENT_CATEGORIES - все могут читать, админы управляют
-CREATE POLICY "Public read access for equipment_categories" ON equipment_categories
+-- ==============================================
+-- 2. ИСПРАВЛЕНИЕ ТАБЛИЦЫ LOGOS
+-- ==============================================
+
+-- Удаляем все существующие политики
+DROP POLICY IF EXISTS "Enable read access for all users" ON logos;
+DROP POLICY IF EXISTS "Enable insert for authenticated users only" ON logos;
+DROP POLICY IF EXISTS "Enable update for authenticated users only" ON logos;
+DROP POLICY IF EXISTS "Enable delete for authenticated users only" ON logos;
+DROP POLICY IF EXISTS "Allow anonymous read access" ON logos;
+DROP POLICY IF EXISTS "Allow public read access" ON logos;
+
+-- Создаем простую политику для чтения для всех
+CREATE POLICY "Allow public read access" ON logos
     FOR SELECT USING (true);
 
-CREATE POLICY "Admins can manage equipment_categories" ON equipment_categories
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM users 
-            WHERE id = auth.uid() 
-            AND role = 'admin'
-        )
-    );
+-- Создаем политику для записи для аутентифицированных пользователей
+CREATE POLICY "Authenticated users can manage logos" ON logos
+    FOR ALL USING (auth.uid() IS NOT NULL);
 
--- 4. ESTIMATES - все могут читать, админы управляют
-CREATE POLICY "Public read access for estimates" ON estimates
+-- ==============================================
+-- 3. ИСПРАВЛЕНИЕ ТАБЛИЦЫ USER_PROFILES
+-- ==============================================
+
+-- Удаляем существующие политики
+DROP POLICY IF EXISTS "Users can view own profile" ON user_profiles;
+DROP POLICY IF EXISTS "Users can update own profile" ON user_profiles;
+DROP POLICY IF EXISTS "Public profiles are viewable by everyone" ON user_profiles;
+
+-- Создаем новые политики
+CREATE POLICY "Users can view own profile" ON user_profiles
+    FOR SELECT USING (auth.uid() = id);
+
+CREATE POLICY "Users can update own profile" ON user_profiles
+    FOR UPDATE USING (auth.uid() = id);
+
+CREATE POLICY "Authenticated users can insert profiles" ON user_profiles
+    FOR INSERT WITH CHECK (auth.uid() = id);
+
+-- ==============================================
+-- 4. ИСПРАВЛЕНИЕ ТАБЛИЦЫ CASES
+-- ==============================================
+
+-- Удаляем существующие политики
+DROP POLICY IF EXISTS "Enable read access for all users" ON cases;
+DROP POLICY IF EXISTS "Enable insert for authenticated users only" ON cases;
+DROP POLICY IF EXISTS "Enable update for authenticated users only" ON cases;
+DROP POLICY IF EXISTS "Enable delete for authenticated users only" ON cases;
+
+-- Создаем новые политики
+CREATE POLICY "Public read access for cases" ON cases
     FOR SELECT USING (true);
 
-CREATE POLICY "Admins can manage estimates" ON estimates
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM users 
-            WHERE id = auth.uid() 
-            AND role = 'admin'
-        )
-    );
+CREATE POLICY "Authenticated users can manage cases" ON cases
+    FOR ALL USING (auth.uid() IS NOT NULL);
 
--- 5. ESTIMATE_ITEMS - все могут читать, админы управляют
-CREATE POLICY "Public read access for estimate_items" ON estimate_items
+-- ==============================================
+-- 5. ИСПРАВЛЕНИЕ ТАБЛИЦЫ NEWS_BLOG
+-- ==============================================
+
+-- Удаляем существующие политики
+DROP POLICY IF EXISTS "Enable read access for all users" ON news_blog;
+DROP POLICY IF EXISTS "Enable insert for authenticated users only" ON news_blog;
+DROP POLICY IF EXISTS "Enable update for authenticated users only" ON news_blog;
+DROP POLICY IF EXISTS "Enable delete for authenticated users only" ON news_blog;
+
+-- Создаем новые политики
+CREATE POLICY "Public read access for news_blog" ON news_blog
     FOR SELECT USING (true);
 
-CREATE POLICY "Admins can manage estimate_items" ON estimate_items
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM users 
-            WHERE id = auth.uid() 
-            AND role = 'admin'
-        )
-    );
+CREATE POLICY "Authenticated users can manage news_blog" ON news_blog
+    FOR ALL USING (auth.uid() IS NOT NULL);
 
--- 6. ARTICLES - все могут читать, админы управляют
-CREATE POLICY "Public read access for articles" ON articles
+-- ==============================================
+-- 6. ИСПРАВЛЕНИЕ ТАБЛИЦЫ SERVICES_BLOCKS
+-- ==============================================
+
+-- Удаляем существующие политики
+DROP POLICY IF EXISTS "Enable read access for all users" ON services_blocks;
+DROP POLICY IF EXISTS "Enable insert for authenticated users only" ON services_blocks;
+DROP POLICY IF EXISTS "Enable update for authenticated users only" ON services_blocks;
+DROP POLICY IF EXISTS "Enable delete for authenticated users only" ON services_blocks;
+
+-- Создаем новые политики
+CREATE POLICY "Public read access for services_blocks" ON services_blocks
     FOR SELECT USING (true);
 
-CREATE POLICY "Admins can manage articles" ON articles
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM users 
-            WHERE id = auth.uid() 
-            AND role = 'admin'
-        )
-    );
+CREATE POLICY "Authenticated users can manage services_blocks" ON services_blocks
+    FOR ALL USING (auth.uid() IS NOT NULL);
 
--- 7. ARTICLE_CATEGORIES - все могут читать, админы управляют
-CREATE POLICY "Public read access for article_categories" ON article_categories
-    FOR SELECT USING (true);
+-- ==============================================
+-- 7. ПРОВЕРКА РЕЗУЛЬТАТА
+-- ==============================================
 
-CREATE POLICY "Admins can manage article_categories" ON article_categories
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM users 
-            WHERE id = auth.uid() 
-            AND role = 'admin'
-        )
-    );
+-- Проверяем статус RLS для всех таблиц
+SELECT 
+    schemaname,
+    tablename,
+    rowsecurity as rls_enabled
+FROM pg_tables 
+WHERE schemaname = 'public' 
+    AND tablename IN ('homepage_equipment', 'logos', 'user_profiles', 'cases', 'news_blog', 'services_blocks')
+ORDER BY tablename;
 
--- Сообщение об успешном завершении
-SELECT 'RLS политики успешно исправлены!' as status;
+-- Проверяем политики для всех таблиц
+SELECT 
+    schemaname,
+    tablename,
+    policyname,
+    permissive,
+    roles,
+    cmd
+FROM pg_policies 
+WHERE schemaname = 'public' 
+    AND tablename IN ('homepage_equipment', 'logos', 'user_profiles', 'cases', 'news_blog', 'services_blocks')
+ORDER BY tablename, policyname;
+
+-- Сообщение об успешном исправлении
+SELECT 'RLS политики для всех таблиц исправлены успешно!' as status;

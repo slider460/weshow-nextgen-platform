@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест входа в админ-панель</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover { background: #45a049; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .error {
+            border-left-color: #f44336;
+            background: #ffebee;
+        }
+        .success {
+            border-left-color: #4CAF50;
+            background: #e8f5e9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Тест входа в админ-панель WeShow</h1>
+        
+        <div class="form-group">
+            <label for="supabaseUrl">Supabase URL:</label>
+            <input type="text" id="supabaseUrl" placeholder="https://your-project.supabase.co">
+        </div>
+        
+        <div class="form-group">
+            <label for="supabaseKey">Supabase Anon Key:</label>
+            <input type="text" id="supabaseKey" placeholder="your-anon-key">
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" value="admin@weshow.ru">
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" value="password">
+        </div>
+        
+        <button onclick="testLogin()" id="loginBtn">Проверить вход</button>
+        <button onclick="checkProfile()" id="profileBtn" disabled>Проверить профиль</button>
+        
+        <div id="output" class="output" style="display: none;"></div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+        
+        let supabase;
+        let currentUser;
+        
+        window.testLogin = async function() {
+            const output = document.getElementById('output');
+            const loginBtn = document.getElementById('loginBtn');
+            const profileBtn = document.getElementById('profileBtn');
+            
+            output.style.display = 'block';
+            output.className = 'output';
+            output.textContent = 'Начинаем тест...\n\n';
+            loginBtn.disabled = true;
+            
+            try {
+                const supabaseUrl = document.getElementById('supabaseUrl').value;
+                const supabaseKey = document.getElementById('supabaseKey').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                if (!supabaseUrl || !supabaseKey) {
+                    output.textContent += '❌ Пожалуйста, заполните Supabase URL и Key\n';
+                    output.className = 'output error';
+                    loginBtn.disabled = false;
+                    return;
+                }
+                
+                // Создаем клиент Supabase
+                output.textContent += '📡 Подключение к Supabase...\n';
+                supabase = createClient(supabaseUrl, supabaseKey);
+                output.textContent += '✅ Клиент создан\n\n';
+                
+                // Попытка входа
+                output.textContent += `🔐 Попытка входа: ${email}\n`;
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password
+                });
+                
+                if (error) {
+                    output.textContent += `\n❌ ОШИБКА ВХОДА:\n${JSON.stringify(error, null, 2)}\n`;
+                    output.className = 'output error';
+                    loginBtn.disabled = false;
+                    return;
+                }
+                
+                output.textContent += '✅ Вход успешный!\n\n';
+                output.textContent += '👤 Данные пользователя:\n';
+                output.textContent += JSON.stringify(data.user, null, 2);
+                output.textContent += '\n\n';
+                
+                currentUser = data.user;
+                profileBtn.disabled = false;
+                output.className = 'output success';
+                
+            } catch (err) {
+                output.textContent += `\n❌ ИСКЛЮЧЕНИЕ:\n${err.message}\n${err.stack}`;
+                output.className = 'output error';
+            } finally {
+                loginBtn.disabled = false;
+            }
+        }
+        
+        window.checkProfile = async function() {
+            const output = document.getElementById('output');
+            const profileBtn = document.getElementById('profileBtn');
+            
+            if (!currentUser || !supabase) {
+                output.textContent += '\n❌ Сначала выполните вход\n';
+                return;
+            }
+            
+            profileBtn.disabled = true;
+            output.textContent += '\n\n📋 Загрузка профиля...\n';
+            
+            try {
+                const { data, error } = await supabase
+                    .from('user_profiles')
+                    .select('*')
+                    .eq('id', currentUser.id)
+                    .single();
+                
+                if (error) {
+                    output.textContent += `\n❌ ОШИБКА ЗАГРУЗКИ ПРОФИЛЯ:\n${JSON.stringify(error, null, 2)}\n`;
+                    output.className = 'output error';
+                    return;
+                }
+                
+                output.textContent += '✅ Профиль найден!\n\n';
+                output.textContent += '👤 Данные профиля:\n';
+                output.textContent += JSON.stringify(data, null, 2);
+                output.textContent += '\n\n';
+                
+                if (data.role === 'admin' || data.role === 'manager') {
+                    output.textContent += '🎉 ДОСТУП К АДМИН-ПАНЕЛИ РАЗРЕШЕН!\n';
+                    output.className = 'output success';
+                } else {
+                    output.textContent += '⚠️ У пользователя нет прав администратора\n';
+                    output.className = 'output error';
+                }
+                
+            } catch (err) {
+                output.textContent += `\n❌ ИСКЛЮЧЕНИЕ:\n${err.message}`;
+                output.className = 'output error';
+            } finally {
+                profileBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
+

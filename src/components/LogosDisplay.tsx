@@ -2,6 +2,7 @@ import React, { useMemo, useCallback, useState } from 'react';
 import { Edit, Plus } from 'lucide-react';
 import { useLogos } from '../contexts/LogosContextDB';
 import { Button } from './ui/button';
+import { logger } from '../utils/logger';
 
 interface LogosDisplayProps {
   showEditButton?: boolean;
@@ -19,13 +20,13 @@ const LogosDisplay = React.memo<LogosDisplayProps>(({
 
   const activeLogos = useMemo(() => {
     const logos = getActiveLogos();
-    console.log('LogosDisplay: Активные логотипы:', logos.length, logos);
-    console.log('LogosDisplay: showEditButton:', showEditButton);
-    console.log('LogosDisplay: className:', className);
+    logger.debug('LogosDisplay: Активные логотипы:', logos.length, logos);
+    logger.debug('LogosDisplay: showEditButton:', showEditButton);
+    logger.debug('LogosDisplay: className:', className);
     
     // Дополнительная проверка каждого логотипа
     logos.forEach((logo, index) => {
-      console.log(`LogosDisplay: Логотип ${index + 1}:`, {
+      logger.debug(`LogosDisplay: Логотип ${index + 1}:`, {
         id: logo.id,
         name: logo.name,
         logo_url: logo.logo_url,
@@ -100,7 +101,7 @@ const LogosDisplay = React.memo<LogosDisplayProps>(({
                   alt={logo.name}
                   className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                   onError={(e) => {
-                    console.log('LogosDisplay: Ошибка загрузки изображения для', logo.name, logo.logo_url);
+                    logger.warn('LogosDisplay: Ошибка загрузки изображения для', logo.name, logo.logo_url);
                     e.currentTarget.style.display = 'none';
                   }}
                 />

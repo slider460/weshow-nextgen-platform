@@ -7,24 +7,24 @@ interface AdminLayoutProps {
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
-  const { user, isLoading, logout } = useAuth()
+  const { user, profile, loading, signOut } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   // Проверка прав доступа
   useEffect(() => {
-    if (!isLoading && (!user || (user.role !== 'admin' && user.role !== 'manager'))) {
+    if (!loading && (!user || !profile || (profile.role !== 'admin' && profile.role !== 'manager'))) {
       navigate('/admin/login')
     }
-  }, [user, isLoading, navigate])
+  }, [user, profile, loading, navigate])
 
-  const handleSignOut = () => {
-    logout()
+  const handleSignOut = async () => {
+    await signOut()
     navigate('/admin/login')
   }
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div style={{ 
         minHeight: '100vh', 
@@ -50,8 +50,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     )
   }
 
-  if (!user || (user.role !== 'admin' && user.role !== 'manager')) {
-    navigate('/admin/login')
+  if (!user || !profile || (profile.role !== 'admin' && profile.role !== 'manager')) {
     return null
   }
 
@@ -171,14 +170,14 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             fontWeight: '600',
             marginBottom: '0.25rem'
           }}>
-            {sidebarOpen ? user.name : user.name.charAt(0)}
+            {sidebarOpen ? (profile.full_name || user.email?.split('@')[0] || 'Пользователь') : (profile.full_name || user.email || 'U').charAt(0)}
           </div>
           <div style={{ 
             fontSize: '0.7rem', 
             color: '#60a5fa',
             textTransform: 'uppercase'
           }}>
-            {sidebarOpen ? user.role : user.role.charAt(0)}
+            {sidebarOpen ? profile.role : profile.role.charAt(0)}
           </div>
         </div>
       </div>
