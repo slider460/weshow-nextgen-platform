@@ -132,21 +132,6 @@ const FigmaSimple = () => {
             </div>
           </div>
 
-          {/* Card 6: Выставка Самара */}
-          <div className="gradient-card-purple rounded-3xl p-8 flex flex-col group hover:scale-105 transition-all duration-500 relative overflow-hidden">
-            <div className="absolute bottom-4 right-4 text-white/20 text-6xl font-bold transform rotate-12">
-              2025
-            </div>
-            
-            <div className="relative z-10">
-              <h3 className="text-2xl font-bold text-white mb-3 drop-shadow-lg">
-                Выставка «Самара»
-              </h3>
-              <p className="text-white/95 text-base drop-shadow-md">
-                интерактивные решения
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* Status */}
@@ -174,6 +159,7 @@ const FigmaSimple = () => {
 };
 
 export default FigmaSimple;
+
 
 
 

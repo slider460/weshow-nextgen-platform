@@ -144,7 +144,8 @@ const Footer = () => {
                     Карьера
                   </Link>
                 </li>
-                <li>
+                {/* Скрытая ссылка на Новости */}
+                <li className="hidden">
                   <Link 
                     to="/news" 
                     className="text-slate-300 hover:text-blue-400 transition-colors duration-300 flex items-center group"

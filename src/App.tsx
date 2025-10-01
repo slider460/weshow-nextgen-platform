@@ -149,8 +149,9 @@ const App = () => (
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/case/:id" element={<CaseDetail />} />
         <Route path="/team" element={<Team />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/news" element={<News />} />
+        {/* Скрытые маршруты для Новостей и Блога */}
+        <Route path="/blog" element={<Blog />} style={{display: 'none'}} />
+        <Route path="/news" element={<News />} style={{display: 'none'}} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/equipment" element={<Equipment />} />
         <Route path="/debug-cart" element={<DebugCart />} />

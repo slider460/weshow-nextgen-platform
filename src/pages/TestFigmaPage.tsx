@@ -251,32 +251,6 @@ const TestFigmaPage = () => {
             )}
           </div>
 
-          {/* Card 6: Выставка Самара */}
-          <div 
-            className="gradient-card-purple rounded-3xl p-8 flex flex-col group hover:scale-105 transition-all duration-500 relative overflow-hidden"
-            onMouseEnter={() => setHoveredCard('samara')}
-            onMouseLeave={() => setHoveredCard(null)}
-          >
-            {/* 2025 Overlay */}
-            <div className="absolute bottom-4 right-4 text-white/20 text-6xl font-bold transform rotate-12">
-              2025
-            </div>
-            
-            <div className="relative z-10">
-              <h3 className="text-2xl font-bold text-white mb-3 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">
-                Выставка «Самара»
-              </h3>
-              <p className="text-white/95 text-base drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
-                интерактивные решения
-              </p>
-              
-              {hoveredCard === 'samara' && (
-                <div className="mt-4 border-white/40 text-white group-hover:bg-white/20 bg-white/10 group-hover:border-white/60 transition-all duration-300 drop-shadow-md px-4 py-2 rounded-full text-sm font-medium group-hover:animate-pulse">
-                  посмотреть →
-                </div>
-              )}
-            </div>
-          </div>
         </div>
 
         {/* Interactive Elements */}

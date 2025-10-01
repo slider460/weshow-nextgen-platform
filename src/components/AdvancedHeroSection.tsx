@@ -270,15 +270,6 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                   </div>
                 </div>
 
-                {/* Samara exhibition card */}
-                <div className="gradient-card-purple rounded-3xl p-8 flex flex-col group hover:scale-105 transition-all duration-500">
-                  <h3 className="text-2xl font-bold text-white mb-3 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">
-                    Выставка «Самара»
-                  </h3>
-                  <p className="text-white/95 text-base drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
-                    интерактивные решения
-                  </p>
-                </div>
               </div>
             </div>
           </div>
@@ -290,6 +281,7 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
 };
 
 export default AdvancedHeroSection;
+
 
 
 

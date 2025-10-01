@@ -3,130 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debug White Screen - WESHOW</title>
+    <title>Debug White Screen</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background: #f0f0f0;
+            padding: 20px;
+            background-color: #f5f5f5;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+        .debug-info {
             background: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .status {
+        .error {
+            background: #fee;
+            border-left: 4px solid #f44;
             padding: 10px;
             margin: 10px 0;
-            border-radius: 4px;
         }
-        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
-        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .debug-info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
+        .success {
+            background: #efe;
+            border-left: 4px solid #4f4;
+            padding: 10px;
             margin: 10px 0;
-            font-family: monospace;
-            font-size: 12px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .test-link {
+            display: block;
+            margin: 10px 0;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .test-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔍 Диагностика белого экрана WESHOW</h1>
+    <h1>🔍 Диагностика белого экрана</h1>
+    
+    <div class="debug-info">
+        <h2>📊 Статус проверки</h2>
+        <div id="status">Проверяем...</div>
         
-        <div class="status info">
-            <strong>Время проверки:</strong> <span id="currentTime"></span>
-        </div>
+        <h3>🔗 Тестовые ссылки:</h3>
+        <a href="http://localhost:8082" class="test-link">→ Основной сайт</a>
+        <a href="http://localhost:8082/test" class="test-link">→ Тестовая страница</a>
+        <a href="http://localhost:8082/portfolio" class="test-link">→ Портфолио</a>
         
-        <div class="status warning">
-            <strong>⚠️ Проблема:</strong> Главная страница показывает белый экран
-        </div>
-        
-        <h2>Тестирование страниц:</h2>
-        
-        <div class="debug-info">
-            <strong>Сервер:</strong> http://localhost:8085<br>
-            <strong>Статус:</strong> <span id="serverStatus">Проверяем...</span>
-        </div>
-        
-        <h3>1. Главная страница (/)</h3>
-        <iframe src="http://localhost:8085" title="Main App" id="mainFrame"></iframe>
-        
-        <h3>2. Тестовая страница (/test)</h3>
-        <iframe src="http://localhost:8085/test" title="Test Page" id="testFrame"></iframe>
-        
-        <h3>3. Портфолио (/portfolio)</h3>
-        <iframe src="http://localhost:8085/portfolio" title="Portfolio" id="portfolioFrame"></iframe>
-        
-        <div class="status info">
-            <strong>Инструкции для диагностики:</strong>
-            <ol>
-                <li>Откройте консоль браузера (F12 → Console)</li>
-                <li>Проверьте, есть ли ошибки JavaScript</li>
-                <li>Посмотрите на вкладку Network - загружаются ли файлы</li>
-                <li>Проверьте, есть ли ошибки 404 или 500</li>
-            </ol>
-        </div>
-        
-        <div class="debug-info" id="consoleErrors">
-            <strong>Ошибки консоли:</strong> <span id="errorCount">0</span><br>
-            <div id="errorList"></div>
-        </div>
+        <h3>🛠️ Тестовые кнопки:</h3>
+        <button onclick="testMainSite()">Проверить основной сайт</button>
+        <button onclick="checkConsoleErrors()">Проверить ошибки консоли</button>
+        <button onclick="testReactComponents()">Тест React компонентов</button>
+    </div>
+
+    <div class="debug-info">
+        <h2>📋 Результаты диагностики</h2>
+        <div id="results"></div>
     </div>
 
     <script>
-        // Обновляем время
-        document.getElementById('currentTime').textContent = new Date().toLocaleString('ru-RU');
-        
-        // Проверяем статус сервера
-        fetch('http://localhost:8085')
-            .then(response => {
-                document.getElementById('serverStatus').textContent = '✅ Сервер работает';
-                document.getElementById('serverStatus').style.color = 'green';
-            })
-            .catch(error => {
-                document.getElementById('serverStatus').textContent = '❌ Сервер недоступен: ' + error.message;
-                document.getElementById('serverStatus').style.color = 'red';
-            });
-        
-        // Перехватываем ошибки
-        let errorCount = 0;
-        const errorList = document.getElementById('errorList');
-        
-        window.addEventListener('error', function(e) {
-            errorCount++;
-            document.getElementById('errorCount').textContent = errorCount;
-            errorList.innerHTML += '<div style="color: red; margin: 5px 0;">❌ ' + e.message + ' (строка ' + e.lineno + ')</div>';
+        function addResult(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = type;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            results.appendChild(div);
+        }
+
+        function testMainSite() {
+            addResult('Проверяем основной сайт...', 'info');
+            
+            fetch('http://localhost:8082')
+                .then(response => {
+                    if (response.ok) {
+                        addResult('✅ Основной сайт отвечает (HTTP ' + response.status + ')', 'success');
+                        return response.text();
+                    } else {
+                        addResult('❌ Основной сайт не отвечает (HTTP ' + response.status + ')', 'error');
+                        throw new Error('HTTP ' + response.status);
+                    }
+                })
+                .then(html => {
+                    if (html.includes('root')) {
+                        addResult('✅ HTML содержит div#root', 'success');
+                    } else {
+                        addResult('❌ HTML не содержит div#root', 'error');
+                    }
+                    
+                    if (html.includes('react')) {
+                        addResult('✅ React загружен', 'success');
+                    } else {
+                        addResult('❌ React не найден', 'error');
+                    }
+                })
+                .catch(error => {
+                    addResult('❌ Ошибка при проверке основного сайта: ' + error.message, 'error');
+                });
+        }
+
+        function checkConsoleErrors() {
+            addResult('Проверяем консоль браузера...', 'info');
+            addResult('⚠️ Откройте Developer Tools (F12) и проверьте вкладку Console на наличие ошибок', 'error');
+            addResult('🔍 Ищите ошибки типа: "Cannot read property", "undefined", "import", "export"', 'error');
+        }
+
+        function testReactComponents() {
+            addResult('Тестируем React компоненты...', 'info');
+            
+            // Попробуем открыть тестовую страницу
+            fetch('http://localhost:8082/test')
+                .then(response => {
+                    if (response.ok) {
+                        addResult('✅ Тестовая страница отвечает', 'success');
+                    } else {
+                        addResult('❌ Тестовая страница не отвечает (HTTP ' + response.status + ')', 'error');
+                    }
+                })
+                .catch(error => {
+                    addResult('❌ Ошибка при проверке тестовой страницы: ' + error.message, 'error');
+                });
+        }
+
+        // Автоматическая проверка при загрузке
+        window.addEventListener('load', () => {
+            addResult('🔍 Диагностическая страница загружена', 'success');
+            addResult('💡 Нажмите кнопки выше для диагностики', 'info');
+            
+            // Автоматически проверяем основной сайт
+            setTimeout(testMainSite, 1000);
         });
-        
-        window.addEventListener('unhandledrejection', function(e) {
-            errorCount++;
-            document.getElementById('errorCount').textContent = errorCount;
-            errorList.innerHTML += '<div style="color: red; margin: 5px 0;">❌ Promise rejected: ' + e.reason + '</div>';
-        });
-        
-        // Проверяем загрузку iframe
-        document.getElementById('mainFrame').onload = function() {
-            console.log('Main frame loaded');
-        };
-        
-        document.getElementById('mainFrame').onerror = function() {
-            console.error('Main frame failed to load');
-            errorList.innerHTML += '<div style="color: red; margin: 5px 0;">❌ Главная страница не загрузилась</div>';
-        };
+
+        // Проверяем каждые 30 секунд
+        setInterval(() => {
+            fetch('http://localhost:8082')
+                .then(response => {
+                    if (response.ok) {
+                        addResult('🟢 Сайт работает (автопроверка)', 'success');
+                    } else {
+                        addResult('🔴 Сайт не отвечает (автопроверка)', 'error');
+                    }
+                })
+                .catch(error => {
+                    addResult('🔴 Ошибка соединения (автопроверка)', 'error');
+                });
+        }, 30000);
     </script>
 </body>
 </html>

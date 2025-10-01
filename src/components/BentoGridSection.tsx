@@ -52,16 +52,6 @@ const BentoGridSection = () => {
       action: () => navigate("/contact")
     },
     {
-      id: 5,
-      title: "Выставка «Самара»",
-      subtitle: "",
-      buttonText: "Посмотреть",
-      size: "medium",
-      gradient: "from-accent/20 to-accent/5",
-      image: "/src/assets/team-work.jpg",
-      action: () => navigate("/portfolio")
-    },
-    {
       id: 6,
       title: "ВДНХ стенд Самарской области",
       subtitle: "на выставке-форуме \"России\"",
@@ -75,14 +65,14 @@ const BentoGridSection = () => {
 
   return (
     <>
-      <section className="py-12 px-4 bg-gradient-to-br from-background via-background/95 to-muted/20">
+      <section className="py-20 px-4 bg-gradient-to-br from-background via-background/95 to-muted/20">
         <div className="container mx-auto max-w-7xl">
           {/* Бенто-сетка согласно примеру */}
-          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-4 h-auto">
+          <div className="flex flex-col md:flex-row md:flex-wrap gap-6">
             {/* Первая строка */}
             {/* Большой блок слева (2 колонки) */}
             <div 
-              className="col-span-1 md:col-span-2 lg:col-span-2 row-span-2 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[300px] md:min-h-[400px]"
+              className="w-full md:w-1/2 lg:w-2/3 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[400px] md:min-h-[500px]"
               style={{ backgroundImage: `url(${bentoItems[0].image})` }}
               onClick={bentoItems[0].action}
             >
@@ -105,7 +95,7 @@ const BentoGridSection = () => {
 
             {/* Showreel (средний блок) */}
             <div 
-              className="col-span-1 md:col-span-1 lg:col-span-2 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[190px] md:min-h-[190px]"
+              className="w-full md:w-1/2 lg:w-1/3 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[280px] md:min-h-[320px]"
               style={{ backgroundImage: `url(${bentoItems[1].image})` }}
               onClick={bentoItems[1].action}
             >
@@ -126,7 +116,7 @@ const BentoGridSection = () => {
 
             {/* Samsung проект */}
             <div 
-              className="col-span-1 md:col-span-1 lg:col-span-2 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[190px] md:min-h-[190px]"
+              className="w-full md:w-1/2 lg:w-1/3 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[280px] md:min-h-[320px]"
               style={{ backgroundImage: `url(${bentoItems[2].image})` }}
               onClick={bentoItems[2].action}
             >
@@ -148,7 +138,7 @@ const BentoGridSection = () => {
             {/* Вторая строка */}
             {/* Showroom (большой блок справа) */}
             <div 
-              className="col-span-1 md:col-span-2 lg:col-span-2 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[190px] md:min-h-[190px]"
+              className="w-full md:w-1/2 lg:w-2/3 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[280px] md:min-h-[320px]"
               style={{ backgroundImage: `url(${bentoItems[3].image})` }}
               onClick={bentoItems[3].action}
             >
@@ -172,48 +162,28 @@ const BentoGridSection = () => {
               </div>
             </div>
 
-            {/* Выставка Самара */}
+
+            {/* ВДНХ стенд */}
             <div 
-              className="col-span-1 md:col-span-1 lg:col-span-2 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[190px] md:min-h-[190px]"
+              className="w-full md:w-1/2 lg:w-1/3 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[280px] md:min-h-[320px]"
               style={{ backgroundImage: `url(${bentoItems[4].image})` }}
               onClick={bentoItems[4].action}
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${bentoItems[4].gradient} group-hover:opacity-90 transition-all duration-300`} />
-              <div className="relative z-10 p-6 flex flex-col justify-between h-full">
-                <h3 className="text-lg md:text-xl font-bold text-white">
-                  {bentoItems[4].title}
-                </h3>
-                <Button 
-                  variant="outline" 
-                  className="w-fit bg-white/10 border-white/20 text-white hover:bg-white/20 group-hover:scale-105 transition-all duration-300"
-                >
-                  {bentoItems[4].buttonText}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* ВДНХ стенд */}
-            <div 
-              className="col-span-1 md:col-span-1 lg:col-span-2 group cursor-pointer relative overflow-hidden rounded-2xl bg-cover bg-center min-h-[190px] md:min-h-[190px]"
-              style={{ backgroundImage: `url(${bentoItems[5].image})` }}
-              onClick={bentoItems[5].action}
-            >
-              <div className={`absolute inset-0 bg-gradient-to-br ${bentoItems[5].gradient} group-hover:opacity-90 transition-all duration-300`} />
               <div className="relative z-10 p-6 flex flex-col justify-between h-full">
                 <div>
                   <h3 className="text-lg md:text-xl font-bold text-white mb-1">
                     ВДНХ стенд Самарской области
                   </h3>
                   <p className="text-white/80 text-sm">
-                    {bentoItems[5].subtitle}
+                    {bentoItems[4].subtitle}
                   </p>
                 </div>
                 <Button 
                   variant="outline" 
                   className="w-fit bg-white/10 border-white/20 text-white hover:bg-white/20 group-hover:scale-105 transition-all duration-300"
                 >
-                  {bentoItems[5].buttonText}
+                  {bentoItems[4].buttonText}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
