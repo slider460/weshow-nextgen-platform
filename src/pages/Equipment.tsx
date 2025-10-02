@@ -177,17 +177,30 @@ const Equipment = () => {
 
   // Преобразуем данные из базы в формат для отображения
   const getEquipmentByCategory = (categorySlug: string) => {
-    return dbEquipment.filter(item => 
-      item.equipment_categories?.slug === categorySlug
-    ).map(item => ({
-      id: item.id,
-      name: item.name,
-      specs: item.description || 'Описание отсутствует',
-      price: `от ${item.price_per_day}₽/день`,
-      priceValue: item.price_per_day,
-      category: categorySlug,
-      stock_quantity: item.stock_quantity
-    }));
+    // Распределяем товары по категориям на основе названия
+    const categoryKeywords = {
+      'projectors': ['проектор', 'экран', 'mapping', 'купол', 'сетка'],
+      'led-displays': ['led', 'экран', 'видеостена', 'панель', 'куб', 'прозрачный', 'изогнутый', 'мобильный'],
+      'audio': ['микшер', 'микрофон', 'акустическая', 'сабвуфер', 'обработка', 'радиосистема', 'гид'],
+      'lighting': ['прожектор', 'лазер', 'стробоскоп', 'дым', 'ультрафиолет', 'молний', 'голографический']
+    };
+    
+    const keywords = categoryKeywords[categorySlug as keyof typeof categoryKeywords] || [];
+    
+    return dbEquipment
+      .filter(item => {
+        const itemName = item.name?.toLowerCase() || '';
+        return keywords.some(keyword => itemName.includes(keyword));
+      })
+      .map(item => ({
+        id: item.id,
+        name: item.name,
+        specs: item.description || 'Описание отсутствует',
+        price: `от ${item.price_per_day || 1000}₽/день`,
+        priceValue: item.price_per_day || 1000,
+        category: categorySlug,
+        stock_quantity: item.stock_quantity || 1
+      }));
   };
 
   // Создаем категории оборудования с данными из базы
@@ -217,7 +230,7 @@ const Equipment = () => {
       icon: <Monitor className="h-8 w-8" />,
       title: "Видеооборудование",
       description: "Камеры, видеомикшеры, мониторы и видеотехника",
-      items: getEquipmentByCategory('video'),
+      items: getEquipmentByCategory('led-displays'),
       gradient: "gradient-card-blue"
     },
     {
@@ -545,7 +558,21 @@ const Equipment = () => {
             
             {!loading && !error && (
               <div className="space-y-12 lg:space-y-16">
-                {equipmentCategories.map((category, categoryIndex) => (
+                {equipmentCategories
+                  .filter(category => category.items && category.items.length > 0)
+                  .length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium mb-4">
+                      📦 Оборудование временно недоступно
+                    </div>
+                    <p className="text-white/70 text-sm">
+                      Попробуйте обновить страницу или обратитесь к администратору
+                    </p>
+                  </div>
+                ) : (
+                  equipmentCategories
+                    .filter(category => category.items && category.items.length > 0)
+                    .map((category, categoryIndex) => (
                 <div key={categoryIndex} className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                   {/* Category Card */}
                   <div className={`${category.gradient} rounded-2xl lg:rounded-3xl p-6 lg:p-8 text-white shadow-lg`}>
@@ -606,7 +633,8 @@ const Equipment = () => {
                     ))}
                   </div>
                 </div>
-                ))}
+                ))
+                )}
               </div>
             )}
           </div>

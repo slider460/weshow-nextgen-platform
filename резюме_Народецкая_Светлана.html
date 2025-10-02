@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Резюме: Народецкая Светлана Робертовна</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Дополнительные стили для улучшения внешнего вида */
+        .section-title {
+            border-bottom: 2px solid #e5e7eb; /* tailwind's gray-200 */
+            padding-bottom: 0.5rem; /* tailwind's pb-2 */
+            margin-bottom: 1.5rem; /* tailwind's mb-6 */
+        }
+        .job-entry + .job-entry {
+            margin-top: 2rem; /* tailwind's mt-8 */
+        }
+         ul {
+            list-style-position: inside;
+        }
+        ul li {
+            padding-left: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .sub-list {
+            padding-left: 1.5rem; /* Отступ для вложенных списков */
+            list-style-type: circle;
+            margin-top: 0.5rem;
+        }
+        .sub-list li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Стили для печати */
+        @media print {
+            body {
+                background-color: #fff !important;
+                -webkit-print-color-adjust: exact !important; /* For Chrome, Safari */
+                color-adjust: exact !important; /* Standard */
+            }
+            .container {
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+            .bg-white {
+                box-shadow: none !important;
+                border: none !important;
+            }
+            header.bg-gray-800 {
+                background-color: #f3f4f6 !important; /* light gray */
+                color: #1f2937 !important; /* dark gray text */
+            }
+             header.bg-gray-800 p {
+                color: #4b5563 !important; /* medium gray text */
+            }
+            .bg-gray-100 {
+                background-color: #fff !important;
+            }
+            .bg-gray-200 {
+                background-color: #e5e7eb !important;
+                color: #1f2937 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <!-- Заголовок резюме -->
+            <header class="bg-gray-800 text-white p-8 text-center">
+                <h1 class="text-4xl font-bold">Народецкая Светлана Робертовна</h1>
+                <p class="text-xl text-gray-300 mt-2">Начальник отдела правового сопровождения деятельности</p>
+            </header>
+
+            <main class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Левая колонка: Контакты и Навыки -->
+                    <aside class="md:col-span-1">
+                        <!-- Контактная информация -->
+                        <section>
+                            <h2 class="text-2xl font-bold text-gray-700 section-title">КОНТАКТЫ</h2>
+                            <div class="space-y-3">
+                                <p class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C6.477 18 2 13.523 2 8V5a1 1 0 011-1h1z" /></svg>
+                                    <span>+7 (926) 214-80-77</span>
+                                </p>
+                                <p class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
+                                    <span>joyss-lanny@mail.ru</span>
+                                </p>
+                                <p class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
+                                    <span>г. Москва, Россия</span>
+                                </p>
+                            </div>
+                        </section>
+                        
+                        <!-- Ключевые навыки -->
+                        <section class="mt-8">
+                            <h2 class="text-2xl font-bold text-gray-700 section-title">КЛЮЧЕВЫЕ НАВЫКИ</h2>
+                            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                                <li>Дисциплинированность, аккуратность, способность взять на себя ответственность в принятии решений по сложным вопросам, самостоятельность и оперативность при решении вопросов, умение находить нестандартные подходы при решении поставленных задач.</li>
+                                <li>Работоспособность, совершенствование личной профессиональной подготовки, овладение новыми правовыми знаниями, старательность, разумная инициатива.</li>
+                                <li>Оперативное и доходчивое доведение до сведения заинтересованных сторон соответствующей информации. Методами коммуникации и обработки правовой информации, в т.ч. документированной, владею свободно.</li>
+                            </ul>
+                        </section>
+                        
+                        <!-- Владение ПК -->
+                         <section class="mt-8">
+                            <h2 class="text-2xl font-bold text-gray-700 section-title">ВЛАДЕНИЕ ПК</h2>
+                             <div class="flex flex-wrap gap-2">
+                                 <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">MS Word</span>
+                                 <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">MS Excel</span>
+                                 <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">PowerPoint</span>
+                                 <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Outlook</span>
+                                 <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Консультант Плюс</span>
+                                 <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Гарант</span>
+                                 <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">1С Предприятие</span>
+                             </div>
+                        </section>
+                    </aside>
+
+                    <!-- Правая колонка: Опыт работы и Образование -->
+                    <div class="md:col-span-2">
+                        <!-- Опыт работы -->
+                        <section>
+                            <h2 class="text-2xl font-bold text-gray-700 section-title">ОПЫТ РАБОТЫ</h2>
+                            <div class="space-y-8">
+                                <!-- Запись о работе 1 -->
+                                <div class="job-entry">
+                                    <h3 class="text-xl font-semibold">Начальник отдела правового сопровождения деятельности</h3>
+                                    <p class="text-md text-gray-600">ООО «СпецМонтаж ГСО»</p>
+                                    <p class="text-sm text-gray-500 mb-2">2022 — наст. время</p>
+                                    <ul class="list-disc text-gray-600 space-y-2">
+                                        <li>Правовое сопровождение предприятия как генерального подрядчика по государственным контрактам, заключенным в том числе в целях реализации государственного заказа (государственные заказчики – Прокуратура Магаданской области), контрактам на выполнение строительно-монтажных работ, заказчиком которых выступает хозяйственное общество ПАО «НК «Роснефть» (ООО «РН-Аэро»), а также иных контрактов и договоров по которым предприятие выступает в качестве субподрядчика.</li>
+                                        <li><b>1.1. Организация и ведение договорной работы на предприятии:</b>
+                                            <ul class="sub-list">
+                                                <li>правовое сопровождение государственных контрактов и договоров, заключенных в рамках исполнения государственных оборонных заказов. Знание положений 44-ФЗ, 223-ФЗ, а также осуществления расчетов между участниками кооперации с использованием счетов, открытых в уполномоченных банках, органах федерального казначейства и др.;</li>
+                                                <li>разработка типовых проектов договоров (поставки‚ строительного подряда‚ купли-продажи‚ перевозки‚ услуг‚ страхования, аренды, финансовой аренды (лизинга) и др.), а также разработка сделок любого типа сложности;</li>
+                                                <li>анализ и подготовка юридических заключений представленных контрагентами договоров;</li>
+                                                <li>подготовка и согласование итоговых редакций договоров предприятия, а также протоколов разногласий, дополнительных соглашений к договорам;</li>
+                                                <li>оперативное внесение изменений в типовые формы договоров предприятия;</li>
+                                                <li>ведение преддоговорных переговоров и разрешение преддоговорных споров;</li>
+                                                <li>консультирование сотрудников предприятия по вопросам заключения, исполнения и расторжения договоров;</li>
+                                                <li>создание единой системы базы данных договоров‚ системы их учёта и визирования, контроль исполнения финансовых и иных обязательств по договорам;</li>
+                                                <li>правовая экспертиза банковских гарантий, договоров поручительства, залога и т.п., а также подготовка требований по банковским гарантиям.</li>
+                                            </ul>
+                                        </li>
+                                        <li><b>1.2. Претензионно-исковая работа:</b>
+                                            <ul class="sub-list">
+                                                <li>выработка позиции предприятия по всем возникшим спорам;</li>
+                                                <li>подготовка претензий (ответов на претензии), исков, возражений, апелляционных и кассационных жалоб, а также иных процессуальных документов;</li>
+                                                <li>участие в досудебных мероприятиях по разрешению и урегулированию спора.</li>
+                                            </ul>
+                                        </li>
+                                        <li><b>1.3. Корпоративная работа:</b>
+                                            <ul class="sub-list">
+                                                <li>анализ и разработка корпоративных документов (приказов, директив, инструкций, распоряжений и др.);</li>
+                                                <li>внесение изменений в учредительные документы предприятия;</li>
+                                                <li>работа с нотариусами;</li>
+                                                <li>юридическая экспертиза внутренних документов предприятия;</li>
+                                                <li>осуществление регулярного ознакомления работников предприятия с нормативными правовыми актами;</li>
+                                                <li>регистрация/прекращение деятельности филиалов и обособленных подразделений;</li>
+                                                <li>участие в разработке стратегии развития предприятия, анализ бизнес-процессов;</li>
+                                                <li>ведение деловой переписки;</li>
+                                                <li>разработка и методическое руководство правовой работой на предприятии;</li>
+                                                <li>осуществление правового сопровождения деятельности в части получения, продления лицензий (в том числе лицензии на выполнение работ, составляющих государственную тайну и лицензии МЧС);</li>
+                                                <li>взаимодействие с СРО;</li>
+                                            </ul>
+                                        </li>
+                                         <li><b>1.4. Работа с государственными органами.</b></li>
+                                         <li><b>1.5. Имущественные отношения.</b></li>
+                                         <li><b>1.6. Правовое сопровождение закупочной деятельности предприятия.</b></li>
+                                         <li><b>1.7. Управленческие функции:</b>
+                                            <ul class="sub-list">
+                                                <li>формирование штата работников отдела;</li>
+                                                <li>координация и распределение полномочий между работниками отдела;</li>
+                                                <li>организация взаимоотношений и связей между работниками предприятия;</li>
+                                                <li>контроль за надлежащим и своевременным исполнением поставленных задач;</li>
+                                                <li>представление отчетов о деятельности отдела руководству предприятия.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- Запись о работе 2 -->
+                                <div class="job-entry">
+                                    <h3 class="text-xl font-semibold">Старший юрист</h3>
+                                    <p class="text-md text-gray-600">ЗАО «Новая усадьба»</p>
+                                    <p class="text-sm text-gray-500 mb-2">Сентябрь 2009 — Август 2020 (11 лет)</p>
+                                     <ul class="list-disc text-gray-600 space-y-1">
+                                        <li><b>1.1. Организация и ведение договорной работы на предприятии.</b></li>
+                                        <li><b>1.2. Претензионно-исковая работа.</b></li>
+                                        <li><b>1.3. Корпоративная работа.</b></li>
+                                        <li><b>1.4. Работа с государственными органами.</b></li>
+                                        <li><b>1.5. Имущественные отношения.</b></li>
+                                    </ul>
+                                </div>
+                                <!-- Запись о работе 3 -->
+                                <div class="job-entry">
+                                    <h3 class="text-xl font-semibold">Секретарь-референт</h3>
+                                    <p class="text-md text-gray-600">ООО «САБТЕРРА»</p>
+                                    <p class="text-sm text-gray-500 mb-2">Август 2008 — Сентябрь 2009 (1 год 2 месяца)</p>
+                                    <ul class="list-disc text-gray-600 space-y-1">
+                                        <li>Полное обеспечение жизнедеятельности офиса.</li>
+                                        <li>Прием, распределение телефонных звонков.</li>
+                                        <li>Регистрация входящей и исходящей документации, организация делопроизводства.</li>
+                                        <li>Ведение распорядка дня руководства, работа в программах Ms Office, Outlook, 1С Предприятие.</li>
+                                        <li>Подготовка документов по просьбе руководства (письма, акты и т.д.).</li>
+                                        <li>Визовая поддержка.</li>
+                                        <li>Организация корпоративных мероприятий.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <!-- Образование -->
+                        <section class="mt-8">
+                            <h2 class="text-2xl font-bold text-gray-700 section-title">ОБРАЗОВАНИЕ И КУРСЫ</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <h3 class="text-lg font-semibold">Государственный Университет – Высшая школа экономики</h3>
+                                    <p class="text-md text-gray-600">Факультет права, специализация – гражданский процесс</p>
+                                    <p class="text-sm text-gray-500">2008 г.</p>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold">Повышение квалификации и курсы</h3>
+                                    <ul class="list-disc text-gray-600 space-y-1 mt-1">
+                                        <li>Онлайн-школа «Lextorium»: «Введение в банкротство», 2022 г.</li>
+                                        <li>Школа права «СТАТУТ»: «Договорное право: реформа Гражданского кодекса и актуальные вопросы судебной практики», 2019 г.</li>
+                                        <li>Школа английского языка Nativenglish: Разговорный интенсивный курс «LORO», 2013 г.</li>
+                                        <li>ООО "Элкод": «Корпоративное право: проблемные вопросы и практика применения», 2010 г.</li>
+                                        <li>ГУ-ВШЭ: Курсы юридического английского языка «Переводчик в сфере профессиональных коммуникаций», 2007 г.</li>
+                                        <li>КонсультантПлюс: Курсы по обучению работе с правовыми базами, 2005 г.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

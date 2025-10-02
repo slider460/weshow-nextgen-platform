@@ -62,6 +62,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     { id: 'equipment-blocks', label: 'Блоки оборудования', icon: '🎬', path: '/admin/equipment-blocks' },
     { id: 'services-blocks', label: 'Блоки услуг', icon: '🚀', path: '/admin/services-blocks' },
     { id: 'cases', label: 'Кейсы', icon: '💼', path: '/admin/cases' },
+    { id: 'letters', label: 'Письма и грамоты', icon: '🏆', path: '/admin/letters' },
     { id: 'solutions', label: 'Комплексные решения', icon: '🎯', path: '/admin/solutions' },
     { id: 'articles', label: 'Статьи', icon: '📝', path: '/admin/articles' },
     { id: 'users', label: 'Пользователи', icon: '👥', path: '/admin/users' }

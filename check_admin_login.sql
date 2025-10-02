@@ -34,3 +34,4 @@ FROM user_profiles up
 JOIN auth.users au ON up.id = au.id
 WHERE up.role = 'admin';
 
+

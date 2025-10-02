@@ -1,133 +1,83 @@
 import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 
-const UltraSimpleTest: React.FC = () => {
-  const [result, setResult] = useState<string>('Нажмите кнопку для тестирования');
+const UltraSimpleTest = () => {
+  const [result, setResult] = useState<string>('Готов к тестированию');
   const [loading, setLoading] = useState(false);
 
-  const testWithTimeout = async () => {
+  const testSupabase = async () => {
     setLoading(true);
-    setResult('Загрузка...');
+    setResult('Тестируем...');
     
     try {
-      console.log('===== УЛЬТРА ПРОСТОЙ ТЕСТ =====');
+      console.log('🔄 UltraSimpleTest: Начинаем тест...');
       
-      // Создаем клиент
-      const supabaseUrl = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE';
+      // Создаем клиент напрямую
+      const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
+      const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE';
       
-      console.log('1. Создаем клиент...');
-      const client = createClient(supabaseUrl, supabaseKey, {
-        auth: {
-          autoRefreshToken: false,
-          persistSession: false
-        }
-      });
+      console.log('🔄 UltraSimpleTest: Создаем клиент...');
+      const { createClient } = await import('@supabase/supabase-js');
+      const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
       
-      console.log('2. Выполняем запрос с таймаутом...');
-      
-      // Создаем Promise с таймаутом
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Таймаут: запрос выполнялся более 10 секунд')), 10000);
-      });
-      
-      const queryPromise = client
-        .from('logos')
-        .select('count(*)')
-        .limit(1);
-      
-      const response = await Promise.race([queryPromise, timeoutPromise]);
-      
-      console.log('3. Ответ получен:', response);
-      
-      if (response.error) {
-        setResult(`❌ ОШИБКА: ${response.error.message}\nКод: ${response.error.code}`);
-        console.error('ОШИБКА:', response.error);
-      } else {
-        setResult(`✅ УСПЕШНО! Подключение работает`);
-        console.log('УСПЕШНО!', response);
+      console.log('🔄 UltraSimpleTest: Делаем запрос...');
+      const { data, error } = await supabase
+        .from('homepage_equipment')
+        .select('*')
+        .limit(5);
+
+      if (error) {
+        console.error('❌ UltraSimpleTest: Ошибка:', error);
+        setResult(`❌ Ошибка: ${error.message}`);
+        return;
       }
+
+      console.log('✅ UltraSimpleTest: Данные получены:', data);
+      setResult(`✅ Успех! Загружено ${data?.length || 0} записей`);
       
     } catch (err) {
-      console.error('ИСКЛЮЧЕНИЕ:', err);
-      setResult(`❌ ИСКЛЮЧЕНИЕ: ${err instanceof Error ? err.message : String(err)}`);
+      console.error('❌ UltraSimpleTest: Исключение:', err);
+      setResult(`❌ Исключение: ${err}`);
     } finally {
       setLoading(false);
-      console.log('===== КОНЕЦ ТЕСТА =====');
     }
   };
 
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      background: '#f0f0f0',
-      padding: '2rem',
-      fontFamily: 'Arial, sans-serif'
-    }}>
-      <div style={{ 
-        maxWidth: '600px', 
-        margin: '0 auto',
-        background: 'white',
-        borderRadius: '12px',
-        padding: '2rem',
-        boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-      }}>
-        <h1 style={{ 
-          fontSize: '1.8rem', 
-          marginBottom: '1.5rem', 
-          textAlign: 'center',
-          color: '#1f2937'
-        }}>
-          ⚡ Ультра простой тест
+    <div className="min-h-screen bg-gray-100 p-8">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">
+          🔧 Ультра-простой тест Supabase
         </h1>
         
-        <div style={{ marginBottom: '2rem' }}>
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-4">Результат теста:</h2>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <p className="text-lg">{result}</p>
+          </div>
+        </div>
+
+        <div className="text-center">
           <button
-            onClick={testWithTimeout}
+            onClick={testSupabase}
             disabled={loading}
-            style={{
-              display: 'block',
-              width: '100%',
-              padding: '1rem',
-              fontSize: '1.1rem',
-              fontWeight: 'bold',
-              color: 'white',
-              backgroundColor: loading ? '#6b7280' : '#ef4444',
-              border: 'none',
-              borderRadius: '0.5rem',
-              cursor: loading ? 'not-allowed' : 'pointer',
-              transition: 'background-color 0.3s ease'
-            }}
+            className={`px-6 py-3 rounded-lg font-semibold text-white ${
+              loading 
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-blue-500 hover:bg-blue-600'
+            }`}
           >
-            {loading ? '⏳ Тестируем с таймаутом...' : '⚡ Тест с таймаутом (10 сек)'}
+            {loading ? '🔄 Тестируем...' : '🚀 Запустить тест'}
           </button>
         </div>
 
-        <div style={{
-          backgroundColor: '#f8fafc',
-          padding: '1rem',
-          borderRadius: '0.5rem',
-          marginBottom: '1rem',
-          border: '1px solid #e2e8f0',
-          whiteSpace: 'pre-line',
-          fontFamily: 'monospace',
-          fontSize: '0.9rem'
-        }}>
-          <strong>Результат:</strong><br />
-          {result}
-        </div>
-
-        <div style={{
-          backgroundColor: '#fef3c7',
-          padding: '1rem',
-          borderRadius: '0.5rem',
-          border: '1px solid #f59e0b'
-        }}>
-          <strong>ℹ️ Особенности:</strong><br />
-          • Таймаут 10 секунд<br />
-          • Запрос только количества записей<br />
-          • Минимальная нагрузка на базу<br />
-          • Отключена аутентификация
+        <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <h3 className="font-semibold text-yellow-800 mb-2">📋 Что проверяет этот тест:</h3>
+          <ul className="text-yellow-700 space-y-1">
+            <li>• Подключение к Supabase</li>
+            <li>• Доступ к таблице homepage_equipment</li>
+            <li>• RLS политики</li>
+            <li>• Загрузку данных</li>
+          </ul>
         </div>
       </div>
     </div>

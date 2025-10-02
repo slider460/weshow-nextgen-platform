@@ -53,3 +53,4 @@ WHERE au.email = 'admin@weshow.ru';
 -- role: admin
 -- full_name: Администратор
 
+

@@ -22,6 +22,15 @@ import TestMinimal from "./pages/TestMinimal";
 import SupabaseConnectionTest from "./pages/SupabaseConnectionTest";
 import EquipmentTest from "./pages/EquipmentTest";
 import { SupabaseDiagnostic } from "./pages/SupabaseDiagnostic";
+import { SimpleConnectionTest } from "./pages/SimpleConnectionTest";
+import { TestAllDataLoading } from "./pages/TestAllDataLoading";
+import { TestEquipmentLoading } from "./pages/TestEquipmentLoading";
+import TestRentalEquipment from "./pages/TestRentalEquipment";
+import DebugEquipment from "./pages/DebugEquipment";
+import RestApiEquipmentTest from "./pages/RestApiEquipmentTest";
+import TestPortfolioLoading from "./pages/TestPortfolioLoading";
+import TestEquipmentPage from "./pages/TestEquipmentPage";
+import TestEquipmentData from "./pages/TestEquipmentData";
 import EquipmentCatalogAdmin from "./pages/admin/EquipmentCatalogAdmin";
 import QuickAddEquipment from "./pages/QuickAddEquipment";
 import CSVImportEquipment from "./pages/CSVImportEquipment";
@@ -110,6 +119,16 @@ import CaseDetail from "./pages/CaseDetail";
 import CaseManagement from "./pages/admin/CaseManagement";
 import AddCaseFieldsSQL from "./pages/AddCaseFieldsSQL";
 import LogosManagement from "./pages/admin/LogosManagement";
+import LettersCertificatesManagement from "./pages/admin/LettersCertificatesManagement";
+import TestLettersTable from "./pages/TestLettersTable";
+import CreateLettersTable from "./pages/CreateLettersTable";
+import AutoCreateLettersTable from "./pages/AutoCreateLettersTable";
+import SimpleCreateTable from "./pages/SimpleCreateTable";
+import AutoCreateTableDirect from "./pages/AutoCreateTableDirect";
+import SetupSQLExecution from "./pages/SetupSQLExecution";
+import CreateTableSimple from "./pages/CreateTableSimple";
+import TestLettersHook from "./pages/TestLettersHook";
+import TestDirectSupabase from "./pages/TestDirectSupabase";
 import CreateLogosTableSQL from "./pages/CreateLogosTableSQL";
 import TestLogosConnection from "./pages/TestLogosConnection";
 import ClearLogosData from "./pages/ClearLogosData";
@@ -213,6 +232,16 @@ const App = () => (
         <Route path="/admin/cases" element={<CaseManagement />} />
         <Route path="/add-case-fields-sql" element={<AddCaseFieldsSQL />} />
         <Route path="/admin/logos" element={<LogosManagement />} />
+        <Route path="/admin/letters" element={<LettersCertificatesManagement />} />
+        <Route path="/test-letters-table" element={<TestLettersTable />} />
+        <Route path="/create-letters-table" element={<CreateLettersTable />} />
+        <Route path="/auto-create-letters-table" element={<AutoCreateLettersTable />} />
+        <Route path="/simple-create-table" element={<SimpleCreateTable />} />
+        <Route path="/auto-create-direct" element={<AutoCreateTableDirect />} />
+        <Route path="/setup-sql-execution" element={<SetupSQLExecution />} />
+        <Route path="/create-table-simple" element={<CreateTableSimple />} />
+        <Route path="/test-letters-hook" element={<TestLettersHook />} />
+        <Route path="/test-direct-supabase" element={<TestDirectSupabase />} />
         <Route path="/create-logos-table-sql" element={<CreateLogosTableSQL />} />
         <Route path="/test-logos-connection" element={<TestLogosConnection />} />
         <Route path="/clear-logos-data" element={<ClearLogosData />} />
@@ -242,6 +271,15 @@ const App = () => (
         <Route path="/test-rest-logos" element={<TestRestLogos />} />
         <Route path="/test-rest-api" element={<TestRestApi />} />
         <Route path="/supabase-diagnostic" element={<SupabaseDiagnostic />} />
+        <Route path="/simple-connection-test" element={<SimpleConnectionTest />} />
+        <Route path="/test-all-data" element={<TestAllDataLoading />} />
+        <Route path="/test-equipment" element={<TestEquipmentLoading />} />
+        <Route path="/test-rental-equipment" element={<TestRentalEquipment />} />
+        <Route path="/debug-equipment" element={<DebugEquipment />} />
+        <Route path="/rest-api-equipment-test" element={<RestApiEquipmentTest />} />
+        <Route path="/test-portfolio-loading" element={<TestPortfolioLoading />} />
+        <Route path="/test-equipment-page" element={<TestEquipmentPage />} />
+        <Route path="/test-equipment-data" element={<TestEquipmentData />} />
         <Route path="/test-inline" element={
           <div style={{ 
             minHeight: '100vh', 

@@ -14,6 +14,7 @@ interface ModernPortfolioSectionProps {
 
 const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps) => {
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [visibleProjects, setVisibleProjects] = useState(4);
   
   // Загружаем кейсы из базы данных
   const { cases, loading, error } = useCases();
@@ -51,10 +52,20 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
     };
   });
 
+  // Функция для загрузки еще проектов
+  const loadMoreProjects = () => {
+    setVisibleProjects(prev => Math.min(prev + 4, projects.length));
+  };
+
+  // Получаем проекты для отображения
+  const displayedProjects = projects.slice(0, visibleProjects);
+  const hasMoreProjects = visibleProjects < projects.length;
+
   // Отладочная информация
   console.log('ModernPortfolioSection: Загружено кейсов:', cases.length);
   console.log('ModernPortfolioSection: Обработано проектов:', projects.length);
-  console.log('ModernPortfolioSection: Первый проект:', projects[0]);
+  console.log('ModernPortfolioSection: Отображается проектов:', displayedProjects.length);
+  console.log('ModernPortfolioSection: Есть еще проекты:', hasMoreProjects);
 
   return (
     <section className="py-20 bg-slate-50 relative z-10 min-h-screen">
@@ -95,7 +106,7 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
 
         {!loading && !error && cases.length > 0 && (
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
-            {projects.map((project, index) => (
+            {displayedProjects.map((project, index) => (
             <div key={index} className="bg-white rounded-3xl overflow-visible shadow-lg hover:shadow-xl transition-all duration-300 group h-full flex flex-col min-h-[700px]">
               <div className="relative overflow-hidden h-64">
                 <img 
@@ -153,6 +164,21 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
               </div>
             </div>
           ))}
+          </div>
+        )}
+
+        {/* Кнопка "Загрузить еще" */}
+        {!loading && !error && cases.length > 0 && hasMoreProjects && (
+          <div className="text-center mb-12">
+            <Button 
+              onClick={loadMoreProjects}
+              variant="outline" 
+              size="lg"
+              className="px-8 py-3"
+            >
+              Загрузить еще
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           </div>
         )}
 

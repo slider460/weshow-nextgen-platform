@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../config/supabase';
+import { getCases, createCase, updateCase, deleteCase } from '../../api/adminRest';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Textarea } from '../../components/ui/textarea';
@@ -21,6 +21,18 @@ import {
   X
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { createClient } from '@supabase/supabase-js';
+
+// Создаем админ клиент для загрузки файлов
+const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
+const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTEzOTMyMywiZXhwIjoyMDc0NzE1MzIzfQ.KOCzZQGNqpGmuXxhuCjAtUPcD8qHr9Alti_uVejrRFs';
+
+const adminSupabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+});
 
 interface CaseData {
   id: string;
@@ -30,6 +42,7 @@ interface CaseData {
   description: string;
   detailed_description?: string;
   image_url?: string;
+  video_url?: string;
   gallery_images?: string[];
   gallery_videos?: string[];
   results: string[];
@@ -55,6 +68,7 @@ const CaseManagement = () => {
   const [editingCase, setEditingCase] = useState<CaseData | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [activeTab, setActiveTab] = useState('list');
 
   useEffect(() => {
     fetchCases();
@@ -63,14 +77,9 @@ const CaseManagement = () => {
   const fetchCases = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('cases')
-        .select('*')
-        .order('sort_order', { ascending: true });
+      const data = await getCases();
 
-      if (error) throw error;
-
-      // Обрабатываем results
+      // Обрабатываем results и другие поля
       const processedCases = data.map(caseItem => {
         let results = [];
         if (Array.isArray(caseItem.results)) {
@@ -88,9 +97,73 @@ const CaseManagement = () => {
           }
         }
 
+        // Обрабатываем technologies_used
+        let technologies_used = [];
+        if (Array.isArray(caseItem.technologies_used)) {
+          technologies_used = caseItem.technologies_used;
+        } else if (typeof caseItem.technologies_used === 'string' && caseItem.technologies_used.trim()) {
+          try {
+            const parsed = JSON.parse(caseItem.technologies_used);
+            if (Array.isArray(parsed)) {
+              technologies_used = parsed;
+            }
+          } catch {
+            technologies_used = caseItem.technologies_used.split(',').map(t => t.trim()).filter(t => t.length > 0);
+          }
+        }
+
+        // Обрабатываем awards
+        let awards = [];
+        if (Array.isArray(caseItem.awards)) {
+          awards = caseItem.awards;
+        } else if (typeof caseItem.awards === 'string' && caseItem.awards.trim()) {
+          try {
+            const parsed = JSON.parse(caseItem.awards);
+            if (Array.isArray(parsed)) {
+              awards = parsed;
+            }
+          } catch {
+            awards = caseItem.awards.split(',').map(a => a.trim()).filter(a => a.length > 0);
+          }
+        }
+
+        // Обрабатываем gallery_images
+        let gallery_images = [];
+        if (Array.isArray(caseItem.gallery_images)) {
+          gallery_images = caseItem.gallery_images;
+        } else if (typeof caseItem.gallery_images === 'string' && caseItem.gallery_images.trim()) {
+          try {
+            const parsed = JSON.parse(caseItem.gallery_images);
+            if (Array.isArray(parsed)) {
+              gallery_images = parsed;
+            }
+          } catch {
+            // Если не удается распарсить, считаем пустым массивом
+          }
+        }
+
+        // Обрабатываем gallery_videos
+        let gallery_videos = [];
+        if (Array.isArray(caseItem.gallery_videos)) {
+          gallery_videos = caseItem.gallery_videos;
+        } else if (typeof caseItem.gallery_videos === 'string' && caseItem.gallery_videos.trim()) {
+          try {
+            const parsed = JSON.parse(caseItem.gallery_videos);
+            if (Array.isArray(parsed)) {
+              gallery_videos = parsed;
+            }
+          } catch {
+            // Если не удается распарсить, считаем пустым массивом
+          }
+        }
+
         return {
           ...caseItem,
-          results
+          results,
+          technologies_used,
+          awards,
+          gallery_images,
+          gallery_videos
         };
       });
 
@@ -112,6 +185,7 @@ const CaseManagement = () => {
       description: '',
       detailed_description: '',
       image_url: '',
+      video_url: '',
       gallery_images: [],
       gallery_videos: [],
       results: [],
@@ -127,15 +201,17 @@ const CaseManagement = () => {
       case_study_url: '',
       featured: false,
       is_visible: true,
-      sort_order: cases.length + 1
+      sort_order: (cases?.length || 0) + 1
     };
     setEditingCase(newCase);
     setIsCreating(true);
+    setActiveTab('edit');
   };
 
   const handleEditCase = (caseItem: CaseData) => {
     setEditingCase({ ...caseItem });
     setIsCreating(false);
+    setActiveTab('edit');
   };
 
   const handleSaveCase = async () => {
@@ -144,34 +220,57 @@ const CaseManagement = () => {
     try {
       setUploading(true);
 
+      // Подготавливаем данные для сохранения
       const caseData = {
-        ...editingCase,
-        results: JSON.stringify(editingCase.results),
-        technologies_used: editingCase.technologies_used || [],
-        awards: editingCase.awards || []
+        title: editingCase.title,
+        description: editingCase.description,
+        detailed_description: editingCase.detailed_description || '',
+        client: editingCase.client,
+        year: editingCase.year,
+        image_url: editingCase.image_url || null,
+        video_url: editingCase.video_url || null,
+        results: editingCase.results.length > 0 ? JSON.stringify(editingCase.results) : null,
+        is_visible: editingCase.is_visible,
+        sort_order: editingCase.sort_order,
+        featured: editingCase.featured || false,
+        gallery_images: editingCase.gallery_images && editingCase.gallery_images.length > 0 ? editingCase.gallery_images : null,
+        gallery_videos: editingCase.gallery_videos && editingCase.gallery_videos.length > 0 ? editingCase.gallery_videos : null,
+        project_duration: editingCase.project_duration || '',
+        team_size: editingCase.team_size || null,
+        budget_range: editingCase.budget_range || '',
+        challenges: editingCase.challenges || '',
+        solutions: editingCase.solutions || '',
+        technologies_used: editingCase.technologies_used && editingCase.technologies_used.length > 0 ? editingCase.technologies_used : null,
+        project_scope: editingCase.project_scope || '',
+        client_feedback: editingCase.client_feedback || '',
+        awards: editingCase.awards && editingCase.awards.length > 0 ? editingCase.awards : null,
+        case_study_url: editingCase.case_study_url || null,
+        updated_at: new Date().toISOString()
       };
 
+      // Добавляем created_at только для новых кейсов
       if (isCreating) {
-        const { error } = await supabase
-          .from('cases')
-          .insert([caseData]);
+        caseData.created_at = new Date().toISOString();
+      }
 
-        if (error) throw error;
+      if (isCreating) {
+        console.log('Создаю новый кейс:', caseData);
+        const result = await createCase(caseData);
+        console.log('Кейс создан:', result);
       } else {
-        const { error } = await supabase
-          .from('cases')
-          .update(caseData)
-          .eq('id', editingCase.id);
-
-        if (error) throw error;
+        console.log('Обновляю кейс:', editingCase.id, caseData);
+        const result = await updateCase(editingCase.id, caseData);
+        console.log('Кейс обновлен:', result);
       }
 
       await fetchCases();
       setEditingCase(null);
       setIsCreating(false);
+      setActiveTab('list');
+      setError(null); // Очищаем ошибки при успешном сохранении
     } catch (err) {
       console.error('Ошибка сохранения кейса:', err);
-      setError('Ошибка сохранения кейса');
+      setError(`Ошибка сохранения кейса: ${err.message || err}`);
     } finally {
       setUploading(false);
     }
@@ -181,13 +280,7 @@ const CaseManagement = () => {
     if (!confirm('Вы уверены, что хотите удалить этот кейс?')) return;
 
     try {
-      const { error } = await supabase
-        .from('cases')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-
+      await deleteCase(id);
       await fetchCases();
     } catch (err) {
       console.error('Ошибка удаления кейса:', err);
@@ -197,13 +290,7 @@ const CaseManagement = () => {
 
   const toggleVisibility = async (id: string, isVisible: boolean) => {
     try {
-      const { error } = await supabase
-        .from('cases')
-        .update({ is_visible: !isVisible })
-        .eq('id', id);
-
-      if (error) throw error;
-
+      await updateCase(id, { is_visible: !isVisible });
       await fetchCases();
     } catch (err) {
       console.error('Ошибка изменения видимости:', err);
@@ -213,13 +300,7 @@ const CaseManagement = () => {
 
   const toggleFeatured = async (id: string, featured: boolean) => {
     try {
-      const { error } = await supabase
-        .from('cases')
-        .update({ featured: !featured })
-        .eq('id', id);
-
-      if (error) throw error;
-
+      await updateCase(id, { featured: !featured });
       await fetchCases();
     } catch (err) {
       console.error('Ошибка изменения статуса:', err);
@@ -230,32 +311,46 @@ const CaseManagement = () => {
   const handleImageUpload = async (file: File, type: 'main' | 'gallery') => {
     try {
       setUploading(true);
+      setError(null); // Очищаем предыдущие ошибки
+      
+      console.log('Загружаю изображение:', file.name, 'тип:', type);
       
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `cases/images/${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
+      console.log('Путь для загрузки:', filePath);
+
+      const { data: uploadData, error: uploadError } = await adminSupabase.storage
         .from('public')
         .upload(filePath, file);
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Ошибка загрузки файла:', uploadError);
+        throw uploadError;
+      }
 
-      const { data } = supabase.storage
+      console.log('Файл загружен:', uploadData);
+
+      const { data: urlData } = adminSupabase.storage
         .from('public')
         .getPublicUrl(filePath);
 
+      console.log('Публичный URL:', urlData.publicUrl);
+
       if (editingCase) {
         if (type === 'main') {
-          setEditingCase({ ...editingCase, image_url: data.publicUrl });
+          setEditingCase({ ...editingCase, image_url: urlData.publicUrl });
+          console.log('Основное изображение установлено');
         } else {
-          const newGallery = [...(editingCase.gallery_images || []), data.publicUrl];
+          const newGallery = [...(editingCase.gallery_images || []), urlData.publicUrl];
           setEditingCase({ ...editingCase, gallery_images: newGallery });
+          console.log('Изображение добавлено в галерею');
         }
       }
     } catch (err) {
       console.error('Ошибка загрузки изображения:', err);
-      setError('Ошибка загрузки изображения');
+      setError(`Ошибка загрузки изображения: ${err.message || err}`);
     } finally {
       setUploading(false);
     }
@@ -289,7 +384,7 @@ const CaseManagement = () => {
           </div>
         )}
 
-        <Tabs defaultValue="list" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList>
             <TabsTrigger value="list">Список кейсов</TabsTrigger>
             <TabsTrigger value="edit" disabled={!editingCase}>
@@ -472,7 +567,7 @@ const CaseManagement = () => {
                   <div>
                     <label className="block text-sm font-medium mb-2">Результаты (по одному на строку)</label>
                     <Textarea
-                      value={editingCase.results.join('\n')}
+                      value={(editingCase.results || []).join('\n')}
                       onChange={(e) => setEditingCase({ 
                         ...editingCase, 
                         results: e.target.value.split('\n').filter(r => r.trim()) 
@@ -591,6 +686,7 @@ const CaseManagement = () => {
                       onClick={() => {
                         setEditingCase(null);
                         setIsCreating(false);
+                        setActiveTab('list');
                       }}
                     >
                       Отмена

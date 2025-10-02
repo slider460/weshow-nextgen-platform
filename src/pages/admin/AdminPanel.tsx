@@ -8,7 +8,8 @@ import EstimatesManagement from './EstimatesManagement'
 import EquipmentManagement from './EquipmentManagement'
 import EquipmentBlocksManagement from './EquipmentBlocksManagement'
 import ServicesBlocksManagement from './ServicesBlocksManagement'
-import CasesManagement from './CasesManagement'
+import CaseManagement from './CaseManagement'
+import LettersCertificatesManagement from './LettersCertificatesManagement'
 import AdminTest from './AdminTest'
 
 // Заглушки для недостающих разделов
@@ -44,7 +45,8 @@ const AdminPanel: React.FC = () => {
       <Route path="/equipment" element={<AdminLayout><EquipmentManagement /></AdminLayout>} />
       <Route path="/equipment-blocks" element={<AdminLayout><EquipmentBlocksManagement /></AdminLayout>} />
       <Route path="/services-blocks" element={<AdminLayout><ServicesBlocksManagement /></AdminLayout>} />
-      <Route path="/cases" element={<AdminLayout><CasesManagement /></AdminLayout>} />
+      <Route path="/cases" element={<AdminLayout><CaseManagement /></AdminLayout>} />
+      <Route path="/letters" element={<AdminLayout><LettersCertificatesManagement /></AdminLayout>} />
       <Route path="/solutions" element={<AdminLayout><SolutionsManagement /></AdminLayout>} />
       <Route path="/articles" element={<AdminLayout><ArticlesManagement /></AdminLayout>} />
       <Route path="/users" element={<AdminLayout><UsersManagement /></AdminLayout>} />

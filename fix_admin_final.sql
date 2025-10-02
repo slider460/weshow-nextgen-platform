@@ -37,3 +37,4 @@ WHERE au.email = 'admin@weshow.ru';
 -- full_name: Администратор
 -- phone: +7 (495) 580-75-37
 
+

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../config/supabase';
+import { getCases, createCase, updateCase, deleteCase } from '../../api/adminRest';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
@@ -53,12 +53,7 @@ const CasesManagement: React.FC = () => {
       setLoading(true);
       setError(null);
       
-      const { data, error } = await supabase
-        .from('cases')
-        .select('*')
-        .order('sort_order', { ascending: true });
-
-      if (error) throw error;
+      const data = await getCases();
       setCases(data || []);
     } catch (err: any) {
       setError(`Ошибка загрузки кейсов: ${err.message}`);
@@ -98,39 +93,30 @@ const CasesManagement: React.FC = () => {
       setSuccess(null);
 
       if (isCreating) {
-        const { error } = await supabase
-          .from('cases')
-          .insert([{
-            title: editingCase.title,
-            description: editingCase.description,
-            client: editingCase.client,
-            year: editingCase.year,
-            image_url: editingCase.image_url,
-            video_url: editingCase.video_url,
-            results: editingCase.results,
-            is_visible: editingCase.is_visible,
-            sort_order: editingCase.sort_order
-          }]);
-
-        if (error) throw error;
+        await createCase({
+          title: editingCase.title,
+          description: editingCase.description,
+          client: editingCase.client,
+          year: editingCase.year,
+          image_url: editingCase.image_url,
+          video_url: editingCase.video_url,
+          results: editingCase.results,
+          is_visible: editingCase.is_visible,
+          sort_order: editingCase.sort_order
+        });
         setSuccess('Кейс успешно создан!');
       } else {
-        const { error } = await supabase
-          .from('cases')
-          .update({
-            title: editingCase.title,
-            description: editingCase.description,
-            client: editingCase.client,
-            year: editingCase.year,
-            image_url: editingCase.image_url,
-            video_url: editingCase.video_url,
-            results: editingCase.results,
-            is_visible: editingCase.is_visible,
-            sort_order: editingCase.sort_order
-          })
-          .eq('id', editingCase.id);
-
-        if (error) throw error;
+        await updateCase(editingCase.id, {
+          title: editingCase.title,
+          description: editingCase.description,
+          client: editingCase.client,
+          year: editingCase.year,
+          image_url: editingCase.image_url,
+          video_url: editingCase.video_url,
+          results: editingCase.results,
+          is_visible: editingCase.is_visible,
+          sort_order: editingCase.sort_order
+        });
         setSuccess('Кейс успешно обновлен!');
       }
 
@@ -149,12 +135,7 @@ const CasesManagement: React.FC = () => {
       setError(null);
       setSuccess(null);
 
-      const { error } = await supabase
-        .from('cases')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
+      await deleteCase(id);
       setSuccess('Кейс успешно удален!');
       await loadCases();
     } catch (err: any) {
@@ -167,12 +148,7 @@ const CasesManagement: React.FC = () => {
       setError(null);
       setSuccess(null);
 
-      const { error } = await supabase
-        .from('cases')
-        .update({ is_visible: !currentVisibility })
-        .eq('id', id);
-
-      if (error) throw error;
+      await updateCase(id, { is_visible: !currentVisibility });
       setSuccess(`Кейс ${!currentVisibility ? 'показан' : 'скрыт'}!`);
       await loadCases();
     } catch (err: any) {
@@ -197,12 +173,7 @@ const CasesManagement: React.FC = () => {
 
       // Обновляем все кейсы с новыми sort_order
       for (const caseItem of newCases) {
-        const { error } = await supabase
-          .from('cases')
-          .update({ sort_order: caseItem.sort_order })
-          .eq('id', caseItem.id);
-
-        if (error) throw error;
+        await updateCase(caseItem.id, { sort_order: caseItem.sort_order });
       }
 
       setSuccess('Порядок кейсов обновлен!');
@@ -229,12 +200,7 @@ const CasesManagement: React.FC = () => {
 
       // Обновляем все кейсы с новыми sort_order
       for (const caseItem of newCases) {
-        const { error } = await supabase
-          .from('cases')
-          .update({ sort_order: caseItem.sort_order })
-          .eq('id', caseItem.id);
-
-        if (error) throw error;
+        await updateCase(caseItem.id, { sort_order: caseItem.sort_order });
       }
 
       setSuccess('Порядок кейсов обновлен!');

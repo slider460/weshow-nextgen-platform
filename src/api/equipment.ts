@@ -38,27 +38,34 @@ const categoryMapping: Record<string, string> = {
 // Функция для получения всех товаров
 export async function getEquipment() {
   try {
-    const { data: equipment, error } = await supabase
-      .from('equipment_catalog')
-      .select(`
-        *,
-        equipment_categories (
-          id,
-          name,
-          slug,
-          description
-        )
-      `)
-      .order('created_at', { ascending: false });
+    console.log('🔄 getEquipment: Загружаем оборудование через REST API...');
+    
+    const url = `${supabaseUrl}/rest/v1/equipment_catalog?select=*&order=created_at.desc`;
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
-    if (error) {
-      console.error('Ошибка при получении товаров:', error);
-      throw error;
+    console.log('🔄 getEquipment: Ответ получен, статус:', response.status);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ getEquipment: HTTP ошибка:', response.status, errorText);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const equipment = await response.json();
+    console.log('✅ getEquipment: Оборудование загружено:', equipment);
+    console.log('✅ getEquipment: Количество записей:', equipment?.length || 0);
 
     return equipment || [];
   } catch (error) {
-    console.error('Ошибка API:', error);
+    console.error('❌ getEquipment: Ошибка API:', error);
     throw error;
   }
 }
@@ -66,28 +73,34 @@ export async function getEquipment() {
 // Функция для получения товаров по категории
 export async function getEquipmentByCategory(categoryId: string) {
   try {
-    const { data: equipment, error } = await supabase
-      .from('equipment_catalog')
-      .select(`
-        *,
-        equipment_categories (
-          id,
-          name,
-          slug,
-          description
-        )
-      `)
-      .eq('category_id', categoryId)
-      .order('created_at', { ascending: false });
+    console.log('🔄 getEquipmentByCategory: Загружаем оборудование по категории через REST API...');
+    
+    const url = `${supabaseUrl}/rest/v1/equipment_catalog?select=*&category_id=eq.${categoryId}&order=created_at.desc`;
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
-    if (error) {
-      console.error('Ошибка при получении товаров по категории:', error);
-      throw error;
+    console.log('🔄 getEquipmentByCategory: Ответ получен, статус:', response.status);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ getEquipmentByCategory: HTTP ошибка:', response.status, errorText);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const equipment = await response.json();
+    console.log('✅ getEquipmentByCategory: Оборудование по категории загружено:', equipment);
+    console.log('✅ getEquipmentByCategory: Количество записей:', equipment?.length || 0);
 
     return equipment || [];
   } catch (error) {
-    console.error('Ошибка API:', error);
+    console.error('❌ getEquipmentByCategory: Ошибка API:', error);
     throw error;
   }
 }
@@ -95,19 +108,34 @@ export async function getEquipmentByCategory(categoryId: string) {
 // Функция для получения категорий
 export async function getCategories() {
   try {
-    const { data: categories, error } = await supabase
-      .from('equipment_categories')
-      .select('*')
-      .order('name', { ascending: true });
+    console.log('🔄 getCategories: Загружаем категории через REST API...');
+    
+    const url = `${supabaseUrl}/rest/v1/equipment_categories?select=*&order=name.asc`;
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
-    if (error) {
-      console.error('Ошибка при получении категорий:', error);
-      throw error;
+    console.log('🔄 getCategories: Ответ получен, статус:', response.status);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ getCategories: HTTP ошибка:', response.status, errorText);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const categories = await response.json();
+    console.log('✅ getCategories: Категории загружены:', categories);
+    console.log('✅ getCategories: Количество записей:', categories?.length || 0);
 
     return categories || [];
   } catch (error) {
-    console.error('Ошибка API:', error);
+    console.error('❌ getCategories: Ошибка API:', error);
     throw error;
   }
 }

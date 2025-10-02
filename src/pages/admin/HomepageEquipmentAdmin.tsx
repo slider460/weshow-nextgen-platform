@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { supabase } from '../../config/supabase'
+import { getHomepageEquipment, createHomepageEquipment, updateHomepageEquipment, deleteHomepageEquipment } from '../../api/adminRest'
 import { Button } from '../../components/ui/button'
 import { Input } from '../../components/ui/input'
 import { Textarea } from '../../components/ui/textarea'
@@ -84,24 +84,7 @@ const HomepageEquipmentAdmin = () => {
       setLoading(true)
       setError(null)
       
-      const { data, error } = await supabase
-        .from('homepage_equipment')
-        .select('*')
-        .order('sort_order', { ascending: true })
-
-      if (error) {
-        console.error('Ошибка загрузки данных:', error)
-        
-        // Если таблица не существует, показываем более понятное сообщение
-        if (error.code === 'PGRST116' || error.message.includes('relation "homepage_equipment" does not exist')) {
-          setError('Таблица homepage_equipment не существует. Сначала настройте базу данных.')
-        } else {
-          setError(`Ошибка загрузки: ${error.message}`)
-        }
-        setEquipmentItems([])
-        return
-      }
-      
+      const data = await getHomepageEquipment()
       setEquipmentItems(data || [])
       setError(null)
     } catch (err) {
@@ -166,42 +149,27 @@ const HomepageEquipmentAdmin = () => {
 
       if (isAddingNew) {
         // Добавляем новый товар
-        const { error } = await supabase
-          .from('homepage_equipment')
-          .insert([{
-            title: formData.title.trim(),
-            description: formData.description.trim(),
-            icon: formData.icon,
-            gradient: formData.gradient,
-            link: formData.link.trim(),
-            is_visible: formData.is_visible,
-            sort_order: formData.sort_order
-          }])
-
-        if (error) {
-          console.error('Ошибка добавления:', error)
-          throw new Error(`Ошибка добавления: ${error.message}`)
-        }
+        await createHomepageEquipment({
+          title: formData.title.trim(),
+          description: formData.description.trim(),
+          icon: formData.icon,
+          gradient: formData.gradient,
+          link: formData.link.trim(),
+          is_visible: formData.is_visible,
+          sort_order: formData.sort_order
+        })
         setSuccess('Блок оборудования успешно добавлен!')
       } else if (editingItem?.id) {
         // Обновляем существующий товар
-        const { error } = await supabase
-          .from('homepage_equipment')
-          .update({
-            title: formData.title.trim(),
-            description: formData.description.trim(),
-            icon: formData.icon,
-            gradient: formData.gradient,
-            link: formData.link.trim(),
-            is_visible: formData.is_visible,
-            sort_order: formData.sort_order
-          })
-          .eq('id', editingItem.id)
-
-        if (error) {
-          console.error('Ошибка обновления:', error)
-          throw new Error(`Ошибка обновления: ${error.message}`)
-        }
+        await updateHomepageEquipment(editingItem.id, {
+          title: formData.title.trim(),
+          description: formData.description.trim(),
+          icon: formData.icon,
+          gradient: formData.gradient,
+          link: formData.link.trim(),
+          is_visible: formData.is_visible,
+          sort_order: formData.sort_order
+        })
         setSuccess('Блок оборудования успешно обновлен!')
       }
 
@@ -234,12 +202,7 @@ const HomepageEquipmentAdmin = () => {
 
     try {
       setError(null)
-      const { error } = await supabase
-        .from('homepage_equipment')
-        .delete()
-        .eq('id', id)
-
-      if (error) throw error
+      await deleteHomepageEquipment(id)
       setSuccess('Блок оборудования успешно удален!')
       await loadData()
     } catch (err) {
@@ -250,12 +213,7 @@ const HomepageEquipmentAdmin = () => {
 
   const handleToggleVisibility = async (id: string, isVisible: boolean) => {
     try {
-      const { error } = await supabase
-        .from('homepage_equipment')
-        .update({ is_visible: isVisible })
-        .eq('id', id)
-
-      if (error) throw error
+      await updateHomepageEquipment(id, { is_visible: isVisible })
       await loadData()
     } catch (err) {
       console.error('Ошибка обновления видимости:', err)
@@ -273,16 +231,8 @@ const HomepageEquipmentAdmin = () => {
     if (!prevItem) return
 
     try {
-      await supabase
-        .from('homepage_equipment')
-        .update({ sort_order: prevItem.sort_order })
-        .eq('id', id)
-
-      await supabase
-        .from('homepage_equipment')
-        .update({ sort_order: item.sort_order })
-        .eq('id', prevItem.id)
-
+      await updateHomepageEquipment(id, { sort_order: prevItem.sort_order })
+      await updateHomepageEquipment(prevItem.id, { sort_order: item.sort_order })
       await loadData()
     } catch (err) {
       console.error('Ошибка перемещения:', err)
@@ -300,16 +250,8 @@ const HomepageEquipmentAdmin = () => {
     if (!nextItem) return
 
     try {
-      await supabase
-        .from('homepage_equipment')
-        .update({ sort_order: nextItem.sort_order })
-        .eq('id', id)
-
-      await supabase
-        .from('homepage_equipment')
-        .update({ sort_order: item.sort_order })
-        .eq('id', nextItem.id)
-
+      await updateHomepageEquipment(id, { sort_order: nextItem.sort_order })
+      await updateHomepageEquipment(nextItem.id, { sort_order: item.sort_order })
       await loadData()
     } catch (err) {
       console.error('Ошибка перемещения:', err)
@@ -330,110 +272,6 @@ const HomepageEquipmentAdmin = () => {
     })
   }
 
-  const createTableAndData = async () => {
-    try {
-      setLoading(true)
-      setError(null)
-      setSuccess(null)
-
-      // Сначала попробуем создать таблицу через RPC
-      const { error: tableError } = await supabase.rpc('exec_sql', {
-        sql: `
-          CREATE TABLE IF NOT EXISTS homepage_equipment (
-            id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-            title VARCHAR(255) NOT NULL,
-            description TEXT,
-            icon VARCHAR(50) NOT NULL DEFAULT 'Monitor',
-            gradient VARCHAR(50) NOT NULL DEFAULT 'gradient-card-purple',
-            link VARCHAR(255) NOT NULL DEFAULT '',
-            is_visible BOOLEAN NOT NULL DEFAULT true,
-            sort_order INTEGER NOT NULL DEFAULT 0,
-            created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-            updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-          );
-        `
-      })
-
-      if (tableError) {
-        console.log('RPC exec_sql не доступна, попробуем другой способ')
-      }
-
-      // Вставляем начальные данные
-      const initialData = [
-        {
-          title: 'Кинетический экран',
-          description: 'Движущиеся интерактивные поверхности',
-          icon: 'Monitor',
-          gradient: 'gradient-card-purple',
-          link: '/services/kinetic-screen',
-          is_visible: true,
-          sort_order: 1
-        },
-        {
-          title: 'Матричный экран',
-          description: 'Многосегментные LED дисплеи',
-          icon: 'Monitor',
-          gradient: 'gradient-card-blue',
-          link: '/services/matrix-screen',
-          is_visible: true,
-          sort_order: 2
-        },
-        {
-          title: 'Прозрачный экран',
-          description: 'Полупрозрачные дисплеи',
-          icon: 'Eye',
-          gradient: 'gradient-card-cyan',
-          link: '/services/transparent-screen',
-          is_visible: true,
-          sort_order: 3
-        },
-        {
-          title: 'Информационные панели',
-          description: 'Цифровые вывески',
-          icon: 'Monitor',
-          gradient: 'gradient-card-dark',
-          link: '/services/info-panels',
-          is_visible: true,
-          sort_order: 4
-        },
-        {
-          title: 'Проектора (от 10000 люмен)',
-          description: 'Высокояркостная проекция',
-          icon: 'Projector',
-          gradient: 'gradient-card-purple',
-          link: '/services/projectors',
-          is_visible: true,
-          sort_order: 5
-        },
-        {
-          title: 'Гибкий неон',
-          description: 'Эластичная LED подсветка',
-          icon: 'Zap',
-          gradient: 'gradient-card-blue',
-          link: '/services/flexible-neon',
-          is_visible: true,
-          sort_order: 6
-        }
-      ]
-
-      const { error: insertError } = await supabase
-        .from('homepage_equipment')
-        .insert(initialData)
-
-      if (insertError) {
-        throw insertError
-      }
-
-      setSuccess('Таблица и начальные данные успешно созданы!')
-      await loadData()
-
-    } catch (err) {
-      console.error('Ошибка создания таблицы:', err)
-      setError(err instanceof Error ? err.message : 'Ошибка создания таблицы')
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const getIconComponent = (iconName: string) => {
     const iconOption = iconOptions.find(option => option.value === iconName)
@@ -485,32 +323,6 @@ const HomepageEquipmentAdmin = () => {
             <RefreshCw className="w-4 h-4 mr-2" />
             Обновить
           </Button>
-          {error && error.includes('не существует') && (
-            <>
-              <Button 
-                onClick={createTableAndData} 
-                className="bg-green-600 hover:bg-green-700"
-                disabled={loading}
-              >
-                <Database className="w-4 h-4 mr-2" />
-                {loading ? 'Создание...' : 'Создать таблицу и данные'}
-              </Button>
-              <Button 
-                onClick={() => window.open('/quick-setup-homepage-equipment', '_blank')} 
-                className="bg-green-600 hover:bg-green-700"
-              >
-                <Database className="w-4 h-4 mr-2" />
-                Быстрая настройка
-              </Button>
-              <Button 
-                onClick={() => window.open('/create-homepage-equipment-table', '_blank')} 
-                variant="outline"
-              >
-                <Database className="w-4 h-4 mr-2" />
-                Создать таблицу
-              </Button>
-            </>
-          )}
         </div>
 
         {/* Форма добавления/редактирования */}

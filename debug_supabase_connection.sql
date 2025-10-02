@@ -66,3 +66,4 @@ SELECT
   'RLS включен' as rls_status,
   COUNT(*) as record_count
 FROM logos;
+

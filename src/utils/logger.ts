@@ -44,3 +44,4 @@ export const logger: Logger = {
 export const { log, warn, error, info, debug } = logger
 
 export default logger
+

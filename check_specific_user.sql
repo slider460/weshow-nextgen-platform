@@ -47,3 +47,4 @@ FROM user_profiles up
 JOIN auth.users au ON up.id = au.id
 WHERE up.id = 'd5aab107-869a-4d25-8693-f14706904a8f';
 
+

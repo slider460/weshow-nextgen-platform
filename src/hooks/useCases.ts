@@ -46,40 +46,52 @@ export const useCases = () => {
       setLoading(true);
       setError(null);
 
-      console.log('Загружаем кейсы...');
+      console.log('🔄 useCases: Загружаем кейсы через REST API...');
 
-      // Проверяем, что supabase инициализирован
-      if (!supabase) {
-        console.log('Supabase не инициализирован, возвращаем пустой массив');
-        setCases([]);
-        setError(null);
-        return;
-      }
+      // Используем REST API вместо Supabase клиента
+      const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
+      const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE';
+      
+      const url = `${SUPABASE_URL}/rest/v1/cases?select=*&is_visible=eq.true&order=sort_order.asc`;
+      
+      console.log('🔄 useCases: Делаем REST запрос...');
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-      // Проверяем, существует ли таблица cases
-      const { data, error: fetchError } = await supabase
-        .from('cases')
-        .select('*')
-        .eq('is_visible', true)
-        .order('sort_order', { ascending: true });
+      console.log('🔄 useCases: Ответ получен, статус:', response.status);
 
-      if (fetchError) {
-        console.error('Ошибка Supabase:', fetchError);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ useCases: HTTP ошибка:', response.status, errorText);
+        
         // Если таблица не существует, просто возвращаем пустой массив
-        if (fetchError.message.includes('relation "public.cases" does not exist') ||
-            fetchError.message.includes('Could not find the table')) {
-          console.log('Таблица cases не существует, возвращаем пустой массив');
+        if (errorText.includes('relation "public.cases" does not exist') ||
+            errorText.includes('Could not find the table')) {
+          console.log('📋 useCases: Таблица cases не существует, возвращаем пустой массив');
           setCases([]);
           setError(null);
           return;
         }
-        throw fetchError;
+        
+        setError(`HTTP ошибка ${response.status}: ${errorText}`);
+        setCases([]);
+        return;
       }
 
-      console.log('Кейсы загружены:', data);
+      const data = await response.json();
+      console.log('✅ useCases: Кейсы загружены:', data);
+      console.log('✅ useCases: Количество записей:', data?.length || 0);
+      
       setCases(data || []);
     } catch (err) {
-      console.error('Ошибка загрузки кейсов:', err);
+      console.error('❌ useCases: Ошибка загрузки кейсов:', err);
       setError(err instanceof Error ? err.message : 'Неизвестная ошибка');
       // Устанавливаем пустой массив при ошибке, чтобы не ломать интерфейс
       setCases([]);

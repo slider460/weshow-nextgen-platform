@@ -226,3 +226,4 @@ export const getEquipmentStats = async (): Promise<{
     throw error
   }
 }
+

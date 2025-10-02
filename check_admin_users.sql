@@ -88,3 +88,4 @@ WHERE table_schema = 'public'
   AND table_name = 'user_profiles'
 ORDER BY ordinal_position;
 
+

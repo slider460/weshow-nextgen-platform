@@ -2,38 +2,27 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Award, FileText } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { useLogos } from "../contexts/LogosContextDB";
+import { useLettersCertificates } from "../hooks/useLettersCertificates";
 import LogosDisplay from "./LogosDisplay";
 
 const SocialProofSection = React.memo(() => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { getActiveLogos } = useLogos();
+  const { letters, loading, error } = useLettersCertificates();
 
-  const documents = useMemo(() => [
-    {
-      id: 1,
-      title: "Благодарственное письмо от ВТБ",
-      description: "За качественное выполнение работ по техническому оснащению головного офиса",
-      image: "/placeholder.svg",
-      type: "letter",
-      year: "2024"
-    },
-    {
-      id: 2,
-      title: "Грамота Лучший системный интегратор",
-      description: "Награда за выдающиеся достижения в области системной интеграции",
-      image: "/placeholder.svg",
-      type: "award",
-      year: "2023"
-    },
-    {
-      id: 3,
-      title: "Благодарность от Сбербанка",
-      description: "За успешную реализацию мультимедийных решений для корпоративных мероприятий",
-      image: "/placeholder.svg",
-      type: "letter",
-      year: "2024"
-    }
-  ], []);
+  // Преобразуем данные из базы в формат для карусели
+  const documents = useMemo(() => {
+    if (!letters || letters.length === 0) return [];
+    
+    return letters.map((letter, index) => ({
+      id: letter.id,
+      title: letter.title,
+      description: letter.description || '',
+      image: letter.image_url || "/placeholder.svg",
+      type: letter.type,
+      year: letter.issued_date ? new Date(letter.issued_date).getFullYear().toString() : new Date().getFullYear().toString()
+    }));
+  }, [letters]);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % documents.length);
@@ -44,9 +33,52 @@ const SocialProofSection = React.memo(() => {
   }, [documents.length]);
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 5000);
-    return () => clearInterval(timer);
-  }, [nextSlide]);
+    if (documents.length > 0) {
+      const timer = setInterval(nextSlide, 5000);
+      return () => clearInterval(timer);
+    }
+  }, [nextSlide, documents.length]);
+
+  // Если загружается или есть ошибка, не показываем карусель
+  if (loading || error || documents.length === 0) {
+    return (
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          
+          {/* Statistics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-20">
+            <div className="gradient-card-purple rounded-3xl p-8">
+              <div className="text-4xl font-bold text-white mb-2">500+</div>
+              <div className="text-white/90">Проектов выполнено</div>
+            </div>
+            <div className="gradient-card-blue rounded-3xl p-8">
+              <div className="text-4xl font-bold text-white mb-2">15+</div>
+              <div className="text-white/90">Лет на рынке</div>
+            </div>
+            <div className="gradient-card-cyan rounded-3xl p-8">
+              <div className="text-4xl font-bold text-white mb-2">50+</div>
+              <div className="text-white/90">Партнеров</div>
+            </div>
+            <div className="gradient-card-dark rounded-3xl p-8">
+              <div className="text-4xl font-bold text-white mb-2">24/7</div>
+              <div className="text-white/90">Техподдержка</div>
+            </div>
+          </div>
+
+          {/* Clients Section */}
+          <div className="mb-20">
+            <div className="flex justify-center items-center mb-12">
+              <h2 className="text-4xl lg:text-5xl font-bold text-slate-900">
+                Нам доверяют
+              </h2>
+            </div>
+            
+            <LogosDisplay showEditButton={false} />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-white">

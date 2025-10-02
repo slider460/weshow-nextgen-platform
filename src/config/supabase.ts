@@ -13,7 +13,18 @@ declare global {
 }
 
 // Создаем простой Supabase клиент без сложных настроек аутентификации
-const supabase = createClient(supabaseUrl, supabaseAnonKey)
+const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
+    detectSessionInUrl: false
+  },
+  global: {
+    headers: {
+      'X-Client-Info': 'main-supabase-client'
+    }
+  }
+})
 
 export { supabase }
 

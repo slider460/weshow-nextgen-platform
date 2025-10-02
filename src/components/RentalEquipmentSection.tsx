@@ -27,13 +27,27 @@ const RentalEquipmentSection = () => {
   const loadEquipmentItems = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('homepage_equipment')
-        .select('*')
-        .eq('is_visible', true)
-        .order('sort_order', { ascending: true });
+      
+      // Используем REST API вместо Supabase клиента
+      const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
+      const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE';
+      
+      const url = `${SUPABASE_URL}/rest/v1/homepage_equipment?select=*&is_visible=eq.true&order=sort_order.asc`;
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-      if (error) throw error;
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
 
       // Преобразуем данные из базы в формат компонента
       const formattedItems = (data || []).map(item => {

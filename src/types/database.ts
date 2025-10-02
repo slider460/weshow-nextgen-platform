@@ -351,7 +351,9 @@ export type Database = {
           id: string
           title: string
           description: string
-          image_url: string | null
+          icon: string
+          gradient: string
+          link: string
           is_visible: boolean
           sort_order: number
           created_at: string
@@ -361,7 +363,9 @@ export type Database = {
           id?: string
           title: string
           description: string
-          image_url?: string | null
+          icon: string
+          gradient: string
+          link: string
           is_visible?: boolean
           sort_order?: number
           created_at?: string
@@ -371,7 +375,9 @@ export type Database = {
           id?: string
           title?: string
           description?: string
-          image_url?: string | null
+          icon?: string
+          gradient?: string
+          link?: string
           is_visible?: boolean
           sort_order?: number
           created_at?: string
@@ -451,6 +457,51 @@ export type Database = {
         }
         Relationships: []
       }
+      letters_certificates: {
+        Row: {
+          id: string
+          title: string
+          description: string | null
+          image_url: string | null
+          document_url: string | null
+          type: 'letter' | 'certificate' | 'award' | 'diploma'
+          issuer: string
+          issued_date: string | null
+          is_visible: boolean
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          description?: string | null
+          image_url?: string | null
+          document_url?: string | null
+          type: 'letter' | 'certificate' | 'award' | 'diploma'
+          issuer: string
+          issued_date?: string | null
+          is_visible?: boolean
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string | null
+          image_url?: string | null
+          document_url?: string | null
+          type?: 'letter' | 'certificate' | 'award' | 'diploma'
+          issuer?: string
+          issued_date?: string | null
+          is_visible?: boolean
+          sort_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -501,6 +552,7 @@ export type EstimateItem = Tables<'estimate_items'>
 export type ArticleCategory = Tables<'article_categories'>
 export type Article = Tables<'articles'>
 export type Logo = Tables<'logos'>
+export type LetterCertificate = Tables<'letters_certificates'>
 
 // Типы для вставки данных
 export type UserInsert = Database['public']['Tables']['users']['Insert']
@@ -509,6 +561,7 @@ export type EstimateInsert = Database['public']['Tables']['estimates']['Insert']
 export type EstimateItemInsert = Database['public']['Tables']['estimate_items']['Insert']
 export type ArticleInsert = Database['public']['Tables']['articles']['Insert']
 export type LogoInsert = Database['public']['Tables']['logos']['Insert']
+export type LetterCertificateInsert = Database['public']['Tables']['letters_certificates']['Insert']
 
 // Типы для обновления данных
 export type UserUpdate = Database['public']['Tables']['users']['Update']
@@ -517,6 +570,7 @@ export type EstimateUpdate = Database['public']['Tables']['estimates']['Update']
 export type EstimateItemUpdate = Database['public']['Tables']['estimate_items']['Update']
 export type ArticleUpdate = Database['public']['Tables']['articles']['Update']
 export type LogoUpdate = Database['public']['Tables']['logos']['Update']
+export type LetterCertificateUpdate = Database['public']['Tables']['letters_certificates']['Update']
 
 // Типы для спецификаций оборудования
 export interface EquipmentSpecifications {
@@ -542,3 +596,6 @@ export type EstimateStatus = 'draft' | 'pending_review' | 'confirmed' | 'cancele
 
 // Типы для категорий логотипов
 export type LogoCategory = 'banking' | 'energy' | 'telecom' | 'tech' | 'aviation' | 'other'
+
+// Типы для категорий писем и грамот
+export type LetterCertificateType = 'letter' | 'certificate' | 'award' | 'diploma'

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { supabase } from '../../config/supabase'
+import { getEstimatesStats, getEquipmentCatalog, getUsers } from '../../api/adminRest'
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card'
 import { Button } from '../../components/ui/button'
 import { Badge } from '../../components/ui/badge'
@@ -50,30 +50,19 @@ const AdminManagement: React.FC = () => {
       setError(null)
 
       // Получаем статистику по заявкам
-      const [estimatesResult, equipmentResult, usersResult, recentEstimatesResult] = await Promise.all([
-        supabase.from('estimates').select('id, status'),
-        supabase.from('equipment_catalog').select('id', { count: 'exact', head: true }),
-        supabase.from('users').select('id', { count: 'exact', head: true }),
-        supabase.from('estimates').select('id, status, event_date, client_notes, created_at').order('created_at', { ascending: false }).limit(5)
+      const [estimatesStats, equipment, users] = await Promise.all([
+        getEstimatesStats(),
+        getEquipmentCatalog(),
+        getUsers()
       ])
 
-      if (estimatesResult.error) throw estimatesResult.error
-      if (equipmentResult.error) throw equipmentResult.error
-      if (usersResult.error) throw usersResult.error
-      if (recentEstimatesResult.error) throw recentEstimatesResult.error
-
-      const estimates = estimatesResult.data || []
-      const totalEstimates = estimates.length
-      const pendingEstimates = estimates.filter(e => e.status === 'pending_review').length
-      const confirmedEstimates = estimates.filter(e => e.status === 'confirmed').length
-
       setStats({
-        totalEstimates,
-        pendingEstimates,
-        confirmedEstimates,
-        totalEquipment: equipmentResult.count || 0,
-        totalUsers: usersResult.count || 0,
-        recentEstimates: recentEstimatesResult.data || []
+        totalEstimates: estimatesStats.totalEstimates,
+        pendingEstimates: estimatesStats.pendingEstimates,
+        confirmedEstimates: estimatesStats.confirmedEstimates,
+        totalEquipment: equipment.length,
+        totalUsers: users.length,
+        recentEstimates: estimatesStats.recentEstimates
       })
 
     } catch (err: any) {

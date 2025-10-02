@@ -8,6 +8,8 @@ import SocialProofSection from "../components/SocialProofSection";
 import UniqueValueProposition from "../components/UniqueValueProposition";
 import WorkflowRoadmapSection from "../components/WorkflowRoadmapSection";
 import ContactFormSection from "../components/ContactFormSection";
+import TeamSection from "../components/TeamSection";
+import LettersCertificatesSection from "../components/LettersCertificatesSection";
 import Footer from "../components/Footer";
 import ShowreelModal from "../components/ShowreelModal";
 
@@ -25,6 +27,8 @@ const Index = () => {
         <ModernServicesSection />
         <UniqueValueProposition />
         <ModernPortfolioSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
+        <TeamSection />
+        <LettersCertificatesSection />
         {/* Убраны блоки: GamePromoSection и ComplexSolutionsSection */}
         <WorkflowRoadmapSection />
         <ModernShowreelSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
