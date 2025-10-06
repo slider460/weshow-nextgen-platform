@@ -73,3 +73,5 @@ ON CONFLICT (name) DO UPDATE SET
 -- Включаем RLS обратно после диагностики
 -- ALTER TABLE logos ENABLE ROW LEVEL SECURITY;
 
+
+

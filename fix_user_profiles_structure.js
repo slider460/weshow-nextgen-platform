@@ -257,3 +257,5 @@ async function fixUserProfiles() {
 
 // Запуск исправления
 fixUserProfiles();
+
+

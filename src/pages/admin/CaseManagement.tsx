@@ -215,9 +215,35 @@ const CaseManagement = () => {
   };
 
   const handleSaveCase = async () => {
-    if (!editingCase) return;
+    console.log('🔄 handleSaveCase вызван');
+    
+    if (!editingCase) {
+      console.log('❌ editingCase отсутствует');
+      return;
+    }
+
+    console.log('📋 editingCase:', editingCase);
+
+    // Валидация обязательных полей
+    if (!editingCase.title?.trim()) {
+      setError('Название кейса обязательно для заполнения');
+      return;
+    }
+    
+    if (!editingCase.client?.trim()) {
+      setError('Клиент обязателен для заполнения');
+      return;
+    }
+    
+    if (!editingCase.description?.trim()) {
+      setError('Описание обязательно для заполнения');
+      return;
+    }
+
+    console.log('✅ Валидация пройдена');
 
     try {
+      console.log('⏳ Устанавливаем uploading = true');
       setUploading(true);
 
       // Подготавливаем данные для сохранения
@@ -248,30 +274,43 @@ const CaseManagement = () => {
         updated_at: new Date().toISOString()
       };
 
+      console.log('📤 Подготовленные данные для сохранения:', caseData);
+
       // Добавляем created_at только для новых кейсов
       if (isCreating) {
         caseData.created_at = new Date().toISOString();
       }
 
       if (isCreating) {
-        console.log('Создаю новый кейс:', caseData);
+        console.log('🆕 Создаю новый кейс:', caseData);
         const result = await createCase(caseData);
-        console.log('Кейс создан:', result);
+        console.log('✅ Кейс создан:', result);
       } else {
-        console.log('Обновляю кейс:', editingCase.id, caseData);
+        console.log('🔄 Обновляю кейс:', editingCase.id, caseData);
         const result = await updateCase(editingCase.id, caseData);
-        console.log('Кейс обновлен:', result);
+        console.log('✅ Кейс обновлен:', result);
       }
 
-      await fetchCases();
+      // Обновляем список кейсов с таймаутом
+      try {
+        await Promise.race([
+          fetchCases(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Таймаут обновления списка')), 5000))
+        ]);
+      } catch (err) {
+        console.warn('Таймаут обновления списка кейсов:', err);
+        // Продолжаем выполнение даже если обновление списка не удалось
+      }
+      
       setEditingCase(null);
       setIsCreating(false);
       setActiveTab('list');
       setError(null); // Очищаем ошибки при успешном сохранении
     } catch (err) {
-      console.error('Ошибка сохранения кейса:', err);
+      console.error('❌ Ошибка сохранения кейса:', err);
       setError(`Ошибка сохранения кейса: ${err.message || err}`);
     } finally {
+      console.log('🏁 Завершение handleSaveCase, устанавливаем uploading = false');
       setUploading(false);
     }
   };
@@ -281,7 +320,15 @@ const CaseManagement = () => {
 
     try {
       await deleteCase(id);
-      await fetchCases();
+      // Обновляем список с таймаутом
+      try {
+        await Promise.race([
+          fetchCases(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Таймаут обновления списка')), 5000))
+        ]);
+      } catch (err) {
+        console.warn('Таймаут обновления списка после удаления:', err);
+      }
     } catch (err) {
       console.error('Ошибка удаления кейса:', err);
       setError('Ошибка удаления кейса');
@@ -291,7 +338,15 @@ const CaseManagement = () => {
   const toggleVisibility = async (id: string, isVisible: boolean) => {
     try {
       await updateCase(id, { is_visible: !isVisible });
-      await fetchCases();
+      // Обновляем список с таймаутом
+      try {
+        await Promise.race([
+          fetchCases(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Таймаут обновления списка')), 5000))
+        ]);
+      } catch (err) {
+        console.warn('Таймаут обновления списка после изменения видимости:', err);
+      }
     } catch (err) {
       console.error('Ошибка изменения видимости:', err);
       setError('Ошибка изменения видимости');
@@ -301,7 +356,15 @@ const CaseManagement = () => {
   const toggleFeatured = async (id: string, featured: boolean) => {
     try {
       await updateCase(id, { featured: !featured });
-      await fetchCases();
+      // Обновляем список с таймаутом
+      try {
+        await Promise.race([
+          fetchCases(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Таймаут обновления списка')), 5000))
+        ]);
+      } catch (err) {
+        console.warn('Таймаут обновления списка после изменения статуса:', err);
+      }
     } catch (err) {
       console.error('Ошибка изменения статуса:', err);
       setError('Ошибка изменения статуса');
@@ -309,49 +372,66 @@ const CaseManagement = () => {
   };
 
   const handleImageUpload = async (file: File, type: 'main' | 'gallery') => {
+    console.log('🖼️ handleImageUpload вызван:', file.name, 'тип:', type);
+    
     try {
+      console.log('⏳ Устанавливаем uploading = true для загрузки изображения');
       setUploading(true);
       setError(null); // Очищаем предыдущие ошибки
       
-      console.log('Загружаю изображение:', file.name, 'тип:', type);
+      console.log('📁 Файл для загрузки:', {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        lastModified: file.lastModified
+      });
       
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `cases/images/${fileName}`;
 
-      console.log('Путь для загрузки:', filePath);
+      console.log('📂 Путь для загрузки:', filePath);
+      console.log('🔗 adminSupabase клиент:', adminSupabase ? 'существует' : 'отсутствует');
 
+      console.log('📤 Начинаем загрузку в Supabase Storage...');
       const { data: uploadData, error: uploadError } = await adminSupabase.storage
         .from('public')
         .upload(filePath, file);
 
       if (uploadError) {
-        console.error('Ошибка загрузки файла:', uploadError);
+        console.error('❌ Ошибка загрузки файла:', uploadError);
         throw uploadError;
       }
 
-      console.log('Файл загружен:', uploadData);
+      console.log('✅ Файл загружен:', uploadData);
 
+      console.log('🔗 Получаем публичный URL...');
       const { data: urlData } = adminSupabase.storage
         .from('public')
         .getPublicUrl(filePath);
 
-      console.log('Публичный URL:', urlData.publicUrl);
+      console.log('🌐 Публичный URL:', urlData.publicUrl);
 
       if (editingCase) {
+        console.log('📝 Обновляем editingCase...');
         if (type === 'main') {
-          setEditingCase({ ...editingCase, image_url: urlData.publicUrl });
-          console.log('Основное изображение установлено');
+          const updatedCase = { ...editingCase, image_url: urlData.publicUrl };
+          setEditingCase(updatedCase);
+          console.log('✅ Основное изображение установлено:', urlData.publicUrl);
         } else {
           const newGallery = [...(editingCase.gallery_images || []), urlData.publicUrl];
-          setEditingCase({ ...editingCase, gallery_images: newGallery });
-          console.log('Изображение добавлено в галерею');
+          const updatedCase = { ...editingCase, gallery_images: newGallery };
+          setEditingCase(updatedCase);
+          console.log('✅ Изображение добавлено в галерею:', urlData.publicUrl);
         }
+      } else {
+        console.warn('⚠️ editingCase отсутствует, не можем обновить URL изображения');
       }
     } catch (err) {
-      console.error('Ошибка загрузки изображения:', err);
+      console.error('❌ Ошибка загрузки изображения:', err);
       setError(`Ошибка загрузки изображения: ${err.message || err}`);
     } finally {
+      console.log('🏁 Завершение handleImageUpload, устанавливаем uploading = false');
       setUploading(false);
     }
   };
@@ -372,10 +452,26 @@ const CaseManagement = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-slate-900">Управление кейсами</h1>
-          <Button onClick={handleCreateCase} className="bg-blue-600 hover:bg-blue-700">
-            <Plus className="mr-2 h-4 w-4" />
-            Создать кейс
-          </Button>
+          <div className="flex gap-4">
+            <Button 
+              onClick={() => {
+                console.log('🔍 Диагностика состояния:');
+                console.log('📋 cases:', cases?.length || 0);
+                console.log('⏳ loading:', loading);
+                console.log('❌ error:', error);
+                console.log('📝 editingCase:', editingCase?.title || 'нет');
+                console.log('⏳ uploading:', uploading);
+                console.log('➕ isCreating:', isCreating);
+              }}
+              variant="outline"
+            >
+              🔍 Диагностика
+            </Button>
+            <Button onClick={handleCreateCase} className="bg-blue-600 hover:bg-blue-700">
+              <Plus className="mr-2 h-4 w-4" />
+              Создать кейс
+            </Button>
+          </div>
         </div>
 
         {error && (
@@ -397,11 +493,24 @@ const CaseManagement = () => {
               {cases.map((caseItem) => (
                 <Card key={caseItem.id} className="overflow-hidden">
                   <div className="relative">
-                    <img
-                      src={caseItem.image_url || '/placeholder.svg'}
-                      alt={caseItem.title}
-                      className="w-full h-48 object-cover"
-                    />
+                    {caseItem.image_url ? (
+                      <img
+                        src={caseItem.image_url}
+                        alt={caseItem.title}
+                        className="w-full h-48 object-cover"
+                        onError={(e) => {
+                          console.error('Ошибка загрузки изображения:', caseItem.image_url);
+                          (e.target as HTMLImageElement).src = '/placeholder.svg';
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+                        <div className="text-center text-gray-500">
+                          <div className="text-4xl mb-2">📷</div>
+                          <div className="text-sm">Нет изображения</div>
+                        </div>
+                      </div>
+                    )}
                     <div className="absolute top-2 right-2 flex gap-2">
                       {caseItem.featured && (
                         <Badge className="bg-yellow-500">
@@ -603,32 +712,59 @@ const CaseManagement = () => {
                     <div>
                       <label className="block text-sm font-medium mb-2">Основное изображение</label>
                       <div className="flex items-center gap-4">
-                        {editingCase.image_url && (
+                        {editingCase.image_url ? (
                           <img 
                             src={editingCase.image_url} 
                             alt="Preview" 
                             className="w-20 h-20 object-cover rounded"
+                            onError={(e) => {
+                              console.error('Ошибка загрузки превью:', editingCase.image_url);
+                              (e.target as HTMLImageElement).src = '/placeholder.svg';
+                            }}
                           />
+                        ) : (
+                          <div className="w-20 h-20 bg-gray-200 flex items-center justify-center rounded">
+                            <div className="text-center text-gray-500">
+                              <div className="text-2xl">📷</div>
+                            </div>
+                          </div>
                         )}
                         <input
                           type="file"
                           accept="image/*"
                           onChange={(e) => {
+                            console.log('📁 Файл выбран для основного изображения');
                             const file = e.target.files?.[0];
-                            if (file) handleImageUpload(file, 'main');
+                            if (file) {
+                              console.log('📄 Выбранный файл:', file.name, file.size, 'байт');
+                              handleImageUpload(file, 'main');
+                            } else {
+                              console.log('❌ Файл не выбран');
+                            }
                           }}
                           className="hidden"
                           id="main-image"
+                          disabled={false}
                         />
-                        <label 
-                          htmlFor="main-image"
-                          className="cursor-pointer"
+                        <Button 
+                          type="button" 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => {
+                            console.log('🖱️ Кнопка загрузки изображения нажата');
+                            const input = document.getElementById('main-image') as HTMLInputElement;
+                            if (input) {
+                              console.log('📋 Input найден, открываем диалог выбора файла');
+                              input.click();
+                            } else {
+                              console.log('❌ Input не найден');
+                            }
+                          }}
+                          disabled={uploading}
                         >
-                          <Button type="button" variant="outline" size="sm">
-                            <Upload className="w-4 h-4 mr-2" />
-                            Загрузить
-                          </Button>
-                        </label>
+                          <Upload className="w-4 h-4 mr-2" />
+                          {uploading ? 'Загрузка...' : 'Загрузить'}
+                        </Button>
                       </div>
                     </div>
                     
@@ -637,7 +773,15 @@ const CaseManagement = () => {
                       <div className="space-y-2">
                         {editingCase.gallery_images?.map((image, index) => (
                           <div key={index} className="flex items-center gap-2">
-                            <img src={image} alt={`Gallery ${index + 1}`} className="w-12 h-12 object-cover rounded" />
+                            <img 
+                              src={image} 
+                              alt={`Gallery ${index + 1}`} 
+                              className="w-12 h-12 object-cover rounded"
+                              onError={(e) => {
+                                console.error('Ошибка загрузки изображения галереи:', image);
+                                (e.target as HTMLImageElement).src = '/placeholder.svg';
+                              }}
+                            />
                             <Button
                               type="button"
                               variant="destructive"
@@ -655,26 +799,52 @@ const CaseManagement = () => {
                           type="file"
                           accept="image/*"
                           onChange={(e) => {
+                            console.log('📁 Файл выбран для галереи');
                             const file = e.target.files?.[0];
-                            if (file) handleImageUpload(file, 'gallery');
+                            if (file) {
+                              console.log('📄 Выбранный файл для галереи:', file.name, file.size, 'байт');
+                              handleImageUpload(file, 'gallery');
+                            } else {
+                              console.log('❌ Файл для галереи не выбран');
+                            }
                           }}
                           className="hidden"
                           id="gallery-image"
+                          disabled={uploading}
                         />
-                        <label htmlFor="gallery-image">
-                          <Button type="button" variant="outline" size="sm">
-                            <ImageIcon className="w-4 h-4 mr-2" />
-                            Добавить в галерею
-                          </Button>
-                        </label>
+                        <Button 
+                          type="button" 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => {
+                            console.log('🖱️ Кнопка загрузки в галерею нажата');
+                            const input = document.getElementById('gallery-image') as HTMLInputElement;
+                            if (input) {
+                              console.log('📋 Input галереи найден, открываем диалог выбора файла');
+                              input.click();
+                            } else {
+                              console.log('❌ Input галереи не найден');
+                            }
+                          }}
+                          disabled={uploading}
+                        >
+                          <ImageIcon className="w-4 h-4 mr-2" />
+                          {uploading ? 'Загрузка...' : 'Добавить в галерею'}
+                        </Button>
                       </div>
                     </div>
                   </div>
 
                   <div className="flex gap-4">
                     <Button 
-                      onClick={handleSaveCase} 
+                      onClick={() => {
+                        console.log('🖱️ Кнопка "Сохранить" нажата');
+                        console.log('📋 editingCase:', editingCase);
+                        console.log('⏳ uploading:', uploading);
+                        handleSaveCase();
+                      }} 
                       disabled={uploading}
+                      title={uploading ? 'Идет сохранение...' : 'Сохранить изменения'}
                       className="bg-blue-600 hover:bg-blue-700"
                     >
                       <Save className="w-4 h-4 mr-2" />

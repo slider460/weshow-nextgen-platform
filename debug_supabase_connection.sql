@@ -67,3 +67,5 @@ SELECT
   COUNT(*) as record_count
 FROM logos;
 
+
+

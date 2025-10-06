@@ -133,3 +133,5 @@ async function testCaseFormIssues() {
 
 // Запуск тестов
 testCaseFormIssues();
+
+

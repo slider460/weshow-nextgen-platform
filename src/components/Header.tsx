@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
 import AnimatedButton from "./AnimatedButton";
 import { useEquipmentCart } from "../hooks/useEquipmentCart";
 import { useAuth } from "../contexts/AuthContext";
@@ -16,7 +15,6 @@ import {
   Sparkles,
   Zap,
   Star,
-  ShoppingCart,
   Search,
   ArrowRight
 } from "lucide-react";
@@ -376,72 +374,8 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-3 flex-shrink-0">
-            {/* Скрытые кнопки авторизации и корзины */}
-            <div className="hidden">
-              {/* Кнопка корзины - скрыта */}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  try {
-                    window.dispatchEvent(new CustomEvent('openEquipmentCart'));
-                    setTimeout(() => {
-                      if (window.location.pathname === '/equipment') {
-                        window.dispatchEvent(new CustomEvent('openEquipmentCart'));
-                      } else {
-                        window.location.href = '/equipment';
-                      }
-                    }, 100);
-                  } catch (error) {
-                    console.error('Error opening cart:', error);
-                    window.location.href = '/equipment';
-                  }
-                }}
-                className="relative border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-200 px-2"
-                title={`Корзина: ${cartCount} товаров`}
-              >
-                <ShoppingCart className="h-4 w-4" />
-                <span className="hidden lg:inline ml-1">Корзина</span>
-                {cartCount > 0 && (
-                  <Badge variant="secondary" className="ml-1 bg-blue-600 text-white border-0 text-xs min-w-[16px] h-4 flex items-center justify-center">
-                    {cartCount > 99 ? '99+' : cartCount}
-                  </Badge>
-                )}
-              </Button>
 
-              {/* Кнопки авторизации - скрыты */}
-              {loading ? (
-                <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
-              ) : user && profile ? (
-                <UserMenu />
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => openAuthModal('signin')}
-                    className="border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-200"
-                  >
-                    Войти
-                  </Button>
-                  <Button
-                    variant="default"
-                    size="sm"
-                    onClick={() => openAuthModal('signup')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200"
-                  >
-                    Регистрация
-                  </Button>
-                </div>
-              )}
 
-              {/* Отладочная информация - скрыта */}
-              {process.env.NODE_ENV === 'development' && (
-                <div className="text-xs text-gray-500 ml-2">
-                  Loading: {loading ? 'true' : 'false'}, User: {user ? 'yes' : 'no'}, Profile: {profile ? 'yes' : 'no'}
-                </div>
-              )}
-            </div>
 
             <AnimatedButton 
               variant="gradient"
@@ -655,43 +589,6 @@ const Header = () => {
               {/* Mobile CTA */}
               <div className="pt-4 space-y-3">
                 
-                {/* Кнопка корзины */}
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => {
-                    closeMenu();
-                    // Пытаемся открыть корзину разными способами
-                    try {
-                      // Способ 1: через событие
-                      window.dispatchEvent(new CustomEvent('openEquipmentCart'));
-                      
-                      // Способ 2: прямая навигация на страницу с корзиной
-                      setTimeout(() => {
-                        if (window.location.pathname === '/equipment') {
-                          // Если мы на странице Equipment, открываем корзину там
-                          window.dispatchEvent(new CustomEvent('openEquipmentCart'));
-                        } else {
-                          // Иначе переходим на страницу Equipment
-                          window.location.href = '/equipment';
-                        }
-                      }, 100);
-                    } catch (error) {
-                      console.error('Error opening cart:', error);
-                      // Fallback: переходим на страницу Equipment
-                      window.location.href = '/equipment';
-                    }
-                  }}
-                  className="w-full border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-200"
-                >
-                  <ShoppingCart className="h-4 w-4 mr-2" />
-                  Корзина
-                  {cartCount > 0 && (
-                    <Badge variant="secondary" className="ml-2 bg-blue-600 text-white border-0 min-w-[20px] h-5 flex items-center justify-center">
-                      {cartCount > 99 ? '99+' : cartCount}
-                    </Badge>
-                  )}
-                </Button>
 
                 {/* Кнопки авторизации для мобильных */}
                 {loading ? (

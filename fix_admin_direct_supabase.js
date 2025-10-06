@@ -389,3 +389,5 @@ async function fixAdminPanelDirectly() {
 
 // Запуск исправления
 fixAdminPanelDirectly();
+
+

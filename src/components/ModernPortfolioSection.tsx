@@ -1,8 +1,11 @@
 
 import { useState } from "react";
 import { Button } from "../components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
 import { ExternalLink, ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import vdnhStand from "../assets/office-building.jpg";
 import ProjectOrderModal from "./ProjectOrderModal";
 import useCases from "../hooks/useCases";
@@ -14,13 +17,13 @@ interface ModernPortfolioSectionProps {
 
 const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps) => {
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-  const [visibleProjects, setVisibleProjects] = useState(4);
+  const [visibleProjects, setVisibleProjects] = useState(6);
   
   // Загружаем кейсы из базы данных
   const { cases, loading, error } = useCases();
 
   // Преобразуем кейсы из базы данных в формат для отображения
-  const projects = cases.map(caseItem => {
+  const projects = (cases || []).map(caseItem => {
     // Обрабатываем results - может быть строкой JSON, массивом или обычной строкой
     let results = [];
     if (Array.isArray(caseItem.results)) {
@@ -54,7 +57,7 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
 
   // Функция для загрузки еще проектов
   const loadMoreProjects = () => {
-    setVisibleProjects(prev => Math.min(prev + 4, projects.length));
+    setVisibleProjects(prev => Math.min(prev + 6, projects.length));
   };
 
   // Получаем проекты для отображения
@@ -105,65 +108,87 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
         )}
 
         {!loading && !error && cases.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-16">
             {displayedProjects.map((project, index) => (
-            <div key={index} className="bg-white rounded-3xl overflow-visible shadow-lg hover:shadow-xl transition-all duration-300 group h-full flex flex-col min-h-[700px]">
-              <div className="relative overflow-hidden h-64">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-4 left-4 text-white">
-                  <div className="text-sm font-medium">{project.client}</div>
-                  <div className="text-sm opacity-80">{project.date}</div>
-                </div>
-                <Button variant="outline" size="sm" className="absolute top-4 right-4 bg-white/10 border-white/20 text-white hover:bg-white/20">
-                  <ExternalLink className="h-4 w-4" />
-                </Button>
-              </div>
-              
-              <div className="p-8 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold text-slate-900 mb-4">
-                  {project.title}
-                </h3>
-                <p className="text-slate-600 mb-6 leading-relaxed">
-                  {project.description}
-                </p>
-                
-                <div className="mb-6 flex-grow">
-                  <h4 className="text-sm font-semibold text-slate-900 mb-3">Результаты:</h4>
-                  <ul className="space-y-2">
-                    {project.results.map((result, resultIndex) => (
-                      <li key={resultIndex} className="flex items-start text-sm text-slate-600">
-                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-3 mt-2 flex-shrink-0" />
-                        <span>{result}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-slate-900 mb-3">Технологии:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, techIndex) => (
-                      <span key={techIndex} className="px-3 py-1 bg-slate-100 text-slate-700 text-xs rounded-full">
-                        {tech}
-                      </span>
-                    ))}
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+              >
+                <Card className="group h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
+                  {/* Gradient Background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  {/* Image Section */}
+                  <div className="relative overflow-hidden h-64">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    
+                    {/* Project Info Overlay */}
+                    <div className="absolute bottom-4 left-4 text-white">
+                      <Badge variant="secondary" className="mb-2 bg-white/20 text-white border-white/30">
+                        {project.client}
+                      </Badge>
+                      <div className="text-sm opacity-80">{project.date}</div>
+                    </div>
+                    
+                    {/* External Link Button */}
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="absolute top-4 right-4 bg-white/10 border-white/20 text-white hover:bg-white/20 transition-all duration-200 hover:scale-110"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Button>
                   </div>
-                </div>
-                
-                <Button className="w-full mt-auto py-3" variant="default" asChild>
-                  <Link to={`/case/${cases[index].id}`}>
-                    Подробнее о проекте
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          ))}
+                  
+                  <CardHeader className="pb-4">
+                    <CardTitle className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                      {project.title}
+                    </CardTitle>
+                    <CardDescription className="text-slate-600 leading-relaxed">
+                      {project.description}
+                    </CardDescription>
+                  </CardHeader>
+                  
+                  <CardContent className="pt-0">
+                    {/* Results/Tags */}
+                    {project.results && project.results.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.results.slice(0, 3).map((result, resultIndex) => (
+                          <Badge key={resultIndex} variant="outline" className="text-xs">
+                            {result}
+                          </Badge>
+                        ))}
+                        {project.results.length > 3 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{project.results.length - 3} еще
+                          </Badge>
+                        )}
+                      </div>
+                    )}
+                    
+                    {/* Action Button */}
+                    <Button 
+                      className="w-full mt-auto py-3 group/btn" 
+                      variant="default" 
+                      asChild
+                    >
+                      <Link to={`/case/${cases[index].id}`}>
+                        Подробнее о проекте
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         )}
 

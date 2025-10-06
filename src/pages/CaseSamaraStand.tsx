@@ -98,37 +98,54 @@ const CaseSamaraStand: React.FC = () => {
 
       <main className="pb-20">
         <section className="py-6">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <article className="lg:col-span-8 max-w-3xl text-slate-700">
-              <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-slate-900">
-                Стенд Самарской области на выставке‑форуме «Россия» 2023–2024
-              </h1>
-              <p className="text-xl text-slate-600 leading-relaxed mb-8">
-                Интерактивный просветительский стенд на ВДНХ: двусторонний экран‑парус с эффектом Naked Eye, Kinect‑игры, VR/AR, кинетический экран, LED‑шары и мультимедийные панели.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-8">
-                <span className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs">ВДНХ, Москва</span>
-                <span className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs">04.11.2023 — 08.07.2024</span>
-                <span className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs">Просветительский стенд</span>
-                <span className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs">Награда: Лучший просветительский стенд</span>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Hero Image */}
+            <div className="mb-12">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  src="/portfolio/samara-stand-main.jpg"
+                  alt="Стенд Самарской области на выставке-форуме «Россия» 2023–2024"
+                  className="w-full h-[400px] lg:h-[500px] object-cover"
+                  loading="eager"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <h1 className="text-3xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+                    Стенд Самарской области на выставке‑форуме «Россия» 2023–2024
+                  </h1>
+                  <p className="text-lg lg:text-xl text-white/90 leading-relaxed max-w-4xl">
+                    Интерактивный просветительский стенд на ВДНХ: двусторонний экран‑парус с эффектом Naked Eye, Kinect‑игры, VR/AR, кинетический экран, LED‑шары и мультимедийные панели.
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-3">
-                <Button size="lg" onClick={() => setOrderOpen(true)}>Обсудить проект</Button>
-                <Button variant="outline" size="lg" onClick={() => setConsultOpen(true)}>Получить консультацию</Button>
-              </div>
-            </article>
+            </div>
 
-            <aside className="lg:col-span-4 lg:pl-6">
-              <nav className="top-24 lg:sticky">
-                <ul className="space-y-2">
-                  {anchors.map((a) => (
-                    <li key={a.id}>
-                      <a className="story-link text-sm text-slate-600 hover:text-slate-900" href={`#${a.id}`}>{a.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </aside>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+              <article className="lg:col-span-8 max-w-3xl text-slate-700">
+                <div className="flex flex-wrap gap-2 mb-8">
+                  <span className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs">ВДНХ, Москва</span>
+                  <span className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs">04.11.2023 — 08.07.2024</span>
+                  <span className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs">Просветительский стенд</span>
+                  <span className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs">Награда: Лучший просветительский стенд</span>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <Button size="lg" onClick={() => setOrderOpen(true)}>Обсудить проект</Button>
+                  <Button variant="outline" size="lg" onClick={() => setConsultOpen(true)}>Получить консультацию</Button>
+                </div>
+              </article>
+
+              <aside className="lg:col-span-4 lg:pl-6">
+                <nav className="top-24 lg:sticky">
+                  <ul className="space-y-2">
+                    {anchors.map((a) => (
+                      <li key={a.id}>
+                        <a className="story-link text-sm text-slate-600 hover:text-slate-900" href={`#${a.id}`}>{a.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </aside>
+            </div>
           </div>
         </section>
 
@@ -244,13 +261,42 @@ const CaseSamaraStand: React.FC = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Медиа</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[1,2,3,4,5,6].map((n) => (
-                <div key={n} className="aspect-video rounded-xl overflow-hidden border bg-muted">
+              {[
+                {
+                  src: "/portfolio/samara-exhibition-1.jpg",
+                  alt: "Выставка Самарской области - интерактивная экспозиция с LED-экранами"
+                },
+                {
+                  src: "/portfolio/auto-exhibition.jpg", 
+                  alt: "Автомобильная выставка с демонстрацией Lada на LED-экранах"
+                },
+                {
+                  src: "/portfolio/regions-presentation.jpg",
+                  alt: "Презентация регионов России с участием представителей"
+                },
+                {
+                  src: "/portfolio/samara-booth.jpg",
+                  alt: "Экспозиция Самарской области - современный выставочный стенд"
+                },
+                {
+                  src: "/portfolio/russia-exhibition.jpg",
+                  alt: "Выставка регионов России - масштабная экспозиция"
+                },
+                {
+                  src: "/portfolio/samara-interactive.jpg",
+                  alt: "Интерактивная зона Самарской области с мультимедийными киосками"
+                }
+              ].map((image, index) => (
+                <div key={index} className="aspect-video rounded-xl overflow-hidden border bg-muted group hover:shadow-lg transition-shadow duration-300">
                   <img
-                    src="/placeholder.svg"
+                    src={image.src}
                     loading="lazy"
-                    alt="Стенд Самарской области — иллюстрация"
-                    className="w-full h-full object-cover"
+                    alt={image.alt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      console.log('❌ Ошибка загрузки изображения:', image.src);
+                      e.currentTarget.src = '/placeholder.svg';
+                    }}
                   />
                 </div>
               ))}

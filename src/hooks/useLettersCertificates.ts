@@ -13,29 +13,41 @@ export const useLettersCertificates = () => {
       setLoading(true);
       setError(null);
       
+      console.log('🔄 useLettersCertificates: Начинаем загрузку данных...');
+      
       const { data, error } = await supabase
         .from('letters_certificates')
         .select('*')
         .eq('is_visible', true)
         .order('sort_order', { ascending: true });
 
+      console.log('📊 useLettersCertificates: Ответ от Supabase:', { data, error });
+
       if (error) {
+        console.error('❌ useLettersCertificates: Ошибка Supabase:', error);
         throw error;
       }
+      
+      console.log('✅ useLettersCertificates: Данные загружены успешно:', data);
       setLetters(data || []);
     } catch (err) {
       console.error('❌ Ошибка при загрузке писем и грамот:', err);
       if (err instanceof Error) {
         if (err.message.includes('relation "letters_certificates" does not exist')) {
+          console.log('📋 useLettersCertificates: Таблица не существует');
           setError('Таблица letters_certificates не найдена. Создайте таблицу в Supabase Dashboard.');
         } else if (err.message.includes('permission denied')) {
+          console.log('🔒 useLettersCertificates: Нет прав доступа');
           setError('Нет прав доступа к таблице letters_certificates.');
         } else if (err.message.includes('Таймаут')) {
+          console.log('⏰ useLettersCertificates: Таймаут');
           setError('Превышено время ожидания загрузки данных. Попробуйте обновить страницу.');
         } else {
+          console.log('❓ useLettersCertificates: Неизвестная ошибка:', err.message);
           setError(err.message);
         }
       } else {
+        console.log('❓ useLettersCertificates: Неизвестная ошибка (не Error)');
         setError('Неизвестная ошибка при загрузке данных');
       }
     } finally {

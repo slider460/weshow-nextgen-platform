@@ -247,10 +247,10 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
 
                 {/* Samsung event card */}
                 <Link 
-                  to="/portfolio/samsung-event"
+                  to="/portfolio"
                   className="gradient-card-dark rounded-3xl p-8 flex flex-col row-span-1 cursor-pointer hover:scale-105 transition-all duration-500 group"
                 >
-                  <h3 className="text-2xl font-bold text-white mb-3 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">A Galaxy Event</h3>
+                  <h3 className="text-2xl font-bold text-white mb-3 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">Самсунг</h3>
                   <p className="text-white/95 text-base mb-6 drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
                     Особенный новый год Samsung
                   </p>

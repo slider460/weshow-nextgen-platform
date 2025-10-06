@@ -210,19 +210,19 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
               </div>
               
               <div className="flex items-center space-x-2">
-                {/* Корзина в заголовке */}
-                <Link 
-                  to="/cart"
-                  className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                  onClick={onClose}
-                >
-                  <ShoppingCart className="w-5 h-5 text-gray-600" />
-                  {cart.totalItems > 0 && (
+                {/* Корзина в заголовке - показывается только если есть товары */}
+                {cart.totalItems > 0 && (
+                  <Link 
+                    to="/cart"
+                    className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                    onClick={onClose}
+                  >
+                    <ShoppingCart className="w-5 h-5 text-gray-600" />
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {cart.totalItems > 99 ? '99+' : cart.totalItems}
                     </span>
-                  )}
-                </Link>
+                  </Link>
+                )}
                 
                 <motion.button
                   onClick={onClose}

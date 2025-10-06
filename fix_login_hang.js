@@ -152,3 +152,5 @@ async function diagnoseLoginIssue() {
 
 // Запуск диагностики
 diagnoseLoginIssue();
+
+

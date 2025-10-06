@@ -20,3 +20,5 @@ CREATE POLICY "Allow all operations" ON logos
 -- 5. Проверяем финальный результат
 SELECT COUNT(*) as final_count FROM logos;
 
+
+

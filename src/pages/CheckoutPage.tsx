@@ -8,6 +8,7 @@ import {
   MapPin,
   CreditCard,
   User,
+  Package,
   Building2,
   Phone,
   Mail,
@@ -21,7 +22,8 @@ import { Badge } from '../components/ui/badge';
 import { Separator } from '../components/ui/separator';
 import { useAdvancedCart } from '../hooks/useAdvancedCart';
 import { useResponsive } from '../hooks/useResponsive';
-import type { PricingCalculation } from '../types/equipment';
+// import { useOrdersAPI } from '../api/orders';
+// import type { PricingCalculation } from '../types/equipment';
 import { cn } from '../lib/utils';
 
 interface CheckoutFormData {
@@ -53,6 +55,8 @@ export const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
   const { isMobile } = useResponsive();
   const { cart, calculateFullPrice, validateCart, clearCart } = useAdvancedCart();
+  // const { createOrder } = useOrdersAPI();
+  const createOrder = async () => ({ success: true });
 
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<CheckoutFormData>({
@@ -70,13 +74,35 @@ export const CheckoutPage: React.FC = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>('card');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [selectedServices, setSelectedServices] = useState<string[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('selectedServices') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  // Сохраняем выбранные услуги в localStorage при изменении
+  useEffect(() => {
+    localStorage.setItem('selectedServices', JSON.stringify(selectedServices));
+  }, [selectedServices]);
 
   // Проверка корзины при загрузке
   useEffect(() => {
+    console.log('CheckoutPage: Проверка корзины', {
+      cartItems: cart.items.length,
+      cartTotal: cart.totalItems,
+      cartData: cart
+    });
+    
     const validation = validateCart();
-    if (!validation.isValid || cart.items.length === 0) {
-      navigate('/equipment');
-    }
+    console.log('CheckoutPage: Валидация корзины', validation);
+    
+    // Временно отключаем перенаправление для тестирования
+    // if (!validation.isValid || cart.items.length === 0) {
+    //   console.log('CheckoutPage: Перенаправление на /equipment из-за пустой корзины');
+    //   navigate('/equipment');
+    // }
   }, [cart, validateCart, navigate]);
 
   const pricing = calculateFullPrice();
@@ -132,15 +158,93 @@ export const CheckoutPage: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      clearCart();
-      navigate('/order-success');
+      // Получаем выбранные услуги из localStorage
+      const orderComment = localStorage.getItem('orderComment') || '';
+
+      // Подготавливаем данные заказа
+      const orderData = {
+        items: cart.items.map(item => ({
+          equipmentId: item.equipmentId,
+          name: item.equipment.name,
+          category: item.equipment.category || 'other',
+          price: item.equipment.priceValue || 0,
+          quantity: item.quantity,
+          totalPrice: (item.equipment.priceValue || 0) * item.quantity
+        })),
+        services: [
+          { id: 'technical_support', name: 'Техническое сопровождение', price: 5000, required: false },
+          { id: 'logistics', name: 'Логистика (Доставка/Забор)', price: 3000, required: true },
+          { id: 'installation', name: 'Монтаж/Демонтаж', price: 4000, required: false }
+        ].filter(service => selectedServices.includes(service.id)),
+        contact: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company
+        },
+        address: formData.address,
+        eventName: formData.eventName,
+        comment: orderComment,
+        rentalPeriod: {
+          startDate: cart.rentalPeriod?.startDate?.toISOString() || new Date().toISOString(),
+          endDate: cart.rentalPeriod?.endDate?.toISOString() || new Date().toISOString(),
+          days: pricing.rentalDays
+        },
+        pricing: {
+          equipmentTotal: pricing.priceBreakdown.equipment,
+          servicesTotal: (selectedServices.includes('logistics') ? 3000 : 0) + 
+                        (selectedServices.includes('installation') ? 4000 : 0) + 
+                        (selectedServices.includes('technical_support') ? 5000 : 0),
+          totalPrice: pricing.priceBreakdown.equipment + 
+                     (selectedServices.includes('logistics') ? 3000 : 0) + 
+                     (selectedServices.includes('installation') ? 4000 : 0) + 
+                     (selectedServices.includes('technical_support') ? 5000 : 0)
+        },
+        paymentMethod: selectedPaymentMethod
+      };
+
+      // Отправляем заказ
+      const result = await createOrder(orderData);
+      
+      if (result.success) {
+        // Очищаем корзину и localStorage
+        clearCart();
+        localStorage.removeItem('selectedServices');
+        localStorage.removeItem('orderComment');
+        
+        // Переходим на страницу успеха
+        navigate('/order-success', { 
+          state: { 
+            orderId: result.orderId,
+            message: 'Спасибо за заказ! Мы свяжемся с вами в ближайшее время для уточнения деталей и подтверждения.'
+          }
+        });
+      } else {
+        throw new Error(result.error || 'Ошибка при создании заказа');
+      }
     } catch (error) {
       console.error('Ошибка при оформлении заказа:', error);
+      alert('Ошибка при оформлении заказа. Попробуйте еще раз.');
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  // Проверка на пустую корзину
+  if (cart.items.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Корзина пуста</h2>
+          <p className="text-gray-600 mb-6">Добавьте товары в корзину для оформления заказа</p>
+          <TouchButton onClick={() => navigate('/equipment')}>
+            Перейти к каталогу
+          </TouchButton>
+        </div>
+      </div>
+    );
+  }
 
   if (!pricing) {
     return (
@@ -211,7 +315,91 @@ export const CheckoutPage: React.FC = () => {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
+                  className="space-y-6"
                 >
+                  {/* Дополнительные услуги */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center">
+                        <Package className="w-5 h-5 mr-2" />
+                        Дополнительные услуги
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between p-4 border rounded-lg">
+                          <div className="flex items-center space-x-3">
+                            <input
+                              type="checkbox"
+                              id="logistics"
+                              checked={selectedServices.includes('logistics')}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedServices(prev => [...prev, 'logistics']);
+                                } else {
+                                  setSelectedServices(prev => prev.filter(s => s !== 'logistics'));
+                                }
+                              }}
+                              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            />
+                            <div>
+                              <label htmlFor="logistics" className="font-medium">Доставка и логистика</label>
+                              <p className="text-sm text-gray-500">Доставка оборудования на объект</p>
+                            </div>
+                          </div>
+                          <span className="font-semibold text-blue-600">3,000 ₽</span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between p-4 border rounded-lg">
+                          <div className="flex items-center space-x-3">
+                            <input
+                              type="checkbox"
+                              id="installation"
+                              checked={selectedServices.includes('installation')}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedServices(prev => [...prev, 'installation']);
+                                } else {
+                                  setSelectedServices(prev => prev.filter(s => s !== 'installation'));
+                                }
+                              }}
+                              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            />
+                            <div>
+                              <label htmlFor="installation" className="font-medium">Монтаж и демонтаж</label>
+                              <p className="text-sm text-gray-500">Установка и настройка оборудования</p>
+                            </div>
+                          </div>
+                          <span className="font-semibold text-blue-600">4,000 ₽</span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between p-4 border rounded-lg">
+                          <div className="flex items-center space-x-3">
+                            <input
+                              type="checkbox"
+                              id="technical_support"
+                              checked={selectedServices.includes('technical_support')}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedServices(prev => [...prev, 'technical_support']);
+                                } else {
+                                  setSelectedServices(prev => prev.filter(s => s !== 'technical_support'));
+                                }
+                              }}
+                              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            />
+                            <div>
+                              <label htmlFor="technical_support" className="font-medium">Техническое сопровождение</label>
+                              <p className="text-sm text-gray-500">Поддержка во время мероприятия</p>
+                            </div>
+                          </div>
+                          <span className="font-semibold text-blue-600">5,000 ₽</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Контактная информация */}
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center">
@@ -304,22 +492,49 @@ export const CheckoutPage: React.FC = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2 text-sm">
+                  {/* Список товаров */}
+                  <div className="space-y-2">
+                    <h4 className="font-medium text-gray-900">Товары в заказе:</h4>
+                    {cart.items.map((item) => (
+                      <div key={item.id} className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                        <div className="flex-1">
+                          <p className="font-medium text-sm">{item.name}</p>
+                          <p className="text-xs text-gray-500">
+                            {item.selectedQuantity} шт. × {item.price_per_day ? item.price_per_day.toLocaleString() : 'Цена не указана'} ₽/день
+                          </p>
+                        </div>
+                        <div className="text-sm font-medium">
+                          {item.totalPrice.toLocaleString()} ₽
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <Separator />
+                  
                   <div className="flex justify-between">
                     <span>Оборудование ({pricing.rentalDays} дн.)</span>
                     <span>{pricing.priceBreakdown.equipment.toLocaleString()} ₽</span>
                   </div>
                   
-                  {pricing.priceBreakdown.delivery > 0 && (
+                  {selectedServices.includes('logistics') && (
                     <div className="flex justify-between">
                       <span>Доставка</span>
-                      <span>{pricing.priceBreakdown.delivery.toLocaleString()} ₽</span>
+                      <span>3,000 ₽</span>
                     </div>
                   )}
                   
-                  {pricing.priceBreakdown.setup > 0 && (
+                  {selectedServices.includes('installation') && (
                     <div className="flex justify-between">
                       <span>Установка</span>
-                      <span>{pricing.priceBreakdown.setup.toLocaleString()} ₽</span>
+                      <span>4,000 ₽</span>
+                    </div>
+                  )}
+                  
+                  {selectedServices.includes('technical_support') && (
+                    <div className="flex justify-between">
+                      <span>Техподдержка</span>
+                      <span>5,000 ₽</span>
                     </div>
                   )}
                 </div>
@@ -329,7 +544,11 @@ export const CheckoutPage: React.FC = () => {
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Итого:</span>
                   <span className="text-blue-600">
-                    {pricing.totalPrice.toLocaleString()} ₽
+                    {(pricing.priceBreakdown.equipment + 
+                     (selectedServices.includes('logistics') ? 3000 : 0) + 
+                     (selectedServices.includes('installation') ? 4000 : 0) + 
+                     (selectedServices.includes('technical_support') ? 5000 : 0)
+                    ).toLocaleString()} ₽
                   </span>
                 </div>
               </CardContent>

@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 import React, { useState, useEffect, ReactNode } from 'react';
 
 // Хук для работы с размерами экрана

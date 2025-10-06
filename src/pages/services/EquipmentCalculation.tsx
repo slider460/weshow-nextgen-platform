@@ -29,7 +29,7 @@ interface EquipmentItem {
   id: string;
   name: string;
   description: string;
-  price_per_day: number;
+  price_per_day: number | null;
   category_name: string;
   quantity: number;
 }
@@ -108,7 +108,7 @@ const EquipmentCalculation = () => {
           ? {
               ...cartItem,
               selectedQuantity: cartItem.selectedQuantity + 1,
-              totalPrice: (cartItem.selectedQuantity + 1) * cartItem.price_per_day
+              totalPrice: (cartItem.selectedQuantity + 1) * (cartItem.price_per_day || 0)
             }
           : cartItem
       ));
@@ -116,7 +116,7 @@ const EquipmentCalculation = () => {
       setCart([...cart, {
         ...item,
         selectedQuantity: 1,
-        totalPrice: item.price_per_day
+        totalPrice: item.price_per_day || 0
       }]);
     }
   };
@@ -132,7 +132,7 @@ const EquipmentCalculation = () => {
         ? {
             ...item,
             selectedQuantity: quantity,
-            totalPrice: quantity * item.price_per_day
+            totalPrice: quantity * (item.price_per_day || 0)
           }
         : item
     ));
@@ -189,7 +189,7 @@ const EquipmentCalculation = () => {
         estimate_id: estimate.id,
         equipment_id: item.id,
         quantity: item.selectedQuantity,
-        price_at_creation: item.price_per_day
+        price_at_creation: item.price_per_day || 0
       }));
 
       console.log('Добавляем позиции:', estimateItems);
@@ -313,7 +313,7 @@ const EquipmentCalculation = () => {
                           <CardDescription>{item.category_name}</CardDescription>
                         </div>
                         <Badge variant="secondary">
-                          {item.price_per_day.toLocaleString()} ₽/день
+                          {item.price_per_day ? item.price_per_day.toLocaleString() : 'Цена не указана'} ₽/день
                         </Badge>
                       </div>
                     </CardHeader>
@@ -362,7 +362,9 @@ const EquipmentCalculation = () => {
                           <div key={item.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                             <div className="flex-1">
                               <p className="font-medium text-sm">{item.name}</p>
-                              <p className="text-xs text-slate-500">{item.price_per_day.toLocaleString()} ₽/день</p>
+                              <p className="text-xs text-slate-500">
+                                {item.price_per_day ? item.price_per_day.toLocaleString() : 'Цена не указана'} ₽/день
+                              </p>
                             </div>
                             <div className="flex items-center space-x-2">
                               <Button

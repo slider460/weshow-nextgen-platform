@@ -1,381 +1,351 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { 
-  Mail, 
-  Lock, 
-  Eye, 
-  EyeOff, 
-  User, 
-  Phone, 
-  Building, 
-  ArrowRight, 
-  AlertCircle,
-  CheckCircle,
-  Loader,
-  Check
-} from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { ArrowLeft, Mail, Lock, Eye, EyeOff, User, Building, AlertCircle, Check } from 'lucide-react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { Button } from '../components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { TouchButton, TouchInput } from '../components/TouchFriendlyComponents';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 
-const RegisterPage = () => {
+const RegisterPage: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
-    password: '',
-    confirmPassword: '',
-    name: '',
+    company: '',
     phone: '',
-    company: ''
+    password: '',
+    confirmPassword: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-
-  const { register } = useAuth();
-  const navigate = useNavigate();
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    setError('');
-  };
-
-  const validateForm = () => {
-    if (!formData.email || !formData.password || !formData.name) {
-      return 'Пожалуйста, заполните все обязательные поля';
-    }
-
-    if (formData.password.length < 6) {
-      return 'Пароль должен содержать минимум 6 символов';
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      return 'Пароли не совпадают';
-    }
-
-    if (!formData.email.includes('@')) {
-      return 'Введите корректный email адрес';
-    }
-
-    if (!agreedToTerms) {
-      return 'Необходимо согласиться с условиями использования';
-    }
-
-    return null;
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     setError('');
-    setSuccess('');
 
-    const validationError = validateForm();
-    if (validationError) {
-      setError(validationError);
+    // Валидация
+    if (formData.password !== formData.confirmPassword) {
+      setError('Пароли не совпадают');
+      setIsLoading(false);
       return;
     }
 
-    setIsLoading(true);
+    if (!agreedToTerms) {
+      setError('Необходимо согласиться с условиями использования');
+      setIsLoading(false);
+      return;
+    }
 
     try {
-      const result = await register({
-        email: formData.email,
-        password: formData.password,
-        name: formData.name,
-        phone: formData.phone,
-        company: formData.company
-      });
+      // Здесь будет логика регистрации
+      console.log('Registration attempt:', formData);
       
-      if (result.success) {
-        setSuccess('Регистрация прошла успешно! Добро пожаловать!');
-        // Небольшая задержка для показа успешного сообщения
-        setTimeout(() => {
-          navigate('/');
-        }, 1500);
-      } else {
-        setError(result.error || 'Ошибка регистрации');
-      }
-    } catch (error) {
-      setError('Произошла ошибка. Попробуйте позже.');
+      // Имитация задержки
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Перенаправляем на главную страницу
+      navigate('/');
+    } catch (err) {
+      setError('Ошибка при регистрации. Попробуйте еще раз.');
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
-      >
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-block"
-          >
-            <div className="w-16 h-16 bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-600 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-4">
-              <span className="text-white font-black text-2xl">W</span>
-            </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">WeShow Platform</h1>
-            <p className="text-gray-600 text-sm">Создайте новый аккаунт</p>
-          </motion.div>
-        </div>
+    <div className="min-h-screen bg-slate-50">
+      <Header />
+      
+      <main className="pt-20">
+        <div className="container mx-auto px-4 py-12">
+          {/* Breadcrumb */}
+          <nav className="flex items-center space-x-2 text-sm text-slate-600 mb-8">
+            <Link to="/" className="hover:text-blue-600 transition-colors">
+              Главная
+            </Link>
+            <span>/</span>
+            <span className="text-slate-900">Регистрация</span>
+          </nav>
 
-        {/* Registration Form */}
-        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center pb-4">
-            <CardTitle className="text-xl font-semibold text-gray-900">
-              Регистрация
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Error Message */}
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-center space-x-2"
-              >
-                <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
-                <span className="text-sm text-red-700">{error}</span>
-              </motion.div>
-            )}
-
-            {/* Success Message */}
-            {success && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-green-50 border border-green-200 rounded-lg p-3 flex items-center space-x-2"
-              >
-                <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                <span className="text-sm text-green-700">{success}</span>
-              </motion.div>
-            )}
-
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Name Field */}
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium text-gray-700">
-                  Имя и фамилия *
-                </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <TouchInput
-                    id="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
-                    placeholder="Введите ваше имя"
-                    className="pl-10"
-                    disabled={isLoading}
-                  />
+          <div className="max-w-md mx-auto">
+            <Card className="shadow-xl">
+              <CardHeader className="text-center">
+                <div className="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                  <User className="w-6 h-6 text-green-600" />
                 </div>
-              </div>
+                <CardTitle className="text-2xl font-bold text-slate-900">
+                  Создать аккаунт
+                </CardTitle>
+                <CardDescription className="text-slate-600">
+                  Зарегистрируйтесь для доступа к персональным услугам и скидкам
+                </CardDescription>
+              </CardHeader>
+              
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {error && (
+                    <div className="flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700">
+                      <AlertCircle className="w-4 h-4" />
+                      <span className="text-sm">{error}</span>
+                    </div>
+                  )}
 
-              {/* Email Field */}
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium text-gray-700">
-                  Email адрес *
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <TouchInput
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    placeholder="user@example.com"
-                    className="pl-10"
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-
-              {/* Phone Field */}
-              <div className="space-y-2">
-                <label htmlFor="phone" className="text-sm font-medium text-gray-700">
-                  Телефон
-                </label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <TouchInput
-                    id="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange('phone', e.target.value)}
-                    placeholder="+7 (912) 345-67-89"
-                    className="pl-10"
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-
-              {/* Company Field */}
-              <div className="space-y-2">
-                <label htmlFor="company" className="text-sm font-medium text-gray-700">
-                  Компания
-                </label>
-                <div className="relative">
-                  <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <TouchInput
-                    id="company"
-                    type="text"
-                    value={formData.company}
-                    onChange={(e) => handleInputChange('company', e.target.value)}
-                    placeholder="Название компании"
-                    className="pl-10"
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-
-              {/* Password Field */}
-              <div className="space-y-2">
-                <label htmlFor="password" className="text-sm font-medium text-gray-700">
-                  Пароль *
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <TouchInput
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    value={formData.password}
-                    onChange={(e) => handleInputChange('password', e.target.value)}
-                    placeholder="Минимум 6 символов"
-                    className="pl-10 pr-10"
-                    disabled={isLoading}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    disabled={isLoading}
-                  >
-                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                  </button>
-                </div>
-              </div>
-
-              {/* Confirm Password Field */}
-              <div className="space-y-2">
-                <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
-                  Подтвердите пароль *
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <TouchInput
-                    id="confirmPassword"
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    value={formData.confirmPassword}
-                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                    placeholder="Повторите пароль"
-                    className="pl-10 pr-10"
-                    disabled={isLoading}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    disabled={isLoading}
-                  >
-                    {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                  </button>
-                </div>
-              </div>
-
-              {/* Terms Agreement */}
-              <div className="flex items-start space-x-3">
-                <div className="relative flex-shrink-0 mt-1">
-                  <input
-                    type="checkbox"
-                    id="terms"
-                    checked={agreedToTerms}
-                    onChange={(e) => setAgreedToTerms(e.target.checked)}
-                    className="sr-only"
-                    disabled={isLoading}
-                  />
-                  <TouchButton
-                    type="button"
-                    onClick={() => setAgreedToTerms(!agreedToTerms)}
-                    className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
-                      agreedToTerms 
-                        ? 'bg-blue-600 border-blue-600' 
-                        : 'bg-white border-gray-300 hover:border-gray-400'
-                    }`}
-                    size="sm"
-                    disabled={isLoading}
-                  >
-                    {agreedToTerms && <Check className="w-3 h-3 text-white" />}
-                  </TouchButton>
-                </div>
-                <label htmlFor="terms" className="text-sm text-gray-600 leading-relaxed">
-                  Я согласен с{' '}
-                  <Link to="/terms" className="text-blue-600 hover:text-blue-700 hover:underline">
-                    условиями использования
-                  </Link>
-                  {' '}и{' '}
-                  <Link to="/privacy" className="text-blue-600 hover:text-blue-700 hover:underline">
-                    политикой конфиденциальности
-                  </Link>
-                </label>
-              </div>
-
-              {/* Submit Button */}
-              <TouchButton
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium"
-              >
-                {isLoading ? (
-                  <div className="flex items-center justify-center space-x-2">
-                    <Loader className="h-4 w-4 animate-spin" />
-                    <span>Регистрация...</span>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">Имя</Label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                        <Input
+                          id="firstName"
+                          name="firstName"
+                          type="text"
+                          value={formData.firstName}
+                          onChange={handleChange}
+                          placeholder="Имя"
+                          className="pl-10"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Фамилия</Label>
+                      <Input
+                        id="lastName"
+                        name="lastName"
+                        type="text"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        placeholder="Фамилия"
+                        required
+                      />
+                    </div>
                   </div>
-                ) : (
-                  <div className="flex items-center justify-center space-x-2">
-                    <span>Создать аккаунт</span>
-                    <ArrowRight className="h-4 w-4" />
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="your@email.com"
+                        className="pl-10"
+                        required
+                      />
+                    </div>
                   </div>
-                )}
-              </TouchButton>
-            </form>
 
-            {/* Login Link */}
-            <div className="text-center pt-4 border-t border-gray-200">
-              <p className="text-sm text-gray-600">
-                Уже есть аккаунт?{' '}
-                <Link 
-                  to="/login" 
-                  className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
-                >
-                  Войти
-                </Link>
-              </p>
-            </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="company">Компания (необязательно)</Label>
+                    <div className="relative">
+                      <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                      <Input
+                        id="company"
+                        name="company"
+                        type="text"
+                        value={formData.company}
+                        onChange={handleChange}
+                        placeholder="Название компании"
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
 
-            {/* Back to Home */}
-            <div className="text-center">
-              <Link 
-                to="/" 
-                className="text-sm text-gray-500 hover:text-gray-700 hover:underline"
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Телефон</Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+7 (999) 123-45-67"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="password">Пароль</Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                      <Input
+                        id="password"
+                        name="password"
+                        type={showPassword ? 'text' : 'password'}
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Минимум 8 символов"
+                        className="pl-10 pr-10"
+                        required
+                        minLength={8}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">Подтвердите пароль</Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                      <Input
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        placeholder="Повторите пароль"
+                        className="pl-10 pr-10"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      >
+                        {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-3">
+                      <input
+                        type="checkbox"
+                        id="terms"
+                        checked={agreedToTerms}
+                        onChange={(e) => setAgreedToTerms(e.target.checked)}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1"
+                      />
+                      <Label htmlFor="terms" className="text-sm text-slate-600">
+                        Я согласен с{' '}
+                        <Link
+                          to="/terms"
+                          className="text-blue-600 hover:text-blue-700 hover:underline"
+                        >
+                          условиями использования
+                        </Link>{' '}
+                        и{' '}
+                        <Link
+                          to="/privacy"
+                          className="text-blue-600 hover:text-blue-700 hover:underline"
+                        >
+                          политикой конфиденциальности
+                        </Link>
+                      </Label>
+                    </div>
+
+                    <div className="flex items-start space-x-3">
+                      <input
+                        type="checkbox"
+                        id="newsletter"
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1"
+                      />
+                      <Label htmlFor="newsletter" className="text-sm text-slate-600">
+                        Подписаться на новости и специальные предложения
+                      </Label>
+                    </div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isLoading || !agreedToTerms}
+                  >
+                    {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+                  </Button>
+                </form>
+
+                <div className="mt-6 text-center">
+                  <p className="text-slate-600">
+                    Уже есть аккаунт?{' '}
+                    <Link
+                      to="/login"
+                      className="text-blue-600 hover:text-blue-700 hover:underline font-medium"
+                    >
+                      Войти
+                    </Link>
+                  </p>
+                </div>
+
+                <div className="mt-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-slate-200" />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-2 bg-white text-slate-500">Или</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 space-y-3">
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => console.log('Google register')}
+                    >
+                      <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                        />
+                        <path
+                          fill="currentColor"
+                          d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                        />
+                        <path
+                          fill="currentColor"
+                          d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                        />
+                        <path
+                          fill="currentColor"
+                          d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                        />
+                      </svg>
+                      Зарегистрироваться через Google
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Back to home */}
+            <div className="text-center mt-6">
+              <Link
+                to="/"
+                className="inline-flex items-center text-slate-600 hover:text-slate-900 transition-colors"
               >
-                ← Вернуться на главную
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Вернуться на главную
               </Link>
             </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
     </div>
   );
 };

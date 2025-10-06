@@ -14,6 +14,12 @@ import Blog from "./pages/Blog";
 import News from "./pages/News";
 import Careers from "./pages/Careers";
 import Equipment from "./pages/Equipment";
+import CheckoutPage from "./pages/CheckoutPage";
+import TermsPage from "./pages/TermsPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import CaseSamaraStand from "./pages/CaseSamaraStand";
 import SamsungEvent from "./pages/SamsungEvent";
 import TestPage from "./pages/TestPage";
@@ -31,6 +37,13 @@ import RestApiEquipmentTest from "./pages/RestApiEquipmentTest";
 import TestPortfolioLoading from "./pages/TestPortfolioLoading";
 import TestEquipmentPage from "./pages/TestEquipmentPage";
 import TestEquipmentData from "./pages/TestEquipmentData";
+import TestCasesLoading from "./pages/TestCasesLoading";
+import TestCasesDisplay from "./pages/TestCasesDisplay";
+import TestCasesImages from "./pages/TestCasesImages";
+import TestImageUrls from "./pages/TestImageUrls";
+import TestCaseSave from "./pages/TestCaseSave";
+import TestCaseSaveDebug from "./pages/TestCaseSaveDebug";
+import TestImageUpload from "./pages/TestImageUpload";
 import EquipmentCatalogAdmin from "./pages/admin/EquipmentCatalogAdmin";
 import QuickAddEquipment from "./pages/QuickAddEquipment";
 import CSVImportEquipment from "./pages/CSVImportEquipment";
@@ -58,6 +71,11 @@ import FlexibleNeon from "./pages/services/FlexibleNeon";
 import ProjectionScreens from "./pages/services/ProjectionScreens";
 import HolographicFans from "./pages/services/HolographicFans";
 import ArGlasses from "./pages/services/ArGlasses";
+import ProjectionMapping from "./pages/services/ProjectionMapping";
+import HolographicDisplays from "./pages/services/HolographicDisplays";
+import SpacePlanning from "./pages/services/SpacePlanning";
+import TechSupport from "./pages/services/TechSupport";
+import SystemIntegration from "./pages/services/SystemIntegration";
 
 // Страницы разработки
 import ArVrApps from "./pages/services/ArVrApps";
@@ -74,7 +92,6 @@ import CorporateDesign from "./pages/services/CorporateDesign";
 import SpaceDecoration from "./pages/services/SpaceDecoration";
 
 // Страницы технической поддержки
-import TechSupport from "./pages/services/TechSupport";
 import Installation from "./pages/services/Installation";
 import Configuration from "./pages/services/Configuration";
 import EquipmentDiagnostics from "./pages/services/EquipmentDiagnostics";
@@ -95,7 +112,6 @@ import DatabaseManagement from './pages/DatabaseManagement';
 import AdminPanel from './pages/admin/AdminPanel';
 
 // Страницы комплексных решений
-import SystemIntegration from "./pages/services/SystemIntegration";
 import SystemConfiguration from "./pages/services/SystemConfiguration";
 import SystemTesting from "./pages/services/SystemTesting";
 import ProcessAutomation from "./pages/services/ProcessAutomation";
@@ -113,7 +129,6 @@ import CopyServicesBlocksSQL from "./pages/CopyServicesBlocksSQL";
 import CopyCasesSQL from "./pages/CopyCasesSQL";
 import SetupSupabaseStorage from "./pages/SetupSupabaseStorage";
 import SimpleStorageFix from "./pages/SimpleStorageFix";
-import TestCasesDisplay from "./pages/TestCasesDisplay";
 import DebugPortfolio from "./pages/DebugPortfolio";
 import CaseDetail from "./pages/CaseDetail";
 import CaseManagement from "./pages/admin/CaseManagement";
@@ -135,6 +150,8 @@ import ClearLogosData from "./pages/ClearLogosData";
 import TestLogosSync from "./pages/TestLogosSync";
 import TestLogoDeletion from "./pages/TestLogoDeletion";
 import ForceRefreshLogos from "./pages/ForceRefreshLogos";
+import CartPage from "./pages/CartPage";
+import OrderSuccessPage from "./pages/OrderSuccessPage";
 import DebugLogos from "./pages/DebugLogos";
 import ClearAllLogos from "./pages/ClearAllLogos";
 import ClearAllLogosSQL from "./pages/ClearAllLogosSQL";
@@ -159,7 +176,6 @@ import TestRestLogos from "./pages/TestRestLogos";
 import TestRestApi from "./pages/TestRestApi";
 
 // Страницы пространственного проектирования
-import SpacePlanning from "./pages/services/SpacePlanning";
 import SpaceDesign from "./pages/services/SpaceDesign";
 import SpaceImplementation from "./pages/services/SpaceImplementation";
 import ThreeDModeling from "./pages/services/ThreeDModeling";
@@ -189,6 +205,12 @@ const App = () => (
         <Route path="/news" element={<News />} style={{display: 'none'}} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/equipment" element={<Equipment />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/debug-cart" element={<DebugCart />} />
         <Route path="/logos" element={<LogosManagement />} />
         <Route path="/game" element={<Game />} />
@@ -228,6 +250,11 @@ const App = () => (
         <Route path="/setup-supabase-storage" element={<SetupSupabaseStorage />} />
         <Route path="/simple-storage-fix" element={<SimpleStorageFix />} />
         <Route path="/test-cases-display" element={<TestCasesDisplay />} />
+        <Route path="/test-cases-images" element={<TestCasesImages />} />
+        <Route path="/test-image-urls" element={<TestImageUrls />} />
+        <Route path="/test-case-save" element={<TestCaseSave />} />
+        <Route path="/test-case-save-debug" element={<TestCaseSaveDebug />} />
+        <Route path="/test-image-upload" element={<TestImageUpload />} />
         <Route path="/debug-portfolio" element={<DebugPortfolio />} />
         <Route path="/admin/cases" element={<CaseManagement />} />
         <Route path="/add-case-fields-sql" element={<AddCaseFieldsSQL />} />
@@ -248,6 +275,8 @@ const App = () => (
         <Route path="/test-logos-sync" element={<TestLogosSync />} />
         <Route path="/test-logo-deletion" element={<TestLogoDeletion />} />
         <Route path="/force-refresh-logos" element={<ForceRefreshLogos />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/order-success" element={<OrderSuccessPage />} />
         <Route path="/debug-logos" element={<DebugLogos />} />
         <Route path="/clear-all-logos" element={<ClearAllLogos />} />
         <Route path="/clear-all-logos-sql" element={<ClearAllLogosSQL />} />
@@ -280,6 +309,7 @@ const App = () => (
         <Route path="/test-portfolio-loading" element={<TestPortfolioLoading />} />
         <Route path="/test-equipment-page" element={<TestEquipmentPage />} />
         <Route path="/test-equipment-data" element={<TestEquipmentData />} />
+        <Route path="/test-cases-loading" element={<TestCasesLoading />} />
         <Route path="/test-inline" element={
           <div style={{ 
             minHeight: '100vh', 
@@ -495,6 +525,11 @@ const App = () => (
         <Route path="/services/projection-screens" element={<ProjectionScreens />} />
         <Route path="/services/holographic-fans" element={<HolographicFans />} />
         <Route path="/services/ar-glasses" element={<ArGlasses />} />
+        <Route path="/services/projection-mapping" element={<ProjectionMapping />} />
+        <Route path="/services/holographic-displays" element={<HolographicDisplays />} />
+        <Route path="/services/space-planning" element={<SpacePlanning />} />
+        <Route path="/services/tech-support" element={<TechSupport />} />
+        <Route path="/services/system-integration" element={<SystemIntegration />} />
         
         {/* Страницы разработки */}
         <Route path="/services/ar-vr-apps" element={<ArVrApps />} />

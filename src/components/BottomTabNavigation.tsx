@@ -61,14 +61,14 @@ export const BottomTabNavigation: React.FC<BottomTabNavigationProps> = ({
       path: '/search',
       description: 'Поиск по сайту'
     },
-    {
+    ...(cart.totalItems > 0 ? [{
       id: 'cart',
       label: 'Корзина',
       icon: ShoppingCart,
       path: '/cart',
-      badge: cart.totalItems > 0 ? cart.totalItems : undefined,
+      badge: cart.totalItems,
       description: 'Корзина покупок'
-    },
+    }] : []),
     {
       id: 'profile',
       label: isAuthenticated ? 'Профиль' : 'Войти',
