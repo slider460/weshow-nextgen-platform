@@ -1,5 +1,5 @@
 
-// WESHOW NextGen Platform - Updated: 2025-10-06 19:55 MSK
+// WESHOW NextGen Platform - Updated: 2025-10-06 20:00 MSK - FORCE UPDATE
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import { LanguageProvider } from "./contexts/LanguageContext";
