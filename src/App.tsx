@@ -1,5 +1,5 @@
 
-// WESHOW NextGen Platform - Updated: 2025-10-06 21:30 MSK - PERFORMANCE OPTIMIZED
+// WESHOW NextGen Platform - Updated: 2025-10-06 21:45 MSK - PERFORMANCE OPTIMIZED - FORCE DEPLOY
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import { LanguageProvider } from "./contexts/LanguageContext";
