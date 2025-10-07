@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 WESHOW - Запуск рабочей версии</title>
+    <style>
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .launcher {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            font-weight: bold;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        .status {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #4caf50;
+        }
+        .launch-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .launch-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .feature h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .feature p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .url-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.1em;
+            color: #333;
+            margin: 20px 0;
+            border: 2px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="launcher">
+        <div class="logo">W</div>
+        <h1>WESHOW</h1>
+        <p class="subtitle">Комплексные мультимедийные решения для бизнеса</p>
+        
+        <div class="status">
+            <strong>✅ Статус:</strong> Рабочая версия сайта запущена и готова к использованию
+        </div>
+        
+        <div class="url-display">
+            🌐 <strong>URL:</strong> http://localhost:8085
+        </div>
+        
+        <a href="http://localhost:8085" class="launch-btn" target="_blank">
+            🚀 Открыть сайт
+        </a>
+        
+        <a href="http://localhost:8085/test-final.html" class="launch-btn" target="_blank">
+            🧪 Тестовая панель
+        </a>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🏠 Главная страница</h3>
+                <p>Современный дизайн с анимациями и интерактивными элементами</p>
+            </div>
+            <div class="feature">
+                <h3>📱 Адаптивность</h3>
+                <p>Полностью адаптивный дизайн для всех устройств</p>
+            </div>
+            <div class="feature">
+                <h3>🎨 Портфолио</h3>
+                <p>Интерактивная галерея проектов и кейсов</p>
+            </div>
+            <div class="feature">
+                <h3>📞 Контакты</h3>
+                <p>Формы обратной связи и контактная информация</p>
+            </div>
+            <div class="feature">
+                <h3>🛠️ Услуги</h3>
+                <p>Подробное описание всех предоставляемых услуг</p>
+            </div>
+            <div class="feature">
+                <h3>👥 Команда</h3>
+                <p>Информация о команде и экспертах</p>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <h3 style="margin-top: 0; color: #333;">🔧 Технические особенности</h3>
+            <ul style="text-align: left; color: #666; line-height: 1.6;">
+                <li>React 18 с TypeScript</li>
+                <li>Tailwind CSS для стилизации</li>
+                <li>React Router для навигации</li>
+                <li>Framer Motion для анимаций</li>
+                <li>Radix UI компоненты</li>
+                <li>Обработка ошибок и безопасные контексты</li>
+            </ul>
+        </div>
+        
+        <div style="margin-top: 20px; font-size: 0.9em; color: #999;">
+            <p>Время запуска: <span id="currentTime"></span></p>
+            <p>Версия: 1.0.0 | Статус: ✅ Работает</p>
+        </div>
+    </div>
+
+    <script>
+        // Обновляем время
+        document.getElementById('currentTime').textContent = new Date().toLocaleString('ru-RU');
+        
+        // Проверяем доступность сайта
+        fetch('http://localhost:8085')
+            .then(response => {
+                if (response.ok) {
+                    console.log('✅ Сайт доступен');
+                } else {
+                    console.warn('⚠️ Сайт отвечает с ошибкой:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('❌ Ошибка подключения к сайту:', error);
+            });
+    </script>
+</body>
+</html>
+
+

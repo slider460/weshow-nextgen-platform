@@ -13,6 +13,7 @@ import {
 import { EquipmentGrid } from '../components/EquipmentGridCatalog';
 import { AdvancedEquipmentCart } from '../components/AdvancedEquipmentCart';
 import { TouchButton } from '../components/TouchFriendlyComponents';
+import { EquipmentGridSkeleton } from '../components/EquipmentGridSkeleton';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Badge } from '../components/ui/badge';
@@ -21,6 +22,7 @@ import { useAdvancedCart } from '../hooks/useAdvancedCart';
 import { useResponsive } from '../hooks/useResponsive';
 import { mockEquipment, getFeaturedEquipment, getEquipmentCategories } from '../data/equipmentData';
 import { getEquipment } from '../api/equipment';
+import { usePreloadedData } from '../hooks/usePreloader';
 import type { Equipment, EquipmentFilters, EquipmentCategory } from '../types/equipment';
 import { cn } from '../lib/utils';
 
@@ -61,6 +63,9 @@ export const CatalogPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isMobile } = useResponsive();
   const { cart } = useAdvancedCart();
+  
+  // Используем предзагруженные данные
+  const { equipment: preloadedEquipment, categories: preloadedCategories, isLoading: preloadedLoading } = usePreloadedData();
 
   // Состояние страницы
   const [equipment, setEquipment] = useState<Equipment[]>([]);
@@ -73,99 +78,75 @@ export const CatalogPage: React.FC = () => {
   const searchQuery = searchParams.get('search') || '';
   const categoryParam = searchParams.get('category') as EquipmentCategory;
 
-  // Загрузка данных из Supabase
+  // Используем предзагруженные данные
   useEffect(() => {
-    const loadEquipment = async () => {
-      try {
-        setLoading(true);
-        console.log('Загружаем товары из Supabase...');
-        
-        // Прямой запрос к Supabase API
-        const response = await fetch('https://zbykhdjqrtqftfitbvbt.supabase.co/rest/v1/equipment_catalog?select=*,equipment_categories(*)', {
-          method: 'GET',
-          headers: {
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE',
-            'Content-Type': 'application/json'
-          },
-          mode: 'cors'
-        });
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log('Получено товаров:', data.length);
-        
-        // Маппинг категорий
-        const categoryMapping: Record<string, string> = {
-          '464a3da6-4944-4778-9e84-e28fa43f4f03': 'audio',
-          'aafa4e79-347b-4e5a-99e8-fad53f77abb6': 'projection', 
-          'eaece304-35d0-4909-8f4f-621cee215257': 'projection',
-          '18eaed84-0ef1-4fd4-ac8f-4882a039ceb1': 'lighting'
-        };
-        
-        // Преобразуем данные из Supabase в формат приложения
-        const transformedData = data.map((item: any) => ({
-          id: item.id,
-          name: item.name,
-          category: categoryMapping[item.category_id] || 'other',
-          brand: 'WESHOW',
-          model: item.name,
-          description: item.description || '',
-          specifications: item.specifications || {},
-          pricing: {
-            dailyRate: item.price_per_day,
-            weeklyRate: item.price_per_day * 5,
-            monthlyRate: item.price_per_day * 20,
-            setupFee: 0,
-            deliveryFee: 0,
-            minimumRental: 1
-          },
-          availability: {
-            total: item.stock_quantity,
-            available: item.stock_quantity,
-            reserved: 0,
-            inRepair: 0
-          },
-          media: {
-            images: item.main_image_url ? [item.main_image_url] : ['/api/placeholder/600/400'],
-            thumbnail: item.main_image_url || '/api/placeholder/300/200',
-            videos: [],
-            documents: []
-          },
-          requirements: {
-            power: '220В',
-            space: 'Стандартное',
-            setup: 'Профессиональная установка',
-            staff: '1-2 специалиста'
-          },
-          tags: [item.equipment_categories?.name || 'Оборудование'],
-          rating: {
-            average: 4.5,
-            count: Math.floor(Math.random() * 50) + 10
-          },
-          createdAt: new Date(item.created_at),
-          updatedAt: new Date(item.updated_at),
-          isActive: true,
-          featured: Math.random() > 0.7
-        }));
-        
-        console.log('Преобразовано товаров:', transformedData.length);
-        console.log('Первые 3 товара:', transformedData.slice(0, 3).map(item => item.name));
-        setEquipment(transformedData);
-      } catch (error) {
-        console.error('Ошибка загрузки товаров:', error);
-        // Fallback на моковые данные
-        setEquipment(mockEquipment);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadEquipment();
-  }, []);
+    if (preloadedEquipment && preloadedEquipment.length > 0) {
+      console.log('✅ Используем предзагруженные данные каталога:', preloadedEquipment.length);
+      
+      // Маппинг категорий
+      const categoryMapping: Record<string, string> = {
+        '464a3da6-4944-4778-9e84-e28fa43f4f03': 'audio',
+        'aafa4e79-347b-4e5a-99e8-fad53f77abb6': 'projection', 
+        'eaece304-35d0-4909-8f4f-621cee215257': 'projection',
+        '18eaed84-0ef1-4fd4-ac8f-4882a039ceb1': 'lighting'
+      };
+      
+      // Преобразуем данные из Supabase в формат приложения
+      const transformedData = preloadedEquipment.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+        category: categoryMapping[item.category_id] || 'other',
+        brand: 'WESHOW',
+        model: item.name,
+        description: item.description || '',
+        specifications: item.specifications || {},
+        pricing: {
+          dailyRate: item.price_per_day,
+          weeklyRate: item.price_per_day * 5,
+          monthlyRate: item.price_per_day * 20,
+          setupFee: 0,
+          deliveryFee: 0,
+          minimumRental: 1
+        },
+        availability: {
+          total: item.stock_quantity,
+          available: item.stock_quantity,
+          reserved: 0,
+          inRepair: 0
+        },
+        media: {
+          images: item.main_image_url ? [item.main_image_url] : ['/api/placeholder/600/400'],
+          thumbnail: item.main_image_url || '/api/placeholder/300/200',
+          videos: [],
+          documents: []
+        },
+        requirements: {
+          power: '220В',
+          space: 'Стандартное',
+          setup: 'Профессиональная установка',
+          staff: '1-2 специалиста'
+        },
+        tags: [item.equipment_categories?.name || 'Оборудование'],
+        rating: {
+          average: 4.5,
+          count: Math.floor(Math.random() * 50) + 10
+        },
+        createdAt: new Date(item.created_at),
+        updatedAt: new Date(item.updated_at),
+        isActive: true,
+        featured: Math.random() > 0.7
+      }));
+      
+      console.log('✅ Преобразовано товаров:', transformedData.length);
+      setEquipment(transformedData);
+      setLoading(false);
+    } else if (!preloadedLoading) {
+      // Если предзагрузка завершена, но данных нет, используем mock данные
+      console.log('⚠️ Предзагруженных данных нет, используем mock данные');
+      setEquipment(mockEquipment);
+      setLoading(false);
+    }
+  }, [preloadedEquipment, preloadedLoading]);
 
   // Инициализация фильтров из URL параметров
   useEffect(() => {

@@ -23,3 +23,4 @@
 
 - PDF: .pdf
 - Изображения: .jpg, .jpeg, .png, .webp
+

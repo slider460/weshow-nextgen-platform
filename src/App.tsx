@@ -1,10 +1,12 @@
 
-// WESHOW NextGen Platform - Updated: 2025-10-06 20:00 MSK - FORCE UPDATE
+// WESHOW NextGen Platform - Updated: 2025-10-06 21:30 MSK - PERFORMANCE OPTIMIZED
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { LogosProvider } from "./contexts/LogosContextDB";
 import { AuthProvider } from "./contexts/AuthContext";
+import { DataPreloader } from "./components/DataPreloader";
+import { PerformanceMonitor } from "./components/PerformanceMonitor";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -186,6 +188,7 @@ const App = () => (
   <LanguageProvider>
     <LogosProvider>
       <AuthProvider>
+        <DataPreloader>
         <BrowserRouter
           future={{
             v7_startTransition: true,
@@ -569,6 +572,8 @@ const App = () => (
         <Route path="/services/technical-documentation" element={<TechnicalDocumentation />} />
         </Routes>
         </BrowserRouter>
+        <PerformanceMonitor />
+        </DataPreloader>
       </AuthProvider>
     </LogosProvider>
   </LanguageProvider>

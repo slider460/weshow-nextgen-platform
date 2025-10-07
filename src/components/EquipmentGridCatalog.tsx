@@ -34,6 +34,7 @@ import type { Equipment3DModel } from './3d/ThreeViewer';
 import { ARPreview } from './ar/ARPreview';
 import { useResponsive } from '../hooks/useResponsive';
 import { useAdvancedCart } from '../hooks/useAdvancedCart';
+import { EquipmentGridSkeleton } from './EquipmentGridSkeleton';
 import { cn } from '../lib/utils';
 
 interface EquipmentGridProps {
@@ -700,18 +701,7 @@ export const EquipmentGrid: React.FC<EquipmentGridProps> = ({
 
       {/* Сетка оборудования */}
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {[...Array(8)].map((_, index) => (
-            <Card key={index} className="overflow-hidden">
-              <div className="aspect-[4/3] bg-gray-200 animate-pulse" />
-              <CardContent className="p-4 space-y-2">
-                <div className="h-4 bg-gray-200 rounded animate-pulse" />
-                <div className="h-3 bg-gray-200 rounded w-2/3 animate-pulse" />
-                <div className="h-8 bg-gray-200 rounded animate-pulse" />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <EquipmentGridSkeleton count={8} />
       ) : filteredEquipment.length === 0 ? (
         <div className="text-center py-12">
           <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">

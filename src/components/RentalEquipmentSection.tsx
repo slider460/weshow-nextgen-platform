@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { ArrowRight, Monitor, Speaker, Eye, Projector, Gamepad, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
-import { supabase } from "../config/supabase";
+import { usePreloadedData } from "../hooks/usePreloader";
+import { LazyLoadWrapper } from "./LazyLoadWrapper";
 
 const RentalEquipmentSection = () => {
   const [showAll, setShowAll] = useState(false);
-
+  
+  // Используем предзагруженные данные
+  const { homepageEquipment, isLoading } = usePreloadedData();
   const [equipmentItems, setEquipmentItems] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
 
   // Иконки для маппинга
   const iconMap = {
@@ -20,37 +22,11 @@ const RentalEquipmentSection = () => {
     Zap: Zap
   };
 
+  // Обрабатываем предзагруженные данные
   useEffect(() => {
-    loadEquipmentItems();
-  }, []);
-
-  const loadEquipmentItems = async () => {
-    try {
-      setLoading(true);
-      
-      // Используем REST API вместо Supabase клиента
-      const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
-      const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE';
-      
-      const url = `${SUPABASE_URL}/rest/v1/homepage_equipment?select=*&is_visible=eq.true&order=sort_order.asc`;
-      
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': `Bearer ${SUPABASE_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
+    if (homepageEquipment && homepageEquipment.length > 0) {
       // Преобразуем данные из базы в формат компонента
-      const formattedItems = (data || []).map(item => {
+      const formattedItems = homepageEquipment.map(item => {
         const IconComponent = iconMap[item.icon as keyof typeof iconMap] || Monitor;
         return {
           id: item.id,
@@ -63,9 +39,8 @@ const RentalEquipmentSection = () => {
       });
 
       setEquipmentItems(formattedItems);
-    } catch (err) {
-      console.error('Ошибка загрузки блоков оборудования:', err);
-      // Fallback к статическим данным в случае ошибки
+    } else {
+      // Fallback к статическим данным если нет данных из БД
       setEquipmentItems([
         {
           id: 1,
@@ -116,14 +91,12 @@ const RentalEquipmentSection = () => {
           link: "/services/flexible-neon"
         }
       ]);
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [homepageEquipment]);
 
   const visibleItems = showAll ? equipmentItems : equipmentItems.slice(0, 6);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <section className="py-12 lg:py-24 bg-slate-50 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -138,11 +111,12 @@ const RentalEquipmentSection = () => {
 
   return (
     <section className="py-12 lg:py-24 bg-slate-50 relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full blur-3xl opacity-60"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-full blur-3xl opacity-60"></div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <LazyLoadWrapper>
+        {/* Background elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full blur-3xl opacity-60"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-full blur-3xl opacity-60"></div>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
           <div className="inline-flex items-center px-3 py-1 lg:px-4 lg:py-2 rounded-full bg-blue-50 border border-blue-200 text-sm font-medium text-blue-700 mb-4">
@@ -222,7 +196,8 @@ const RentalEquipmentSection = () => {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      </LazyLoadWrapper>
     </section>
   );
 };
