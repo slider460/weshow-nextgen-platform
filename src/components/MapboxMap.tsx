@@ -30,15 +30,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-        link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoSV5AIGvZOfI=';
-        link.crossOrigin = '';
+        // Убираем integrity для избежания ошибок с CDN
+        link.crossOrigin = 'anonymous';
         document.head.appendChild(link);
 
         // Загружаем Leaflet JS
         const script = document.createElement('script');
         script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-        script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1eT+6vw=';
-        script.crossOrigin = '';
+        // Убираем integrity для избежания ошибок с CDN
+        script.crossOrigin = 'anonymous';
         
         script.onload = () => {
           // @ts-ignore

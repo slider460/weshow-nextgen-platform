@@ -1,11 +1,18 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Service Role ключ для административных операций
-const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
-const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTEzOTMyMywiZXhwIjoyMDc0NzE1MzIzfQ.KOCzZQGNqpGmuXxhuCjAtUPcD8qHr9Alti_uVejrRFs';
+// ⚠️ БЕЗОПАСНОСТЬ: Service Role ключ НЕ ДОЛЖЕН использоваться в клиентском коде!
+// Этот файл должен использоваться ТОЛЬКО на backend (Node.js/Edge Functions)
+// Для клиентских операций используйте обычный supabase client с RLS
 
-// Создаем клиент с Service Role для административных операций
-export const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';
+const SUPABASE_SERVICE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_KEY || '';
+
+if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+  console.warn('⚠️ ПРЕДУПРЕЖДЕНИЕ: Service Role credentials не найдены. Административные функции недоступны. Это нормально для клиентского приложения.');
+}
+
+// Создаем клиент с Service Role для административных операций (ТОЛЬКО для backend!)
+export const supabaseAdmin = SUPABASE_SERVICE_KEY ? createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
   auth: {
     autoRefreshToken: false,
     persistSession: false,
@@ -16,7 +23,7 @@ export const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
       'X-Client-Info': 'supabase-admin-client'
     }
   }
-});
+}) : null as any;
 
 // Функция для выполнения SQL команд через RPC
 export const executeSQL = async (sql: string) => {

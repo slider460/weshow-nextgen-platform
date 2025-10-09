@@ -3,6 +3,50 @@
 @tailwind components;
 @tailwind utilities;
 
+/* === ОПТИМИЗАЦИЯ CLS === */
+/* Предотвращение layout shift при загрузке изображений */
+img, video, iframe {
+  content-visibility: auto;
+}
+
+/* Резервируем место для изображений до загрузки */
+img:not([width]):not([height]) {
+  aspect-ratio: attr(width) / attr(height);
+}
+
+/* Предотвращение CLS для динамического контента */
+.prevent-cls {
+  contain: layout;
+}
+
+/* Стабилизация layout для анимаций */
+.will-change-transform {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* === ОПТИМИЗАЦИЯ УВЕДОМЛЕНИЙ === */
+/* Убираем перекрытие корзины уведомлениями */
+[data-sonner-toaster] {
+  --toast-offset: 5rem !important;
+}
+
+/* Стили для toast уведомлений */
+.toast-notification {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(10px);
+  z-index: 9999 !important;
+}
+
+/* Убеждаемся что toaster не перекрывает важные элементы */
+[data-sonner-toaster][data-y-position="bottom"] {
+  bottom: 1rem !important;
+}
+
+[data-sonner-toaster][data-x-position="right"] {
+  right: 1rem !important;
+}
+
 /* Фиксированные стили для модального окна авторизации */
 .auth-modal-overlay {
   position: fixed !important;
@@ -127,6 +171,21 @@
   }
 }
 
+@keyframes liquid-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translate(20px, -30px) scale(1.1) rotate(1deg);
+  }
+  50% {
+    transform: translate(-10px, -20px) scale(0.9) rotate(-1deg);
+  }
+  75% {
+    transform: translate(-20px, 10px) scale(1.05) rotate(0.5deg);
+  }
+}
+
 @keyframes pulse-glow {
   0%, 100% {
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
@@ -246,6 +305,10 @@
 
 .animate-icon-spin-slow {
   animation: icon-spin-slow 3s linear infinite;
+}
+
+.animate-liquid-float {
+  animation: liquid-float 20s ease-in-out infinite;
 }
 
 @keyframes fade-in-scale {
@@ -466,6 +529,14 @@
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
@@ -488,6 +559,14 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 94.1%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 

@@ -24,15 +24,20 @@ import { Link } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
 
 // Создаем админ клиент для загрузки файлов
-const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
-const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTEzOTMyMywiZXhwIjoyMDc0NzE1MzIzfQ.KOCzZQGNqpGmuXxhuCjAtUPcD8qHr9Alti_uVejrRFs';
+// ⚠️ БЕЗОПАСНОСТЬ: Используем env переменные
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';
+const SUPABASE_SERVICE_KEY = import.meta.env.VITE_SUPABASE_SERVICE_KEY || '';
 
-const adminSupabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+  console.warn('⚠️ Service role credentials не найдены. Админ функции ограничены.');
+}
+
+const adminSupabase = SUPABASE_SERVICE_KEY ? createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
   auth: {
     autoRefreshToken: false,
     persistSession: false
   }
-});
+}) : null as any;
 
 interface CaseData {
   id: string;
