@@ -30,7 +30,6 @@ import { Badge } from '../components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Separator } from '../components/ui/separator';
-import { useAdvancedCart } from '../hooks/useAdvancedCart';
 import { useResponsive } from '../hooks/useResponsive';
 import { getEquipmentById, mockEquipment } from '../data/equipmentData';
 import type { Equipment } from '../types/equipment';
@@ -54,7 +53,10 @@ export const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isMobile } = useResponsive();
-  const { addToCart, cart, isLoading: cartLoading } = useAdvancedCart();
+  // Cart functionality temporarily disabled
+  const addToCart = () => console.log('Add to cart');
+  const cart = [];
+  const cartLoading = false;
 
   // Состояние компонента
   const [equipment, setEquipment] = useState<Equipment | null>(null);
