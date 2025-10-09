@@ -3,6 +3,7 @@ import { Button } from "../components/ui/button";
 import { Play, ArrowRight, Sparkles, Zap, Star } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
 import { Link } from "react-router-dom";
+import RotatingTextAdvanced from "./RotatingTextAdvanced";
 
 interface AdvancedHeroSectionProps {
   onShowShowreel?: () => void;
@@ -13,12 +14,20 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    let animationFrameId: number;
+    
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   return (
@@ -71,8 +80,8 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[calc(100vh-120px)] lg:min-h-[calc(100vh-160px)]">
             
             {/* Left side - Main content */}
-            <div className="lg:col-span-5 space-y-6 lg:space-y-8 lg:pr-8">
-              <div className="space-y-4 lg:space-y-6">
+            <div className="lg:col-span-5 lg:pr-4 relative z-20 overflow-hidden min-h-[400px] lg:min-h-[500px]">
+              <div className="space-y-4 lg:space-y-6 relative z-20 max-w-full pb-24 lg:pb-28">
                 {/* Enhanced badge */}
                 <div className="inline-flex items-center px-4 py-2 lg:px-6 lg:py-3 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-white/20 text-sm font-medium text-white/90 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-purple-500/30 transition-all duration-300 group">
                   <Sparkles className="mr-2 h-4 w-4 text-blue-400 animate-pulse" />
@@ -80,24 +89,50 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                   <Zap className="ml-2 h-4 w-4 text-purple-400 animate-bounce" />
                 </div>
                 
-                {/* Enhanced title with more effects */}
-                <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold text-white leading-[1.1] tracking-tight break-words">
+                {/* Enhanced title with Rotating Text effect */}
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1] tracking-tight break-words relative z-10 max-w-full overflow-hidden" style={{wordBreak: 'break-word', hyphens: 'auto'}}>
                   Комплексные
                   <br />
-                  <span className="text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent block sm:inline animate-pulse-slow relative">
-                    мультимедийные
-                    <Star className="absolute -top-2 -right-2 h-6 w-6 text-yellow-400 animate-spin" style={{animationDuration: '3s'}} />
-                  </span>
+                  <RotatingTextAdvanced
+                    texts={[
+                      'интерактивные', 
+                      'цифровые',
+                      'инновационные',
+                      'современные'
+                    ]}
+                    duration={10000}
+                    variant="rotate"
+                    gradient={true}
+                    glow={true}
+                    delay={500}
+                    className="block sm:inline relative max-w-full"
+                    textClassName="text-gradient bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(59,130,246,0.5)] break-words"
+                  />
                   <br />
                   решения
                 </h1>
                 
-                <p className="text-lg lg:text-2xl text-white/80 leading-relaxed max-w-lg font-light">
-                  Аренда на мероприятия, продажа, разработка и интеграция интерактивного оборудования
-                </p>
+                <div className="text-lg lg:text-2xl text-white/80 leading-relaxed max-w-lg font-light relative z-10">
+                  <RotatingTextAdvanced
+                    texts={[
+                      'Аренда на мероприятия, продажа, разработка и интеграция интерактивного оборудования',
+                      'Создаем незабываемые впечатления с помощью современных технологий',
+                      'Полный цикл: от концепции до реализации мультимедийных проектов',
+                      'Профессиональное оборудование для любых мероприятий и пространств'
+                    ]}
+                    duration={16000}
+                    variant="slide"
+                    direction="up"
+                    delay={1000}
+                    className="block relative z-10"
+                    textClassName="transition-all duration-500 relative z-10"
+                  />
+                </div>
                 
-                {/* Enhanced buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 pt-4 lg:pt-6">
+              </div>
+              
+              {/* Fixed buttons at bottom */}
+              <div className="absolute bottom-0 left-0 right-0 flex flex-col sm:flex-row gap-4 lg:gap-6 pt-4 lg:pt-6">
                   <Button 
                     size="lg" 
                     className="px-8 lg:px-10 py-4 lg:py-5 text-base lg:text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 text-white border-0 shadow-2xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 rounded-full group relative overflow-hidden"
@@ -115,12 +150,11 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                       <span className="group-hover:animate-pulse">Наши проекты</span>
                     </a>
                   </Button>
-                </div>
               </div>
             </div>
 
             {/* Right side - Enhanced cards grid */}
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-7 relative z-20">
               {/* Mobile version */}
               <div className="lg:hidden space-y-6">
                 {/* Main rental card */}
@@ -185,7 +219,7 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                 {/* Large purple card */}
                 <Link 
                   to="/equipment"
-                  className="gradient-card-purple-dark rounded-3xl p-10 flex flex-col justify-between row-span-2 relative overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 group"
+                  className="gradient-card-purple-dark rounded-3xl p-10 flex flex-col justify-between row-span-2 relative overflow-hidden cursor-pointer hover:scale-105 transition-all duration-500 group z-30"
                 >
                   {/* Enhanced 3D elements */}
                   <div className="absolute top-6 right-6 w-32 h-32 opacity-60">
@@ -218,7 +252,7 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
 
                 {/* SHOWREEL card */}
                 <div 
-                  className="gradient-card-purple rounded-3xl p-10 flex flex-col items-center justify-center text-center cursor-pointer hover:scale-105 transition-all duration-500 group"
+                  className="gradient-card-purple rounded-3xl p-10 flex flex-col items-center justify-center text-center cursor-pointer hover:scale-105 transition-all duration-500 group z-30"
                   onClick={onShowShowreel}
                 >
                   <h3 className="text-5xl font-bold text-white mb-6 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">
@@ -232,7 +266,7 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                 {/* VDNKh card */}
                 <Link 
                   to="/portfolio/samara-stand"
-                  className="gradient-card-cyan rounded-3xl p-8 flex flex-col cursor-pointer hover:scale-105 transition-all duration-500 group"
+                  className="gradient-card-cyan rounded-3xl p-8 flex flex-col cursor-pointer hover:scale-105 transition-all duration-500 group z-30"
                 >
                   <h3 className="text-3xl font-bold text-white mb-3 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">ВДНХ</h3>
                   <p className="text-white/95 text-base mb-6 drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
@@ -248,7 +282,7 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                 {/* Samsung event card */}
                 <Link 
                   to="/portfolio"
-                  className="gradient-card-dark rounded-3xl p-8 flex flex-col row-span-1 cursor-pointer hover:scale-105 transition-all duration-500 group"
+                  className="gradient-card-dark rounded-3xl p-8 flex flex-col row-span-1 cursor-pointer hover:scale-105 transition-all duration-500 group z-30"
                 >
                   <h3 className="text-2xl font-bold text-white mb-3 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">Самсунг</h3>
                   <p className="text-white/95 text-base mb-6 drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
@@ -260,7 +294,7 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                 </Link>
 
                 {/* SHOWROOM card */}
-                <div className="gradient-card-cyan rounded-3xl p-8 flex flex-col col-span-1 group hover:scale-105 transition-all duration-500">
+                <div className="gradient-card-cyan rounded-3xl p-8 flex flex-col col-span-1 group hover:scale-105 transition-all duration-500 z-30">
                   <h3 className="text-3xl font-bold text-white mb-6 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">
                     SHOW<br />ROOM
                   </h3>

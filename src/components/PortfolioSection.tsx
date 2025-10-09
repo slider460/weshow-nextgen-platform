@@ -102,7 +102,7 @@ const PortfolioSection = () => {
               size="xl"
               onClick={() => setIsProjectModalOpen(true)}
             >
-              Заказать проект
+              Забронировать проект
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>

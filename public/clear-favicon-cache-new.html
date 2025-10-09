@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Очистка кэша фавикона WESHOW</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e40af;
+            text-align: center;
+        }
+        .favicon-preview {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .favicon-preview img {
+            width: 32px;
+            height: 32px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #1e40af;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button:hover {
+            background: #1e3a8a;
+        }
+        .instructions {
+            background: #e0f2fe;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Очистка кэша фавикона WESHOW</h1>
+        
+        <div class="favicon-preview">
+            <h3>Новый фавикон (буква W):</h3>
+            <img src="/favicon.svg?v=2025-01-08" alt="Favicon SVG">
+            <img src="/favicon.ico?v=2025-01-08" alt="Favicon ICO">
+            <img src="/favicon-16x16.png?v=2025-01-08" alt="Favicon 16x16">
+            <img src="/favicon-32x32.png?v=2025-01-08" alt="Favicon 32x32">
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Инструкции по очистке кэша:</h3>
+            <ol>
+                <li><strong>Chrome/Edge:</strong> Ctrl+Shift+R (Windows) или Cmd+Shift+R (Mac)</li>
+                <li><strong>Firefox:</strong> Ctrl+F5 (Windows) или Cmd+Shift+R (Mac)</li>
+                <li><strong>Safari:</strong> Cmd+Option+R (Mac)</li>
+                <li><strong>Альтернатива:</strong> Откройте DevTools (F12) → вкладка Network → поставьте галочку "Disable cache" → обновите страницу</li>
+            </ol>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="clearFaviconCache()">🔄 Принудительно обновить фавикон</button>
+            <button onclick="window.location.href='/'">🏠 Вернуться на главную</button>
+        </div>
+
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function clearFaviconCache() {
+            const status = document.getElementById('status');
+            status.innerHTML = '<div class="status">🔄 Обновляем фавикон...</div>';
+            
+            // Удаляем все существующие фавиконы
+            const existingFavicons = document.querySelectorAll('link[rel*="icon"]');
+            existingFavicons.forEach(link => link.remove());
+            
+            // Добавляем новые фавиконы с timestamp
+            const timestamp = Date.now();
+            const faviconTypes = [
+                { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+                { rel: 'shortcut icon', type: 'image/x-icon', href: '/favicon.ico' },
+                { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+                { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' }
+            ];
+            
+            faviconTypes.forEach(favicon => {
+                const link = document.createElement('link');
+                link.rel = favicon.rel;
+                link.type = favicon.type;
+                link.href = favicon.href + '?v=' + timestamp;
+                if (favicon.sizes) link.sizes = favicon.sizes;
+                document.head.appendChild(link);
+            });
+            
+            // Обновляем изображения на странице
+            const images = document.querySelectorAll('.favicon-preview img');
+            images.forEach(img => {
+                const newSrc = img.src.split('?')[0] + '?v=' + timestamp;
+                img.src = newSrc;
+            });
+            
+            status.innerHTML = '<div class="status success">✅ Фавикон обновлен! Если не видите изменения, очистите кэш браузера.</div>';
+        }
+        
+        // Автоматически обновляем фавикон при загрузке страницы
+        window.addEventListener('load', () => {
+            setTimeout(clearFaviconCache, 1000);
+        });
+    </script>
+</body>
+</html>
+
+

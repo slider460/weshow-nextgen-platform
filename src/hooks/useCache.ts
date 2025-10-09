@@ -300,43 +300,73 @@ export function useCachedData<T>(
 
 // Специализированные хуки для разных типов данных
 
-// Кэш для оборудования
+// Кэш для оборудования - АГРЕССИВНОЕ КЭШИРОВАНИЕ
 export function useEquipmentCache() {
   return useCache({
-    maxAge: 10 * 60 * 1000, // 10 минут
-    maxItems: 200,
+    maxAge: 30 * 60 * 1000, // 30 минут (увеличено для стабильности)
+    maxItems: 500, // больше элементов
     storage: 'localStorage',
     namespace: 'weshow_equipment'
   });
 }
 
-// Кэш для пользовательских данных
+// Кэш для пользовательских данных - АГРЕССИВНОЕ КЭШИРОВАНИЕ
 export function useUserCache() {
   return useCache({
-    maxAge: 30 * 60 * 1000, // 30 минут
-    maxItems: 50,
+    maxAge: 60 * 60 * 1000, // 1 час (увеличено)
+    maxItems: 100, // больше элементов
     storage: 'localStorage',
     namespace: 'weshow_user'
   });
 }
 
-// Кэш для изображений (URLs)
+// Кэш для изображений (URLs) - АГРЕССИВНОЕ КЭШИРОВАНИЕ
 export function useImageCache() {
   return useCache<string>({
-    maxAge: 60 * 60 * 1000, // 1 час
-    maxItems: 500,
+    maxAge: 24 * 60 * 60 * 1000, // 24 часа (изображения редко меняются)
+    maxItems: 1000, // больше элементов для изображений
     storage: 'localStorage',
     namespace: 'weshow_images'
   });
 }
 
-// Кэш для поисковых запросов
+// Кэш для поисковых запросов - АГРЕССИВНОЕ КЭШИРОВАНИЕ
 export function useSearchCache() {
   return useCache({
-    maxAge: 5 * 60 * 1000, // 5 минут
-    maxItems: 100,
-    storage: 'sessionStorage',
+    maxAge: 15 * 60 * 1000, // 15 минут (увеличено)
+    maxItems: 200, // больше элементов
+    storage: 'localStorage', // переведен в localStorage для персистентности
     namespace: 'weshow_search'
+  });
+}
+
+// Кэш для категорий оборудования - АГРЕССИВНОЕ КЭШИРОВАНИЕ
+export function useCategoriesCache() {
+  return useCache({
+    maxAge: 60 * 60 * 1000, // 1 час (категории редко меняются)
+    maxItems: 50,
+    storage: 'localStorage',
+    namespace: 'weshow_categories'
+  });
+}
+
+// Кэш для статей блога - АГРЕССИВНОЕ КЭШИРОВАНИЕ
+export function useArticlesCache() {
+  return useCache({
+    maxAge: 15 * 60 * 1000, // 15 минут
+    maxItems: 200,
+    storage: 'localStorage',
+    namespace: 'weshow_articles'
+  });
+}
+
+// Кэш для смет - АГРЕССИВНОЕ КЭШИРОВАНИЕ
+export function useEstimatesCache() {
+  return useCache({
+    maxAge: 5 * 60 * 1000, // 5 минут (сметы могут часто обновляться)
+    maxItems: 100,
+    storage: 'localStorage',
+    namespace: 'weshow_estimates'
   });
 }
 
@@ -367,13 +397,16 @@ export async function preloadCriticalData() {
   }
 }
 
-// Функция для очистки всех кэшей
+// Функция для очистки всех кэшей - ОБНОВЛЕНО
 export function clearAllCaches() {
   const caches = [
     new Cache({ storage: 'localStorage', namespace: 'weshow_equipment' }),
     new Cache({ storage: 'localStorage', namespace: 'weshow_user' }),
     new Cache({ storage: 'localStorage', namespace: 'weshow_images' }),
-    new Cache({ storage: 'sessionStorage', namespace: 'weshow_search' })
+    new Cache({ storage: 'localStorage', namespace: 'weshow_search' }),
+    new Cache({ storage: 'localStorage', namespace: 'weshow_categories' }),
+    new Cache({ storage: 'localStorage', namespace: 'weshow_articles' }),
+    new Cache({ storage: 'localStorage', namespace: 'weshow_estimates' })
   ];
 
   caches.forEach(cache => cache.clear());

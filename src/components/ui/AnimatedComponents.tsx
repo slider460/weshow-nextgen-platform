@@ -49,24 +49,28 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (ripple && buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      const x = e.clientX - rect.left - size / 2;
-      const y = e.clientY - rect.top - size / 2;
-      
-      const newRipple = {
-        id: Date.now(),
-        x,
-        y,
-        size
-      };
-      
-      setRipples(prev => [...prev, newRipple]);
-      
-      // Удаляем рипл через 600ms
-      setTimeout(() => {
-        setRipples(prev => prev.filter(r => r.id !== newRipple.id));
-      }, 600);
+      // Батчим чтение rect для избежания forced reflow
+      requestAnimationFrame(() => {
+        if (!buttonRef.current) return;
+        const rect = buttonRef.current.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        const newRipple = {
+          id: Date.now(),
+          x,
+          y,
+          size
+        };
+        
+        setRipples(prev => [...prev, newRipple]);
+        
+        // Удаляем рипл через 600ms
+        setTimeout(() => {
+          setRipples(prev => prev.filter(r => r.id !== newRipple.id));
+        }, 600);
+      });
     }
     
     onClick?.(e);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePreloadedData } from '../hooks/usePreloader';
 import { useOptimizedCache } from '../hooks/useOptimizedCache';
+import { usePerformanceMonitoring, performanceMonitor } from '../utils/performance-monitor';
 
 interface PerformanceStats {
   loadTime: number;
@@ -24,8 +25,12 @@ export const PerformanceMonitor: React.FC = () => {
   });
   
   const [isVisible, setIsVisible] = useState(false);
+  const [webVitals, setWebVitals] = useState<any>({});
   const { equipment, categories, homepageEquipment } = usePreloadedData();
   const cache = useOptimizedCache();
+  
+  // Подключаем новый мониторинг производительности
+  usePerformanceMonitoring(true);
 
   useEffect(() => {
     // Вычисляем размер данных
@@ -45,7 +50,11 @@ export const PerformanceMonitor: React.FC = () => {
       dataSize,
       memoryUsage: (performance as any).memory?.usedJSHeapSize || 0
     });
-  }, [equipment, categories, homepageEquipment, cache]);
+    
+    // Получаем Web Vitals метрики
+    const vitals = performanceMonitor.getStats();
+    setWebVitals(vitals);
+  }, [equipment.length, categories.length, homepageEquipment.length]);
 
   if (!isVisible) {
     return (
@@ -103,9 +112,34 @@ export const PerformanceMonitor: React.FC = () => {
         </div>
       </div>
       
+      {/* Новый раздел: Core Web Vitals */}
+      {Object.keys(webVitals).length > 0 && (
+        <div className="mt-3 pt-3 border-t border-gray-200">
+          <h4 className="font-semibold text-gray-900 mb-2 text-sm">Core Web Vitals</h4>
+          <div className="space-y-1.5 text-xs">
+            {Object.entries(webVitals).map(([name, data]: [string, any]) => (
+              <div key={name} className="flex justify-between items-center">
+                <span className="text-gray-600">{name}:</span>
+                <div className="flex items-center gap-1">
+                  <span className="font-mono">{data.avg.toFixed(0)}ms</span>
+                  <span className={`w-2 h-2 rounded-full ${
+                    data.avg <= (name === 'CLS' ? 0.1 : name === 'LCP' ? 2500 : name === 'INP' ? 200 : 800) 
+                      ? 'bg-green-500' 
+                      : 'bg-yellow-500'
+                  }`} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      
       <div className="mt-3 pt-3 border-t border-gray-200">
         <div className="text-xs text-gray-500">
           💡 Данные предзагружены и кэшированы
+        </div>
+        <div className="text-xs text-gray-500 mt-1">
+          🚀 Real-time performance monitoring
         </div>
       </div>
     </div>

@@ -632,7 +632,7 @@ const KineticScreen: React.FC = () => {
                   className="w-full bg-gradient-to-r from-[#00F2A9] to-[#007BFF] hover:from-[#00E0A0] hover:to-[#0066CC] text-white"
                   onClick={scrollToForm}
                 >
-                  Заказать
+                  Забронировать
                 </Button>
               </div>
               
@@ -673,7 +673,7 @@ const KineticScreen: React.FC = () => {
                   className="w-full bg-gradient-to-r from-[#007BFF] to-[#00F2A9] hover:from-[#0066CC] hover:to-[#00E0A0] text-white"
                   onClick={scrollToForm}
                 >
-                  Заказать
+                  Забронировать
                 </Button>
               </div>
               
@@ -709,7 +709,7 @@ const KineticScreen: React.FC = () => {
                   className="w-full bg-gradient-to-r from-[#00F2A9] to-[#007BFF] hover:from-[#00E0A0] hover:to-[#0066CC] text-white"
                   onClick={scrollToForm}
                 >
-                  Заказать
+                  Забронировать
                 </Button>
               </div>
             </div>

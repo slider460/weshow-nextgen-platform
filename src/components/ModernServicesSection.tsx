@@ -73,7 +73,7 @@ const ModernServicesSection = () => {
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-6">
             Комплексные
             <span className="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent block">
-              мультимедийные решения
+              решения
             </span>
           </h2>
 

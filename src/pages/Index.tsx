@@ -2,16 +2,14 @@ import Header from "../components/Header";
 import AdvancedHeroSection from "../components/AdvancedHeroSection";
 import ModernServicesSection from "../components/ModernServicesSection";
 import ModernPortfolioSection from "../components/ModernPortfolioSection";
-import ModernShowreelSection from "../components/ModernShowreelSection";
 import RentalEquipmentSection from "../components/RentalEquipmentSection";
-import SocialProofSection from "../components/SocialProofSection";
-import UniqueValueProposition from "../components/UniqueValueProposition";
 import WorkflowRoadmapSection from "../components/WorkflowRoadmapSection";
 import ContactFormSection from "../components/ContactFormSection";
 import TeamSection from "../components/TeamSection";
 import LettersCertificatesSection from "../components/LettersCertificatesSection";
 import Footer from "../components/Footer";
 import ShowreelModal from "../components/ShowreelModal";
+import LogoLoopSection from "../components/LogoLoopSection";
 
 import { useState } from "react";
 
@@ -25,14 +23,12 @@ const Index = () => {
         <AdvancedHeroSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <RentalEquipmentSection />
         <ModernServicesSection />
-        <UniqueValueProposition />
         <ModernPortfolioSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <TeamSection />
         <LettersCertificatesSection />
-        {/* Убраны блоки: GamePromoSection и ComplexSolutionsSection */}
+        {/* Убраны блоки: GamePromoSection, ComplexSolutionsSection, UniqueValueProposition, ModernShowreelSection и SocialProofSection */}
         <WorkflowRoadmapSection />
-        <ModernShowreelSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
-        <SocialProofSection />
+        <LogoLoopSection />
         <ContactFormSection />
       </main>
       <Footer />

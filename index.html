@@ -9,9 +9,11 @@
     <meta name="author" content="WESHOW" />
     <meta name="keywords" content="мультимедийные технологии, техническая интеграция, AV системы, проекционный маппинг, корпоративные мероприятия" />
 
-    <!-- Favicon - ТОЛЬКО новый SVG 2025 -->
-    <link rel="icon" type="image/svg+xml" href="/weshow-logo-2025.svg" />
-    <link rel="shortcut icon" href="/weshow-logo-2025.svg" />
+    <!-- Favicon - WESHOW с буквой W -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2025-01-08" />
+    <link rel="shortcut icon" href="/favicon.ico?v=2025-01-08" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2025-01-08" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2025-01-08" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Open Graph - современные meta-теги -->
@@ -29,10 +31,19 @@
     <meta name="twitter:description" content="Профессиональное техническое оснащение и организация мероприятий" />
     <meta name="twitter:image" content="https://weshow.su/twitter-image.png" />
     
-    <!-- Google Fonts - Современная типографика -->
+    <!-- Google Fonts - Асинхронная загрузка для оптимизации -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Отложенная загрузка шрифтов -->
+    <link 
+      rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" 
+      media="print" 
+      onload="this.media='all'"
+    >
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    </noscript>
     
     <!-- Preload критических ресурсов - убран неиспользуемый preload логотипа -->
   </head>
@@ -41,9 +52,9 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Простая очистка кэша favicon -->
-    <script>
-      // Простая функция для обновления favicon
+    <!-- Оптимизированная загрузка скриптов - отложенная -->
+    <script defer>
+      // Функция обновления favicon - отложенная загрузка
       function updateFavicon() {
         const timestamp = Date.now();
         const existingFavicons = document.querySelectorAll('link[rel*="icon"]');
@@ -52,18 +63,17 @@
         const link = document.createElement('link');
         link.rel = 'icon';
         link.type = 'image/svg+xml';
-        link.href = '/weshow-logo-2025.svg?v=' + timestamp;
+        link.href = '/favicon.svg?v=' + timestamp;
         document.head.appendChild(link);
       }
       
-      // Обновляем favicon при загрузке страницы
-      document.addEventListener('DOMContentLoaded', updateFavicon);
+      // Отложенная загрузка после полной загрузки страницы
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateFavicon);
+      } else {
+        // Если DOM уже загружен, выполняем сразу
+        requestIdleCallback ? requestIdleCallback(updateFavicon) : setTimeout(updateFavicon, 1);
+      }
     </script>
-
-          <!-- Service Worker временно отключен для диагностики -->
-          <script>
-            // Service Worker отключен для диагностики проблем
-            console.log('Service Worker отключен для диагностики');
-          </script>
   </body>
 </html>

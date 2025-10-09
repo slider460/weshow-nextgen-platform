@@ -2,8 +2,12 @@ import { createClient } from '@supabase/supabase-js'
 import { Database } from '../types/database'
 
 // Supabase configuration
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://zbykhdjqrtqftfitbvbt.supabase.co'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('⚠️ ОШИБКА: Supabase credentials не найдены! Создайте файл .env с VITE_SUPABASE_URL и VITE_SUPABASE_ANON_KEY')
+}
 
 // Проверяем, существует ли уже клиент в window объекте
 declare global {

@@ -148,10 +148,14 @@ export const OptimizedVideo: React.FC<OptimizedVideoProps> = ({
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (progressRef.current && videoRef.current) {
-      const rect = progressRef.current.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const percentage = clickX / rect.width;
-      videoRef.current.currentTime = percentage * duration;
+      // Батчим операцию для избежания forced reflow
+      requestAnimationFrame(() => {
+        if (!progressRef.current || !videoRef.current) return;
+        const rect = progressRef.current.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const percentage = clickX / rect.width;
+        videoRef.current.currentTime = percentage * duration;
+      });
     }
   };
 

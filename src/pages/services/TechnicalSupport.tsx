@@ -87,7 +87,7 @@ const TechnicalSupport = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="px-8 py-4 text-lg font-semibold bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700">
-                  Заказать услугу
+                  Забронировать услугу
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-semibold">

@@ -41,7 +41,7 @@ const DesignMockups: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700">
-              Заказать макеты
+              Забронировать макеты
             </Button>
               <Button variant="outline" size="lg">
               Посмотреть примеры

@@ -32,7 +32,7 @@ export const createDemoHomePage = (): CMSPage => {
     },
     ctaButtons: [
       {
-        text: { ru: 'Заказать консультацию', en: 'Get Consultation' },
+        text: { ru: 'Забронировать консультацию', en: 'Get Consultation' },
         url: '/contact',
         style: 'primary',
         icon: 'phone'

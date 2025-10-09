@@ -66,6 +66,20 @@ export const DataPreloader: React.FC<DataPreloaderProps> = ({ children }) => {
             <p>Подготавливаем каталог оборудования...</p>
             <p className="mt-1">Это займет всего несколько секунд</p>
           </div>
+          
+          {/* Кнопка пропуска загрузки */}
+          <div className="mt-8">
+            <button 
+              onClick={() => {
+                console.log('⚠️ Пользователь пропустил загрузку');
+                // Принудительно завершаем загрузку
+                window.location.reload();
+              }}
+              className="px-4 py-2 text-sm text-slate-500 hover:text-slate-700 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+            >
+              Пропустить загрузку
+            </button>
+          </div>
         </div>
       </div>
     );

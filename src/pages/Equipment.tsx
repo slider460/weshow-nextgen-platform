@@ -30,18 +30,18 @@ import {
   Trash2
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import EquipmentCart from "../components/EquipmentCart";
 import { useState, useEffect } from "react";
 import { Badge } from "../components/ui/badge";
 import { Calculator } from "lucide-react";
 import ConsultationModal from "../components/ConsultationModal";
-import { useEquipmentCart } from "../hooks/useEquipmentCart";
+import BookingCalendar from "../components/BookingCalendar";
 import { getEquipment, getCategories } from "../api/equipment";
+import { AddToCartButton } from "../components/AddToCartButton";
 
 const Equipment = () => {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const { cartCount, addToCart, forceClearCart } = useEquipmentCart();
+  const [showBookingCalendar, setShowBookingCalendar] = useState(false);
+  const [selectedEquipmentForBooking, setSelectedEquipmentForBooking] = useState<any>(null);
   
   // Состояние для данных из базы
   const [dbEquipment, setDbEquipment] = useState<any[]>([]);
@@ -72,15 +72,6 @@ const Equipment = () => {
     };
   }, []);
 
-  // Слушаем события открытия корзины из Header
-  useEffect(() => {
-    const handleOpenCart = () => setIsCartOpen(true);
-    window.addEventListener('openEquipmentCart', handleOpenCart);
-    
-    return () => {
-      window.removeEventListener('openEquipmentCart', handleOpenCart);
-    };
-  }, []);
 
   // Загружаем данные из базы
   useEffect(() => {
@@ -156,23 +147,17 @@ const Equipment = () => {
   };
 
   // Обработчик добавления в корзину с уведомлением
-  const handleAddToCart = (equipment: any) => {
-    try {
-      // Добавляем в корзину через хук
-      addToCart(equipment);
-      
-      // Показываем уведомление
-      showNotification(`${equipment.name} добавлен в корзину`);
-      
-      // Принудительно обновляем данные корзины
-      setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: 0 } }));
-      }, 100);
-      
-    } catch (error) {
-      console.error('Error adding to cart:', error);
-      showNotification('Ошибка при добавлении в корзину');
-    }
+
+  // Обработчик открытия календаря бронирования
+  const handleOpenBookingCalendar = (equipment: any) => {
+    setSelectedEquipmentForBooking(equipment);
+    setShowBookingCalendar(true);
+  };
+
+  // Обработчик закрытия календаря бронирования
+  const handleCloseBookingCalendar = () => {
+    setShowBookingCalendar(false);
+    setSelectedEquipmentForBooking(null);
   };
 
   // Преобразуем данные из базы в формат для отображения
@@ -498,37 +483,17 @@ const Equipment = () => {
             
             {/* Кнопки корзины */}
             <div className="mt-6 lg:mt-8 flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center items-center">
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => setIsCartOpen(true)}
-                className="border-white/30 text-white hover:bg-white/20 bg-white/10 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold hover:scale-105 transition-transform duration-200"
-              >
-                <ShoppingCart className="h-4 w-4 lg:h-5 lg:w-5 mr-2" />
-                Корзина
-                {cartCount > 0 && (
-                  <Badge variant="secondary" className="ml-2 bg-white text-blue-600 border-0">
-                    {cartCount}
-                  </Badge>
-                )}
-              </Button>
-              
-              {cartCount > 0 && (
-                <Button
-                  size="sm"
+              <Link to="/cart">
+                <Button 
+                  size="lg"
                   variant="outline"
-                  onClick={() => {
-                    if (confirm('Вы уверены, что хотите полностью очистить корзину? Это действие нельзя отменить.')) {
-                      forceClearCart();
-                    }
-                  }}
-                  className="border-red-500 text-red-700 hover:bg-red-100 hover:border-red-600 bg-white font-medium text-xs lg:text-sm px-3 lg:px-4 py-2 lg:py-3"
-                  title="Очистить корзину от всех товаров"
+                  className="border-white/30 text-white hover:bg-white/20 bg-white/10 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold hover:scale-105 transition-transform duration-200"
                 >
-                  <Trash2 className="h-3 w-3 lg:h-4 lg:w-4 mr-2" />
-                  Очистить корзину
+                  <ShoppingCart className="h-4 w-4 lg:h-5 lg:w-5 mr-2" />
+                  Корзина
                 </Button>
-              )}
+              </Link>
+              
             </div>
           </div>
         </section>
@@ -607,14 +572,22 @@ const Equipment = () => {
                               {item.price}
                             </span>
                             <div className="flex flex-col sm:flex-row gap-2">
+                              <AddToCartButton 
+                                equipmentId={item.id}
+                                name={item.name}
+                                category={item.category || 'Прочее'}
+                                price={parseInt(item.price?.toString().replace(/[^\d]/g, '') || '1000')}
+                                image={item.image}
+                                className="text-xs lg:text-sm px-3 lg:px-4 py-1 lg:py-2"
+                              />
                               <Button 
                                 size="sm" 
                                 variant="outline"
-                                onClick={() => handleAddToCart(item)}
-                                className="hover:bg-green-50 hover:text-green-600 hover:border-green-300 transition-colors duration-200 text-xs lg:text-sm px-3 lg:px-4 py-1 lg:py-2"
+                                onClick={() => handleOpenBookingCalendar(item)}
+                                className="hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 transition-colors duration-200 text-xs lg:text-sm px-3 lg:px-4 py-1 lg:py-2"
                               >
-                                <ShoppingCart className="h-3 w-3 lg:h-4 lg:w-4 mr-1 lg:mr-2" />
-                                В корзину
+                                <Calendar className="h-3 w-3 lg:h-4 lg:w-4 mr-1 lg:mr-2" />
+                                Забронировать
                               </Button>
                               <Button 
                                 size="sm" 
@@ -623,7 +596,7 @@ const Equipment = () => {
                                 className="text-xs lg:text-sm px-3 lg:px-4 py-1 lg:py-2"
                               >
                                 <Link to="/services/equipment-calculation">
-                                  Заказать
+                                  Забронировать
                                 </Link>
                               </Button>
                             </div>
@@ -722,11 +695,40 @@ const Equipment = () => {
         title="Консультация по оборудованию"
       />
 
-      {/* Корзина оборудования */}
-      <EquipmentCart 
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-      />
+
+      {/* Календарь бронирования */}
+      {showBookingCalendar && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-900">Бронирование оборудования</h2>
+                  <p className="text-slate-600 mt-1">
+                    Выберите дату и время для {selectedEquipmentForBooking?.name}
+                  </p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleCloseBookingCalendar}
+                  className="text-slate-400 hover:text-slate-600"
+                >
+                  <X className="h-6 w-6" />
+                </Button>
+              </div>
+              
+              <BookingCalendar
+                equipmentId={selectedEquipmentForBooking?.id}
+                equipmentName={selectedEquipmentForBooking?.name}
+                onBookingSelect={(booking) => {
+                  console.log('Booking selected:', booking);
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

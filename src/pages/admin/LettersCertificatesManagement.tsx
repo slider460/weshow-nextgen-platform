@@ -295,15 +295,7 @@ const LettersCertificatesManagement = () => {
                   />
                 </div>
 
-                <div>
-                  <Label htmlFor="image_url">URL изображения</Label>
-                  <Input
-                    id="image_url"
-                    value={formData.image_url}
-                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    placeholder="https://example.com/image.jpg"
-                  />
-                </div>
+                {/* Поле image_url убрано - превью больше не используются */}
 
                 <div>
                   <Label htmlFor="document_url">URL документа</Label>
@@ -404,11 +396,6 @@ const LettersCertificatesManagement = () => {
                   )}
                   
                   <div className="flex gap-2 text-sm text-slate-500">
-                    {letter.image_url && (
-                      <span className="flex items-center gap-1">
-                        <span>📷</span> Изображение
-                      </span>
-                    )}
                     {letter.document_url && (
                       <a 
                         href={letter.document_url} 

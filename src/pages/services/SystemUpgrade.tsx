@@ -41,7 +41,7 @@ const SystemUpgrade: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-violet-600 hover:bg-violet-700">
-              Заказать обновление
+              Забронировать обновление
             </Button>
               <Button variant="outline" size="lg">
               Получить расчет

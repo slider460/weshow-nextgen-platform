@@ -12,20 +12,52 @@ const LettersCertificatesSection = () => {
   const testLetters = [
     {
       id: 'test-1',
-      title: 'Благодарственное письмо от ТРЦ Саларис (тестовые данные)',
+      title: 'Благодарственное письмо от Министерства Туризма Самарской области',
+      issuer: 'Министерство туризма Самарской области',
+      description: 'За высокий профессионализм, личный вклад в подготовку и проведение региональной выставки «Самара»',
+      type: 'letter',
+      issued_date: '2025-02-01',
+      document_url: '/testimonials/pdf/museum-samara-thank-you.pdf',
+      is_visible: true,
+      sort_order: 1
+    },
+    {
+      id: 'test-2',
+      title: 'Благодарственное письмо от ТРЦ Саларис',
       issuer: 'АО "ЛАУТ"',
       description: 'Благодарственное письмо по результату годовых проектов',
       type: 'letter',
       issued_date: '2018-04-01',
-      image_url: null,
-      document_url: '/testimonials/pdf/thank-you-salariss.pdf',
+      document_url: '/testimonials/pdf/salaris-thank-you.pdf',
       is_visible: true,
-      sort_order: 1
+      sort_order: 2
+    },
+    {
+      id: 'test-3',
+      title: 'Технический продакшн',
+      issuer: 'Премия событийный индустрии "Многогранность"',
+      description: '1 место в номинации Технический продакшн/продюсирование',
+      type: 'award',
+      issued_date: '2024-01-01',
+      document_url: '/testimonials/pdf/event-industry-award.pdf',
+      is_visible: true,
+      sort_order: 3
+    },
+    {
+      id: 'test-4',
+      title: 'Поставщик технических инновационных продуктов',
+      issuer: 'Премия событийной индустрии "Многогранность"',
+      description: '1 место в номинации Поставщик технических инновационных продуктов',
+      type: 'award',
+      issued_date: '2024-01-01',
+      document_url: '/testimonials/pdf/technical-innovations-award.pdf',
+      is_visible: true,
+      sort_order: 4
     }
   ];
   
-  // Используем только данные из базы (временно отключаем тестовые данные)
-  const displayLetters = letters || [];
+  // Всегда используем тестовые данные для демонстрации
+  const displayLetters = testLetters;
   
   // console.log('🎯 Display letters:', displayLetters);
 
@@ -161,7 +193,7 @@ const LettersCertificatesSection = () => {
         </div>
 
         {/* Grid of Letters and Certificates */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {displayLetters.map((letter) => (
             <div 
               key={letter.id} 
@@ -202,45 +234,7 @@ const LettersCertificatesSection = () => {
                 </p>
               )}
 
-              {/* Image Preview */}
-              {letter.image_url && letter.image_url.trim() !== '' && !letter.image_url.includes('disk.yandex.ru') ? (
-                <div className="mb-4">
-                  <img 
-                    src={letter.image_url} 
-                    alt={letter.title}
-                    className="w-full h-32 object-cover rounded-xl"
-                    onError={(e) => {
-                      console.log('❌ Ошибка загрузки изображения:', letter.image_url);
-                      e.currentTarget.style.display = 'none';
-                      const placeholder = e.currentTarget.nextElementSibling as HTMLElement;
-                      if (placeholder) placeholder.style.display = 'flex';
-                    }}
-                  />
-                  <div className="hidden mb-4 bg-slate-50 rounded-lg p-8 flex items-center justify-center h-32">
-                    <div className="text-center">
-                      {getTypeIcon(letter.type)}
-                      <p className="text-sm text-slate-500 mt-2">Предпросмотр недоступен</p>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="mb-4 bg-slate-50 rounded-xl p-8 flex items-center justify-center h-32">
-                  <div className="text-center">
-                    {getTypeIcon(letter.type)}
-                    <p className="text-sm text-slate-500 mt-2">
-                      {letter.image_url && letter.image_url.includes('disk.yandex.ru')
-                        ? 'Изображение недоступно (защита хостинга)' 
-                        : 'Предпросмотр недоступен'
-                      }
-                    </p>
-                    {letter.image_url && letter.image_url.includes('disk.yandex.ru') && (
-                      <p className="text-xs text-slate-400 mt-1">
-                        Ссылка: {letter.image_url}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )}
+              {/* Убрано превью изображений - оставляем только текст и кнопку */}
 
               {/* Document Link */}
               {letter.document_url && (

@@ -11,14 +11,13 @@ import {
   Package
 } from 'lucide-react';
 import { EquipmentGrid } from '../components/EquipmentGridCatalog';
-import { AdvancedEquipmentCart } from '../components/AdvancedEquipmentCart';
 import { TouchButton } from '../components/TouchFriendlyComponents';
 import { EquipmentGridSkeleton } from '../components/EquipmentGridSkeleton';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Badge } from '../components/ui/badge';
 import { Card, CardContent } from '../components/ui/card';
-import { useAdvancedCart } from '../hooks/useAdvancedCart';
+import { AddToCartButton } from '../components/AddToCartButton';
 import { useResponsive } from '../hooks/useResponsive';
 import { mockEquipment, getFeaturedEquipment, getEquipmentCategories } from '../data/equipmentData';
 import { getEquipment } from '../api/equipment';
@@ -62,7 +61,6 @@ export const CatalogPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { isMobile } = useResponsive();
-  const { cart } = useAdvancedCart();
   
   // Используем предзагруженные данные
   const { equipment: preloadedEquipment, categories: preloadedCategories, isLoading: preloadedLoading } = usePreloadedData();

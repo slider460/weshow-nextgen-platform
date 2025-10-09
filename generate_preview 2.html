@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Museum Samara Preview</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="565" style="border: 1px solid #ccc;"></canvas>
+    <br>
+    <button onclick="downloadImage()">Download as JPG</button>
+    
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Orange background
+        ctx.fillStyle = '#ff8c00';
+        ctx.fillRect(0, 0, 400, 565);
+        
+        // White content area with curved top
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.moveTo(0, 50);
+        ctx.quadraticCurveTo(200, 20, 400, 50);
+        ctx.lineTo(400, 565);
+        ctx.lineTo(0, 565);
+        ctx.closePath();
+        ctx.fill();
+        
+        // Set text properties
+        ctx.fillStyle = '#374151';
+        ctx.font = 'bold 12px Arial';
+        ctx.textAlign = 'left';
+        
+        // Ministry title left
+        ctx.fillText('МИНИСТЕРСТВО ТУРИЗМА', 60, 85);
+        ctx.fillText('САМАРСКОЙ ОБЛАСТИ', 60, 100);
+        
+        // Samara Region text right
+        ctx.fillText('САМАРСКАЯ', 280, 85);
+        ctx.fillText('область', 280, 100);
+        
+        // Main title
+        ctx.font = 'bold 24px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('БЛАГОДАРСТВЕННОЕ ПИСЬМО', 200, 180);
+        
+        // Reason text
+        ctx.font = 'bold 14px Arial';
+        ctx.fillText('ЗА ВЫСОКИЙ ПРОФЕССИОНАЛИЗМ,', 200, 220);
+        ctx.fillText('ЛИЧНЫЙ ВКЛАД', 200, 240);
+        ctx.fillText('В ПОДГОТОВКУ И ПРОВЕДЕНИЕ', 200, 260);
+        ctx.fillText('РЕГИОНАЛЬНОЙ ВЫСТАВКИ «САМАРА»', 200, 280);
+        
+        // Recipient
+        ctx.font = 'bold 16px Arial';
+        ctx.fillText('Коммуникационная группа', 200, 320);
+        ctx.fillText('Триплан', 200, 340);
+        
+        // Minister signature left
+        ctx.font = '12px Arial';
+        ctx.textAlign = 'left';
+        ctx.fillText('Министр туризма', 50, 450);
+        ctx.fillText('Самарской области', 50, 465);
+        ctx.font = 'bold 12px Arial';
+        ctx.fillText('Матвеева Е.А.', 50, 480);
+        
+        // Year
+        ctx.font = 'bold 14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('2025', 200, 520);
+        
+        // Draw emblems (simplified)
+        // Left emblem
+        ctx.fillStyle = '#1e40af';
+        ctx.beginPath();
+        ctx.arc(50, 90, 18, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.moveTo(32, 75);
+        ctx.lineTo(50, 68);
+        ctx.lineTo(68, 75);
+        ctx.lineTo(58, 85);
+        ctx.lineTo(42, 85);
+        ctx.closePath();
+        ctx.fill();
+        
+        // Right emblem
+        ctx.fillStyle = '#10b981';
+        ctx.beginPath();
+        ctx.arc(350, 90, 18, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Signature area
+        ctx.strokeStyle = '#374151';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(280, 440);
+        ctx.quadraticCurveTo(300, 430, 320, 440);
+        ctx.quadraticCurveTo(340, 435, 360, 445);
+        ctx.stroke();
+        
+        // Official seal
+        ctx.fillStyle = '#1e40af';
+        ctx.beginPath();
+        ctx.arc(340, 450, 25, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.arc(340, 450, 20, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'museum-samara-thank-you.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.click();
+        }
+    </script>
+</body>
+</html>

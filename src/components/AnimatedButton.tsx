@@ -32,29 +32,34 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const rippleId = useRef(0);
 
-  // Эффект пульсации при нажатии
+  // Эффект пульсации при нажатии с оптимизацией
   const createRipple = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!ripple || !buttonRef.current) return;
 
     const button = buttonRef.current;
-    const rect = button.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = event.clientX - rect.left - size / 2;
-    const y = event.clientY - rect.top - size / 2;
+    
+    // Батчим операцию чтения для избежания forced reflow
+    requestAnimationFrame(() => {
+      if (!button) return;
+      const rect = button.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = event.clientX - rect.left - size / 2;
+      const y = event.clientY - rect.top - size / 2;
 
-    const newRipple = {
-      id: rippleId.current++,
-      x,
-      y,
-      size,
-    };
+      const newRipple = {
+        id: rippleId.current++,
+        x,
+        y,
+        size,
+      };
 
-    setRipples(prev => [...prev, newRipple]);
+      setRipples(prev => [...prev, newRipple]);
 
-    // Удаляем ripple через анимацию
-    setTimeout(() => {
-      setRipples(prev => prev.filter(r => r.id !== newRipple.id));
-    }, 600);
+      // Удаляем ripple через анимацию
+      setTimeout(() => {
+        setRipples(prev => prev.filter(r => r.id !== newRipple.id));
+      }, 600);
+    });
   };
 
   // Обработчики событий

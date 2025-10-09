@@ -1,0 +1,11 @@
+{
+  "registries": {
+    "rayui": "https://ui.raycast.com/registry.json",
+    "reactbits": "https://api.reactbits.dev/registry.json",
+    "mycompany": "https://internal.company.com/ui-registry.json"
+  }
+}
+
+
+
+

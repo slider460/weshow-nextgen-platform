@@ -41,7 +41,7 @@ const CorporatePresentation: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700">
-              Заказать презентацию
+              Забронировать презентацию
             </Button>
               <Button variant="outline" size="lg">
               Посмотреть примеры

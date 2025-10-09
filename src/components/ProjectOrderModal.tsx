@@ -190,7 +190,7 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center text-gray-900">
-            Заказать проект
+            Забронировать проект
           </DialogTitle>
         </DialogHeader>
         

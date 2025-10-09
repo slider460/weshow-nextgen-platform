@@ -1,194 +1,238 @@
 
-// WESHOW NextGen Platform - Updated: 2025-10-06 21:45 MSK - PERFORMANCE OPTIMIZED - FORCE DEPLOY
+// WESHOW NextGen Platform - Updated: 2025-10-09 PERFORMANCE OPTIMIZED v2 - Code Splitting
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, lazy, Suspense } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { LogosProvider } from "./contexts/LogosContextDB";
 import { AuthProvider } from "./contexts/AuthContext";
 import { DataPreloader } from "./components/DataPreloader";
 import { PerformanceMonitor } from "./components/PerformanceMonitor";
+import { NotificationProvider } from "./components/NotificationSystem";
+import { Toaster } from "sonner";
+import { preloadCriticalDataOptimized } from "./config/optimized-supabase";
+import { setupPerformanceMonitoring } from "./config/performance-config";
+
+// Критичные страницы - загружаем сразу
 import Index from "./pages/Index";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Services from "./pages/Services";
-import Portfolio from "./pages/Portfolio";
-import Team from "./pages/Team";
-import Blog from "./pages/Blog";
-import News from "./pages/News";
-import Careers from "./pages/Careers";
 import Equipment from "./pages/Equipment";
-import CheckoutPage from "./pages/CheckoutPage";
-import TermsPage from "./pages/TermsPage";
-import PrivacyPage from "./pages/PrivacyPage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import CaseSamaraStand from "./pages/CaseSamaraStand";
-import SamsungEvent from "./pages/SamsungEvent";
-import TestPage from "./pages/TestPage";
-import TestSimple from "./pages/TestSimple";
-import TestMinimal from "./pages/TestMinimal";
-import SupabaseConnectionTest from "./pages/SupabaseConnectionTest";
-import EquipmentTest from "./pages/EquipmentTest";
-import { SupabaseDiagnostic } from "./pages/SupabaseDiagnostic";
-import { SimpleConnectionTest } from "./pages/SimpleConnectionTest";
-import { TestAllDataLoading } from "./pages/TestAllDataLoading";
-import { TestEquipmentLoading } from "./pages/TestEquipmentLoading";
-import TestRentalEquipment from "./pages/TestRentalEquipment";
-import DebugEquipment from "./pages/DebugEquipment";
-import RestApiEquipmentTest from "./pages/RestApiEquipmentTest";
-import TestPortfolioLoading from "./pages/TestPortfolioLoading";
-import TestEquipmentPage from "./pages/TestEquipmentPage";
-import TestEquipmentData from "./pages/TestEquipmentData";
-import TestCasesLoading from "./pages/TestCasesLoading";
-import TestCasesDisplay from "./pages/TestCasesDisplay";
-import TestCasesImages from "./pages/TestCasesImages";
-import TestImageUrls from "./pages/TestImageUrls";
-import TestCaseSave from "./pages/TestCaseSave";
-import TestCaseSaveDebug from "./pages/TestCaseSaveDebug";
-import TestImageUpload from "./pages/TestImageUpload";
-import EquipmentCatalogAdmin from "./pages/admin/EquipmentCatalogAdmin";
-import QuickAddEquipment from "./pages/QuickAddEquipment";
-import CSVImportEquipment from "./pages/CSVImportEquipment";
-import HomepageEquipmentAdmin from "./pages/admin/HomepageEquipmentAdmin";
-import SetupHomepageEquipment from "./pages/SetupHomepageEquipment";
-import CreateHomepageEquipmentTable from "./pages/CreateHomepageEquipmentTable";
-import QuickSetupHomepageEquipment from "./pages/QuickSetupHomepageEquipment";
+
+// Некритичные страницы - lazy loading для оптимизации
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Services = lazy(() => import("./pages/Services"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
+const Team = lazy(() => import("./pages/Team"));
+const Blog = lazy(() => import("./pages/Blog"));
+const News = lazy(() => import("./pages/News"));
+const Careers = lazy(() => import("./pages/Careers"));
+const TermsPage = lazy(() => import("./pages/TermsPage"));
+const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
+const CaseSamaraStand = lazy(() => import("./pages/CaseSamaraStand"));
+const SamsungEvent = lazy(() => import("./pages/SamsungEvent"));
+// Тестовые страницы - lazy loading (низкий приоритет)
+const TestPage = lazy(() => import("./pages/TestPage"));
+const TestSimple = lazy(() => import("./pages/TestSimple"));
+const TestMinimal = lazy(() => import("./pages/TestMinimal"));
+const SupabaseConnectionTest = lazy(() => import("./pages/SupabaseConnectionTest"));
+const EquipmentTest = lazy(() => import("./pages/EquipmentTest"));
+const SupabaseDiagnostic = lazy(() => import("./pages/SupabaseDiagnostic").then(m => ({ default: m.SupabaseDiagnostic })));
+const SimpleConnectionTest = lazy(() => import("./pages/SimpleConnectionTest").then(m => ({ default: m.SimpleConnectionTest })));
+const TestAllDataLoading = lazy(() => import("./pages/TestAllDataLoading").then(m => ({ default: m.TestAllDataLoading })));
+const TestEquipmentLoading = lazy(() => import("./pages/TestEquipmentLoading").then(m => ({ default: m.TestEquipmentLoading })));
+const TestRentalEquipment = lazy(() => import("./pages/TestRentalEquipment"));
+const DebugEquipment = lazy(() => import("./pages/DebugEquipment"));
+const RestApiEquipmentTest = lazy(() => import("./pages/RestApiEquipmentTest"));
+const TestPortfolioLoading = lazy(() => import("./pages/TestPortfolioLoading"));
+const TestEquipmentPage = lazy(() => import("./pages/TestEquipmentPage"));
+const TestEquipmentData = lazy(() => import("./pages/TestEquipmentData"));
+const TestCasesLoading = lazy(() => import("./pages/TestCasesLoading"));
+const TestCasesDisplay = lazy(() => import("./pages/TestCasesDisplay"));
+const TestCasesImages = lazy(() => import("./pages/TestCasesImages"));
+const TestImageUrls = lazy(() => import("./pages/TestImageUrls"));
+const TestCaseSave = lazy(() => import("./pages/TestCaseSave"));
+const TestCaseSaveDebug = lazy(() => import("./pages/TestCaseSaveDebug"));
+const TestImageUpload = lazy(() => import("./pages/TestImageUpload"));
+const EquipmentCatalogAdmin = lazy(() => import("./pages/admin/EquipmentCatalogAdmin"));
+const QuickAddEquipment = lazy(() => import("./pages/QuickAddEquipment"));
+const CSVImportEquipment = lazy(() => import("./pages/CSVImportEquipment"));
+const HomepageEquipmentAdmin = lazy(() => import("./pages/admin/HomepageEquipmentAdmin"));
+const SetupHomepageEquipment = lazy(() => import("./pages/SetupHomepageEquipment"));
+const CreateHomepageEquipmentTable = lazy(() => import("./pages/CreateHomepageEquipmentTable"));
+const QuickSetupHomepageEquipment = lazy(() => import("./pages/QuickSetupHomepageEquipment"));
 
 
-// Основные страницы услуг
-import Multimedia from "./pages/services/Multimedia";
-import Development from "./pages/services/Development";
-import Design from "./pages/services/Design";
-import TechnicalSupport from "./pages/services/TechnicalSupport";
-import EquipmentRental from "./pages/services/EquipmentRental";
-import ComplexSolutions from "./pages/services/ComplexSolutions";
+// Основные страницы услуг - lazy loading
+const Multimedia = lazy(() => import("./pages/services/Multimedia"));
+const Development = lazy(() => import("./pages/services/Development"));
+const Design = lazy(() => import("./pages/services/Design"));
+const TechnicalSupport = lazy(() => import("./pages/services/TechnicalSupport"));
+const EquipmentRental = lazy(() => import("./pages/services/EquipmentRental"));
+const ComplexSolutions = lazy(() => import("./pages/services/ComplexSolutions"));
 
-// Страницы мультимедийного оборудования
-import KineticScreen from "./pages/services/KineticScreen";
-import MatrixScreen from "./pages/services/MatrixScreen";
-import TransparentScreen from "./pages/services/TransparentScreen";
-import InfoPanels from "./pages/services/InfoPanels";
-import Projectors from "./pages/services/Projectors";
-import FlexibleNeon from "./pages/services/FlexibleNeon";
-import ProjectionScreens from "./pages/services/ProjectionScreens";
-import HolographicFans from "./pages/services/HolographicFans";
-import ArGlasses from "./pages/services/ArGlasses";
-import ProjectionMapping from "./pages/services/ProjectionMapping";
-import HolographicDisplays from "./pages/services/HolographicDisplays";
-import SpacePlanning from "./pages/services/SpacePlanning";
-import TechSupport from "./pages/services/TechSupport";
-import SystemIntegration from "./pages/services/SystemIntegration";
+// Страницы мультимедийного оборудования - lazy loading
+const KineticScreen = lazy(() => import("./pages/services/KineticScreen"));
+const MatrixScreen = lazy(() => import("./pages/services/MatrixScreen"));
+const TransparentScreen = lazy(() => import("./pages/services/TransparentScreen"));
+const InfoPanels = lazy(() => import("./pages/services/InfoPanels"));
+const Projectors = lazy(() => import("./pages/services/Projectors"));
+const FlexibleNeon = lazy(() => import("./pages/services/FlexibleNeon"));
+const ProjectionScreens = lazy(() => import("./pages/services/ProjectionScreens"));
+const HolographicFans = lazy(() => import("./pages/services/HolographicFans"));
+const ArGlasses = lazy(() => import("./pages/services/ArGlasses"));
+const ProjectionMapping = lazy(() => import("./pages/services/ProjectionMapping"));
+const HolographicDisplays = lazy(() => import("./pages/services/HolographicDisplays"));
+const SpacePlanning = lazy(() => import("./pages/services/SpacePlanning"));
+const TechSupport = lazy(() => import("./pages/services/TechSupport"));
+const SystemIntegration = lazy(() => import("./pages/services/SystemIntegration"));
 
-// Страницы разработки
-import ArVrApps from "./pages/services/ArVrApps";
-import InteractiveGames from "./pages/services/InteractiveGames";
-import MobileSolutions from "./pages/services/MobileSolutions";
-import WebPlatforms from "./pages/services/WebPlatforms";
-import CrossPlatform from "./pages/services/CrossPlatform";
+// Страницы разработки - lazy loading
+const ArVrApps = lazy(() => import("./pages/services/ArVrApps"));
+const InteractiveGames = lazy(() => import("./pages/services/InteractiveGames"));
+const MobileSolutions = lazy(() => import("./pages/services/MobileSolutions"));
+const WebPlatforms = lazy(() => import("./pages/services/WebPlatforms"));
+const CrossPlatform = lazy(() => import("./pages/services/CrossPlatform"));
 
-// Страницы дизайна
-import ContentCreation from "./pages/services/ContentCreation";
-import ContentAdaptation from "./pages/services/ContentAdaptation";
-import MultimediaContent from "./pages/services/MultimediaContent";
-import CorporateDesign from "./pages/services/CorporateDesign";
-import SpaceDecoration from "./pages/services/SpaceDecoration";
+// Страницы дизайна - lazy loading
+const ContentCreation = lazy(() => import("./pages/services/ContentCreation"));
+const ContentAdaptation = lazy(() => import("./pages/services/ContentAdaptation"));
+const MultimediaContent = lazy(() => import("./pages/services/MultimediaContent"));
+const CorporateDesign = lazy(() => import("./pages/services/CorporateDesign"));
+const SpaceDecoration = lazy(() => import("./pages/services/SpaceDecoration"));
 
-// Страницы технической поддержки
-import Installation from "./pages/services/Installation";
-import Configuration from "./pages/services/Configuration";
-import EquipmentDiagnostics from "./pages/services/EquipmentDiagnostics";
-import Maintenance from "./pages/services/Maintenance";
-import EquipmentCalculation from "./pages/services/EquipmentCalculation";
-import DebugCart from "./pages/DebugCart";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import Game from "./pages/Game";
-import GameSimple from './pages/GameSimple';
-import TestFigmaPage from './pages/TestFigmaPage';
-import FigmaExactPage from './pages/FigmaExactPage';
-import FigmaDebugPage from './pages/FigmaDebugPage';
-import FigmaSimplePage from './pages/FigmaSimplePage';
-import FigmaTestPage from './pages/FigmaTestPage';
-import SimpleTest from './pages/SimpleTest';
-import SupabaseTest from './pages/SupabaseTest';
-import DatabaseManagement from './pages/DatabaseManagement';
-import AdminPanel from './pages/admin/AdminPanel';
+// Страницы технической поддержки - lazy loading
+const Installation = lazy(() => import("./pages/services/Installation"));
+const Configuration = lazy(() => import("./pages/services/Configuration"));
+const EquipmentDiagnostics = lazy(() => import("./pages/services/EquipmentDiagnostics"));
+const Maintenance = lazy(() => import("./pages/services/Maintenance"));
+const EquipmentCalculation = lazy(() => import("./pages/services/EquipmentCalculation"));
+const DebugCart = lazy(() => import("./pages/DebugCart"));
+const Game = lazy(() => import("./pages/Game"));
+const GameSimple = lazy(() => import('./pages/GameSimple'));
+const TestFigmaPage = lazy(() => import('./pages/TestFigmaPage'));
+const FigmaExactPage = lazy(() => import('./pages/FigmaExactPage'));
+const FigmaDebugPage = lazy(() => import('./pages/FigmaDebugPage'));
+const FigmaSimplePage = lazy(() => import('./pages/FigmaSimplePage'));
+const FigmaTestPage = lazy(() => import('./pages/FigmaTestPage'));
+const SimpleTest = lazy(() => import('./pages/SimpleTest'));
+const SupabaseTest = lazy(() => import('./pages/SupabaseTest'));
+const DatabaseManagement = lazy(() => import('./pages/DatabaseManagement'));
+const AdminPanel = lazy(() => import('./pages/admin/AdminPanel'));
+const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard'));
 
-// Страницы комплексных решений
-import SystemConfiguration from "./pages/services/SystemConfiguration";
-import SystemTesting from "./pages/services/SystemTesting";
-import ProcessAutomation from "./pages/services/ProcessAutomation";
-import SystemScaling from "./pages/services/SystemScaling";
+// Страницы комплексных решений - lazy loading
+const SystemConfiguration = lazy(() => import("./pages/services/SystemConfiguration"));
+const SystemTesting = lazy(() => import("./pages/services/SystemTesting"));
+const ProcessAutomation = lazy(() => import("./pages/services/ProcessAutomation"));
+const SystemScaling = lazy(() => import("./pages/services/SystemScaling"));
 
-// Админка
-import AdminDebug from "./pages/admin/AdminDebug";
-import AdminSimple from "./pages/admin/AdminSimple";
-import FixHomepageEquipmentRLS from "./pages/FixHomepageEquipmentRLS";
-import TestEstimatesPage from "./pages/TestEstimatesPage";
-import AdminBypass from "./pages/AdminBypass";
-import SimpleEstimatesPage from "./pages/SimpleEstimatesPage";
-import CreateServicesBlocksTable from "./pages/CreateServicesBlocksTable";
-import CopyServicesBlocksSQL from "./pages/CopyServicesBlocksSQL";
-import CopyCasesSQL from "./pages/CopyCasesSQL";
-import SetupSupabaseStorage from "./pages/SetupSupabaseStorage";
-import SimpleStorageFix from "./pages/SimpleStorageFix";
-import DebugPortfolio from "./pages/DebugPortfolio";
-import CaseDetail from "./pages/CaseDetail";
-import CaseManagement from "./pages/admin/CaseManagement";
-import AddCaseFieldsSQL from "./pages/AddCaseFieldsSQL";
-import LogosManagement from "./pages/admin/LogosManagement";
-import LettersCertificatesManagement from "./pages/admin/LettersCertificatesManagement";
-import TestLettersTable from "./pages/TestLettersTable";
-import CreateLettersTable from "./pages/CreateLettersTable";
-import AutoCreateLettersTable from "./pages/AutoCreateLettersTable";
-import SimpleCreateTable from "./pages/SimpleCreateTable";
-import AutoCreateTableDirect from "./pages/AutoCreateTableDirect";
-import SetupSQLExecution from "./pages/SetupSQLExecution";
-import CreateTableSimple from "./pages/CreateTableSimple";
-import TestLettersHook from "./pages/TestLettersHook";
-import TestDirectSupabase from "./pages/TestDirectSupabase";
-import CreateLogosTableSQL from "./pages/CreateLogosTableSQL";
-import TestLogosConnection from "./pages/TestLogosConnection";
-import ClearLogosData from "./pages/ClearLogosData";
-import TestLogosSync from "./pages/TestLogosSync";
-import TestLogoDeletion from "./pages/TestLogoDeletion";
-import ForceRefreshLogos from "./pages/ForceRefreshLogos";
-import CartPage from "./pages/CartPage";
-import OrderSuccessPage from "./pages/OrderSuccessPage";
-import DebugLogos from "./pages/DebugLogos";
-import ClearAllLogos from "./pages/ClearAllLogos";
-import ClearAllLogosSQL from "./pages/ClearAllLogosSQL";
-import ForceClearLogos from "./pages/ForceClearLogos";
-import ExecuteForceClearSQL from "./pages/ExecuteForceClearSQL";
-import QuickClearLogos from "./pages/QuickClearLogos";
-import ForceRemoveAllLogos from "./pages/ForceRemoveAllLogos";
-import { Profile } from "./pages/Profile";
-import { AccessDenied } from "./pages/AccessDenied";
-import { AuthTest } from "./pages/AuthTest";
-import { SimpleAuthTest } from "./pages/SimpleAuthTest";
-import { WorkingAuthTest } from "./pages/WorkingAuthTest";
-import CreateAdminUser from "./pages/CreateAdminUser";
-import DiagnoseAdmin from "./pages/DiagnoseAdmin";
-import FixAdminEmail from "./pages/FixAdminEmail";
-import TestLogosLoad from "./pages/TestLogosLoad";
-import SimpleDbTest from "./pages/SimpleDbTest";
-import DirectSupabaseTest from "./pages/DirectSupabaseTest";
-import UltraSimpleTest from "./pages/UltraSimpleTest";
-import RestApiTest from "./pages/RestApiTest";
-import TestRestLogos from "./pages/TestRestLogos";
-import TestRestApi from "./pages/TestRestApi";
+// Админка - lazy loading
+const AdminDebug = lazy(() => import("./pages/admin/AdminDebug"));
+const AdminSimple = lazy(() => import("./pages/admin/AdminSimple"));
+const FixHomepageEquipmentRLS = lazy(() => import("./pages/FixHomepageEquipmentRLS"));
+const TestEstimatesPage = lazy(() => import("./pages/TestEstimatesPage"));
+const AdminBypass = lazy(() => import("./pages/AdminBypass"));
+const SimpleEstimatesPage = lazy(() => import("./pages/SimpleEstimatesPage"));
+const CreateServicesBlocksTable = lazy(() => import("./pages/CreateServicesBlocksTable"));
+const CopyServicesBlocksSQL = lazy(() => import("./pages/CopyServicesBlocksSQL"));
+const CopyCasesSQL = lazy(() => import("./pages/CopyCasesSQL"));
+const SetupSupabaseStorage = lazy(() => import("./pages/SetupSupabaseStorage"));
+const SimpleStorageFix = lazy(() => import("./pages/SimpleStorageFix"));
+const DebugPortfolio = lazy(() => import("./pages/DebugPortfolio"));
+const CaseDetail = lazy(() => import("./pages/CaseDetail"));
+const CaseManagement = lazy(() => import("./pages/admin/CaseManagement"));
+const AddCaseFieldsSQL = lazy(() => import("./pages/AddCaseFieldsSQL"));
+const LogosManagement = lazy(() => import("./pages/admin/LogosManagement"));
+const LettersCertificatesManagement = lazy(() => import("./pages/admin/LettersCertificatesManagement"));
+const TestLettersTable = lazy(() => import("./pages/TestLettersTable"));
+const CreateLettersTable = lazy(() => import("./pages/CreateLettersTable"));
+const AutoCreateLettersTable = lazy(() => import("./pages/AutoCreateLettersTable"));
+const SimpleCreateTable = lazy(() => import("./pages/SimpleCreateTable"));
+const AutoCreateTableDirect = lazy(() => import("./pages/AutoCreateTableDirect"));
+const SetupSQLExecution = lazy(() => import("./pages/SetupSQLExecution"));
+const CreateTableSimple = lazy(() => import("./pages/CreateTableSimple"));
+const TestLettersHook = lazy(() => import("./pages/TestLettersHook"));
+const TestDirectSupabase = lazy(() => import("./pages/TestDirectSupabase"));
+const CreateLogosTableSQL = lazy(() => import("./pages/CreateLogosTableSQL"));
+const TestLogosConnection = lazy(() => import("./pages/TestLogosConnection"));
+const ClearLogosData = lazy(() => import("./pages/ClearLogosData"));
+const TestLogosSync = lazy(() => import("./pages/TestLogosSync"));
+const TestLogoDeletion = lazy(() => import("./pages/TestLogoDeletion"));
+const ForceRefreshLogos = lazy(() => import("./pages/ForceRefreshLogos"));
+const DebugLogos = lazy(() => import("./pages/DebugLogos"));
+const ClearAllLogos = lazy(() => import("./pages/ClearAllLogos"));
+const ClearAllLogosSQL = lazy(() => import("./pages/ClearAllLogosSQL"));
+const ForceClearLogos = lazy(() => import("./pages/ForceClearLogos"));
+const ExecuteForceClearSQL = lazy(() => import("./pages/ExecuteForceClearSQL"));
+const QuickClearLogos = lazy(() => import("./pages/QuickClearLogos"));
+const ForceRemoveAllLogos = lazy(() => import("./pages/ForceRemoveAllLogos"));
+const Profile = lazy(() => import("./pages/Profile").then(m => ({ default: m.Profile })));
+const AccessDenied = lazy(() => import("./pages/AccessDenied").then(m => ({ default: m.AccessDenied })));
+const AuthTest = lazy(() => import("./pages/AuthTest").then(m => ({ default: m.AuthTest })));
+const SimpleAuthTest = lazy(() => import("./pages/SimpleAuthTest").then(m => ({ default: m.SimpleAuthTest })));
+const WorkingAuthTest = lazy(() => import("./pages/WorkingAuthTest").then(m => ({ default: m.WorkingAuthTest })));
+const CreateAdminUser = lazy(() => import("./pages/CreateAdminUser"));
+const DiagnoseAdmin = lazy(() => import("./pages/DiagnoseAdmin"));
+const FixAdminEmail = lazy(() => import("./pages/FixAdminEmail"));
+const TestLogosLoad = lazy(() => import("./pages/TestLogosLoad"));
+const SimpleDbTest = lazy(() => import("./pages/SimpleDbTest"));
+const DirectSupabaseTest = lazy(() => import("./pages/DirectSupabaseTest"));
+const UltraSimpleTest = lazy(() => import("./pages/UltraSimpleTest"));
+const RestApiTest = lazy(() => import("./pages/RestApiTest"));
+const TestRestLogos = lazy(() => import("./pages/TestRestLogos"));
+const TestRestApi = lazy(() => import("./pages/TestRestApi"));
+const CartPage = lazy(() => import("./pages/CartPage"));
 
-// Страницы пространственного проектирования
-import SpaceDesign from "./pages/services/SpaceDesign";
-import SpaceImplementation from "./pages/services/SpaceImplementation";
-import ThreeDModeling from "./pages/services/ThreeDModeling";
-import TechnicalDocumentation from "./pages/services/TechnicalDocumentation";
+// Страницы пространственного проектирования - lazy loading
+const SpaceDesign = lazy(() => import("./pages/services/SpaceDesign"));
+const SpaceImplementation = lazy(() => import("./pages/services/SpaceImplementation"));
+const ThreeDModeling = lazy(() => import("./pages/services/ThreeDModeling"));
+const TechnicalDocumentation = lazy(() => import("./pages/services/TechnicalDocumentation"));
+const ElectricDemoFinal = lazy(() => import("./pages/ElectricDemoFinal"));
+const RotatingTextDemo = lazy(() => import("./pages/RotatingTextDemo"));
+const VideoShowcase = lazy(() => import("./pages/VideoShowcase"));
+const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage"));
+
+// Компонент для инициализации оптимизированной предзагрузки
+const OptimizedAppWrapper = ({ children }: { children: React.ReactNode }) => {
+  useEffect(() => {
+    // Инициализируем оптимизированную предзагрузку при запуске приложения
+    preloadCriticalDataOptimized()
+      .then(() => {
+        console.log('🚀 Оптимизированная предзагрузка инициализирована');
+      })
+      .catch((error) => {
+        console.warn('⚠️ Ошибка инициализации предзагрузки:', error);
+      });
+    
+    // Инициализируем систему мониторинга производительности
+    setupPerformanceMonitoring();
+    console.log("📊 Performance monitoring активирован");
+  }, []);
+
+  return <>{children}</>;
+};
+
+// Fallback компонент для Suspense
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+      <p className="mt-4 text-gray-600">Загрузка...</p>
+    </div>
+  </div>
+);
 
 const App = () => (
   <LanguageProvider>
     <LogosProvider>
       <AuthProvider>
+        <NotificationProvider>
         <DataPreloader>
+        <OptimizedAppWrapper>
         <BrowserRouter
           future={{
             v7_startTransition: true,
@@ -196,6 +240,7 @@ const App = () => (
           }}
         >
         <ScrollToTop />
+        <Suspense fallback={<PageLoader />}>
         <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<About />} />
@@ -205,11 +250,10 @@ const App = () => (
         <Route path="/case/:id" element={<CaseDetail />} />
         <Route path="/team" element={<Team />} />
         {/* Скрытые маршруты для Новостей и Блога */}
-        <Route path="/blog" element={<Blog />} style={{display: 'none'}} />
-        <Route path="/news" element={<News />} style={{display: 'none'}} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/news" element={<News />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/equipment" element={<Equipment />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -242,6 +286,7 @@ const App = () => (
         <Route path="/import-equipment" element={<CSVImportEquipment />} />
         <Route path="/database" element={<DatabaseManagement />} />
         <Route path="/admin/*" element={<AdminPanel />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-debug" element={<AdminDebug />} />
         <Route path="/admin-simple" element={<AdminSimple />} />
         <Route path="/fix-homepage-equipment-rls" element={<FixHomepageEquipmentRLS />} />
@@ -279,8 +324,6 @@ const App = () => (
         <Route path="/test-logos-sync" element={<TestLogosSync />} />
         <Route path="/test-logo-deletion" element={<TestLogoDeletion />} />
         <Route path="/force-refresh-logos" element={<ForceRefreshLogos />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/order-success" element={<OrderSuccessPage />} />
         <Route path="/debug-logos" element={<DebugLogos />} />
         <Route path="/clear-all-logos" element={<ClearAllLogos />} />
         <Route path="/clear-all-logos-sql" element={<ClearAllLogosSQL />} />
@@ -303,6 +346,7 @@ const App = () => (
         <Route path="/rest-api-test" element={<RestApiTest />} />
         <Route path="/test-rest-logos" element={<TestRestLogos />} />
         <Route path="/test-rest-api" element={<TestRestApi />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/supabase-diagnostic" element={<SupabaseDiagnostic />} />
         <Route path="/simple-connection-test" element={<SimpleConnectionTest />} />
         <Route path="/test-all-data" element={<TestAllDataLoading />} />
@@ -545,8 +589,8 @@ const App = () => (
         {/* Страницы дизайна */}
         <Route path="/services/content-creation" element={<ContentCreation />} />
         <Route path="/services/content-adaptation" element={<ContentAdaptation />} />
-        <Route path="/services/multimedia-content" element={<MultimediaContent />} />
-        <Route path="/services/corporate-design" element={<CorporateDesign />} />
+        <Route path="/services/multimedia-content" element={<MultimediaContent title="Мультимедийный контент" />} />
+        <Route path="/services/corporate-design" element={<CorporateDesign title="Корпоративный дизайн" />} />
         <Route path="/services/space-decoration" element={<SpaceDecoration />} />
         
         {/* Страницы технической поддержки */}
@@ -566,14 +610,31 @@ const App = () => (
         
         {/* Страницы пространственного проектирования */}
         <Route path="/services/space-planning" element={<SpacePlanning />} />
-        <Route path="/services/space-design" element={<SpaceDesign />} />
+        <Route path="/services/space-design" element={<SpaceDesign title="Дизайн пространства" />} />
         <Route path="/services/space-implementation" element={<SpaceImplementation />} />
         <Route path="/services/3d-modeling" element={<ThreeDModeling />} />
         <Route path="/services/technical-documentation" element={<TechnicalDocumentation />} />
+        <Route path="/electric-demo" element={<ElectricDemoFinal />} />
+        <Route path="/rotating-text-demo" element={<RotatingTextDemo />} />
+        <Route path="/video-showcase" element={<VideoShowcase />} />
         </Routes>
+        </Suspense>
         </BrowserRouter>
         <PerformanceMonitor />
+        </OptimizedAppWrapper>
         </DataPreloader>
+        </NotificationProvider>
+        <Toaster 
+          position="bottom-right" 
+          richColors 
+          toastOptions={{
+            style: {
+              marginRight: '1rem',
+              marginBottom: '1rem',
+            },
+            className: 'toast-notification',
+          }}
+        />
       </AuthProvider>
     </LogosProvider>
   </LanguageProvider>

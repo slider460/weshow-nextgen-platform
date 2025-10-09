@@ -3,6 +3,10 @@ import Footer from "../../components/Footer";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
+import AnimatedContent from "../../components/AnimatedContent";
+import SpotlightCard from "../../components/SpotlightCard";
+import GradientText from "../../components/GradientText";
+import LiquidEther from "../../components/LiquidEther";
 import { 
   Monitor, 
   Video, 
@@ -18,7 +22,29 @@ import {
   Globe,
   Settings,
   Truck,
-  Calculator
+  Calculator,
+  Shield,
+  Award,
+  Headphones,
+  Camera,
+  Mic,
+  Lightbulb,
+  Projector,
+  Smartphone,
+  Wifi,
+  Play,
+  Pause,
+  Volume2,
+  Eye,
+  Download,
+  Calendar,
+  MapPin,
+  ChevronRight,
+  Sparkles,
+  Target,
+  TrendingUp,
+  Heart,
+  ThumbsUp
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -28,38 +54,80 @@ const EquipmentRental = () => {
       icon: Monitor,
       title: "Видеооборудование",
       description: "Проекторы, экраны, LED-панели",
-      features: ["4K проекторы", "LED-видеостены", "Интерактивные экраны"]
+      features: ["4K проекторы", "LED-видеостены", "Интерактивные экраны"],
+      color: "from-blue-500 to-cyan-500"
     },
     {
       icon: Speaker,
-      title: "Аудиооборудование",
+      title: "Аудиооборудование", 
       description: "Микрофоны, колонки, микшеры",
-      features: ["Беспроводные микрофоны", "Профессиональные колонки", "Цифровые микшеры"]
+      features: ["Беспроводные микрофоны", "Профессиональные колонки", "Цифровые микшеры"],
+      color: "from-purple-500 to-pink-500"
     },
     {
       icon: Video,
       title: "Световое оборудование",
-      description: "Прожекторы, стробоскопы, лазеры",
-      features: ["RGB прожекторы", "Светодиодные панели", "Лазерные установки"]
+      description: "Прожекторы, стробоскопы, лазеры", 
+      features: ["RGB прожекторы", "Светодиодные панели", "Лазерные установки"],
+      color: "from-orange-500 to-red-500"
     }
   ];
 
   const rentalTypes = [
-    "Краткосрочная аренда (1-7 дней)",
-    "Среднесрочная аренда (1-4 недели)",
-    "Долгосрочная аренда (от 1 месяца)",
-    "Аренда с обслуживанием",
-    "Аренда без обслуживания",
-    "Аренда с доставкой"
+    {
+      title: "Краткосрочная аренда",
+      period: "1-7 дней",
+      description: "Идеально для мероприятий и презентаций",
+      icon: Calendar,
+      color: "from-green-500 to-emerald-500"
+    },
+    {
+      title: "Среднесрочная аренда", 
+      period: "1-4 недели",
+      description: "Для длительных проектов и кампаний",
+      icon: Clock,
+      color: "from-blue-500 to-indigo-500"
+    },
+    {
+      title: "Долгосрочная аренда",
+      period: "от 1 месяца", 
+      description: "Постоянные инсталляции и офисы",
+      icon: Award,
+      color: "from-purple-500 to-violet-500"
+    }
   ];
 
   const benefits = [
-    "Гибкие условия аренды",
-    "Профессиональное оборудование",
-    "Быстрая доставка",
-    "Техническая поддержка",
-    "Конкурентные цены",
-    "Гарантия качества"
+    {
+      icon: Shield,
+      title: "Гарантия качества",
+      description: "Все оборудование проходит тщательную проверку"
+    },
+    {
+      icon: Truck,
+      title: "Быстрая доставка",
+      description: "Доставка по Москве в течение 24 часов"
+    },
+    {
+      icon: Settings,
+      title: "Техническая поддержка",
+      description: "Круглосуточная поддержка наших специалистов"
+    },
+    {
+      icon: Calculator,
+      title: "Гибкие цены",
+      description: "Индивидуальные условия для каждого клиента"
+    },
+    {
+      icon: Users,
+      title: "Профессиональная команда",
+      description: "Опытные специалисты с многолетним стажем"
+    },
+    {
+      icon: Globe,
+      title: "Широкая география",
+      description: "Работаем по всей России и СНГ"
+    }
   ];
 
   return (
@@ -68,252 +136,266 @@ const EquipmentRental = () => {
       
       <main className="pt-24">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-indigo-50 to-blue-50 py-20 relative overflow-hidden">
+        <section className="relative py-20 overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50">
           <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-indigo-100 to-blue-100 rounded-full blur-3xl opacity-60"></div>
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-cyan-100 to-indigo-100 rounded-full blur-3xl opacity-60"></div>
           
-          <div className="container mx-auto px-6 lg:px-8 relative">
+          <div className="container mx-auto px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-4xl mx-auto">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-50 border border-indigo-200 text-sm font-medium text-indigo-700 mb-6">
-                📺 Аренда оборудования
-              </div>
-              <h1 className="text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
-                Арендуем
-                <span className="text-gradient bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent block">
-                  профессиональное оборудование
-                </span>
-              </h1>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8">
-                Широкий выбор современного оборудования для мероприятий любого масштаба: 
-                от небольших презентаций до крупных концертов
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="px-8 py-4 text-lg font-semibold bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700">
-                  Заказать аренду
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-semibold">
-                  Посмотреть каталог
-                </Button>
-                <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-semibold" asChild>
-                  <a href="/services/equipment-calculation">
-                    Калькулятор аренды
-                    <Calculator className="ml-2 h-5 w-5" />
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Equipment Grid */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-6">
-                Наше оборудование
-              </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Профессиональное оборудование для любых мероприятий
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {equipment.map((item, index) => (
-                <Card key={index} className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-slate-200/50">
-                  <CardHeader className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <item.icon className="h-8 w-8 text-white" />
-                    </div>
-                    <CardTitle className="text-xl text-slate-900">
-                      {item.title}
-                    </CardTitle>
-                    <CardDescription className="text-slate-600">
-                      {item.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {item.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center text-sm text-slate-600">
-                          <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Rental Types */}
-        <section className="py-20 bg-slate-50">
-          <div className="container mx-auto px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <h2 className="text-4xl font-bold text-slate-900 mb-6">
-                  Условия аренды
-                </h2>
-                <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                  Мы предлагаем гибкие условия аренды оборудования 
-                  для удовлетворения любых потребностей наших клиентов
+              <AnimatedContent distance={60} delay={0.2}>
+                <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-100 backdrop-blur-sm border border-indigo-200 text-sm font-medium text-indigo-700 mb-6">
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Аренда оборудования
+                </div>
+              </AnimatedContent>
+              
+              <AnimatedContent distance={80} delay={0.4}>
+                <h1 className="text-4xl lg:text-6xl font-bold leading-normal mb-6 pb-6">
+                  <GradientText
+                    colors={['#1e293b', '#334155', '#475569', '#1e293b']}
+                    animationSpeed={8}
+                    className="text-4xl lg:text-6xl font-bold"
+                  >
+                    Аренда профессионального оборудования
+                  </GradientText>
+                </h1>
+              </AnimatedContent>
+              
+              <AnimatedContent distance={60} delay={0.6}>
+                <p className="text-xl text-slate-700 leading-relaxed mb-10 max-w-3xl mx-auto">
+                  Современное мультимедийное оборудование для любых мероприятий. 
+                  От презентаций до масштабных конференций.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {rentalTypes.map((type, index) => (
-                    <div key={index} className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
-                      <span className="text-slate-700">{type}</span>
-                    </div>
-                  ))}
+              </AnimatedContent>
+              
+              <AnimatedContent distance={40} delay={0.8}>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button size="lg" className="bg-white text-indigo-600 hover:bg-white/90">
+                    <Calculator className="w-5 h-5 mr-2" />
+                    Рассчитать стоимость
+                  </Button>
+                  <Button size="lg" variant="outline" className="border-indigo-600 text-indigo-600 hover:bg-indigo-50">
+                    <Phone className="w-5 h-5 mr-2" />
+                    Связаться с нами
+                  </Button>
                 </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-indigo-100 to-blue-100 rounded-2xl p-8 border border-indigo-200/50">
-                <div className="text-center space-y-4">
-                  <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-blue-500 rounded-full flex items-center justify-center mx-auto">
-                    <Zap className="h-10 w-10 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900">
-                    Гибкие условия
-                  </h3>
-                  <p className="text-slate-600">
-                    Адаптируем условия аренды под ваши потребности и бюджет
-                  </p>
-                </div>
-              </div>
+              </AnimatedContent>
             </div>
           </div>
         </section>
 
-        {/* Benefits */}
-        <section className="py-20 bg-white">
+        {/* Equipment Types Section */}
+        <section className="py-20 relative">
           <div className="container mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-6">
-                Преимущества аренды
-              </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Почему выгодно арендовать оборудование у нас
-              </p>
-            </div>
+            <AnimatedContent distance={60}>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+                  <GradientText
+                    colors={['#6366f1', '#8b5cf6', '#06b6d4']}
+                    animationSpeed={6}
+                    className="text-3xl lg:text-4xl font-bold"
+                  >
+                    Типы оборудования
+                  </GradientText>
+                </h2>
+                <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                  Широкий выбор современного оборудования для любых задач
+                </p>
+              </div>
+            </AnimatedContent>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {equipment.map((item, index) => (
+                <AnimatedContent key={item.title} distance={80} delay={index * 0.2}>
+                  <Card className="group h-full bg-white shadow-lg border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="text-center">
+                        <div className={`w-20 h-20 bg-gradient-to-r ${item.color} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-xl`}>
+                          <item.icon className="h-10 w-10 text-white" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-slate-900 mb-4 drop-shadow-sm">{item.title}</h3>
+                        <p className="text-slate-700 mb-6 leading-relaxed">{item.description}</p>
+                        <ul className="space-y-2 text-sm text-slate-600">
+                          {item.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-center">
+                              <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </AnimatedContent>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Rental Types Section */}
+        <section className="py-20 bg-gradient-to-br from-slate-50 to-slate-100">
+          <div className="container mx-auto px-6 lg:px-8">
+            <AnimatedContent distance={60}>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+                  <GradientText
+                    colors={['#8b5cf6', '#ec4899', '#f59e0b']}
+                    animationSpeed={7}
+                    className="text-3xl lg:text-4xl font-bold"
+                  >
+                    Условия аренды
+                  </GradientText>
+                </h2>
+                <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                  Гибкие условия аренды под любые потребности
+                </p>
+              </div>
+            </AnimatedContent>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {rentalTypes.map((type, index) => (
+                <AnimatedContent key={type.title} distance={80} delay={index * 0.2}>
+                  <Card className="h-full bg-white hover:shadow-xl transition-all duration-500 group border border-slate-200">
+                    <CardHeader className="text-center pb-4">
+                      <div className={`w-16 h-16 bg-gradient-to-r ${type.color} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-500`}>
+                        <type.icon className="h-8 w-8 text-white" />
+                      </div>
+                      <CardTitle className="text-xl font-bold text-slate-900">{type.title}</CardTitle>
+                      <Badge className={`bg-gradient-to-r ${type.color} text-white border-0 w-fit mx-auto`}>
+                        {type.period}
+                      </Badge>
+                    </CardHeader>
+                    <CardContent className="text-center">
+                      <p className="text-slate-700 leading-relaxed">{type.description}</p>
+                    </CardContent>
+                  </Card>
+                </AnimatedContent>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="py-20">
+          <div className="container mx-auto px-6 lg:px-8">
+            <AnimatedContent distance={60}>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+                  <GradientText
+                    colors={['#06b6d4', '#3b82f6', '#6366f1']}
+                    animationSpeed={5}
+                    className="text-3xl lg:text-4xl font-bold"
+                  >
+                    Наши преимущества
+                  </GradientText>
+                </h2>
+                <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                  Почему клиенты выбирают именно нас
+                </p>
+              </div>
+            </AnimatedContent>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               {benefits.map((benefit, index) => (
-                <div key={index} className="bg-slate-50 rounded-2xl p-6 border border-slate-200/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-blue-500 rounded-xl flex items-center justify-center">
-                      <Star className="h-5 w-5 text-white" />
+                <AnimatedContent key={benefit.title} distance={80} delay={index * 0.1}>
+                  <Card className="group bg-white shadow-lg border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-start space-x-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-500">
+                          <benefit.icon className="h-6 w-6 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-bold text-slate-900 mb-2">{benefit.title}</h3>
+                          <p className="text-slate-700 text-sm leading-relaxed">{benefit.description}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </AnimatedContent>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Process Section */}
+        <section className="py-20 bg-gradient-to-br from-indigo-50 to-blue-50">
+          <div className="container mx-auto px-6 lg:px-8">
+            <AnimatedContent distance={60}>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+                  <GradientText
+                    colors={['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981']}
+                    animationSpeed={8}
+                    className="text-3xl lg:text-4xl font-bold"
+                  >
+                    Как мы работаем
+                  </GradientText>
+                </h2>
+                <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                  Простой процесс аренды оборудования
+                </p>
+              </div>
+            </AnimatedContent>
+
+            <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+              {[
+                { step: "01", title: "Консультация", description: "Обсуждаем ваши потребности", icon: Phone },
+                { step: "02", title: "Подбор оборудования", description: "Выбираем подходящее оборудование", icon: Target },
+                { step: "03", title: "Доставка и установка", description: "Привозим и настраиваем", icon: Truck },
+                { step: "04", title: "Техподдержка", description: "Сопровождаем мероприятие", icon: Settings }
+              ].map((item, index) => (
+                <AnimatedContent key={item.step} distance={80} delay={index * 0.2}>
+                  <div className="text-center group">
+                    <div className="relative mb-6">
+                      <div className="w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                        <item.icon className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                        {item.step}
+                      </div>
                     </div>
-                    <h3 className="font-semibold text-slate-900">{benefit}</h3>
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
+                    <p className="text-slate-700 text-sm leading-relaxed">{item.description}</p>
                   </div>
-                  <p className="text-slate-600 text-sm">
-                    Мы обеспечиваем {benefit.toLowerCase()} для всех клиентов
-                  </p>
-                </div>
+                </AnimatedContent>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Process */}
-        <section className="py-20 bg-gradient-to-br from-slate-50 to-indigo-50">
-          <div className="container mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-6">
-                Как заказать аренду
+        {/* CTA Section */}
+        <section className="py-20 relative overflow-hidden bg-gradient-to-r from-indigo-600 to-blue-600">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl"></div>
+          
+          <div className="container mx-auto px-6 lg:px-8 text-center relative z-10">
+            <AnimatedContent distance={60}>
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+                <GradientText
+                  colors={['#ffffff', '#e0e7ff', '#c7d2fe', '#ffffff']}
+                  animationSpeed={6}
+                  className="text-3xl lg:text-4xl font-bold"
+                >
+                  Нужно оборудование в аренду?
+                </GradientText>
               </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Простой процесс заказа оборудования в аренду
+            </AnimatedContent>
+            
+            <AnimatedContent distance={40} delay={0.2}>
+              <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+                Свяжитесь с нами для обсуждения ваших потребностей и получения 
+                коммерческого предложения по аренде оборудования
               </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              {[
-                { step: "01", title: "Заявка", description: "Оставляете заявку на сайте или по телефону" },
-                { step: "02", title: "Подбор", description: "Мы подбираем подходящее оборудование" },
-                { step: "03", title: "Подтверждение", description: "Согласовываем условия и стоимость" },
-                { step: "04", title: "Доставка", description: "Доставляем и устанавливаем оборудование" }
-              ].map((item, index) => (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 text-white text-xl font-bold">
-                    {item.step}
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
-                  <p className="text-slate-600 text-sm">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Why Choose Us */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-6">
-                Почему выбирают нас
-              </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Наши преимущества в аренде оборудования
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  icon: Users,
-                  title: "Опытная команда",
-                  description: "Специалисты с многолетним опытом работы с оборудованием"
-                },
-                {
-                  icon: Truck,
-                  title: "Быстрая доставка",
-                  description: "Доставляем оборудование в кратчайшие сроки"
-                },
-                {
-                  icon: Settings,
-                  title: "Техническая поддержка",
-                  description: "Помогаем с настройкой и решением проблем"
-                }
-              ].map((item, index) => (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <item.icon className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                  <p className="text-slate-600">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="py-20 bg-gradient-to-r from-indigo-600 to-blue-600">
-          <div className="container mx-auto px-6 lg:px-8 text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-              Нужно оборудование в аренду?
-            </h2>
-            <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
-              Свяжитесь с нами для обсуждения ваших потребностей и получения 
-              коммерческого предложения по аренде
-            </p>
+            </AnimatedContent>
+            
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                <Phone className="mr-2 h-5 w-5" />
-                Позвонить
+              <Button size="lg" className="bg-white text-indigo-600 hover:bg-white/90">
+                <Phone className="w-5 h-5 mr-2" />
+                +7 (495) 580-75-37
               </Button>
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10">
-                <Mail className="mr-2 h-5 w-5" />
-                Написать
-              </Button>
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
-                <a href="/services/equipment-calculation">
-                  <Calculator className="mr-2 h-5 w-5" />
-                  Калькулятор аренды
-                </a>
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-indigo-600 transition-all duration-300 bg-white/10 backdrop-blur-sm">
+                <Mail className="w-5 h-5 mr-2" />
+                info@weshow.ru
               </Button>
             </div>
           </div>

@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getEquipment } from '../api/equipment';
 import { useOptimizedCache } from './useOptimizedCache';
+import { 
+  getCategoriesOptimized, 
+  getEquipmentOptimized,
+  preloadCriticalDataOptimized 
+} from '../config/optimized-supabase';
 
 // Интерфейс для предзагруженных данных
 interface PreloadedData {
@@ -52,52 +57,110 @@ export function usePreloader() {
     setData(globalPreloadedData);
 
     try {
-      // Загружаем оборудование
-      loadingPromises.equipment = getEquipment();
-      const equipment = await loadingPromises.equipment;
-
-      // Загружаем данные для главной страницы
-      const homepageEquipmentPromise = loadHomepageEquipment();
-      const categoriesPromise = loadCategories();
-
-      const [homepageEquipment, categories] = await Promise.all([
-        homepageEquipmentPromise,
-        categoriesPromise
+      console.log('🚀 Начинаем оптимизированную предзагрузку...');
+      
+      // Добавляем таймаут для предотвращения зависания
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Таймаут загрузки данных (30 секунд)')), 30000);
+      });
+      
+      // Используем оптимизированные методы с кэшированием
+      const dataPromise = Promise.all([
+        getEquipmentOptimized(), // Оптимизированная загрузка оборудования
+        getCategoriesOptimized(), // Оптимизированная загрузка категорий
+        loadHomepageEquipment() // Статический метод для главной страницы
       ]);
+      
+      const [equipment, categories, homepageEquipment] = await Promise.race([
+        dataPromise,
+        timeoutPromise
+      ]) as [any[], any[], any[]];
 
       // Обновляем глобальные данные
       globalPreloadedData = {
-        equipment,
-        categories,
-        homepageEquipment,
+        equipment: equipment || [],
+        categories: categories || [],
+        homepageEquipment: homepageEquipment || [],
         isLoading: false,
         error: null
       };
 
       setData(globalPreloadedData);
-      console.log('✅ Данные предзагружены:', {
-        equipment: equipment.length,
-        categories: categories.length,
-        homepageEquipment: homepageEquipment.length
+      console.log('✅ Оптимизированные данные предзагружены:', {
+        equipment: equipment?.length || 0,
+        categories: categories?.length || 0,
+        homepageEquipment: homepageEquipment?.length || 0
       });
 
     } catch (error) {
       console.error('❌ Ошибка предзагрузки данных:', error);
-      globalPreloadedData.error = error instanceof Error ? error.message : 'Неизвестная ошибка';
-      globalPreloadedData.isLoading = false;
-      setData(globalPreloadedData);
+      
+      // Fallback к старым методам при ошибке
+      try {
+        console.log('🔄 Пробуем fallback методы...');
+        
+        // Добавляем таймаут для fallback
+        const fallbackTimeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Таймаут fallback загрузки (20 секунд)')), 20000);
+        });
+        
+        const fallbackDataPromise = Promise.all([
+          getEquipment(),
+          loadHomepageEquipment(),
+          loadCategories()
+        ]);
+        
+        const [equipment, homepageEquipment, categories] = await Promise.race([
+          fallbackDataPromise,
+          fallbackTimeoutPromise
+        ]) as [any[], any[], any[]];
+
+        globalPreloadedData = {
+          equipment: equipment || [],
+          categories: categories || [],
+          homepageEquipment: homepageEquipment || [],
+          isLoading: false,
+          error: null
+        };
+        
+        setData(globalPreloadedData);
+        console.log('✅ Fallback данные загружены');
+        
+      } catch (fallbackError) {
+        console.error('❌ Fallback также не сработал:', fallbackError);
+        globalPreloadedData.error = error instanceof Error ? error.message : 'Неизвестная ошибка';
+        globalPreloadedData.isLoading = false;
+        setData(globalPreloadedData);
+      }
     }
   }, []);
 
   // Автоматическая предзагрузка при монтировании
   useEffect(() => {
     preloadData();
+    
+    // Принудительное завершение загрузки через 45 секунд
+    const forceCompleteTimer = setTimeout(() => {
+      if (globalPreloadedData.isLoading) {
+        console.warn('⚠️ Принудительное завершение загрузки через 45 секунд');
+        globalPreloadedData = {
+          equipment: [],
+          categories: [],
+          homepageEquipment: [],
+          isLoading: false,
+          error: null
+        };
+        setData(globalPreloadedData);
+      }
+    }, 45000);
+    
+    return () => clearTimeout(forceCompleteTimer);
   }, [preloadData]);
 
   return {
     ...data,
     preloadData,
-    isReady: !data.isLoading && data.equipment.length > 0
+    isReady: !data.isLoading // Убираем требование наличия данных, чтобы сайт не зависал
   };
 }
 
@@ -132,6 +195,10 @@ async function loadHomepageEquipment() {
     
     const url = `${SUPABASE_URL}/rest/v1/homepage_equipment?select=*&is_visible=eq.true&order=sort_order.asc`;
     
+    // Добавляем таймаут для fetch запроса
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 секунд
+    
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -139,7 +206,10 @@ async function loadHomepageEquipment() {
         'Authorization': `Bearer ${SUPABASE_KEY}`,
         'Content-Type': 'application/json',
       },
+      signal: controller.signal
     });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -162,6 +232,10 @@ async function loadCategories() {
     
     const url = `${SUPABASE_URL}/rest/v1/equipment_categories?select=*&order=name.asc`;
     
+    // Добавляем таймаут для fetch запроса
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 секунд
+    
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -169,7 +243,10 @@ async function loadCategories() {
         'Authorization': `Bearer ${SUPABASE_KEY}`,
         'Content-Type': 'application/json',
       },
+      signal: controller.signal
     });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

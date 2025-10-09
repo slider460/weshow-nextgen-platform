@@ -23,3 +23,8 @@ SELECT COUNT(*) as final_count FROM logos;
 
 
 
+
+
+
+
+

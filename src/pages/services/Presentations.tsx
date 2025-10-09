@@ -86,7 +86,7 @@ const Presentations = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="px-8 py-4 text-lg font-semibold bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700">
-                  Заказать услугу
+                  Забронировать услугу
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button size="lg" variant="outline" className="px-8 py-4 text-lg font-semibold">

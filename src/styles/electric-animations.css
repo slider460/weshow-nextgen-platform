@@ -1,0 +1,40 @@
+/* Электрические анимации для ElectricBorder компонента */
+
+@keyframes electricFlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.02);
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(360deg);
+  }
+}
+
+/* Классы для электрических эффектов */
+.electric-flow {
+  animation: electricFlow 2s ease-in-out infinite;
+}
+
+.electric-sparkle {
+  animation: sparkle 1.5s ease-out forwards;
+}
+
+
+
+

@@ -4,11 +4,11 @@ import { Button } from "../components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { ExternalLink, ArrowRight, Play } from "lucide-react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import vdnhStand from "../assets/office-building.jpg";
 import ProjectOrderModal from "./ProjectOrderModal";
 import useCases from "../hooks/useCases";
+import LightRays from "./LightRays";
 
 
 interface ModernPortfolioSectionProps {
@@ -71,8 +71,28 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
   console.log('ModernPortfolioSection: Есть еще проекты:', hasMoreProjects);
 
   return (
-    <section className="py-20 bg-slate-50 relative z-10 min-h-screen">
-      <div className="container mx-auto px-4 max-w-7xl relative">
+    <section className="py-20 relative min-h-screen overflow-hidden">
+      {/* Light Rays Background - покрывает всю секцию */}
+      <LightRays 
+        raysOrigin="top-center"
+        raysColor="#3b82f6"
+        raysSpeed={0.4}
+        lightSpread={2.5}
+        rayLength={4.0}
+        pulsating={true}
+        fadeDistance={2.0}
+        saturation={0.9}
+        followMouse={true}
+        mouseInfluence={0.15}
+        noiseAmount={0.05}
+        distortion={0.05}
+        className="absolute inset-0 z-0 w-full h-full"
+      />
+      
+      {/* Полупрозрачный фон для лучшей читаемости */}
+      <div className="absolute inset-0 bg-slate-50/80 z-5"></div>
+      
+      <div className="container mx-auto px-4 max-w-7xl relative z-20">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
             Наши проекты
@@ -116,8 +136,13 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -5 }}
+                className="cursor-pointer"
+                onClick={() => {
+                  // Используем window.location для навигации
+                  window.location.href = `/case/${cases[index].id}`;
+                }}
               >
-                <Card className="group h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
+                <Card className="group h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden relative hover:scale-105">
                   {/* Gradient Background */}
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   
@@ -138,14 +163,10 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
                       <div className="text-sm opacity-80">{project.date}</div>
                     </div>
                     
-                    {/* External Link Button */}
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="absolute top-4 right-4 bg-white/10 border-white/20 text-white hover:bg-white/20 transition-all duration-200 hover:scale-110"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </Button>
+                    {/* Click Indicator */}
+                    <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-full p-2 transition-all duration-200 hover:bg-white/30 hover:scale-110">
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
                   </div>
                   
                   <CardHeader className="pb-4">
@@ -174,17 +195,6 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
                       </div>
                     )}
                     
-                    {/* Action Button */}
-                    <Button 
-                      className="w-full mt-auto py-3 group/btn" 
-                      variant="default" 
-                      asChild
-                    >
-                      <Link to={`/case/${cases[index].id}`}>
-                        Подробнее о проекте
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
-                      </Link>
-                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -209,18 +219,22 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
 
         <div className="text-center">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="hero" asChild>
-              <Link to="/portfolio">
-                Все проекты
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+            <Button 
+              size="lg" 
+              variant="hero"
+              onClick={() => {
+                window.location.href = '/portfolio';
+              }}
+            >
+              Все проекты
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button 
               variant="outline" 
               size="lg"
               onClick={() => setIsProjectModalOpen(true)}
             >
-              Заказать проект
+              Забронировать проект
             </Button>
             <Button 
               variant="outline" 

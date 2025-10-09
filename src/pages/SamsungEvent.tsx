@@ -124,7 +124,7 @@ const SamsungEvent = () => {
                 className="px-8 py-4 text-lg font-semibold bg-white/70 backdrop-blur-sm border-slate-300 text-slate-700 hover:bg-white/90 transition-all duration-300"
                 onClick={() => setIsProjectModalOpen(true)}
               >
-                Заказать похожий проект
+                Забронировать похожий проект
               </Button>
             </div>
           </div>
@@ -326,7 +326,7 @@ const SamsungEvent = () => {
               className="px-8 py-4 text-lg font-semibold border-white/30 text-white hover:bg-white/20 transition-all duration-300"
               onClick={() => setIsProjectModalOpen(true)}
             >
-              Заказать проект
+              Забронировать проект
             </Button>
           </div>
         </div>
@@ -343,8 +343,8 @@ const SamsungEvent = () => {
       <ProjectOrderModal 
         isOpen={isProjectModalOpen}
         onClose={() => setIsProjectModalOpen(false)}
-        title="Заказать похожий проект"
-        triggerText="Заказать проект"
+        title="Забронировать похожий проект"
+        triggerText="Забронировать проект"
       />
       
       <Footer />

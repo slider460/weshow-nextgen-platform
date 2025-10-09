@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import AnimatedButton from "./AnimatedButton";
-import { useEquipmentCart } from "../hooks/useEquipmentCart";
 import { useAuth } from "../contexts/AuthContext";
 import { AuthModal } from "./auth/AuthModal";
 import { UserMenu } from "./auth/UserMenu";
+import { HeaderCart } from "./HeaderCart";
 
 import { 
   Menu, 
@@ -30,7 +30,6 @@ const Header = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'signin' | 'signup' | 'reset'>('signin');
   const location = useLocation();
-  const { cartCount } = useEquipmentCart();
   const { user, profile, loading } = useAuth();
 
   useEffect(() => {
@@ -126,6 +125,18 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-6 ml-8 flex-shrink-0">
+            
+            <Link 
+              to="/about" 
+              className={`relative text-slate-700 hover:text-blue-600 hover-no-flicker interactive-optimized transition-colors duration-200 font-medium group ${
+                isActive("/about") ? "text-blue-600" : ""
+              }`}
+            >
+              О нас
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-200 ${
+                isActive("/about") ? "w-full" : "w-0 group-hover:w-full"
+              }`}></span>
+            </Link>
 
             {/* Services Dropdown */}
             <div className="relative group">
@@ -374,9 +385,8 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-3 flex-shrink-0">
-
-
-
+            <HeaderCart />
+            
             <AnimatedButton 
               variant="gradient"
               hoverEffect="lift"
@@ -414,6 +424,15 @@ const Header = () => {
         <div className="bg-white/95 backdrop-blur-optimized backdrop-element-optimized border-t border-slate-200 shadow-xl">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <nav className="space-y-1">
+              <Link 
+                to="/about" 
+                className="flex items-center px-4 py-3 text-base font-medium text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors duration-200" 
+                onClick={closeMenu}
+              >
+                <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                О нас
+              </Link>
+              
               <Link 
                 to="/" 
                 className="flex items-center px-3 py-2 text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200" 

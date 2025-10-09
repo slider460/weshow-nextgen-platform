@@ -28,7 +28,7 @@ const translations = {
     
     // Кнопки
     'btn.get-consultation': 'Получить консультацию',
-    'btn.order-project': 'Заказать проект',
+    'btn.order-project': 'Забронировать проект',
     'btn.learn-more': 'Узнать больше',
     'btn.view-showreel': 'Смотреть шоурил',
     'btn.subscribe': 'Подписаться',

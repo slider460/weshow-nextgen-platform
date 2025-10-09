@@ -7,7 +7,6 @@ import {
   List,
   ChevronDown,
   Star,
-  ShoppingCart,
   Eye,
   Zap,
   Shield,
@@ -33,8 +32,8 @@ import type { Equipment, EquipmentCategory, EquipmentFilters } from '../types/eq
 import type { Equipment3DModel } from './3d/ThreeViewer';
 import { ARPreview } from './ar/ARPreview';
 import { useResponsive } from '../hooks/useResponsive';
-import { useAdvancedCart } from '../hooks/useAdvancedCart';
 import { EquipmentGridSkeleton } from './EquipmentGridSkeleton';
+import { AddToCartButton } from './AddToCartButton';
 import { cn } from '../lib/utils';
 
 interface EquipmentGridProps {
@@ -80,7 +79,6 @@ export const EquipmentGrid: React.FC<EquipmentGridProps> = ({
   
   // Debug logging
   console.log('EquipmentGrid render - equipment count:', equipment.length, 'loading:', loading);
-  const { addToCart, cart, isLoading: cartLoading } = useAdvancedCart();
 
   // Состояние UI
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -207,18 +205,6 @@ export const EquipmentGrid: React.FC<EquipmentGridProps> = ({
   }, [currentFilters, onFiltersChange]);
 
   // Добавление в корзину
-  const handleAddToCart = useCallback(async (equipment: Equipment, event: React.MouseEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    try {
-      await addToCart(equipment);
-      // Можно показать уведомление об успехе
-    } catch (error) {
-      console.error('Ошибка добавления в корзину:', error);
-      // Можно показать уведомление об ошибке
-    }
-  }, [addToCart]);
 
   // Определение количества колонок в зависимости от экрана
   const getGridCols = () => {
@@ -261,14 +247,9 @@ export const EquipmentGrid: React.FC<EquipmentGridProps> = ({
   const handleAREquipmentSelect = useCallback((equipment: Equipment3DModel) => {
     console.log('AR equipment selected from catalog:', equipment);
   }, []);
-  const isInCart = useCallback((equipmentId: string) => {
-    return cart.items.some(item => item.equipmentId === equipmentId);
-  }, [cart.items]);
 
   // Компонент карточки оборудования
   const EquipmentCard = ({ equipment: item }: { equipment: Equipment }) => {
-    const isUnavailable = item.availability.available === 0;
-    const inCart = isInCart(item.id);
 
     const cardContent = (
       <Card className={cn(
@@ -369,22 +350,15 @@ export const EquipmentGrid: React.FC<EquipmentGridProps> = ({
             )}
 
             {/* Кнопка добавления в корзину */}
-            <Button
-              className={cn(
-                "w-full mt-3",
-                inCart && "bg-green-600 hover:bg-green-700"
-              )}
-              size="sm"
-              disabled={isUnavailable || cartLoading}
-              onClick={(e) => handleAddToCart(item, e)}
-            >
-              {cartLoading ? (
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-              ) : (
-                <ShoppingCart className="w-4 h-4 mr-2" />
-              )}
-              {inCart ? 'В корзине' : isUnavailable ? 'Недоступно' : 'В корзину'}
-            </Button>
+            <AddToCartButton 
+              item={{
+                id: item.id,
+                name: item.name,
+                price: item.price || 0,
+                image: item.image
+              }}
+              className="w-full mt-3"
+            />
           </div>
         </CardContent>
       </Card>
