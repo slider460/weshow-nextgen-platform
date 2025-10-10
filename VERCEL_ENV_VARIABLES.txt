@@ -1,0 +1,78 @@
+═══════════════════════════════════════════════════════════════════
+    🔑 ENVIRONMENT VARIABLES ДЛЯ VERCEL
+═══════════════════════════════════════════════════════════════════
+
+⚠️  КОПИРУЙ ЭТИ ЗНАЧЕНИЯ В VERCEL DASHBOARD!
+
+───────────────────────────────────────────────────────────────────
+
+📋 ПЕРЕМЕННАЯ #1:
+
+Name (Имя):
+VITE_SUPABASE_URL
+
+Value (Значение):
+https://zbykhdjqrtqftfitbvbt.supabase.co
+
+Environment: 
+✓ Production
+
+───────────────────────────────────────────────────────────────────
+
+📋 ПЕРЕМЕННАЯ #2:
+
+Name (Имя):
+VITE_SUPABASE_ANON_KEY
+
+Value (Значение):
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE
+
+Environment: 
+✓ Production
+
+───────────────────────────────────────────────────────────────────
+
+❌ НЕ ДОБАВЛЯЙ ЭТУ ПЕРЕМЕННУЮ (небезопасно для клиента):
+
+VITE_SUPABASE_SERVICE_KEY - НЕ НУЖНА!
+
+═══════════════════════════════════════════════════════════════════
+
+🎯 ГДЕ ДОБАВИТЬ В VERCEL:
+
+1. Открой свой проект в Vercel Dashboard
+2. Нажми "Settings" (сверху)
+3. Слева выбери "Environment Variables"
+4. Нажми "Add New"
+5. Введи Name и Value
+6. Выбери Environment: Production
+7. Нажми "Save"
+8. Повтори для второй переменной
+
+Затем:
+9. "Deployments" → последний деплой
+10. "..." → "Redeploy"
+
+═══════════════════════════════════════════════════════════════════
+
+📸 СКРИНШОТ ИНСТРУКЦИИ:
+
+┌─────────────────────────────────────────────────┐
+│ Vercel Dashboard                                │
+├─────────────────────────────────────────────────┤
+│ Settings → Environment Variables                │
+│                                                 │
+│ [Add New]                                       │
+│                                                 │
+│ Name: VITE_SUPABASE_URL                        │
+│ Value: https://zbykhdjqrtqftfitbvbt.supabase.co│
+│ Environment: ✓ Production                       │
+│                                                 │
+│ [Save]                                          │
+└─────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════
+
+✅ ГОТОВО! Просто скопируй значения выше в Vercel!
+
+
