@@ -181,3 +181,4 @@ To run from source:
 # Go >= 1.22
 go run . help
 ```
+# Force rebuild Tue Oct 14 15:04:25 MSK 2025
