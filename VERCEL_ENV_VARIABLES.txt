@@ -76,3 +76,4 @@ VITE_SUPABASE_SERVICE_KEY - НЕ НУЖНА!
 ✅ ГОТОВО! Просто скопируй значения выше в Vercel!
 
 
+

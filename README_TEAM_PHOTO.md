@@ -98,3 +98,4 @@ className="w-full h-auto group-hover:scale-105 transition-transform duration-700
 4. Очистите кэш браузера (Ctrl+F5 или Cmd+R)
 
 
+

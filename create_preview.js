@@ -197,3 +197,4 @@ console.log('HTML превью создано: museum_preview.html');
 console.log('Откройте файл в браузере и сделайте скриншот для получения JPG');
 
 
+

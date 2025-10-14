@@ -328,3 +328,4 @@ Deployment: Vercel/Netlify ready
 **Продолжительность работы:** ~4 часа  
 **Инструменты:** MCP Chrome DevTools, Git, Vite, npm  
 
+

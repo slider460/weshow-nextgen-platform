@@ -101,3 +101,4 @@ SELECT 'Статистика equipment_categories' as info, COUNT(*) as row_coun
 
 
 
+
