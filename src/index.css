@@ -4,6 +4,7 @@
 @tailwind utilities;
 
 /* === ОПТИМИЗАЦИЯ CLS === */
+/* Force rebuild $(date) */
 /* Предотвращение layout shift при загрузке изображений */
 img, video, iframe {
   content-visibility: auto;
