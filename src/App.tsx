@@ -20,7 +20,7 @@ const PageLoader = () => (
   </div>
 );
 
-// Lazy load components
+// Lazy load components with optimized loading
 const Index = React.lazy(() => import('./pages/Index'));
 const About = React.lazy(() => import('./pages/About'));
 const Services = React.lazy(() => import('./pages/Services'));
@@ -37,10 +37,24 @@ const CaseDetail = React.lazy(() => import('./pages/CaseDetail'));
 const CaseManagement = React.lazy(() => import('./pages/admin/CaseManagement'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 
+// Preload critical components
+const preloadCriticalComponents = () => {
+  // Preload About and Services as they're likely to be visited
+  import('./pages/About');
+  import('./pages/Services');
+};
+
 function App() {
   // Проверяем переменные окружения при запуске
   useEffect(() => {
     checkSupabaseEnv();
+    
+    // Preload critical components after initial load
+    const timer = setTimeout(() => {
+      preloadCriticalComponents();
+    }, 2000); // Preload after 2 seconds
+    
+    return () => clearTimeout(timer);
   }, []);
 
   return (
