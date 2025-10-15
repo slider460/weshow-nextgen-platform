@@ -75,25 +75,26 @@ const ComplexSolutionsMobileSection = () => {
           </p>
         </div>
 
-        {/* Mobile Carousel */}
-        <div className="block md:hidden">
+        {/* Mobile Carousel - ВСЕГДА ВИДИМАЯ ДЛЯ ТЕСТА */}
+        <div style={{ border: '2px solid red', padding: '10px', margin: '20px 0' }}>
           <div style={{ position: 'relative', width: '100%' }}>
             {/* Debug info */}
             <div className="text-center mb-4 text-sm text-gray-600">
-              Текущий слайд: {currentIndex + 1} из {solutions.length}
+              ТЕСТ КАРУСЕЛИ - Текущий слайд: {currentIndex + 1} из {solutions.length}
             </div>
             
-            <div style={{ overflow: 'hidden' }}>
+            <div style={{ overflow: 'hidden', border: '1px solid blue' }}>
               <div 
                 style={{ 
                   display: 'flex',
                   transition: 'transform 0.3s ease-in-out',
                   transform: `translateX(-${currentIndex * 100}%)`,
-                  width: `${solutions.length * 100}%`
+                  width: `${solutions.length * 100}%`,
+                  border: '1px solid green'
                 }}
               >
                 {solutions.map((solution, index) => (
-                  <div key={index} style={{ width: `${100 / solutions.length}%`, flexShrink: 0 }}>
+                  <div key={index} style={{ width: `${100 / solutions.length}%`, flexShrink: 0, border: '1px solid yellow' }}>
                     <div className={`${solution.gradient} rounded-3xl p-6 mx-2 min-h-[400px]`}>
                       <div className="text-white mb-4">
                         {solution.icon}
