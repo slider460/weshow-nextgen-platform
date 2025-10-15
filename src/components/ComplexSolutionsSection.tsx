@@ -110,8 +110,8 @@ const ComplexSolutionsSection = () => {
           ))}
         </div>
 
-        {/* Mobile Carousel - видимый только на мобильных */}
-        <div className="block md:hidden">
+        {/* Mobile Carousel - ВСЕГДА ВИДИМАЯ ДЛЯ ТЕСТА */}
+        <div>
           <div style={{ border: '2px solid red', padding: '10px', margin: '20px 0' }}>
             <div style={{ position: 'relative', width: '100%' }}>
               {/* Debug info */}
