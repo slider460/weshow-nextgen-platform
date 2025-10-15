@@ -16,17 +16,33 @@ declare global {
   }
 }
 
-// Создаем простой Supabase клиент без сложных настроек аутентификации
+// Оптимизированный Supabase клиент с улучшенной производительностью
 const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    autoRefreshToken: false,
-    persistSession: false,
+    autoRefreshToken: true,
+    persistSession: true,
     detectSessionInUrl: false
+  },
+  realtime: {
+    params: {
+      eventsPerSecond: 10,
+    },
   },
   global: {
     headers: {
-      'X-Client-Info': 'main-supabase-client'
+      'X-Client-Info': 'weshow-platform',
+      'x-application-name': 'weshow-platform'
     }
+  },
+  db: {
+    schema: 'public',
+  },
+  // Добавляем таймауты для предотвращения зависаний
+  fetch: (url, options = {}) => {
+    return fetch(url, {
+      ...options,
+      signal: AbortSignal.timeout(10000), // 10 секунд таймаут
+    })
   }
 })
 
