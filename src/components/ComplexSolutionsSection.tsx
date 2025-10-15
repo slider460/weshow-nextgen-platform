@@ -1,71 +1,50 @@
-import { Button } from "../components/ui/button";
+import { Button } from "./ui/button";
 import { ArrowRight, Building, Users, Trophy, Globe, Presentation, Store, Construction, Video } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ComplexSolutionsSection = () => {
   const solutions = [
     {
+      icon: <Video className="h-8 w-8" />,
+      title: "Мультимедийные решения",
+      description: "Интерактивные дисплеи, видеостены и проекционные системы для вашего бизнеса",
+      features: ["LED-видеостены", "Интерактивные панели", "Проекционные системы"],
+      gradient: "gradient-card-blue"
+    },
+    {
+      icon: <Building className="h-8 w-8" />,
+      title: "Разработка ПО и игр",
+      description: "Создание современных приложений и интерактивных игр для любых платформ",
+      features: ["Мобильные приложения", "Веб-приложения", "Игры и симуляторы"],
+      gradient: "gradient-card-purple"
+    },
+    {
       icon: <Users className="h-8 w-8" />,
       title: "Частные мероприятия",
       description: "Свадьбы, дни рождения, корпоративы",
       features: ["Световое оформление", "Звуковое сопровождение", "Фото/видео"],
-      gradient: "gradient-card-purple"
+      gradient: "gradient-card-green"
     },
     {
       icon: <Presentation className="h-8 w-8" />,
       title: "Презентации/конференции/форумы",
       description: "Профессиональное техническое обеспечение",
       features: ["Проекция", "Синхронный перевод", "Стриминг"],
-      gradient: "gradient-card-blue"
+      gradient: "gradient-card-orange"
     },
     {
       icon: <Store className="h-8 w-8" />,
       title: "Выставочные стенды",
       description: "Мультимедийное оформление стендов",
       features: ["Интерактивные панели", "LED-экраны", "Презентации"],
-      gradient: "gradient-card-cyan"
+      gradient: "gradient-card-indigo"
     },
     {
       icon: <Trophy className="h-8 w-8" />,
       title: "Спортивные мероприятия",
       description: "Техническое сопровождение соревнований",
       features: ["Табло", "Звуковое сопровождение", "Видеоповторы"],
-      gradient: "gradient-card-dark"
-    },
-    {
-      icon: <Building className="h-8 w-8" />,
-      title: "Корпоративные мероприятия",
-      description: "Комплексные решения для бизнеса",
-      features: ["Брендинг", "Презентации", "Развлечения"],
-      gradient: "gradient-card-purple"
-    },
-    {
-      icon: <Video className="h-8 w-8" />,
-      title: "Online мероприятия",
-      description: "Цифровые события и стриминг",
-      features: ["Многокамерная съемка", "Стриминг", "Интерактив"],
-      gradient: "gradient-card-blue"
-    },
-    {
-      icon: <Globe className="h-8 w-8" />,
-      title: "Презентации спортивных объектов",
-      description: "Техническое оснащение спортивных арен",
-      features: ["Видеокубы", "Медиафасады", "Системы управления"],
-      gradient: "gradient-card-cyan"
-    },
-    {
-      icon: <Store className="h-8 w-8" />,
-      title: "Презентации ТРЦ",
-      description: "Мультимедийные решения для торговых центров",
-      features: ["Навигация", "Реклама", "Интерактивные зоны"],
-      gradient: "gradient-card-dark"
-    },
-    {
-      icon: <Construction className="h-8 w-8" />,
-      title: "Презентации строительных объектов",
-      description: "Визуализация проектов недвижимости",
-      features: ["3D-туры", "Интерактивные макеты", "VR-презентации"],
-      gradient: "gradient-card-purple"
+      gradient: "gradient-card-yellow"
     }
   ];
 
@@ -81,6 +60,7 @@ const ComplexSolutionsSection = () => {
           </p>
         </div>
 
+        {/* Desktop Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {solutions.map((solution, index) => (
             <div key={index} className={`${solution.gradient} rounded-3xl p-8 hover:scale-105 transition-all duration-300`}>
@@ -116,27 +96,12 @@ const ComplexSolutionsSection = () => {
         </div>
 
         <div className="text-center">
-          <div className="gradient-card-blue rounded-3xl p-12">
-            <h3 className="text-3xl font-bold text-white mb-4">
-              Обсудим ваш проект?
-            </h3>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Расскажите о ваших задачах, и мы предложим оптимальное решение
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
-                <Link to="/contact">
-                  Обсудить проект
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/20 bg-white/10" asChild>
-                <Link to="/portfolio">
-                  Посмотреть кейсы
-                </Link>
-              </Button>
-            </div>
-          </div>
+          <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full" asChild>
+            <Link to="/services/complex-solutions">
+              Все комплексные решения
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
