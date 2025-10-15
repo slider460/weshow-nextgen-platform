@@ -10,7 +10,6 @@ import EquipmentBlocksManagement from './EquipmentBlocksManagement'
 import ServicesBlocksManagement from './ServicesBlocksManagement'
 import CaseManagement from './CaseManagement'
 import LettersCertificatesManagement from './LettersCertificatesManagement'
-import AdminTest from './AdminTest'
 
 // Заглушки для недостающих разделов
 const SolutionsManagement = () => (
@@ -38,7 +37,6 @@ const AdminPanel: React.FC = () => {
   return (
     <Routes>
       <Route path="/login" element={<AdminLogin />} />
-      <Route path="/test" element={<AdminTest />} />
       <Route path="/" element={<AdminLayout><AdminManagement /></AdminLayout>} />
       <Route path="/dashboard" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
       <Route path="/estimates" element={<AdminLayout><EstimatesManagement /></AdminLayout>} />
