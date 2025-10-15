@@ -33,29 +33,8 @@ const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
 const CaseSamaraStand = lazy(() => import("./pages/CaseSamaraStand"));
 const SamsungEvent = lazy(() => import("./pages/SamsungEvent"));
-// Тестовые страницы - lazy loading (низкий приоритет)
-const TestPage = lazy(() => import("./pages/TestPage"));
-const TestSimple = lazy(() => import("./pages/TestSimple"));
-const TestMinimal = lazy(() => import("./pages/TestMinimal"));
-const SupabaseConnectionTest = lazy(() => import("./pages/SupabaseConnectionTest"));
-const EquipmentTest = lazy(() => import("./pages/EquipmentTest"));
-const SupabaseDiagnostic = lazy(() => import("./pages/SupabaseDiagnostic").then(m => ({ default: m.SupabaseDiagnostic })));
-const SimpleConnectionTest = lazy(() => import("./pages/SimpleConnectionTest").then(m => ({ default: m.SimpleConnectionTest })));
-const TestAllDataLoading = lazy(() => import("./pages/TestAllDataLoading").then(m => ({ default: m.TestAllDataLoading })));
-const TestEquipmentLoading = lazy(() => import("./pages/TestEquipmentLoading").then(m => ({ default: m.TestEquipmentLoading })));
-const TestRentalEquipment = lazy(() => import("./pages/TestRentalEquipment"));
-const DebugEquipment = lazy(() => import("./pages/DebugEquipment"));
-const RestApiEquipmentTest = lazy(() => import("./pages/RestApiEquipmentTest"));
-const TestPortfolioLoading = lazy(() => import("./pages/TestPortfolioLoading"));
-const TestEquipmentPage = lazy(() => import("./pages/TestEquipmentPage"));
-const TestEquipmentData = lazy(() => import("./pages/TestEquipmentData"));
-const TestCasesLoading = lazy(() => import("./pages/TestCasesLoading"));
-const TestCasesDisplay = lazy(() => import("./pages/TestCasesDisplay"));
-const TestCasesImages = lazy(() => import("./pages/TestCasesImages"));
-const TestImageUrls = lazy(() => import("./pages/TestImageUrls"));
-const TestCaseSave = lazy(() => import("./pages/TestCaseSave"));
-const TestCaseSaveDebug = lazy(() => import("./pages/TestCaseSaveDebug"));
-const TestImageUpload = lazy(() => import("./pages/TestImageUpload"));
+// Тестовые страницы удалены для оптимизации сборки
+// Тестовые страницы удалены для оптимизации сборки
 const EquipmentCatalogAdmin = lazy(() => import("./pages/admin/EquipmentCatalogAdmin"));
 const QuickAddEquipment = lazy(() => import("./pages/QuickAddEquipment"));
 const CSVImportEquipment = lazy(() => import("./pages/CSVImportEquipment"));
@@ -109,16 +88,7 @@ const Configuration = lazy(() => import("./pages/services/Configuration"));
 const EquipmentDiagnostics = lazy(() => import("./pages/services/EquipmentDiagnostics"));
 const Maintenance = lazy(() => import("./pages/services/Maintenance"));
 const EquipmentCalculation = lazy(() => import("./pages/services/EquipmentCalculation"));
-const DebugCart = lazy(() => import("./pages/DebugCart"));
-const Game = lazy(() => import("./pages/Game"));
-const GameSimple = lazy(() => import('./pages/GameSimple'));
-const TestFigmaPage = lazy(() => import('./pages/TestFigmaPage'));
-const FigmaExactPage = lazy(() => import('./pages/FigmaExactPage'));
-const FigmaDebugPage = lazy(() => import('./pages/FigmaDebugPage'));
-const FigmaSimplePage = lazy(() => import('./pages/FigmaSimplePage'));
-const FigmaTestPage = lazy(() => import('./pages/FigmaTestPage'));
-const SimpleTest = lazy(() => import('./pages/SimpleTest'));
-const SupabaseTest = lazy(() => import('./pages/SupabaseTest'));
+// Тестовые страницы удалены для оптимизации сборки
 const DatabaseManagement = lazy(() => import('./pages/DatabaseManagement'));
 const AdminPanel = lazy(() => import('./pages/admin/AdminPanel'));
 const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard'));
@@ -130,12 +100,7 @@ const ProcessAutomation = lazy(() => import("./pages/services/ProcessAutomation"
 const SystemScaling = lazy(() => import("./pages/services/SystemScaling"));
 
 // Админка - lazy loading
-const AdminDebug = lazy(() => import("./pages/admin/AdminDebug"));
-const AdminSimple = lazy(() => import("./pages/admin/AdminSimple"));
-const FixHomepageEquipmentRLS = lazy(() => import("./pages/FixHomepageEquipmentRLS"));
-const TestEstimatesPage = lazy(() => import("./pages/TestEstimatesPage"));
-const AdminBypass = lazy(() => import("./pages/AdminBypass"));
-const SimpleEstimatesPage = lazy(() => import("./pages/SimpleEstimatesPage"));
+// Тестовые страницы удалены для оптимизации сборки
 const CreateServicesBlocksTable = lazy(() => import("./pages/CreateServicesBlocksTable"));
 const CopyServicesBlocksSQL = lazy(() => import("./pages/CopyServicesBlocksSQL"));
 const CopyCasesSQL = lazy(() => import("./pages/CopyCasesSQL"));
@@ -259,24 +224,8 @@ const App = () => (
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/debug-cart" element={<DebugCart />} />
         <Route path="/logos" element={<LogosManagement />} />
-        <Route path="/game" element={<Game />} />
-        <Route path="/game-simple" element={<GameSimple />} />
-        <Route path="/test" element={<TestPage />} />
-        <Route path="/test-simple" element={<TestSimple />} />
-        <Route path="/test-minimal" element={<TestMinimal />} />
-        <Route path="/test-page" element={<TestPage />} />
-        <Route path="/simple" element={<SimpleTest />} />
-        <Route path="/supabase-test" element={<SupabaseConnectionTest />} />
-        <Route path="/test-figma" element={<TestFigmaPage />} />
-        <Route path="/figma-exact" element={<FigmaExactPage />} />
-        <Route path="/figma-debug" element={<FigmaDebugPage />} />
-        <Route path="/figma-simple" element={<FigmaSimplePage />} />
-        <Route path="/figma-test" element={<FigmaTestPage />} />
-        <Route path="/simple-test" element={<SimpleTest />} />
-        <Route path="/supabase-test" element={<SupabaseTest />} />
-        <Route path="/equipment-test" element={<EquipmentTest />} />
+        {/* Тестовые роуты удалены для оптимизации сборки */}
         <Route path="/admin/equipment" element={<EquipmentCatalogAdmin />} />
         <Route path="/admin/homepage-equipment" element={<HomepageEquipmentAdmin />} />
         <Route path="/setup-homepage-equipment" element={<SetupHomepageEquipment />} />
@@ -287,134 +236,35 @@ const App = () => (
         <Route path="/database" element={<DatabaseManagement />} />
         <Route path="/admin/*" element={<AdminPanel />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/admin-debug" element={<AdminDebug />} />
-        <Route path="/admin-simple" element={<AdminSimple />} />
-        <Route path="/fix-homepage-equipment-rls" element={<FixHomepageEquipmentRLS />} />
-        <Route path="/test-estimates" element={<TestEstimatesPage />} />
-        <Route path="/admin-bypass" element={<AdminBypass />} />
-        <Route path="/simple-estimates" element={<SimpleEstimatesPage />} />
+        {/* Тестовые роуты удалены для оптимизации сборки */}
         <Route path="/create-services-blocks-table" element={<CreateServicesBlocksTable />} />
         <Route path="/copy-services-blocks-sql" element={<CopyServicesBlocksSQL />} />
         <Route path="/copy-cases-sql" element={<CopyCasesSQL />} />
         <Route path="/setup-supabase-storage" element={<SetupSupabaseStorage />} />
         <Route path="/simple-storage-fix" element={<SimpleStorageFix />} />
-        <Route path="/test-cases-display" element={<TestCasesDisplay />} />
-        <Route path="/test-cases-images" element={<TestCasesImages />} />
-        <Route path="/test-image-urls" element={<TestImageUrls />} />
-        <Route path="/test-case-save" element={<TestCaseSave />} />
-        <Route path="/test-case-save-debug" element={<TestCaseSaveDebug />} />
-        <Route path="/test-image-upload" element={<TestImageUpload />} />
-        <Route path="/debug-portfolio" element={<DebugPortfolio />} />
+        {/* Тестовые роуты удалены для оптимизации сборки */}
         <Route path="/admin/cases" element={<CaseManagement />} />
         <Route path="/add-case-fields-sql" element={<AddCaseFieldsSQL />} />
         <Route path="/admin/logos" element={<LogosManagement />} />
         <Route path="/admin/letters" element={<LettersCertificatesManagement />} />
-        <Route path="/test-letters-table" element={<TestLettersTable />} />
-        <Route path="/create-letters-table" element={<CreateLettersTable />} />
-        <Route path="/auto-create-letters-table" element={<AutoCreateLettersTable />} />
-        <Route path="/simple-create-table" element={<SimpleCreateTable />} />
-        <Route path="/auto-create-direct" element={<AutoCreateTableDirect />} />
-        <Route path="/setup-sql-execution" element={<SetupSQLExecution />} />
-        <Route path="/create-table-simple" element={<CreateTableSimple />} />
-        <Route path="/test-letters-hook" element={<TestLettersHook />} />
-        <Route path="/test-direct-supabase" element={<TestDirectSupabase />} />
-        <Route path="/create-logos-table-sql" element={<CreateLogosTableSQL />} />
-        <Route path="/test-logos-connection" element={<TestLogosConnection />} />
-        <Route path="/clear-logos-data" element={<ClearLogosData />} />
-        <Route path="/test-logos-sync" element={<TestLogosSync />} />
-        <Route path="/test-logo-deletion" element={<TestLogoDeletion />} />
-        <Route path="/force-refresh-logos" element={<ForceRefreshLogos />} />
-        <Route path="/debug-logos" element={<DebugLogos />} />
-        <Route path="/clear-all-logos" element={<ClearAllLogos />} />
-        <Route path="/clear-all-logos-sql" element={<ClearAllLogosSQL />} />
-        <Route path="/force-clear-logos" element={<ForceClearLogos />} />
-        <Route path="/execute-force-clear-sql" element={<ExecuteForceClearSQL />} />
-        <Route path="/quick-clear-logos" element={<QuickClearLogos />} />
-        <Route path="/force-remove-all-logos" element={<ForceRemoveAllLogos />} />
+        {/* Тестовые роуты удалены для оптимизации сборки */}
         <Route path="/profile" element={<Profile />} />
         <Route path="/access-denied" element={<AccessDenied />} />
-        <Route path="/auth-test" element={<AuthTest />} />
-        <Route path="/simple-auth-test" element={<SimpleAuthTest />} />
-        <Route path="/working-auth-test" element={<WorkingAuthTest />} />
+        {/* Тестовые роуты удалены для оптимизации сборки */}
         <Route path="/create-admin" element={<CreateAdminUser />} />
         <Route path="/diagnose-admin" element={<DiagnoseAdmin />} />
         <Route path="/fix-admin-email" element={<FixAdminEmail />} />
-        <Route path="/test-logos-load" element={<TestLogosLoad />} />
-        <Route path="/simple-db-test" element={<SimpleDbTest />} />
-        <Route path="/direct-supabase-test" element={<DirectSupabaseTest />} />
-        <Route path="/ultra-simple-test" element={<UltraSimpleTest />} />
-        <Route path="/rest-api-test" element={<RestApiTest />} />
-        <Route path="/test-rest-logos" element={<TestRestLogos />} />
-        <Route path="/test-rest-api" element={<TestRestApi />} />
+        {/* Тестовые роуты удалены для оптимизации сборки */}
+        {/* Тестовые роуты удалены для оптимизации сборки */}
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/supabase-diagnostic" element={<SupabaseDiagnostic />} />
-        <Route path="/simple-connection-test" element={<SimpleConnectionTest />} />
-        <Route path="/test-all-data" element={<TestAllDataLoading />} />
-        <Route path="/test-equipment" element={<TestEquipmentLoading />} />
-        <Route path="/test-rental-equipment" element={<TestRentalEquipment />} />
-        <Route path="/debug-equipment" element={<DebugEquipment />} />
-        <Route path="/rest-api-equipment-test" element={<RestApiEquipmentTest />} />
-        <Route path="/test-portfolio-loading" element={<TestPortfolioLoading />} />
-        <Route path="/test-equipment-page" element={<TestEquipmentPage />} />
-        <Route path="/test-equipment-data" element={<TestEquipmentData />} />
-        <Route path="/test-cases-loading" element={<TestCasesLoading />} />
-        <Route path="/test-inline" element={
-          <div style={{ 
-            minHeight: '100vh', 
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            fontSize: '2rem',
-            fontWeight: 'bold'
-          }}>
-            <div style={{ textAlign: 'center' }}>
-              <h1>🎨 Inline Test работает!</h1>
-              <p style={{ fontSize: '1rem', marginTop: '1rem', opacity: 0.8 }}>
-                Если вы видите это, значит React работает корректно
-              </p>
-            </div>
-          </div>
-        } />
-        <Route path="/minimal-test" element={
-          <div style={{ 
-            minHeight: '100vh', 
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            fontSize: '2rem',
-            fontWeight: 'bold',
-            textAlign: 'center'
-          }}>
-            <div>
-              <h1>🎨 Minimal Test</h1>
-              <p style={{ fontSize: '1rem', marginTop: '1rem', opacity: 0.8 }}>
-                React работает! Порт: 8083
-              </p>
-              <p style={{ fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6 }}>
-                Время: {new Date().toLocaleTimeString()}
-              </p>
-            </div>
-          </div>
-        } />
-        <Route path="/ultra-simple" element={
-          <div style={{ 
-            minHeight: '100vh', 
-            background: 'red',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            fontSize: '3rem',
-            fontWeight: 'bold'
-          }}>
-            ULTRA SIMPLE TEST
-          </div>
-        } />
-        <Route path="/figma-inline" element={
+        {/* Тестовые роуты удалены для оптимизации сборки */}
+        {/* Тестовые роуты удалены для оптимизации сборки */}
+        {/* Тестовые роуты удалены для оптимизации сборки */}
+        {/* Тестовые роуты удалены для оптимизации сборки */}
+        {/* Тестовые роуты удалены для оптимизации сборки */}
+        {/* Тестовые роуты удалены для оптимизации сборки */}
+        {/* Тестовые роуты удалены для оптимизации сборки */}
+        {/* <Route path="/figma-inline" element={
           <div style={{ 
             minHeight: '100vh', 
             background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
