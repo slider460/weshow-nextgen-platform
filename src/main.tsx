@@ -57,8 +57,8 @@ const AppFallback = () => (
 // Безопасная инициализация мониторинга производительности и ошибок
 const initMonitoring = () => {
   try {
-    // Проверяем, что мы в браузере
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    // Проверяем, что мы в браузере и DOM готов
+    if (typeof window !== 'undefined' && typeof document !== 'undefined' && document.readyState !== 'loading') {
       // Инициализируем с задержкой для полной загрузки DOM
       setTimeout(() => {
         try {
@@ -68,14 +68,32 @@ const initMonitoring = () => {
           console.warn('Failed to initialize monitoring:', error)
         }
       }, 100)
+    } else {
+      // Ждем готовности DOM
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          try {
+            initPerformanceMonitoring()
+            initErrorReporting()
+          } catch (error) {
+            console.warn('Failed to initialize monitoring:', error)
+          }
+        }, 100)
+      })
     }
   } catch (error) {
     console.warn('Monitoring initialization failed:', error)
   }
 }
 
-// Инициализируем мониторинг
-initMonitoring()
+// Инициализируем мониторинг только после полной загрузки
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMonitoring)
+  } else {
+    initMonitoring()
+  }
+}
 
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>

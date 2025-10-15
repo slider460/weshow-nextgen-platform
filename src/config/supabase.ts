@@ -16,8 +16,14 @@ declare global {
   }
 }
 
-// Оптимизированный Supabase клиент с улучшенной производительностью
-const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+// Безопасная инициализация Supabase клиента
+let supabase: any = null
+
+try {
+  // Проверяем, что у нас есть валидные credentials
+  if (supabaseUrl && supabaseAnonKey && supabaseUrl.includes('supabase.co') && supabaseAnonKey.length > 50) {
+    // Оптимизированный Supabase клиент с улучшенной производительностью
+    supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
@@ -45,6 +51,16 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     })
   }
 })
+  } else {
+    console.warn('⚠️ Invalid Supabase credentials, using fallback client')
+    // Создаем fallback клиент с пустыми credentials
+    supabase = createClient('https://fallback.supabase.co', 'fallback-key')
+  }
+} catch (error) {
+  console.error('❌ Failed to initialize Supabase client:', error)
+  // Создаем fallback клиент в случае ошибки
+  supabase = createClient('https://fallback.supabase.co', 'fallback-key')
+}
 
 export { supabase }
 

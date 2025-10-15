@@ -7,6 +7,12 @@ export const getEnvVar = (key: string, fallback: string = ''): string => {
       return value
     }
     
+    // Затем пробуем получить из define переменных (для build-time)
+    const defineKey = `__${key}__`
+    if (typeof window !== 'undefined' && (window as any)[defineKey]) {
+      return (window as any)[defineKey]
+    }
+    
     // Затем пробуем получить из window (для runtime)
     if (typeof window !== 'undefined' && (window as any).__ENV__?.[key]) {
       return (window as any).__ENV__[key]
