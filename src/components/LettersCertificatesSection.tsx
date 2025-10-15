@@ -1,9 +1,9 @@
-import { useLettersCertificates } from '../hooks/useLettersCertificates';
+import { useLettersCertificates } from '../hooks/useLettersCertificatesNew';
 import { Award, FileText, Trophy, GraduationCap, ExternalLink, Calendar } from 'lucide-react';
 import { Button } from './ui/button';
 
 const LettersCertificatesSection = () => {
-  const { letters, loading, error } = useLettersCertificates();
+  const { data: letters = [], isLoading: loading, error } = useLettersCertificates();
   
   // Логирование для отладки (временно отключено)
   // console.log('🔍 LettersCertificatesSection Debug:', { letters, loading, error });
@@ -56,8 +56,8 @@ const LettersCertificatesSection = () => {
     }
   ];
   
-  // Всегда используем тестовые данные для демонстрации
-  const displayLetters = testLetters;
+  // Используем данные из React Query или fallback данные
+  const displayLetters = letters.length > 0 ? letters : testLetters;
   
   // console.log('🎯 Display letters:', displayLetters);
 
