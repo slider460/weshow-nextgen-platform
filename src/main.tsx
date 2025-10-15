@@ -1,8 +1,27 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App.tsx'
 import ErrorBoundary from './components/ErrorBoundary.tsx'
 import './index.css'
+
+// Создаем QueryClient с оптимизированными настройками
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 минут
+      cacheTime: 10 * 60 * 1000, // 10 минут
+      retry: 3,
+      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+    },
+    mutations: {
+      retry: 1,
+      retryDelay: 1000,
+    },
+  },
+})
 
 // Создаем fallback для всего приложения
 const AppFallback = () => (
@@ -34,7 +53,9 @@ const AppFallback = () => (
 );
 
 createRoot(document.getElementById("root")!).render(
-  <ErrorBoundary fallback={<AppFallback />}>
-    <App />
-  </ErrorBoundary>
+  <QueryClientProvider client={queryClient}>
+    <ErrorBoundary fallback={<AppFallback />}>
+      <App />
+    </ErrorBoundary>
+  </QueryClientProvider>
 );

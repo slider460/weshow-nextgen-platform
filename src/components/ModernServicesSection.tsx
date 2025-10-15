@@ -4,11 +4,15 @@ import { Button } from "../components/ui/button";
 import { ArrowRight, Sparkles, Monitor, Smartphone, Users, Settings, Palette, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import ConsultationModal from "./ConsultationModal";
+import { useServices } from "../hooks/useServices";
+import { ServicesGridSkeleton } from "./ui/skeletons/ServiceSkeleton";
 
 const ModernServicesSection = () => {
   const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
+  const { data: dbServices, isLoading, error } = useServices();
 
-  const services = [
+  // Fallback сервисы для случаев ошибок
+  const fallbackServices = [
     {
       icon: Monitor,
       title: "Мультимедийные решения",
@@ -58,6 +62,38 @@ const ModernServicesSection = () => {
       link: "equipment-rental"
     }
   ];
+
+  // Используем данные из БД или fallback
+  const services = dbServices && dbServices.length > 0 ? dbServices.map((dbService, index) => ({
+    icon: fallbackServices[index % fallbackServices.length]?.icon || Monitor,
+    title: dbService.name,
+    description: dbService.description,
+    features: fallbackServices[index % fallbackServices.length]?.features || [],
+    color: fallbackServices[index % fallbackServices.length]?.color || "from-blue-500 to-cyan-500",
+    link: fallbackServices[index % fallbackServices.length]?.link || "service"
+  })) : fallbackServices;
+
+  // Показываем skeleton во время загрузки
+  if (isLoading) {
+    return (
+      <section className="py-24 bg-slate-50 relative overflow-hidden">
+        <div className="container mx-auto px-6 lg:px-8 relative">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-purple-50 border border-purple-200 text-sm font-medium text-purple-700 mb-6">
+              🚀 Наши услуги
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-6">
+              Комплексные
+              <span className="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent block">
+                решения
+              </span>
+            </h2>
+          </div>
+          <ServicesGridSkeleton count={6} />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-24 bg-slate-50 relative overflow-hidden">
