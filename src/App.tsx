@@ -1,9 +1,10 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { LogosProvider } from './contexts/LogosContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { checkSupabaseEnv } from './utils/envCheck';
 // import { PageLoader } from './components/PageLoader';
 
 const PageLoader = () => (
@@ -37,6 +38,11 @@ const CaseManagement = React.lazy(() => import('./pages/admin/CaseManagement'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 
 function App() {
+  // Проверяем переменные окружения при запуске
+  useEffect(() => {
+    checkSupabaseEnv();
+  }, []);
+
   return (
   <LanguageProvider>
     <LogosProvider>
