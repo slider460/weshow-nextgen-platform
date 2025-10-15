@@ -61,7 +61,7 @@ export function usePreloader() {
       
       // Добавляем таймаут для предотвращения зависания
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Таймаут загрузки данных (30 секунд)')), 30000);
+        setTimeout(() => reject(new Error('Таймаут загрузки данных (5 секунд)')), 5000);
       });
       
       // Используем оптимизированные методы с кэшированием
@@ -101,7 +101,7 @@ export function usePreloader() {
         
         // Добавляем таймаут для fallback
         const fallbackTimeoutPromise = new Promise((_, reject) => {
-          setTimeout(() => reject(new Error('Таймаут fallback загрузки (20 секунд)')), 20000);
+          setTimeout(() => reject(new Error('Таймаут fallback загрузки (3 секунды)')), 3000);
         });
         
         const fallbackDataPromise = Promise.all([
@@ -139,10 +139,10 @@ export function usePreloader() {
   useEffect(() => {
     preloadData();
     
-    // Принудительное завершение загрузки через 45 секунд
+    // Принудительное завершение загрузки через 10 секунд
     const forceCompleteTimer = setTimeout(() => {
       if (globalPreloadedData.isLoading) {
-        console.warn('⚠️ Принудительное завершение загрузки через 45 секунд');
+        console.warn('⚠️ Принудительное завершение загрузки через 10 секунд');
         globalPreloadedData = {
           equipment: [],
           categories: [],
@@ -152,7 +152,7 @@ export function usePreloader() {
         };
         setData(globalPreloadedData);
       }
-    }, 45000);
+    }, 10000);
     
     return () => clearTimeout(forceCompleteTimer);
   }, [preloadData]);
