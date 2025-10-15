@@ -2,10 +2,14 @@ import Header from "../components/Header";
 import AdvancedHeroSection from "../components/AdvancedHeroSection";
 import ModernServicesSection from "../components/ModernServicesSection";
 import ModernPortfolioSection from "../components/ModernPortfolioSection";
+import ModernPortfolioMobileSection from "../components/ModernPortfolioMobileSection";
 import RentalEquipmentSection from "../components/RentalEquipmentSection";
 import WorkflowRoadmapSection from "../components/WorkflowRoadmapSection";
+import WorkflowMobileSection from "../components/WorkflowMobileSection";
 import ContactFormSection from "../components/ContactFormSection";
 import TeamSection from "../components/TeamSection";
+import TeamMobileSection from "../components/TeamMobileSection";
+import ComplexSolutionsMobileSection from "../components/ComplexSolutionsMobileSection";
 import LettersCertificatesSection from "../components/LettersCertificatesSection";
 import Footer from "../components/Footer";
 import ShowreelModal from "../components/ShowreelModal";
@@ -27,11 +31,42 @@ const Index = () => {
         <AdvancedHeroSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <RentalEquipmentSection />
         <ModernServicesSection />
-        <ModernPortfolioSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
-        <TeamSection />
+        
+        {/* Desktop Portfolio Section */}
+        <div className="hidden md:block">
+          <ModernPortfolioSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
+        </div>
+        
+        {/* Mobile Portfolio Section */}
+        <div className="block md:hidden">
+          <ModernPortfolioMobileSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
+        </div>
+        
+        {/* Desktop Team Section */}
+        <div className="hidden md:block">
+          <TeamSection />
+        </div>
+        
+        {/* Mobile Team Section */}
+        <div className="block md:hidden">
+          <TeamMobileSection />
+        </div>
+        
+        {/* Complex Solutions Section */}
+        <ComplexSolutionsMobileSection />
+        
         <LettersCertificatesSection />
-        {/* Убраны блоки: GamePromoSection, ComplexSolutionsSection, UniqueValueProposition, ModernShowreelSection и SocialProofSection */}
-        <WorkflowRoadmapSection />
+        
+        {/* Desktop Workflow Section */}
+        <div className="hidden md:block">
+          <WorkflowRoadmapSection />
+        </div>
+        
+        {/* Mobile Workflow Section */}
+        <div className="block md:hidden">
+          <WorkflowMobileSection />
+        </div>
+        
         <LogoLoopSection />
         <ContactFormSection />
       </main>
