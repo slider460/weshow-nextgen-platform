@@ -20,8 +20,12 @@ import {
   Rocket
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const ComplexSolutions = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
   const solutions = [
     {
       icon: Puzzle,
@@ -60,6 +64,18 @@ const ComplexSolutions = () => {
     "Гарантия качества",
     "Техническая поддержка"
   ];
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === solutions.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? solutions.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -111,7 +127,8 @@ const ComplexSolutions = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Desktop Grid */}
+            <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8">
               {solutions.map((solution, index) => (
                 <Card key={index} className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-slate-200/50">
                   <CardHeader className="text-center">
@@ -137,6 +154,88 @@ const ComplexSolutions = () => {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+
+            {/* Mobile Carousel */}
+            <div className="block md:hidden">
+              <div style={{ border: '2px solid red', padding: '10px', margin: '20px 0' }}>
+                <div style={{ position: 'relative', width: '100%' }}>
+                  {/* Debug info */}
+                  <div className="text-center mb-4 text-sm text-gray-600">
+                    СТРАНИЦА КАРУСЕЛЬ - Текущий слайд: {currentIndex + 1} из {solutions.length}
+                  </div>
+                  
+                  <div style={{ overflow: 'hidden', border: '1px solid blue' }}>
+                    <div 
+                      style={{ 
+                        display: 'flex',
+                        transition: 'transform 0.3s ease-in-out',
+                        transform: `translateX(-${currentIndex * 100}%)`,
+                        width: `${solutions.length * 100}%`,
+                        border: '1px solid green'
+                      }}
+                    >
+                      {solutions.map((solution, index) => (
+                        <div key={index} style={{ width: `${100 / solutions.length}%`, flexShrink: 0, border: '1px solid yellow' }}>
+                          <Card className="mx-2 border-slate-200/50" style={{ transform: 'none !important', transition: 'none !important' }}>
+                            <CardHeader className="text-center">
+                              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <solution.icon className="h-8 w-8 text-white" />
+                              </div>
+                              <CardTitle className="text-xl text-slate-900">
+                                {solution.title}
+                              </CardTitle>
+                              <CardDescription className="text-slate-600">
+                                {solution.description}
+                              </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                              <ul className="space-y-2">
+                                {solution.features.map((feature, idx) => (
+                                  <li key={idx} className="flex items-center text-sm text-slate-600">
+                                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                                    {feature}
+                                  </li>
+                                ))}
+                              </ul>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Navigation buttons */}
+                  <button
+                    onClick={prevSlide}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg transition-colors z-10"
+                    aria-label="Previous slide"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={nextSlide}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg transition-colors z-10"
+                    aria-label="Next slide"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                  
+                  {/* Dots indicator */}
+                  <div className="flex justify-center mt-4 space-x-2">
+                    {solutions.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentIndex(index)}
+                        className={`w-2 h-2 rounded-full transition-colors ${
+                          index === currentIndex ? 'bg-emerald-600' : 'bg-gray-300'
+                        }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
