@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
 import { ArrowRight, Building, Users, Trophy, Globe, Presentation, Store, Construction, Video } from "lucide-react";
 import { Link } from "react-router-dom";
-import MobileCarousel from "./ui/MobileCarousel";
+import SimpleCarousel from "./SimpleCarousel";
 
 const ComplexSolutionsMobileSection = () => {
   const solutions = [
@@ -62,39 +62,41 @@ const ComplexSolutionsMobileSection = () => {
         </div>
 
         {/* Mobile Carousel */}
-        <MobileCarousel showOnMobile={true} showOnDesktop={false}>
-          {solutions.map((solution, index) => (
-            <div key={index} className={`${solution.gradient} rounded-3xl p-6 mx-2 min-h-[400px]`}>
-              <div className="text-white mb-4">
-                {solution.icon}
+        <div className="block md:hidden">
+          <SimpleCarousel>
+            {solutions.map((solution, index) => (
+              <div key={index} className={`${solution.gradient} rounded-3xl p-6 mx-4 min-h-[400px]`}>
+                <div className="text-white mb-4">
+                  {solution.icon}
+                </div>
+                
+                <h3 className="text-xl font-bold text-white mb-3">
+                  {solution.title}
+                </h3>
+                
+                <p className="text-white/90 text-sm leading-relaxed mb-4">
+                  {solution.description}
+                </p>
+                
+                <ul className="space-y-2 mb-6">
+                  {solution.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-center text-sm text-white/80">
+                      <div className="w-1.5 h-1.5 bg-white rounded-full mr-3" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                
+                <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10 w-full" asChild>
+                  <Link to="/services/complex-solutions">
+                    Узнать больше
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
-              
-              <h3 className="text-xl font-bold text-white mb-3">
-                {solution.title}
-              </h3>
-              
-              <p className="text-white/90 text-sm leading-relaxed mb-4">
-                {solution.description}
-              </p>
-              
-              <ul className="space-y-2 mb-6">
-                {solution.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center text-sm text-white/80">
-                    <div className="w-1.5 h-1.5 bg-white rounded-full mr-3" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10 w-full" asChild>
-                <Link to="/services/complex-solutions">
-                  Узнать больше
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          ))}
-        </MobileCarousel>
+            ))}
+          </SimpleCarousel>
+        </div>
 
         <div className="text-center mt-16">
           <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full" asChild>
