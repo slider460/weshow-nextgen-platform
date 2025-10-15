@@ -10,11 +10,15 @@ import LettersCertificatesSection from "../components/LettersCertificatesSection
 import Footer from "../components/Footer";
 import ShowreelModal from "../components/ShowreelModal";
 import LogoLoopSection from "../components/LogoLoopSection";
+import { useAutoPrefetch } from "../hooks/usePrefetch";
 
 import { useState } from "react";
 
 const Index = () => {
   const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
+  
+  // Автоматический prefetching критических данных
+  useAutoPrefetch();
 
   return (
     <div className="min-h-screen bg-slate-50">

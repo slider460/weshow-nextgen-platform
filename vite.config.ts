@@ -70,10 +70,40 @@ export default defineConfig({
     rollupOptions: {
       output: {
         // Разделение на чанки для лучшего кеширования
-        manualChunks: {
-          'vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui': ['framer-motion', 'lucide-react'],
-          'three': ['three', '@react-three/fiber', '@react-three/drei'],
+        manualChunks: (id) => {
+          // Vendor chunks
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'vendor-react'
+            }
+            if (id.includes('@tanstack/react-query')) {
+              return 'vendor-query'
+            }
+            if (id.includes('framer-motion') || id.includes('lucide-react')) {
+              return 'vendor-ui'
+            }
+            if (id.includes('three') || id.includes('@react-three')) {
+              return 'vendor-three'
+            }
+            if (id.includes('@supabase')) {
+              return 'vendor-supabase'
+            }
+            return 'vendor-other'
+          }
+          
+          // App chunks
+          if (id.includes('/pages/')) {
+            return 'pages'
+          }
+          if (id.includes('/components/')) {
+            return 'components'
+          }
+          if (id.includes('/hooks/')) {
+            return 'hooks'
+          }
+          if (id.includes('/utils/')) {
+            return 'utils'
+          }
         },
         // Настройка имен файлов для кеширования
         chunkFileNames: 'assets/js/[name]-[hash].js',
