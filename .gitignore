@@ -48,3 +48,8 @@ public/samsung-event.mp4
 node-*.tar.gz
 node-*/
 
+# Spec Kit - Cursor agent folder (may contain credentials)
+.cursor/agent/
+.cursor/credentials/
+.cursor/cache/
+
