@@ -54,9 +54,28 @@ const AppFallback = () => (
   </div>
 );
 
-// Инициализируем мониторинг производительности и ошибок
-initPerformanceMonitoring()
-initErrorReporting()
+// Безопасная инициализация мониторинга производительности и ошибок
+const initMonitoring = () => {
+  try {
+    // Проверяем, что мы в браузере
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      // Инициализируем с задержкой для полной загрузки DOM
+      setTimeout(() => {
+        try {
+          initPerformanceMonitoring()
+          initErrorReporting()
+        } catch (error) {
+          console.warn('Failed to initialize monitoring:', error)
+        }
+      }, 100)
+    }
+  } catch (error) {
+    console.warn('Monitoring initialization failed:', error)
+  }
+}
+
+// Инициализируем мониторинг
+initMonitoring()
 
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>

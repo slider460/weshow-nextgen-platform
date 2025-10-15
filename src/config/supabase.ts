@@ -1,13 +1,13 @@
 import { createClient } from '@supabase/supabase-js'
 import { Database } from '../types/database'
+import { SUPABASE_CONFIG, initEnv } from '../utils/env'
 
-// Supabase configuration
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
+// Инициализируем переменные окружения
+initEnv()
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('⚠️ ОШИБКА: Supabase credentials не найдены! Создайте файл .env с VITE_SUPABASE_URL и VITE_SUPABASE_ANON_KEY')
-}
+// Supabase configuration with safe fallback values
+const supabaseUrl = SUPABASE_CONFIG.url
+const supabaseAnonKey = SUPABASE_CONFIG.anonKey
 
 // Проверяем, существует ли уже клиент в window объекте
 declare global {
