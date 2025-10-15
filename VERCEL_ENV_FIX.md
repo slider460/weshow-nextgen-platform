@@ -30,6 +30,11 @@
 - **Value:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE`
 - **Environment:** Production ✅
 
+## 🔧 ИСПРАВЛЕНИЯ В КОДЕ
+- Удалены захардкоженные URL Supabase из всех файлов
+- Все API файлы теперь используют переменные окружения
+- Добавлена расширенная диагностика переменных окружения
+
 ### 5. Сохраните и пересоберите
 - Нажмите "Save"
 - Перейдите в "Deployments"
