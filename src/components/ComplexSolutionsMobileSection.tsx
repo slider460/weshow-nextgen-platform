@@ -1,9 +1,11 @@
 import { Button } from "./ui/button";
-import { ArrowRight, Building, Users, Trophy, Globe, Presentation, Store, Construction, Video } from "lucide-react";
+import { ArrowRight, Building, Users, Trophy, Globe, Presentation, Store, Construction, Video, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import SimpleCarousel from "./SimpleCarousel";
+import { useState } from "react";
 
 const ComplexSolutionsMobileSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
   const solutions = [
     {
       icon: <Video className="h-8 w-8" />,
@@ -48,6 +50,18 @@ const ComplexSolutionsMobileSection = () => {
       gradient: "gradient-card-yellow"
     }
   ];
+  
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === solutions.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? solutions.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
     <section className="py-20 bg-slate-50">
@@ -63,39 +77,78 @@ const ComplexSolutionsMobileSection = () => {
 
         {/* Mobile Carousel */}
         <div className="block md:hidden">
-          <SimpleCarousel>
-            {solutions.map((solution, index) => (
-              <div key={index} className={`${solution.gradient} rounded-3xl p-6 mx-4 min-h-[400px]`}>
-                <div className="text-white mb-4">
-                  {solution.icon}
-                </div>
-                
-                <h3 className="text-xl font-bold text-white mb-3">
-                  {solution.title}
-                </h3>
-                
-                <p className="text-white/90 text-sm leading-relaxed mb-4">
-                  {solution.description}
-                </p>
-                
-                <ul className="space-y-2 mb-6">
-                  {solution.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center text-sm text-white/80">
-                      <div className="w-1.5 h-1.5 bg-white rounded-full mr-3" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                
-                <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10 w-full" asChild>
-                  <Link to="/services/complex-solutions">
-                    Узнать больше
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+          <div className="relative w-full">
+            <div className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-300 ease-in-out"
+                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              >
+                {solutions.map((solution, index) => (
+                  <div key={index} className="w-full flex-shrink-0">
+                    <div className={`${solution.gradient} rounded-3xl p-6 mx-4 min-h-[400px]`}>
+                      <div className="text-white mb-4">
+                        {solution.icon}
+                      </div>
+                      
+                      <h3 className="text-xl font-bold text-white mb-3">
+                        {solution.title}
+                      </h3>
+                      
+                      <p className="text-white/90 text-sm leading-relaxed mb-4">
+                        {solution.description}
+                      </p>
+                      
+                      <ul className="space-y-2 mb-6">
+                        {solution.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center text-sm text-white/80">
+                            <div className="w-1.5 h-1.5 bg-white rounded-full mr-3" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      
+                      <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10 w-full" asChild>
+                        <Link to="/services/complex-solutions">
+                          Узнать больше
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </SimpleCarousel>
+            </div>
+            
+            {/* Navigation buttons */}
+            <button
+              onClick={prevSlide}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg transition-colors z-10"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg transition-colors z-10"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+            
+            {/* Dots indicator */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {solutions.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    index === currentIndex ? 'bg-blue-600' : 'bg-gray-300'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="text-center mt-16">
