@@ -10,6 +10,7 @@ import ContactFormSection from "../components/ContactFormSection";
 import TeamSection from "../components/TeamSection";
 import TeamMobileSection from "../components/TeamMobileSection";
 import ComplexSolutionsMobileSection from "../components/ComplexSolutionsMobileSection";
+import TestCarousel from "../components/TestCarousel";
 import LettersCertificatesSection from "../components/LettersCertificatesSection";
 import Footer from "../components/Footer";
 import ShowreelModal from "../components/ShowreelModal";
@@ -31,6 +32,8 @@ const Index = () => {
         <AdvancedHeroSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <RentalEquipmentSection />
         <ModernServicesSection />
+        
+        <TestCarousel />
         
         {/* Desktop Portfolio Section */}
         <div className="hidden md:block">
