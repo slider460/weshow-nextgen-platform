@@ -75,7 +75,7 @@ const ComplexSolutionsMobileSection = () => {
           </p>
         </div>
 
-        {/* Mobile Carousel - ПРОСТАЯ ВЕРСИЯ БЕЗ GRADIENT КЛАССОВ */}
+        {/* Mobile Carousel - ВСЕГДА ВИДИМАЯ ДЛЯ ТЕСТА */}
         <div style={{ border: '2px solid red', padding: '10px', margin: '20px 0' }}>
           <div style={{ position: 'relative', width: '100%' }}>
             {/* Debug info */}
