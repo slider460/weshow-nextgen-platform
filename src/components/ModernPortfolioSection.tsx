@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import vdnhStand from "../assets/office-building.jpg";
 import ProjectOrderModal from "./ProjectOrderModal";
 import useCases from "../hooks/useCases";
+import { useProjects } from "../hooks/useProjects";
+import { ProjectsGridSkeleton } from "./ui/skeletons/ProjectSkeleton";
 import LightRays from "./LightRays";
 
 
@@ -19,7 +21,8 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [visibleProjects, setVisibleProjects] = useState(6);
   
-  // Загружаем кейсы из базы данных
+  // Загружаем проекты из базы данных с React Query
+  const { data: projectsData, isLoading: projectsLoading, error: projectsError } = useProjects();
   const { cases, loading, error } = useCases();
 
   // Преобразуем кейсы из базы данных в формат для отображения
@@ -102,32 +105,23 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
           </p>
         </div>
 
-        {loading && (
-          <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <p className="mt-4 text-slate-600">Загрузка проектов...</p>
-          </div>
+        {/* Показываем skeleton loader во время загрузки */}
+        {(projectsLoading || loading) && (
+          <ProjectsGridSkeleton count={6} />
         )}
 
-        {error && (
+        {/* Показываем ошибку только если нет fallback данных */}
+        {projectsError && !projectsData && (
           <div className="text-center py-12">
             <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
-              <p className="text-red-600">Ошибка загрузки проектов: {error}</p>
-              <p className="text-sm text-red-500 mt-2">Обратитесь к администратору</p>
+              <p className="text-red-600">Ошибка загрузки проектов</p>
+              <p className="text-sm text-red-500 mt-2">Используются демонстрационные данные</p>
             </div>
           </div>
         )}
 
-        {!loading && !error && cases.length === 0 && (
-          <div className="text-center py-12">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-md mx-auto">
-              <p className="text-blue-600">Проекты будут добавлены в ближайшее время</p>
-              <p className="text-sm text-blue-500 mt-2">Следите за обновлениями</p>
-            </div>
-          </div>
-        )}
-
-        {!loading && !error && cases.length > 0 && (
+        {/* Показываем проекты если они загружены */}
+        {!projectsLoading && !loading && (
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-16">
             {displayedProjects.map((project, index) => (
               <motion.div

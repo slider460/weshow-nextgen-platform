@@ -53,18 +53,37 @@ function App() {
         <Route path="/" element={<Index />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/services/multimedia" element={<Services />} />
+        <Route path="/services/development" element={<Services />} />
+        <Route path="/services/equipment-rental" element={<Services />} />
+        <Route path="/services/design" element={<Services />} />
+        <Route path="/services/kinetic-screen" element={<Services />} />
+        <Route path="/services/complex-solutions" element={<Services />} />
+        <Route path="/services/technical-support" element={<Services />} />
         <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/contact" element={<Contact />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/news" element={<News />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/cart" element={<CartPage />} />
-                <Route path="/admin" element={<AdminPanel />} />
-                <Route path="/case/:id" element={<CaseDetail />} />
-                <Route path="/case-management" element={<CaseManagement />} />
-                <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/case/:id" element={<CaseDetail />} />
+        <Route path="/case-management" element={<CaseManagement />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} />
+        {/* Fallback route для 404 */}
+        <Route path="*" element={
+          <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+            <div className="text-center">
+              <h1 className="text-6xl font-bold text-slate-900 mb-4">404</h1>
+              <p className="text-xl text-slate-600 mb-8">Страница не найдена</p>
+              <a href="/" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                Вернуться на главную
+              </a>
+            </div>
+          </div>
+        } />
         </Routes>
             </Suspense>
         </BrowserRouter>
