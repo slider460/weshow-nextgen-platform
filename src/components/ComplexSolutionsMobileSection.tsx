@@ -78,14 +78,22 @@ const ComplexSolutionsMobileSection = () => {
         {/* Mobile Carousel */}
         <div className="block md:hidden">
           <div className="relative w-full">
+            {/* Debug info */}
+            <div className="text-center mb-4 text-sm text-gray-600">
+              Текущий слайд: {currentIndex + 1} из {solutions.length}
+            </div>
+            
             <div className="overflow-hidden">
               <div 
                 className="flex transition-transform duration-300 ease-in-out"
-                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                style={{ 
+                  transform: `translateX(-${currentIndex * 100}%)`,
+                  width: `${solutions.length * 100}%`
+                }}
               >
                 {solutions.map((solution, index) => (
-                  <div key={index} className="w-full flex-shrink-0">
-                    <div className={`${solution.gradient} rounded-3xl p-6 mx-4 min-h-[400px]`}>
+                  <div key={index} className="w-full flex-shrink-0" style={{ width: `${100 / solutions.length}%` }}>
+                    <div className={`${solution.gradient} rounded-3xl p-6 mx-2 min-h-[400px]`}>
                       <div className="text-white mb-4">
                         {solution.icon}
                       </div>
