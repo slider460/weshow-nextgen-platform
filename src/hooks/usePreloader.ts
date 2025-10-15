@@ -80,7 +80,7 @@ export function usePreloader() {
       globalPreloadedData = {
         equipment: equipment || [],
         categories: categories || [],
-        homepageEquipment: homepageEquipment || [],
+        homepageEquipment: homepageEquipment || getDefaultHomepageEquipment(),
         isLoading: false,
         error: null
       };
@@ -118,7 +118,7 @@ export function usePreloader() {
         globalPreloadedData = {
           equipment: equipment || [],
           categories: categories || [],
-          homepageEquipment: homepageEquipment || [],
+          homepageEquipment: homepageEquipment || getDefaultHomepageEquipment(),
           isLoading: false,
           error: null
         };
@@ -146,7 +146,7 @@ export function usePreloader() {
         globalPreloadedData = {
           equipment: [],
           categories: [],
-          homepageEquipment: [],
+          homepageEquipment: getDefaultHomepageEquipment(),
           isLoading: false,
           error: null
         };
@@ -257,6 +257,74 @@ async function loadCategories() {
     console.error('Ошибка загрузки категорий:', error);
     return [];
   }
+}
+
+/**
+ * Функция для получения данных по умолчанию для главной страницы
+ */
+function getDefaultHomepageEquipment() {
+  return [
+    {
+      id: '1',
+      title: 'Проекционное оборудование',
+      description: 'Профессиональные проекторы и экраны для мероприятий',
+      icon: 'Monitor',
+      gradient: 'gradient-card-purple',
+      link: '/equipment/projection',
+      is_visible: true,
+      sort_order: 1
+    },
+    {
+      id: '2',
+      title: 'Звуковое оборудование',
+      description: 'Микрофоны, колонки и звуковые системы',
+      icon: 'Speaker',
+      gradient: 'gradient-card-blue',
+      link: '/equipment/audio',
+      is_visible: true,
+      sort_order: 2
+    },
+    {
+      id: '3',
+      title: 'Осветительное оборудование',
+      description: 'Светодиодные панели, прожекторы и эффекты',
+      icon: 'Sun',
+      gradient: 'gradient-card-green',
+      link: '/equipment/lighting',
+      is_visible: true,
+      sort_order: 3
+    },
+    {
+      id: '4',
+      title: 'Видеооборудование',
+      description: 'Камеры, мониторы и системы видеозаписи',
+      icon: 'Video',
+      gradient: 'gradient-card-orange',
+      link: '/equipment/video',
+      is_visible: true,
+      sort_order: 4
+    },
+    {
+      id: '5',
+      title: 'Интерактивные дисплеи',
+      description: 'Сенсорные экраны и интерактивные панели',
+      icon: 'Monitor',
+      gradient: 'gradient-card-cyan',
+      link: '/equipment/interactive',
+      is_visible: true,
+      sort_order: 5
+    },
+    {
+      id: '6',
+      title: 'AR/VR оборудование',
+      description: 'Очки виртуальной реальности и AR системы',
+      icon: 'Eye',
+      gradient: 'gradient-card-purple',
+      link: '/equipment/ar-vr',
+      is_visible: true,
+      sort_order: 6
+    }
+  ];
 }
 
 /**
