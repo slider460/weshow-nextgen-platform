@@ -75,12 +75,12 @@ const ComplexSolutionsMobileSection = () => {
           </p>
         </div>
 
-        {/* Mobile Carousel - ВСЕГДА ВИДИМАЯ ДЛЯ ТЕСТА */}
+        {/* Mobile Carousel - ПРОСТАЯ ВЕРСИЯ БЕЗ GRADIENT КЛАССОВ */}
         <div style={{ border: '2px solid red', padding: '10px', margin: '20px 0' }}>
           <div style={{ position: 'relative', width: '100%' }}>
             {/* Debug info */}
             <div className="text-center mb-4 text-sm text-gray-600">
-              ТЕСТ КАРУСЕЛИ - Текущий слайд: {currentIndex + 1} из {solutions.length}
+              ПРОСТАЯ КАРУСЕЛЬ - Текущий слайд: {currentIndex + 1} из {solutions.length}
             </div>
             
             <div style={{ overflow: 'hidden', border: '1px solid blue' }}>
@@ -95,34 +95,53 @@ const ComplexSolutionsMobileSection = () => {
               >
                 {solutions.map((solution, index) => (
                   <div key={index} style={{ width: `${100 / solutions.length}%`, flexShrink: 0, border: '1px solid yellow' }}>
-                    <div className={`${solution.gradient} rounded-3xl p-6 mx-2 min-h-[400px]`}>
-                      <div className="text-white mb-4">
+                    <div style={{ 
+                      background: index === 0 ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' :
+                                 index === 1 ? 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' :
+                                 index === 2 ? 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' :
+                                 index === 3 ? 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' :
+                                 index === 4 ? 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)' :
+                                 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                      borderRadius: '24px',
+                      padding: '24px',
+                      margin: '0 8px',
+                      minHeight: '400px',
+                      color: 'white'
+                    }}>
+                      <div className="mb-4">
                         {solution.icon}
                       </div>
                       
-                      <h3 className="text-xl font-bold text-white mb-3">
+                      <h3 className="text-xl font-bold mb-3" style={{ color: 'white' }}>
                         {solution.title}
                       </h3>
                       
-                      <p className="text-white/90 text-sm leading-relaxed mb-4">
+                      <p className="text-sm leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.9)' }}>
                         {solution.description}
                       </p>
                       
                       <ul className="space-y-2 mb-6">
                         {solution.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center text-sm text-white/80">
+                          <li key={featureIndex} className="flex items-center text-sm" style={{ color: 'rgba(255,255,255,0.8)' }}>
                             <div className="w-1.5 h-1.5 bg-white rounded-full mr-3" />
                             {feature}
                           </li>
                         ))}
                       </ul>
                       
-                      <Button variant="outline" className="border-white/30 text-white hover:bg-white/20 bg-white/10 w-full" asChild>
-                        <Link to="/services/complex-solutions">
-                          Узнать больше
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
+                      <button 
+                        style={{ 
+                          width: '100%',
+                          padding: '12px',
+                          border: '1px solid rgba(255,255,255,0.3)',
+                          borderRadius: '8px',
+                          background: 'rgba(255,255,255,0.1)',
+                          color: 'white',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Узнать больше
+                      </button>
                     </div>
                   </div>
                 ))}
