@@ -33,8 +33,6 @@ const Index = () => {
         <RentalEquipmentSection />
         <ModernServicesSection />
         
-        <TestSimpleCarousel />
-        
         {/* Desktop Portfolio Section */}
         <div className="hidden md:block">
           <ModernPortfolioSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
