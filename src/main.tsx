@@ -2,62 +2,35 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App.tsx'
-import ErrorBoundary from './components/ErrorBoundary.tsx'
 import './index.css'
 
-// Создаем QueryClient с оптимизированными настройками
+// Простой QueryClient без сложных настроек
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 минут
-      cacheTime: 10 * 60 * 1000, // 10 минут
-      retry: 3,
-      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: true,
-    },
-    mutations: {
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 10 * 60 * 1000,
       retry: 1,
-      retryDelay: 1000,
+      refetchOnWindowFocus: false,
     },
   },
 })
 
-// Создаем fallback для всего приложения
+// Простой fallback компонент
 const AppFallback = () => (
-  <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-    <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6 text-center">
-      <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      </div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">WESHOW</h1>
-      <p className="text-gray-600 mb-6">Произошла ошибка при загрузке приложения</p>
-      <div className="space-y-3">
-        <button
-          onClick={() => window.location.reload()}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
-        >
-          🔄 Перезагрузить
-        </button>
-        <button
-          onClick={() => window.location.href = '/'}
-          className="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors"
-        >
-          🏠 На главную
-        </button>
-      </div>
+  <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-2xl font-bold text-gray-900 mb-4">WESHOW</h1>
+      <p className="text-gray-600">Загрузка...</p>
     </div>
   </div>
-);
+)
 
-// Простая инициализация без сложной логики для предотвращения ReferenceError
-
+// Простая инициализация React приложения
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
-    <ErrorBoundary fallback={<AppFallback />}>
+    <React.Suspense fallback={<AppFallback />}>
       <App />
-    </ErrorBoundary>
+    </React.Suspense>
   </QueryClientProvider>
-);
+)
