@@ -6,8 +6,12 @@ import viteCompression from 'vite-plugin-compression'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  // Загружаем переменные окружения
+  // Загружаем переменные окружения с fallback значениями
   const env = loadEnv(mode, process.cwd(), '')
+  
+  // Безопасное получение переменных окружения с fallback значениями
+  const supabaseUrl = env.VITE_SUPABASE_URL || 'https://zbykhdjqrtqftfitbvbt.supabase.co'
+  const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE'
   
   return {
   plugins: [
@@ -118,10 +122,10 @@ export default defineConfig(({ mode }) => {
     // Увеличиваем лимит предупреждений для больших чанков
     chunkSizeWarningLimit: 1000,
   },
-  // Переменные окружения
+  // Переменные окружения с безопасными fallback значениями
   define: {
-    __VITE_SUPABASE_URL__: JSON.stringify(env.VITE_SUPABASE_URL || ''),
-    __VITE_SUPABASE_ANON_KEY__: JSON.stringify(env.VITE_SUPABASE_ANON_KEY || ''),
+    __VITE_SUPABASE_URL__: JSON.stringify(supabaseUrl),
+    __VITE_SUPABASE_ANON_KEY__: JSON.stringify(supabaseAnonKey),
   },
   }
 })
