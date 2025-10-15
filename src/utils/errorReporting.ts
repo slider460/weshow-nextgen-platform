@@ -214,15 +214,25 @@ export const collectUserFeedback = (feedback: string, rating: number, context?: 
 
 // Инициализация системы отчетности об ошибках
 export const initErrorReporting = (): void => {
-  setupGlobalErrorHandling()
+  // Проверяем доступность всех необходимых объектов
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    console.warn('Error reporting skipped: browser APIs not available')
+    return
+  }
+
+  try {
+    setupGlobalErrorHandling()
   
-  // Отправляем накопленные ошибки при загрузке
-  const pendingErrors = JSON.parse(localStorage.getItem('pending-errors') || '[]')
-  if (pendingErrors.length > 0) {
-    pendingErrors.forEach((report: ErrorReport) => {
-      sendErrorReport(report)
-    })
-    localStorage.removeItem('pending-errors')
+    // Отправляем накопленные ошибки при загрузке
+    const pendingErrors = JSON.parse(localStorage.getItem('pending-errors') || '[]')
+    if (pendingErrors.length > 0) {
+      pendingErrors.forEach((report: ErrorReport) => {
+        sendErrorReport(report)
+      })
+      localStorage.removeItem('pending-errors')
+    }
+  } catch (error) {
+    console.warn('Error reporting initialization failed:', error)
   }
 }
 

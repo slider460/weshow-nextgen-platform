@@ -1,11 +1,15 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 // import { handleApiRequest } from './src/api/routes'
 import viteCompression from 'vite-plugin-compression'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  // Загружаем переменные окружения
+  const env = loadEnv(mode, process.cwd(), '')
+  
+  return {
   plugins: [
     react(),
     // Добавляем gzip компрессию
@@ -114,4 +118,10 @@ export default defineConfig({
     // Увеличиваем лимит предупреждений для больших чанков
     chunkSizeWarningLimit: 1000,
   },
+  // Переменные окружения
+  define: {
+    __VITE_SUPABASE_URL__: JSON.stringify(env.VITE_SUPABASE_URL || ''),
+    __VITE_SUPABASE_ANON_KEY__: JSON.stringify(env.VITE_SUPABASE_ANON_KEY || ''),
+  },
+  }
 })

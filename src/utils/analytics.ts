@@ -173,8 +173,14 @@ export const trackNetworkPerformance = () => {
 
 // Инициализация мониторинга
 export const initPerformanceMonitoring = () => {
-  // Web Vitals
-  if (typeof window !== 'undefined') {
+  // Проверяем доступность всех необходимых объектов
+  if (typeof window === 'undefined' || typeof document === 'undefined' || typeof navigator === 'undefined') {
+    console.warn('Performance monitoring skipped: browser APIs not available')
+    return
+  }
+
+  try {
+    // Web Vitals
     import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
       getCLS(trackWebVitals)
       getFID(trackWebVitals)
@@ -208,5 +214,7 @@ export const initPerformanceMonitoring = () => {
     window.addEventListener('beforeunload', () => {
       trackUserInteraction('page-unload', 'window')
     })
+  } catch (error) {
+    console.warn('Performance monitoring initialization failed:', error)
   }
 }
