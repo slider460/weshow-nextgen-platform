@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App.tsx'
 import ErrorBoundary from './components/ErrorBoundary.tsx'
+import { initPerformanceMonitoring } from './utils/analytics'
+import { initErrorReporting } from './utils/errorReporting'
 import './index.css'
 
 // Создаем QueryClient с оптимизированными настройками
@@ -51,6 +53,10 @@ const AppFallback = () => (
     </div>
   </div>
 );
+
+// Инициализируем мониторинг производительности и ошибок
+initPerformanceMonitoring()
+initErrorReporting()
 
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
