@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест локального сайта WESHOW</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+        .test-section h3 {
+            color: #475569;
+            margin-top: 0;
+        }
+        .test-link {
+            display: inline-block;
+            margin: 8px 12px 8px 0;
+            padding: 8px 16px;
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .test-link:hover {
+            background: #2563eb;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        .status.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .status.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .metric {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e293b;
+        }
+        .metric-label {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .console-output {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Тестирование локального сайта WESHOW</h1>
+        
+        <div class="test-section">
+            <h3>🔗 Проверка навигации</h3>
+            <p>Проверьте что все ссылки работают корректно:</p>
+            <a href="http://localhost:8084" class="test-link">🏠 Главная</a>
+            <a href="http://localhost:8084/about" class="test-link">ℹ️ О нас</a>
+            <a href="http://localhost:8084/services" class="test-link">⚙️ Услуги</a>
+            <a href="http://localhost:8084/portfolio" class="test-link">💼 Портфолио</a>
+            <a href="http://localhost:8084/contact" class="test-link">📞 Контакты</a>
+            <a href="http://localhost:8084/blog" class="test-link">📝 Блог</a>
+            <a href="http://localhost:8084/news" class="test-link">📰 Новости</a>
+            <a href="http://localhost:8084/careers" class="test-link">💼 Карьера</a>
+            <a href="http://localhost:8084/equipment" class="test-link">🔧 Оборудование</a>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Подстраницы сервисов</h3>
+            <p>Проверьте что все подстраницы сервисов загружаются:</p>
+            <a href="http://localhost:8084/services/multimedia" class="test-link">🎥 Мультимедиа</a>
+            <a href="http://localhost:8084/services/development" class="test-link">💻 Разработка</a>
+            <a href="http://localhost:8084/services/equipment-rental" class="test-link">📦 Аренда</a>
+            <a href="http://localhost:8084/services/design" class="test-link">🎨 Дизайн</a>
+            <a href="http://localhost:8084/services/kinetic-screen" class="test-link">⚡ Кинетик экран</a>
+            <a href="http://localhost:8084/services/complex-solutions" class="test-link">🔧 Комплексные решения</a>
+            <a href="http://localhost:8084/services/technical-support" class="test-link">🛠️ Техподдержка</a>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Производительность</h3>
+            <p>Откройте DevTools (F12) и проверьте:</p>
+            <ul>
+                <li>⚡ <strong>Network</strong> - время загрузки ресурсов</li>
+                <li>📈 <strong>Lighthouse</strong> - оценка производительности</li>
+                <li>🎯 <strong>Performance</strong> - Web Vitals</li>
+                <li>🚨 <strong>Console</strong> - отсутствие ошибок</li>
+            </ul>
+            
+            <div class="metrics" id="metrics">
+                <div class="metric">
+                    <div class="metric-value" id="loadTime">-</div>
+                    <div class="metric-label">Время загрузки</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="lcp">-</div>
+                    <div class="metric-label">LCP</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="fcp">-</div>
+                    <div class="metric-label">FCP</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="cls">-</div>
+                    <div class="metric-label">CLS</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>⚡ React Query и Skeleton Loaders</h3>
+            <p>Проверьте что:</p>
+            <ul>
+                <li>🔄 Skeleton loaders отображаются при загрузке данных</li>
+                <li>📦 Данные кэшируются (быстрая повторная загрузка)</li>
+                <li>🛡️ Fallback данные показываются при ошибках</li>
+                <li>⚡ Prefetching работает (данные загружаются заранее)</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>🚨 Мониторинг и ошибки</h3>
+            <p>В консоли браузера должны отображаться:</p>
+            <ul>
+                <li>📊 Web Vitals метрики</li>
+                <li>🔍 Performance метрики</li>
+                <li>🚨 Error reports (если есть ошибки)</li>
+                <li>👤 User interaction tracking</li>
+            </ul>
+            
+            <div class="console-output" id="consoleOutput">
+                Ожидание данных из консоли...
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📱 Responsive Design</h3>
+            <p>Проверьте на разных размерах экрана:</p>
+            <button onclick="testResponsive()" class="test-link">📱 Тест мобильной версии</button>
+            <button onclick="testTablet()" class="test-link">📟 Тест планшета</button>
+            <button onclick="testDesktop()" class="test-link">🖥️ Тест десктопа</button>
+        </div>
+    </div>
+
+    <script>
+        // Простое измерение производительности
+        window.addEventListener('load', function() {
+            const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+            document.getElementById('loadTime').textContent = loadTime + 'ms';
+            
+            // Цветовая индикация
+            const loadTimeElement = document.getElementById('loadTime');
+            if (loadTime < 3000) {
+                loadTimeElement.style.color = '#059669';
+            } else if (loadTime < 5000) {
+                loadTimeElement.style.color = '#d97706';
+            } else {
+                loadTimeElement.style.color = '#dc2626';
+            }
+        });
+
+        // Web Vitals (упрощенная версия)
+        if ('PerformanceObserver' in window) {
+            // LCP
+            new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                if (entries.length > 0) {
+                    const lcp = entries[entries.length - 1].startTime;
+                    document.getElementById('lcp').textContent = Math.round(lcp) + 'ms';
+                    document.getElementById('lcp').style.color = lcp < 2500 ? '#059669' : '#dc2626';
+                }
+            }).observe({ entryTypes: ['largest-contentful-paint'] });
+
+            // FCP
+            new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                if (entries.length > 0) {
+                    const fcp = entries[0].startTime;
+                    document.getElementById('fcp').textContent = Math.round(fcp) + 'ms';
+                    document.getElementById('fcp').style.color = fcp < 1800 ? '#059669' : '#dc2626';
+                }
+            }).observe({ entryTypes: ['paint'] });
+
+            // CLS
+            let clsValue = 0;
+            new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (!entry.hadRecentInput) {
+                        clsValue += entry.value;
+                    }
+                }
+                document.getElementById('cls').textContent = clsValue.toFixed(4);
+                document.getElementById('cls').style.color = clsValue < 0.1 ? '#059669' : '#dc2626';
+            }).observe({ entryTypes: ['layout-shift'] });
+        }
+
+        // Responsive testing
+        function testResponsive() {
+            window.open('http://localhost:8084', '_blank', 'width=375,height=667');
+        }
+
+        function testTablet() {
+            window.open('http://localhost:8084', '_blank', 'width=768,height=1024');
+        }
+
+        function testDesktop() {
+            window.open('http://localhost:8084', '_blank', 'width=1920,height=1080');
+        }
+
+        // Console monitoring
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+        const consoleOutput = document.getElementById('consoleOutput');
+        
+        console.log = function(...args) {
+            originalConsoleLog.apply(console, args);
+            consoleOutput.innerHTML += '<div style="color: #10b981;">[LOG] ' + args.join(' ') + '</div>';
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+        
+        console.error = function(...args) {
+            originalConsoleError.apply(console, args);
+            consoleOutput.innerHTML += '<div style="color: #ef4444;">[ERROR] ' + args.join(' ') + '</div>';
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+    </script>
+</body>
+</html>

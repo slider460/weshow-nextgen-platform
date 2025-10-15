@@ -1,29 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 import { Database } from '../types/database'
-import { SUPABASE_CONFIG, initEnv } from '../utils/env'
 
-// Инициализируем переменные окружения
-initEnv()
+// Статическая конфигурация Supabase для предотвращения ReferenceError
+const supabaseUrl = 'https://zbykhdjqrtqftfitbvbt.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE'
 
-// Supabase configuration with safe fallback values
-const supabaseUrl = SUPABASE_CONFIG.url
-const supabaseAnonKey = SUPABASE_CONFIG.anonKey
-
-// Проверяем, существует ли уже клиент в window объекте
-declare global {
-  interface Window {
-    __supabase_client?: ReturnType<typeof createClient>
-  }
-}
-
-// Безопасная инициализация Supabase клиента
-let supabase: any = null
-
-try {
-  // Проверяем, что у нас есть валидные credentials
-  if (supabaseUrl && supabaseAnonKey && supabaseUrl.includes('supabase.co') && supabaseAnonKey.length > 50) {
-    // Оптимизированный Supabase клиент с улучшенной производительностью
-    supabase = createClient(supabaseUrl, supabaseAnonKey, {
+// Создаем Supabase клиент без динамических проверок
+const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
@@ -51,16 +34,6 @@ try {
     })
   }
 })
-  } else {
-    console.warn('⚠️ Invalid Supabase credentials, using fallback client')
-    // Создаем fallback клиент с пустыми credentials
-    supabase = createClient('https://fallback.supabase.co', 'fallback-key')
-  }
-} catch (error) {
-  console.error('❌ Failed to initialize Supabase client:', error)
-  // Создаем fallback клиент в случае ошибки
-  supabase = createClient('https://fallback.supabase.co', 'fallback-key')
-}
 
 export { supabase }
 
