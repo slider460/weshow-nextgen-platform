@@ -1,2 +1,4 @@
-# Игнорируем только node_modules
+# Игнорируем только node_modules для принудительного обновления
 node_modules
+*.log
+.env.local
