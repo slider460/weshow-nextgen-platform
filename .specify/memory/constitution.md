@@ -1,61 +1,50 @@
-# WeShow NextGen Platform Constitution
+# [PROJECT_NAME] Constitution
+<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
 
 ## Core Principles
 
-### I. User Experience First
-Every feature must prioritize user experience and accessibility. Performance, responsiveness, and intuitive design are non-negotiable. All interfaces must be mobile-first, accessible (WCAG 2.1 AA), and support multiple languages. User feedback drives all design decisions.
+### [PRINCIPLE_1_NAME]
+<!-- Example: I. Library-First -->
+[PRINCIPLE_1_DESCRIPTION]
+<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
 
-### II. Modern Technology Stack
-React 18+ with TypeScript for type safety, Vite for fast development, and modern web standards. Use established libraries (Radix UI, Framer Motion, Three.js) for consistency. No legacy code or deprecated patterns allowed. Progressive enhancement ensures functionality across all devices.
+### [PRINCIPLE_2_NAME]
+<!-- Example: II. CLI Interface -->
+[PRINCIPLE_2_DESCRIPTION]
+<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
 
-### III. Performance & Optimization
-Core Web Vitals must be excellent (LCP < 2.5s, FID < 100ms, CLS < 0.1). Code splitting, lazy loading, and compression are mandatory. Images must be optimized, animations must be GPU-accelerated. Bundle size monitoring and performance budgets enforced.
+### [PRINCIPLE_3_NAME]
+<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
+[PRINCIPLE_3_DESCRIPTION]
+<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
 
-### IV. Security & Privacy
-All user data must be encrypted in transit and at rest. Implement proper authentication, authorization, and input validation. Follow OWASP guidelines, use HTTPS everywhere, and maintain secure coding practices. Privacy by design - minimal data collection, explicit consent.
+### [PRINCIPLE_4_NAME]
+<!-- Example: IV. Integration Testing -->
+[PRINCIPLE_4_DESCRIPTION]
+<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
 
-### V. Scalability & Reliability
-System must handle concurrent users, database connections, and API requests efficiently. Implement proper error handling, logging, and monitoring. Use Supabase for backend services with proper RLS policies. Fail gracefully with user-friendly error messages.
+### [PRINCIPLE_5_NAME]
+<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
+[PRINCIPLE_5_DESCRIPTION]
+<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
 
-## Technology Standards
+## [SECTION_2_NAME]
+<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
 
-### Frontend Architecture
-- React 18+ with functional components and hooks
-- TypeScript for all code with strict type checking
-- Tailwind CSS for styling with design system consistency
-- Vite for build tooling with HMR and fast builds
-- React Router for client-side routing
+[SECTION_2_CONTENT]
+<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
 
-### Backend & Database
-- Supabase for authentication, database, and real-time features
-- PostgreSQL with Row Level Security (RLS) enabled
-- RESTful APIs with proper HTTP status codes
-- GraphQL for complex queries when needed
+## [SECTION_3_NAME]
+<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
 
-### Development Tools
-- ESLint and Prettier for code quality
-- Playwright for end-to-end testing
-- GitHub Actions for CI/CD
-- Vercel for deployment with edge functions
-
-## Development Workflow
-
-### Code Quality
-- All code must pass ESLint checks and type checking
-- Components must be tested with React Testing Library
-- E2E tests required for critical user flows
-- Code reviews mandatory for all changes
-- Documentation required for complex features
-
-### Deployment Process
-- All changes must be tested in development environment
-- Staging deployment before production
-- Automated testing in CI/CD pipeline
-- Performance monitoring in production
-- Rollback capability for critical issues
+[SECTION_3_CONTENT]
+<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
 
 ## Governance
+<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-This constitution supersedes all other development practices. All team members must comply with these principles. Amendments require team discussion, documentation of rationale, and approval from technical lead. Regular reviews ensure principles remain relevant and effective.
+[GOVERNANCE_RULES]
+<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
 
-**Version**: 1.0.0 | **Ratified**: 2025-10-15 | **Last Amended**: 2025-10-15
+**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
+<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
