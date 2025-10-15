@@ -39,6 +39,100 @@ export const usePrefetch = () => {
       },
       staleTime: 24 * 60 * 60 * 1000, // 24 часа
     })
+
+    // Prefetch projects (портфолио)
+    queryClient.prefetchQuery({
+      queryKey: ['projects'],
+      queryFn: async () => {
+        const { supabase } = await import('../config/supabase')
+        const { data, error } = await supabase
+          .from('projects')
+          .select('id, title, description, image_url, created_at')
+          .order('created_at', { ascending: false })
+          .limit(12)
+        
+        if (error) throw error
+        return data
+      },
+      staleTime: 60 * 60 * 1000, // 1 час
+    })
+
+    // Prefetch equipment (каталог оборудования)
+    queryClient.prefetchQuery({
+      queryKey: ['equipment'],
+      queryFn: async () => {
+        const { supabase } = await import('../config/supabase')
+        const { data, error } = await supabase
+          .from('equipment_catalog')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(20)
+        
+        if (error) throw error
+        return data
+      },
+      staleTime: 60 * 60 * 1000, // 1 час
+    })
+
+    // Prefetch equipment categories
+    queryClient.prefetchQuery({
+      queryKey: ['equipment-categories'],
+      queryFn: async () => {
+        const { supabase } = await import('../config/supabase')
+        const { data, error } = await supabase
+          .from('equipment_categories')
+          .select('*')
+          .order('created_at', { ascending: false })
+        
+        if (error) throw error
+        return data
+      },
+      staleTime: 24 * 60 * 60 * 1000, // 24 часа
+    })
+
+    // Prefetch articles (блог)
+    queryClient.prefetchQuery({
+      queryKey: ['articles'],
+      queryFn: async () => {
+        const { supabase } = await import('../config/supabase')
+        const { data, error } = await supabase
+          .from('articles')
+          .select(`
+            *,
+            article_categories (
+              id,
+              name,
+              slug
+            ),
+            users (
+              id,
+              name
+            )
+          `)
+          .order('published_at', { ascending: false })
+          .limit(10)
+        
+        if (error) throw error
+        return data
+      },
+      staleTime: 60 * 60 * 1000, // 1 час
+    })
+
+    // Prefetch article categories
+    queryClient.prefetchQuery({
+      queryKey: ['article-categories'],
+      queryFn: async () => {
+        const { supabase } = await import('../config/supabase')
+        const { data, error } = await supabase
+          .from('article_categories')
+          .select('*')
+          .order('name')
+        
+        if (error) throw error
+        return data
+      },
+      staleTime: 24 * 60 * 60 * 1000, // 24 часа
+    })
   }
 
   // Prefetch данных на основе пользовательского поведения

@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
-import { handleApiRequest } from './src/api/routes'
+// import { handleApiRequest } from './src/api/routes'
 import viteCompression from 'vite-plugin-compression'
 
 // https://vitejs.dev/config/
@@ -24,29 +24,29 @@ export default defineConfig({
       algorithm: 'brotliCompress',
       ext: '.br',
     }),
-    // Кастомный плагин для API роутов
-    {
-      name: 'api-routes',
-      configureServer(server) {
-        server.middlewares.use('/api', async (req, res, next) => {
-          try {
-            const response = await handleApiRequest(req.url || '', req.method || 'GET');
-            
-            res.statusCode = response.status;
-            response.headers.forEach((value, key) => {
-              res.setHeader(key, value);
-            });
-            
-            const body = await response.text();
-            res.end(body);
-          } catch (error) {
-            console.error('API Middleware Error:', error);
-            res.statusCode = 500;
-            res.end(JSON.stringify({ error: 'Internal Server Error' }));
-          }
-        });
-      }
-    }
+    // Кастомный плагин для API роутов (временно отключен)
+    // {
+    //   name: 'api-routes',
+    //   configureServer(server) {
+    //     server.middlewares.use('/api', async (req, res, next) => {
+    //       try {
+    //         const response = await handleApiRequest(req.url || '', req.method || 'GET');
+
+    //         res.statusCode = response.status;
+    //         response.headers.forEach((value, key) => {
+    //           res.setHeader(key, value);
+    //         });
+
+    //         const body = await response.text();
+    //         res.end(body);
+    //       } catch (error) {
+    //         console.error('API Middleware Error:', error);
+    //         res.statusCode = 500;
+    //         res.end(JSON.stringify({ error: 'Internal Server Error' }));
+    //       }
+    //     });
+    //   }
+    // }
   ],
   resolve: {
     alias: {

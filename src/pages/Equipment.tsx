@@ -35,7 +35,8 @@ import { Badge } from "../components/ui/badge";
 import { Calculator } from "lucide-react";
 import ConsultationModal from "../components/ConsultationModal";
 import BookingCalendar from "../components/BookingCalendar";
-import { getEquipment, getCategories } from "../api/equipment";
+import { useEquipment, useEquipmentCategories } from "../hooks/useEquipment";
+import { EquipmentGridSkeleton } from "../components/ui/skeletons/EquipmentSkeleton";
 import { AddToCartButton } from "../components/AddToCartButton";
 
 const Equipment = () => {
@@ -43,11 +44,12 @@ const Equipment = () => {
   const [showBookingCalendar, setShowBookingCalendar] = useState(false);
   const [selectedEquipmentForBooking, setSelectedEquipmentForBooking] = useState<any>(null);
   
-  // Состояние для данных из базы
-  const [dbEquipment, setDbEquipment] = useState<any[]>([]);
-  const [dbCategories, setDbCategories] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Используем новые хуки с React Query
+  const { data: dbEquipment = [], isLoading: equipmentLoading, error: equipmentError } = useEquipment();
+  const { data: dbCategories = [], isLoading: categoriesLoading, error: categoriesError } = useEquipmentCategories();
+  
+  const loading = equipmentLoading || categoriesLoading;
+  const error = equipmentError?.message || categoriesError?.message || null;
 
   // Добавляем CSS стили для уведомлений
   useEffect(() => {
@@ -73,29 +75,7 @@ const Equipment = () => {
   }, []);
 
 
-  // Загружаем данные из базы
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true);
-        const [equipmentData, categoriesData] = await Promise.all([
-          getEquipment(),
-          getCategories()
-        ]);
-        
-        setDbEquipment(equipmentData);
-        setDbCategories(categoriesData);
-        setError(null);
-      } catch (err) {
-        console.error('Ошибка загрузки данных:', err);
-        setError(err instanceof Error ? err.message : 'Неизвестная ошибка');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
+  // Данные теперь загружаются через React Query хуки
 
 
 
@@ -502,21 +482,24 @@ const Equipment = () => {
         <section className="py-12 lg:py-16">
           <div className="container mx-auto px-4">
             {loading && (
-              <div className="text-center py-12">
-                <div className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium mb-4">
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-3"></div>
-                  Загрузка оборудования...
+              <div className="space-y-8">
+                <EquipmentGridSkeleton count={3} />
+                <div className="text-center">
+                  <div className="inline-flex items-center px-6 py-3 bg-blue-500/20 backdrop-blur-sm text-blue-700 rounded-full text-sm font-medium mb-4">
+                    <div className="w-5 h-5 border-2 border-blue-300 border-t-blue-600 rounded-full animate-spin mr-3"></div>
+                    Загрузка оборудования из базы данных...
+                  </div>
                 </div>
               </div>
             )}
             
             {error && (
               <div className="text-center py-12">
-                <div className="inline-flex items-center px-6 py-3 bg-red-500/20 backdrop-blur-sm text-red-200 rounded-full text-sm font-medium mb-4">
+                <div className="inline-flex items-center px-6 py-3 bg-red-500/20 backdrop-blur-sm text-red-700 rounded-full text-sm font-medium mb-4">
                   ❌ Ошибка загрузки: {error}
                 </div>
-                <p className="text-white/70 text-sm">
-                  Попробуйте обновить страницу или обратитесь к администратору
+                <p className="text-slate-600 text-sm">
+                  Используются демонстрационные данные. Проверьте подключение к Supabase.
                 </p>
               </div>
             )}

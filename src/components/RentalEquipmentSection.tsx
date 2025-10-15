@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { ArrowRight, Monitor, Speaker, Eye, Projector, Gamepad, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
-import { usePreloadedData } from "../hooks/usePreloader";
+import { useEquipment } from "../hooks/useEquipment";
 import { LazyLoadWrapper } from "./LazyLoadWrapper";
 
 const RentalEquipmentSection = () => {
   const [showAll, setShowAll] = useState(false);
   
-  // Используем предзагруженные данные
-  const { homepageEquipment, isLoading } = usePreloadedData();
+  // Используем React Query хук для оборудования
+  const { data: equipmentData = [], isLoading, error } = useEquipment();
   const [equipmentItems, setEquipmentItems] = useState<any[]>([]);
 
   // Иконки для маппинга
@@ -22,19 +22,38 @@ const RentalEquipmentSection = () => {
     Zap: Zap
   };
 
-  // Обрабатываем предзагруженные данные
+  // Обрабатываем данные из React Query
   useEffect(() => {
-    if (homepageEquipment && homepageEquipment.length > 0) {
+    if (equipmentData && equipmentData.length > 0) {
       // Преобразуем данные из базы в формат компонента
-      const formattedItems = homepageEquipment.map(item => {
-        const IconComponent = iconMap[item.icon as keyof typeof iconMap] || Monitor;
+      const formattedItems = equipmentData.slice(0, 6).map((item, index) => {
+        // Определяем иконку на основе названия оборудования
+        let IconComponent = Monitor;
+        if (item.name?.toLowerCase().includes('звук') || item.name?.toLowerCase().includes('аудио')) {
+          IconComponent = Speaker;
+        } else if (item.name?.toLowerCase().includes('свет') || item.name?.toLowerCase().includes('освещение')) {
+          IconComponent = Zap;
+        } else if (item.name?.toLowerCase().includes('проектор')) {
+          IconComponent = Projector;
+        }
+
+        // Определяем градиент на основе индекса
+        const gradients = [
+          "gradient-card-purple",
+          "gradient-card-blue", 
+          "gradient-card-cyan",
+          "gradient-card-dark",
+          "gradient-card-green",
+          "gradient-card-orange"
+        ];
+
         return {
           id: item.id,
-          title: item.title,
-          description: item.description,
+          title: item.name || `Оборудование ${index + 1}`,
+          description: item.description || "Профессиональное оборудование для мероприятий",
           icon: <IconComponent className="h-6 w-6 lg:h-8 lg:w-8" />,
-          gradient: item.gradient,
-          link: item.link
+          gradient: gradients[index % gradients.length],
+          link: `/equipment/${item.id}`
         };
       });
 
@@ -92,7 +111,7 @@ const RentalEquipmentSection = () => {
         }
       ]);
     }
-  }, [homepageEquipment]);
+  }, [equipmentData]);
 
   const visibleItems = showAll ? equipmentItems : equipmentItems.slice(0, 6);
 
