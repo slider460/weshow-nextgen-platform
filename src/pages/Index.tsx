@@ -52,8 +52,15 @@ const Index = () => {
           <TeamMobileSection />
         </div>
         
-        {/* Complex Solutions Section */}
-        <ComplexSolutionsMobileSection />
+        {/* Desktop Complex Solutions Section */}
+        <div className="hidden md:block">
+          <ComplexSolutionsMobileSection />
+        </div>
+        
+        {/* Mobile Complex Solutions Section */}
+        <div className="block md:hidden">
+          <ComplexSolutionsMobileSection />
+        </div>
         
         <LettersCertificatesSection />
         
