@@ -1,6 +1,10 @@
 // REST API конфигурация
-const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co'
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE'
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || ''
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
+
+if (!SUPABASE_URL || !SUPABASE_KEY) {
+  console.error('⚠️ ОШИБКА: Supabase credentials не найдены в equipmentRest.ts!')
+}
 
 export interface Equipment {
   id: string
