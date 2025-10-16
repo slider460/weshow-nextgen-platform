@@ -1,6 +1,7 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { LanguageProvider } from './contexts/LanguageContext'
 import App from './App.tsx'
 import './index.css'
 
@@ -29,8 +30,10 @@ const AppFallback = () => (
 // Простая инициализация React приложения
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
-    <React.Suspense fallback={<AppFallback />}>
-      <App />
-    </React.Suspense>
+    <LanguageProvider>
+      <React.Suspense fallback={<AppFallback />}>
+        <App />
+      </React.Suspense>
+    </LanguageProvider>
   </QueryClientProvider>
 )
