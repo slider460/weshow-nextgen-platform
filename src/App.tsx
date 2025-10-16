@@ -37,6 +37,7 @@ const CaseManagement = React.lazy(() => import('./pages/admin/CaseManagement'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 const Equipment = React.lazy(() => import('./pages/Equipment'));
 const Team = React.lazy(() => import('./pages/Team'));
+const SamaraStandCase = React.lazy(() => import('./pages/SamaraStandCase'));
 
 // Preload critical components
 const preloadCriticalComponents = () => {
@@ -88,6 +89,7 @@ function App() {
               <Route path="/product/:id" element={<ProductDetailPage />} />
               <Route path="/equipment" element={<Equipment />} />
               <Route path="/team" element={<Team />} />
+              <Route path="/portfolio/samara-stand" element={<SamaraStandCase />} />
               {/* Fallback route для 404 */}
               <Route path="*" element={
                 <div className="min-h-screen bg-slate-50 flex items-center justify-center">
