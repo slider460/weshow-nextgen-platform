@@ -1,6 +1,5 @@
 import Header from "../components/Header";
 import AdvancedHeroSection from "../components/AdvancedHeroSection";
-import ModernServicesSection from "../components/ModernServicesSection";
 import ModernPortfolioSection from "../components/ModernPortfolioSection";
 import ModernPortfolioMobileSection from "../components/ModernPortfolioMobileSection";
 import RentalEquipmentSection from "../components/RentalEquipmentSection";
@@ -29,7 +28,6 @@ const Index = () => {
       <main className="space-y-0 overflow-x-hidden">
         <AdvancedHeroSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <RentalEquipmentSection />
-        <ModernServicesSection />
         
         {/* Desktop Portfolio Section */}
         <div className="hidden md:block">
