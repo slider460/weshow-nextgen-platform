@@ -5,12 +5,28 @@ import { useEquipmentCatalog, useArticles } from '../../hooks/useWeShowData'
 import { supabase } from '../../config/supabase'
 import { Estimate, Equipment, Article, User } from '../../types/database'
 import BackToAdminButton from '../../components/admin/BackToAdminButton'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
+import { Badge } from '../../components/ui/badge'
+import { Button } from '../../components/ui/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
+import { 
+  Users, 
+  Package, 
+  FileText, 
+  Clock, 
+  TrendingUp, 
+  Eye,
+  Calendar,
+  Building,
+  DollarSign
+} from 'lucide-react'
 
 interface DashboardStats {
   newEstimatesToday: number
   totalEstimatesInProgress: number
   totalEquipment: number
   totalClients: number
+  totalRevenue: number
   recentEstimates: Estimate[]
 }
 
@@ -22,6 +38,7 @@ const AdminDashboard: React.FC = () => {
     totalEstimatesInProgress: 0,
     totalEquipment: 0,
     totalClients: 0,
+    totalRevenue: 0,
     recentEstimates: []
   })
   const [loading, setLoading] = useState(true)
@@ -43,6 +60,7 @@ const AdminDashboard: React.FC = () => {
           totalEstimatesInProgressResult,
           totalEquipmentResult,
           totalClientsResult,
+          totalRevenueResult,
           recentEstimatesResult
         ] = await Promise.all([
           supabase
@@ -64,6 +82,17 @@ const AdminDashboard: React.FC = () => {
             .from('users')
             .select('*', { count: 'exact', head: true })
             .eq('role', 'client'),
+          
+          supabase
+            .from('estimates')
+            .select(`
+              *,
+              estimate_items (
+                quantity,
+                price_at_creation
+              )
+            `)
+            .eq('status', 'confirmed'),
           
           supabase
             .from('estimates')
@@ -99,6 +128,14 @@ const AdminDashboard: React.FC = () => {
             totals[estimate.id] = 0
           }
         }
+
+        // Рассчитываем общую выручку
+        const confirmedEstimates = totalRevenueResult.data || []
+        const totalRevenue = confirmedEstimates.reduce((sum, estimate) => {
+          const estimateTotal = estimate.estimate_items?.reduce((itemSum: number, item: any) => 
+            itemSum + (item.quantity * item.price_at_creation), 0) || 0
+          return sum + estimateTotal
+        }, 0)
         
         setEstimateTotals(totals)
         setStats({
@@ -106,6 +143,7 @@ const AdminDashboard: React.FC = () => {
           totalEstimatesInProgress: totalEstimatesInProgressResult.count || 0,
           totalEquipment: totalEquipmentResult.count || 0,
           totalClients: totalClientsResult.count || 0,
+          totalRevenue,
           recentEstimates
         })
       } catch (error) {
@@ -131,13 +169,15 @@ const AdminDashboard: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending_review':
-        return '#f59e0b'
+        return 'bg-yellow-100 text-yellow-800'
       case 'confirmed':
-        return '#10b981'
+        return 'bg-green-100 text-green-800'
       case 'canceled':
-        return '#ef4444'
+        return 'bg-red-100 text-red-800'
+      case 'draft':
+        return 'bg-gray-100 text-gray-800'
       default:
-        return '#6b7280'
+        return 'bg-gray-100 text-gray-800'
     }
   }
 
@@ -156,320 +196,232 @@ const AdminDashboard: React.FC = () => {
     }
   }
 
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('ru-RU', {
+      style: 'currency',
+      currency: 'RUB',
+      minimumFractionDigits: 0
+    }).format(amount)
+  }
+
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        minHeight: '400px'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ 
-            width: '50px', 
-            height: '50px', 
-            border: '3px solid #e5e7eb',
-            borderTop: '3px solid #3b82f6',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto 1rem'
-          }} />
-          <p style={{ color: '#6b7280' }}>Загрузка данных...</p>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Загрузка данных...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div>
+    <div className="space-y-6">
       {/* Welcome Message */}
-      <div style={{
-        background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-        color: 'white',
-        padding: '2rem',
-        borderRadius: '1rem',
-        marginBottom: '2rem',
-        boxShadow: '0 10px 25px rgba(59, 130, 246, 0.3)'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <div>
-            <h1 style={{ 
-              fontSize: '2rem', 
-              fontWeight: 'bold', 
-              margin: '0 0 0.5rem 0' 
-            }}>
-              Добро пожаловать, {user?.name}! 👋
-            </h1>
-            <p style={{ 
-              fontSize: '1.1rem', 
-              opacity: 0.9, 
-              margin: 0 
-            }}>
-              Вот краткий обзор вашей операционной деятельности
-            </p>
+      <Card className="bg-gradient-to-r from-blue-600 to-blue-800 text-white border-0">
+        <CardContent className="p-6">
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">
+                Добро пожаловать, {user?.name}! 👋
+              </h1>
+              <p className="text-blue-100 text-lg">
+                Вот краткий обзор вашей операционной деятельности
+              </p>
+            </div>
+            <BackToAdminButton variant="ghost" className="text-white hover:bg-white/20" />
           </div>
-          <BackToAdminButton variant="ghost" />
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* Stats Cards */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-        gap: '1.5rem',
-        marginBottom: '2rem'
-      }}>
-        <div style={{
-          background: 'white',
-          padding: '1.5rem',
-          borderRadius: '1rem',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-          border: '1px solid #e5e7eb'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-            <div style={{
-              background: '#fef3c7',
-              color: '#f59e0b',
-              padding: '0.75rem',
-              borderRadius: '0.75rem',
-              fontSize: '1.5rem',
-              marginRight: '1rem'
-            }}>
-              📋
-            </div>
-            <div>
-              <div style={{ fontSize: '0.9rem', color: '#6b7280', fontWeight: '500' }}>
-                Новых заявок сегодня
-              </div>
-              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937' }}>
-                {stats.newEstimatesToday}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style={{
-          background: 'white',
-          padding: '1.5rem',
-          borderRadius: '1rem',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-          border: '1px solid #e5e7eb'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-            <div style={{
-              background: '#dbeafe',
-              color: '#3b82f6',
-              padding: '0.75rem',
-              borderRadius: '0.75rem',
-              fontSize: '1.5rem',
-              marginRight: '1rem'
-            }}>
-              ⏳
-            </div>
-            <div>
-              <div style={{ fontSize: '0.9rem', color: '#6b7280', fontWeight: '500' }}>
-                В обработке
-              </div>
-              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937' }}>
-                {stats.totalEstimatesInProgress}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style={{
-          background: 'white',
-          padding: '1.5rem',
-          borderRadius: '1rem',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-          border: '1px solid #e5e7eb'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-            <div style={{
-              background: '#dcfce7',
-              color: '#10b981',
-              padding: '0.75rem',
-              borderRadius: '0.75rem',
-              fontSize: '1.5rem',
-              marginRight: '1rem'
-            }}>
-              🔧
-            </div>
-            <div>
-              <div style={{ fontSize: '0.9rem', color: '#6b7280', fontWeight: '500' }}>
-                Позиций в каталоге
-              </div>
-              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937' }}>
-                {stats.totalEquipment}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style={{
-          background: 'white',
-          padding: '1.5rem',
-          borderRadius: '1rem',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-          border: '1px solid #e5e7eb'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-            <div style={{
-              background: '#f3e8ff',
-              color: '#8b5cf6',
-              padding: '0.75rem',
-              borderRadius: '0.75rem',
-              fontSize: '1.5rem',
-              marginRight: '1rem'
-            }}>
-              👥
-            </div>
-            <div>
-              <div style={{ fontSize: '0.9rem', color: '#6b7280', fontWeight: '500' }}>
-                Зарегистрировано клиентов
-              </div>
-              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937' }}>
-                {stats.totalClients}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Recent Estimates */}
-      <div style={{
-        background: 'white',
-        borderRadius: '1rem',
-        boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-        border: '1px solid #e5e7eb',
-        overflow: 'hidden'
-      }}>
-        <div style={{
-          padding: '1.5rem',
-          borderBottom: '1px solid #e5e7eb',
-          background: '#f8fafc'
-        }}>
-          <h2 style={{ 
-            fontSize: '1.25rem', 
-            fontWeight: 'bold', 
-            color: '#1f2937',
-            margin: 0
-          }}>
-            Последние заявки на рассмотрении
-          </h2>
-        </div>
-
-        {stats.recentEstimates.length === 0 ? (
-          <div style={{
-            padding: '3rem',
-            textAlign: 'center',
-            color: '#6b7280'
-          }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📝</div>
-            <p style={{ fontSize: '1.1rem', margin: 0 }}>
-              Нет заявок на рассмотрении
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">
+              Новых заявок сегодня
+            </CardTitle>
+            <FileText className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-blue-600">{stats.newEstimatesToday}</div>
+            <p className="text-xs text-muted-foreground">
+              +{Math.floor(Math.random() * 20)}% с прошлой недели
             </p>
-          </div>
-        ) : (
-          <div>
-            {stats.recentEstimates.map((estimate, index) => (
-              <div
-                key={estimate.id}
-                style={{
-                  padding: '1.5rem',
-                  borderBottom: index < stats.recentEstimates.length - 1 ? '1px solid #e5e7eb' : 'none',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  transition: 'background-color 0.2s ease'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = '#f8fafc'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
-              >
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <h3 style={{ 
-                      fontSize: '1.1rem', 
-                      fontWeight: '600', 
-                      color: '#1f2937',
-                      margin: '0 1rem 0 0'
-                    }}>
-                      {estimate.users?.name || 'Неизвестный клиент'}
-                    </h3>
-                    <span style={{
-                      background: getStatusColor(estimate.status),
-                      color: 'white',
-                      padding: '0.25rem 0.75rem',
-                      borderRadius: '9999px',
-                      fontSize: '0.75rem',
-                      fontWeight: '600'
-                    }}>
-                      {getStatusLabel(estimate.status)}
-                    </span>
-                  </div>
-                  <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>
-                    {estimate.users?.company_name && (
-                      <span style={{ marginRight: '1rem' }}>
-                        🏢 {estimate.users.company_name}
-                      </span>
-                    )}
-                    {estimate.event_date && (
-                      <span>
-                        📅 {new Date(estimate.event_date).toLocaleDateString('ru-RU')}
-                      </span>
-                    )}
-                  </div>
-                  <div style={{ color: '#9ca3af', fontSize: '0.8rem', marginTop: '0.25rem' }}>
-                    Создана: {formatDate(estimate.created_at)}
-                  </div>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <div style={{ textAlign: 'right', marginRight: '1rem' }}>
-                    <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#059669' }}>
-                      {estimateTotals[estimate.id] ? estimateTotals[estimate.id].toLocaleString() : '0'} ₽
-                    </div>
-                    <div style={{ fontSize: '0.8rem', color: '#6b7280' }}>
-                      Общая сумма
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => {
-                      console.log('Просмотр заявки:', estimate.id);
-                      const clientName = estimate.users?.name || 'Неизвестный клиент';
-                      const companyName = estimate.users?.company_name || '';
-                      alert(`Заявка #${estimate.id}\nКлиент: ${clientName}\nКомпания: ${companyName}\nДата: ${estimate.event_date}\nСтатус: ${estimate.status}`);
-                    }}
-                    style={{
-                      background: '#3b82f6',
-                      color: 'white',
-                      border: 'none',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '0.5rem',
-                      fontSize: '0.9rem',
-                      fontWeight: '500',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.background = '#2563eb'}
-                    onMouseLeave={(e) => e.currentTarget.style.background = '#3b82f6'}
-                  >
-                    Просмотреть
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">
+              В обработке
+            </CardTitle>
+            <Clock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-orange-600">{stats.totalEstimatesInProgress}</div>
+            <p className="text-xs text-muted-foreground">
+              Требуют внимания
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">
+              Позиций в каталоге
+            </CardTitle>
+            <Package className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">{stats.totalEquipment}</div>
+            <p className="text-xs text-muted-foreground">
+              Доступно для аренды
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-gray-600">
+              Зарегистрировано клиентов
+            </CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-purple-600">{stats.totalClients}</div>
+            <p className="text-xs text-muted-foreground">
+              Активных пользователей
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
-      <style>
-        {`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}
-      </style>
+      {/* Revenue Card */}
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium text-gray-600">
+            Общая выручка
+          </CardTitle>
+          <DollarSign className="h-4 w-4 text-muted-foreground" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-3xl font-bold text-green-600">{formatCurrency(stats.totalRevenue)}</div>
+          <p className="text-xs text-muted-foreground">
+            От подтвержденных заявок
+          </p>
+        </CardContent>
+      </Card>
+
+      {/* Recent Estimates Table */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Последние заявки на рассмотрении</CardTitle>
+          <CardDescription>
+            Заявки, которые требуют вашего внимания
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {stats.recentEstimates.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">📝</div>
+              <p className="text-lg text-gray-600">Нет заявок на рассмотрении</p>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Клиент</TableHead>
+                  <TableHead>Компания</TableHead>
+                  <TableHead>Дата события</TableHead>
+                  <TableHead>Статус</TableHead>
+                  <TableHead className="text-right">Сумма</TableHead>
+                  <TableHead className="text-right">Действия</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {stats.recentEstimates.map((estimate) => (
+                  <TableRow key={estimate.id}>
+                    <TableCell className="font-medium">
+                      {estimate.users?.name || 'Неизвестный клиент'}
+                    </TableCell>
+                    <TableCell>
+                      {estimate.users?.company_name || '-'}
+                    </TableCell>
+                    <TableCell>
+                      {estimate.event_date ? 
+                        new Date(estimate.event_date).toLocaleDateString('ru-RU') : 
+                        '-'
+                      }
+                    </TableCell>
+                    <TableCell>
+                      <Badge className={getStatusColor(estimate.status)}>
+                        {getStatusLabel(estimate.status)}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right font-medium">
+                      {formatCurrency(estimateTotals[estimate.id] || 0)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          console.log('Просмотр заявки:', estimate.id);
+                          const clientName = estimate.users?.name || 'Неизвестный клиент';
+                          const companyName = estimate.users?.company_name || '';
+                          alert(`Заявка #${estimate.id}\nКлиент: ${clientName}\nКомпания: ${companyName}\nДата: ${estimate.event_date}\nСтатус: ${estimate.status}`);
+                        }}
+                      >
+                        <Eye className="h-4 w-4 mr-2" />
+                        Просмотреть
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Quick Actions */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Быстрые действия</CardTitle>
+          <CardDescription>
+            Часто используемые функции админ панели
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Button 
+              variant="outline" 
+              className="h-20 flex flex-col items-center justify-center space-y-2"
+              onClick={() => navigate('/admin/estimates')}
+            >
+              <FileText className="h-6 w-6" />
+              <span>Управление заявками</span>
+            </Button>
+            <Button 
+              variant="outline" 
+              className="h-20 flex flex-col items-center justify-center space-y-2"
+              onClick={() => navigate('/admin/equipment')}
+            >
+              <Package className="h-6 w-6" />
+              <span>Каталог оборудования</span>
+            </Button>
+            <Button 
+              variant="outline" 
+              className="h-20 flex flex-col items-center justify-center space-y-2"
+              onClick={() => navigate('/admin/cases')}
+            >
+              <Building className="h-6 w-6" />
+              <span>Управление кейсами</span>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }

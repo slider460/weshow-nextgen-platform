@@ -281,6 +281,39 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       logger.info('🔐 Login attempt for:', email);
       
+      // Проверяем тестовых пользователей
+      const { isTestUser, ADMIN_TEST_USERS } = await import('../utils/adminTestUsers');
+      const testUser = isTestUser(email, password);
+      
+      if (testUser) {
+        logger.info('🧪 Test user detected:', testUser.email);
+        
+        // Создаем фиктивного пользователя для тестового входа
+        const mockUser = {
+          id: `test-${testUser.role}-${Date.now()}`,
+          email: testUser.email,
+          name: testUser.name,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        } as User;
+
+        const mockProfile = {
+          id: mockUser.id,
+          full_name: testUser.name,
+          company_name: testUser.company_name,
+          phone: undefined,
+          role: testUser.role as 'admin' | 'manager' | 'client',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        };
+
+        setUser(mockUser);
+        setProfile(mockProfile);
+        logger.info('✅ Test user login complete!');
+        return { success: true };
+      }
+      
+      // Обычный вход через Supabase
       const data = await signIn(email, password);
       logger.info('✅ Login successful, data:', data);
       

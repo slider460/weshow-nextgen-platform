@@ -32,6 +32,7 @@ const PrivacyPage = React.lazy(() => import('./pages/PrivacyPage'));
 const Profile = React.lazy(() => import('./pages/Profile'));
 const CartPage = React.lazy(() => import('./pages/CartPage'));
 const AdminPanel = React.lazy(() => import('./pages/admin/AdminPanel'));
+const AdminTest = React.lazy(() => import('./pages/AdminTest'));
 const CaseDetail = React.lazy(() => import('./pages/CaseDetail'));
 const CaseManagement = React.lazy(() => import('./pages/admin/CaseManagement'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
@@ -83,7 +84,8 @@ function App() {
               <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/cart" element={<CartPage />} />
-              <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/admin/*" element={<AdminPanel />} />
+              <Route path="/admin-test" element={<AdminTest />} />
               <Route path="/case/:id" element={<CaseDetail />} />
               <Route path="/case-management" element={<CaseManagement />} />
               <Route path="/product/:id" element={<ProductDetailPage />} />
