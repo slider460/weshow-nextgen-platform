@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "../components/ui/button";
-import { ArrowRight, Sparkles, Monitor, Smartphone, Users, Settings, Palette, Zap } from "lucide-react";
+import { ArrowRight, Sparkles, Monitor, Smartphone, Users, Palette, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import ConsultationModal from "./ConsultationModal";
 import { useServices } from "../hooks/useServices";
@@ -36,14 +36,6 @@ const ModernServicesSection = () => {
       features: ["24/7 мониторинг", "Профилактика", "Экстренная поддержка"],
       color: "from-green-500 to-emerald-500",
       link: "technical-support"
-    },
-    {
-      icon: Settings,
-      title: "Интеграция мультимедии",
-      description: "Объединение различных систем в единую экосистему",
-      features: ["Системная интеграция", "Автоматизация", "Управление контентом"],
-      color: "from-orange-500 to-red-500",
-      link: "complex-solutions"
     },
     {
       icon: Palette,
@@ -83,9 +75,9 @@ const ModernServicesSection = () => {
               🚀 Наши услуги
             </div>
             <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-6">
-              Комплексные
+              Наши
               <span className="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent block">
-                решения
+                услуги
               </span>
             </h2>
           </div>
@@ -107,9 +99,9 @@ const ModernServicesSection = () => {
             🚀 Наши услуги
           </div>
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-6">
-            Комплексные
+            Наши
             <span className="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent block">
-              решения
+              услуги
             </span>
           </h2>
 
