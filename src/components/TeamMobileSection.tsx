@@ -78,7 +78,40 @@ const TeamMobileSection: React.FC = () => {
         <MobileCarousel showOnMobile={true} showOnDesktop={false}>
           {teamMembers.map((member) => (
             <div key={member.id} className="mx-2">
-              <TeamCard member={member} />
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 min-h-[400px] flex flex-col items-center text-center">
+                {/* Avatar */}
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-4 relative overflow-hidden">
+                  <img
+                    src={member.avatarUrl}
+                    alt={`${member.name} avatar`}
+                    className="w-20 h-20 rounded-full object-cover border-2 border-white"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                    }}
+                  />
+                </div>
+                
+                {/* Name */}
+                <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
+                  {member.name}
+                </h3>
+                
+                {/* Title Badge */}
+                <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-2">
+                  {member.title}
+                </div>
+                
+                {/* Experience */}
+                <p className="text-gray-600 text-sm mb-3">
+                  {member.experience}
+                </p>
+                
+                {/* Description */}
+                <p className="text-gray-700 text-sm leading-relaxed flex-grow">
+                  {member.description}
+                </p>
+              </div>
             </div>
           ))}
         </MobileCarousel>
