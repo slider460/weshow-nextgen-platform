@@ -5,10 +5,10 @@ import { Database } from '../types/database'
 const supabaseUrl = 'https://zbykhdjqrtqftfitbvbt.supabase.co'
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE'
 
-console.log('🔧 Supabase Config:')
+console.log('🔧 Supabase Config v2.4.3:')
 console.log('URL:', supabaseUrl)
 console.log('Key defined:', !!supabaseAnonKey)
-console.log('✅ Используются статические значения')
+console.log('✅ Используются статические значения - FORCE UPDATE')
 
 // Создаем Supabase клиент
 const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
