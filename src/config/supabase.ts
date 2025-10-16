@@ -1,15 +1,26 @@
 import { createClient } from '@supabase/supabase-js'
 import { Database } from '../types/database'
+import { debugEnvironment, SUPABASE_CONFIG } from '../utils/env-debug'
 
-// Получаем переменные окружения с fallback значениями
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://zbykhdjqrtqftfitbvbt.supabase.co'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE'
+// Запускаем диагностику окружения
+const envDebug = debugEnvironment()
+
+// Используем конфигурацию с fallback значениями
+const supabaseUrl = SUPABASE_CONFIG.url
+const supabaseAnonKey = SUPABASE_CONFIG.anonKey
+
+// Дополнительная диагностика
+console.log('Supabase URL:', supabaseUrl)
+console.log('Supabase Key defined:', !!supabaseAnonKey)
 
 // Проверяем, что переменные определены
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Supabase credentials не найдены!')
+  console.error('❌ Supabase credentials не найдены!')
+  console.error('Environment debug:', envDebug)
   console.error('VITE_SUPABASE_URL:', supabaseUrl)
   console.error('VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? '***defined***' : 'undefined')
+} else {
+  console.log('✅ Supabase credentials найдены')
 }
 
 // Создаем Supabase клиент
