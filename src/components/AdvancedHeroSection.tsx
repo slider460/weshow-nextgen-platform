@@ -5,6 +5,21 @@ import ConsultationModal from "./ConsultationModal";
 import { Link } from "react-router-dom";
 import RotatingTextAdvanced from "./RotatingTextAdvanced";
 
+// Константы для предотвращения пересоздания массивов при каждом рендере
+const TITLE_TEXTS = [
+  'интерактивные', 
+  'цифровые',
+  'инновационные',
+  'современные'
+];
+
+const DESCRIPTION_TEXTS = [
+  'Аренда на мероприятия, продажа, разработка и интеграция интерактивного оборудования',
+  'Создаем незабываемые впечатления с помощью современных технологий',
+  'Полный цикл: от концепции до реализации мультимедийных проектов',
+  'Профессиональное оборудование для любых мероприятий и пространств'
+];
+
 interface AdvancedHeroSectionProps {
   onShowShowreel?: () => void;
 }
@@ -94,12 +109,7 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                   Комплексные
                   <br />
                   <RotatingTextAdvanced
-                    texts={[
-                      'интерактивные', 
-                      'цифровые',
-                      'инновационные',
-                      'современные'
-                    ]}
+                    texts={TITLE_TEXTS}
                     duration={10000}
                     variant="rotate"
                     gradient={true}
@@ -114,12 +124,7 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                 
                 <div className="text-lg lg:text-2xl text-white/80 leading-relaxed max-w-lg font-light relative z-10">
                   <RotatingTextAdvanced
-                    texts={[
-                      'Аренда на мероприятия, продажа, разработка и интеграция интерактивного оборудования',
-                      'Создаем незабываемые впечатления с помощью современных технологий',
-                      'Полный цикл: от концепции до реализации мультимедийных проектов',
-                      'Профессиональное оборудование для любых мероприятий и пространств'
-                    ]}
+                    texts={DESCRIPTION_TEXTS}
                     duration={16000}
                     variant="slide"
                     direction="up"
