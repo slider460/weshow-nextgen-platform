@@ -11,8 +11,6 @@ import TeamSection from "../components/TeamSection";
 import TeamMobileSection from "../components/TeamMobileSection";
 import ComplexSolutionsSection from "../components/ComplexSolutionsSection";
 import ComplexSolutionsMobileSection from "../components/ComplexSolutionsMobileSection";
-import TestCarousel from "../components/TestCarousel";
-import SimpleTest from "../components/SimpleTest";
 import LettersCertificatesSection from "../components/LettersCertificatesSection";
 import Footer from "../components/Footer";
 import ShowreelModal from "../components/ShowreelModal";
@@ -31,7 +29,6 @@ const Index = () => {
     <div className="min-h-screen bg-slate-50">
       <Header />
       <main className="space-y-0 overflow-x-hidden">
-        <SimpleTest />
         <AdvancedHeroSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <RentalEquipmentSection />
         <ModernServicesSection />
@@ -56,16 +53,13 @@ const Index = () => {
           <TeamMobileSection />
         </div>
         
-        {/* Test Carousel */}
-        <TestCarousel />
-        
-        {/* Complex Solutions Section - ВСЕГДА ВИДИМАЯ ДЛЯ ТЕСТА */}
-        <div>
+        {/* Desktop Complex Solutions Section */}
+        <div className="hidden md:block">
           <ComplexSolutionsSection />
         </div>
         
-        {/* Mobile Complex Solutions Section - ВСЕГДА ВИДИМАЯ ДЛЯ ТЕСТА */}
-        <div>
+        {/* Mobile Complex Solutions Section */}
+        <div className="block md:hidden">
           <ComplexSolutionsMobileSection />
         </div>
         
