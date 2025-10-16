@@ -9,8 +9,6 @@ import WorkflowMobileSection from "../components/WorkflowMobileSection";
 import ContactFormSection from "../components/ContactFormSection";
 import TeamSection from "../components/TeamSection";
 import TeamMobileSection from "../components/TeamMobileSection";
-import ComplexSolutionsSection from "../components/ComplexSolutionsSection";
-import ComplexSolutionsMobileSection from "../components/ComplexSolutionsMobileSection";
 import LettersCertificatesSection from "../components/LettersCertificatesSection";
 import Footer from "../components/Footer";
 import ShowreelModal from "../components/ShowreelModal";
@@ -51,16 +49,6 @@ const Index = () => {
         {/* Mobile Team Section */}
         <div className="block md:hidden">
           <TeamMobileSection />
-        </div>
-        
-        {/* Desktop Complex Solutions Section */}
-        <div className="hidden md:block">
-          <ComplexSolutionsSection />
-        </div>
-        
-        {/* Mobile Complex Solutions Section */}
-        <div className="block md:hidden">
-          <ComplexSolutionsMobileSection />
         </div>
         
         <LettersCertificatesSection />
