@@ -9,6 +9,7 @@ import ContactFormSection from "../components/ContactFormSection";
 import TeamSection from "../components/TeamSection";
 import TeamMobileSection from "../components/TeamMobileSection";
 import LettersCertificatesSection from "../components/LettersCertificatesSection";
+import LettersCertificatesMobileSection from "../components/LettersCertificatesMobileSection";
 import Footer from "../components/Footer";
 import ShowreelModal from "../components/ShowreelModal";
 import LogoLoopSection from "../components/LogoLoopSection";
@@ -49,7 +50,15 @@ const Index = () => {
           <TeamMobileSection />
         </div>
         
-        <LettersCertificatesSection />
+        {/* Desktop Letters & Certificates Section */}
+        <div className="hidden md:block">
+          <LettersCertificatesSection />
+        </div>
+        
+        {/* Mobile Letters & Certificates Section */}
+        <div className="block md:hidden">
+          <LettersCertificatesMobileSection />
+        </div>
         
         {/* Desktop Workflow Section */}
         <div className="hidden md:block">
