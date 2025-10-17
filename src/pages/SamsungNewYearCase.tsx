@@ -34,7 +34,7 @@ const SamsungNewYearCase = () => {
     results: {
       title: "Результат",
       video: {
-        src: "https://www.dropbox.com/scl/fi/rljujmu5jpotalcme31bv/Samsung-2020.mp4?rlkey=uy7uhib44p8fjc4fys1ykkipj&st=9vunqpcl&dl=1", // Внешняя ссылка на видео
+        src: "https://uc4111aafc024d284864d8722e40.dl.dropboxusercontent.com/cd/0/inline/CzarfPsW2ioRO5GCgEM5BHyiuZ8Rk2IGolW_I0ZaNo_9p7SfCJ_YbQAbp_N7_EMxW17RJqJFWR_GOMfiaJNOFuOkhmiHzO6YPmNPqgch3hqOL4V8-V-l6ym-ix8dtJb6f3eCfWeqA1UB-XGX3zT4XUTn/file?dl=1", // Прямая ссылка на видео
         poster: "/images/cases/samsung/event-hall-wide.jpg",
         title: "Samsung New Year 2020 - Результат мероприятия"
       }
