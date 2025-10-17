@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
-import { Play } from 'lucide-react'
+import React from 'react'
 
 const SamsungNewYearCase = () => {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
 
   // Данные кейса
   const caseData = {
@@ -52,25 +50,14 @@ const SamsungNewYearCase = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans">
-      {/* Hero Section with Play Button */}
-      <div className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Hero Section */}
+      <div className="relative h-screen overflow-hidden">
         <img
           src={caseData.images.eventHall}
           alt="Event Hall"
           className="absolute inset-0 w-full h-full object-cover filter brightness-75"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/50 via-slate-900/70 to-blue-800/50"></div>
-        <div className="relative z-10 flex flex-col items-center justify-center text-center">
-          <button
-            onClick={() => setIsVideoPlaying(true)}
-            className="relative w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center cursor-pointer shadow-lg transform transition-transform duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-opacity-50"
-          >
-            <Play className="w-16 h-16 md:w-24 md:h-24 text-white fill-current" />
-          </button>
-          <p className="text-white text-3xl md:text-5xl font-bold mt-8 drop-shadow-lg">
-            Смотреть
-          </p>
-        </div>
       </div>
 
       {/* Case Title and Subtitle Section */}
