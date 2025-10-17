@@ -3,8 +3,6 @@ name: 🚀 Deploy to Vercel
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch: # Позволяет запускать вручную
 
 jobs:
@@ -39,11 +37,13 @@ jobs:
         if: success()
         run: |
           echo "✅ Сайт успешно развернут на Vercel!"
-          echo "🌐 Домен: weshow.su"
+          echo "🌐 Домен: www.weshow.su"
           echo "📅 Время: $(date)"
+          echo "🔗 URL: https://www.weshow.su"
           
       - name: 📧 Send failure notification
         if: failure()
         run: |
           echo "❌ Ошибка при развертывании!"
           echo "📅 Время: $(date)"
+          echo "🔍 Проверьте логи выше для деталей"
