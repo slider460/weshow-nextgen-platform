@@ -258,7 +258,14 @@ const Portfolio = () => {
               );
 
               return (
-                <Link key={index} to={`/case/${cases[index].id}`} className="group cursor-pointer block" aria-label={`${project.title} — подробнее`}>
+                <Link 
+                  key={index} 
+                  to={project.title && project.title.includes('Samsung') 
+                    ? '/portfolio/samsung-new-year-2020' 
+                    : `/case/${cases[index].id}`} 
+                  className="group cursor-pointer block" 
+                  aria-label={`${project.title} — подробнее`}
+                >
                   {card}
                 </Link>
               );
