@@ -93,17 +93,25 @@ const SamsungNewYearCase = () => {
     <div className="min-h-screen bg-slate-900 text-white">
       {/* Header */}
       <div className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-blue-800"></div>
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('/images/cases/samsung/event-hall-wide.jpg')"
+          }}
+        ></div>
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-slate-900/70 to-blue-800/80"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
+          <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight text-white drop-shadow-2xl">
             {caseData.title}
           </h1>
-          <p className="text-xl md:text-2xl text-blue-200 mb-8">
+          <p className="text-xl md:text-2xl text-blue-200 mb-8 drop-shadow-lg">
             {caseData.subtitle}
           </p>
           <div className="flex justify-center">
-            <div className="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
-              <span className="text-2xl font-bold">S</span>
+            <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30">
+              <span className="text-2xl font-bold text-white">S</span>
             </div>
           </div>
         </div>
