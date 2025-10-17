@@ -27,3 +27,6 @@ images/team/*.png
 *.pdf
 *.mov
 *.avi
+*.png
+*.tar.gz
+dist/
