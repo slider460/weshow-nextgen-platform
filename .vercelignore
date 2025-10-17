@@ -1,4 +1,29 @@
-# Игнорируем только node_modules для принудительного обновления
-node_modules
+node_modules/
+.git/
+dist/
 *.log
 .env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+coverage/
+.nyc_output/
+.cache/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+# Large media files
+videos/
+testimonials/pdf/
+images/team/*.jpg
+images/team/*.png
+*.mp4
+*.pdf
+*.mov
+*.avi
