@@ -44,7 +44,8 @@ const SamsungNewYearCase = () => {
         "/images/cases/samsung/digital-mailbox-1.jpg",
         "/images/cases/samsung/digital-mailbox-2.jpg"
       ],
-      performance: "/images/cases/samsung/performance-stage.jpg"
+      performance: "/images/cases/samsung/performance-stage.jpg",
+      celebration: "/images/cases/samsung/celebration-moment.jpg"
     }
   }
 
@@ -149,6 +150,30 @@ const SamsungNewYearCase = () => {
             alt="Performance Stage"
             className="w-full h-auto object-cover rounded-lg shadow-lg"
           />
+        </div>
+      </section>
+
+      {/* Celebration Moment Section */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-gray-800">Кульминация праздника</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Момент всеобщего ликования с падающим конфетти, танцами и атмосферой настоящего праздника
+            </p>
+          </div>
+          <div className="relative w-full max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
+            <img
+              src={caseData.images.celebration}
+              alt="Samsung New Year Celebration Moment"
+              className="w-full h-auto object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            <div className="absolute bottom-6 left-6 text-white">
+              <p className="text-lg font-semibold">Samsung New Year 2020</p>
+              <p className="text-sm opacity-90">Праздничная атмосфера мероприятия</p>
+            </div>
+          </div>
         </div>
       </section>
 
