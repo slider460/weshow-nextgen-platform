@@ -151,7 +151,16 @@ const ModernPortfolioMobileSection = ({ onShowShowreel }: ModernPortfolioMobileS
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group"
+              className="group cursor-pointer"
+              onClick={() => {
+                // Специальная ссылка для кейса Samsung
+                if (project.title && project.title.includes('Samsung')) {
+                  window.location.href = '/portfolio/samsung-new-year-2020';
+                } else {
+                  // Используем window.location для навигации
+                  window.location.href = `/case/${project.id}`;
+                }
+              }}
             >
               <Card className="h-full overflow-hidden hover:shadow-xl transition-all duration-300 border-0 bg-slate-50">
                 <div className="relative overflow-hidden">
@@ -224,7 +233,20 @@ const ModernPortfolioMobileSection = ({ onShowShowreel }: ModernPortfolioMobileS
         {/* Mobile Carousel */}
         <MobileCarousel showOnMobile={true} showOnDesktop={false}>
           {allProjects.slice(0, 6).map((project, index) => (
-            <Card key={project.id} className="h-full overflow-hidden border-0 bg-slate-50 mx-2">
+            <div 
+              key={project.id} 
+              className="cursor-pointer"
+              onClick={() => {
+                // Специальная ссылка для кейса Samsung
+                if (project.title && project.title.includes('Samsung')) {
+                  window.location.href = '/portfolio/samsung-new-year-2020';
+                } else {
+                  // Используем window.location для навигации
+                  window.location.href = `/case/${project.id}`;
+                }
+              }}
+            >
+              <Card className="h-full overflow-hidden border-0 bg-slate-50 mx-2">
               <div className="relative overflow-hidden">
                 <img
                   src={project.image}
@@ -286,6 +308,7 @@ const ModernPortfolioMobileSection = ({ onShowShowreel }: ModernPortfolioMobileS
                 </Button>
               </CardContent>
             </Card>
+            </div>
           ))}
         </MobileCarousel>
 

@@ -133,7 +133,7 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
                 className="cursor-pointer"
                 onClick={() => {
                   // Специальная ссылка для кейса Samsung
-                  if (caseItem.title && caseItem.title.includes('Samsung')) {
+                  if (project.title && project.title.includes('Samsung')) {
                     window.location.href = '/portfolio/samsung-new-year-2020';
                   } else {
                     // Используем window.location для навигации
