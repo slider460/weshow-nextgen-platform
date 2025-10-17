@@ -161,12 +161,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         </div>
       </div>
 
-      {/* Title */}
-      {title && (
-        <div className="absolute top-4 left-4 text-white">
-          <h3 className="text-lg font-semibold">{title}</h3>
-        </div>
-      )}
     </div>
   )
 }
