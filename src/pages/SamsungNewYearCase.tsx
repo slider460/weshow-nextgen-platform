@@ -162,36 +162,16 @@ const SamsungNewYearCase = () => {
         </div>
       </section>
 
-      {/* Results Section with Video */}
+      {/* Results Section */}
       <section className="py-16 bg-slate-900">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-4xl font-bold mb-10 text-white text-left">Результат</h2>
           <div className="relative w-full max-w-6xl mx-auto rounded-xl overflow-hidden shadow-2xl aspect-video">
-            {!isVideoPlaying ? (
-              <div
-                className="absolute inset-0 bg-cover bg-center flex items-center justify-center cursor-pointer"
-                style={{ backgroundImage: `url(${caseData.results.video.poster})` }}
-                onClick={() => setIsVideoPlaying(true)}
-              >
-                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                  <div className="w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                    <Play className="w-12 h-12 text-white fill-current" />
-                  </div>
-                </div>
-                <p className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white text-2xl font-bold drop-shadow-lg">
-                  Смотреть
-                </p>
-              </div>
-            ) : (
-              <iframe
-                className="w-full h-full"
-                src={`${caseData.results.video.src}?autoplay=1`}
-                title="Samsung New Year 2020 Event Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            )}
+            <img
+              src={caseData.results.video.poster}
+              alt="Event Result"
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </section>
