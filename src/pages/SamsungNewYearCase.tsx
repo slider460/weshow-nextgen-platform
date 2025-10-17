@@ -50,16 +50,6 @@ const SamsungNewYearCase = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans">
-      {/* Hero Section */}
-      <div className="relative h-screen overflow-hidden">
-        <img
-          src={caseData.images.eventHall}
-          alt="Event Hall"
-          className="absolute inset-0 w-full h-full object-cover filter brightness-75"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/50 via-slate-900/70 to-blue-800/50"></div>
-      </div>
-
       {/* Case Title and Subtitle Section */}
       <section className="py-16 md:py-24 bg-slate-900 text-center">
         <div className="max-w-4xl mx-auto px-6">
