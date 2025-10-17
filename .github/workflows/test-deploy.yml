@@ -1,9 +1,7 @@
-name: 🧪 Test GitHub Actions
+name: 🧪 Test Deploy
 
 on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+  workflow_dispatch: # Только ручной запуск для тестирования
 
 jobs:
   test:
@@ -25,17 +23,37 @@ jobs:
       - name: 🔨 Build project
         run: npm run build
         
-      - name: ✅ Test build
+      - name: 🔍 Check secrets
         run: |
-          echo "✅ Проект успешно собран!"
-          echo "📁 Содержимое dist/:"
-          ls -la dist/
-          echo "📄 Размер index.html:"
-          wc -l dist/index.html
+          echo "Checking secrets..."
+          if [ -n "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "✅ VERCEL_TOKEN is set"
+          else
+            echo "❌ VERCEL_TOKEN is missing"
+          fi
           
-      - name: 📧 Success notification
+          if [ -n "${{ secrets.VERCEL_ORG_ID }}" ]; then
+            echo "✅ VERCEL_ORG_ID is set"
+          else
+            echo "❌ VERCEL_ORG_ID is missing"
+          fi
+          
+          if [ -n "${{ secrets.VERCEL_PROJECT_ID }}" ]; then
+            echo "✅ VERCEL_PROJECT_ID is set"
+          else
+            echo "❌ VERCEL_PROJECT_ID is missing"
+          fi
+          
+      - name: 🚀 Test Vercel Deploy
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          
+      - name: ✅ Success
         if: success()
         run: |
-          echo "🎉 Тест прошел успешно!"
-          echo "📅 Время: $(date)"
-          echo "🔄 Следующий шаг: настроить Vercel деплой"
+          echo "🎉 Деплой успешен!"
+          echo "🌐 Сайт: https://www.weshow.su"
