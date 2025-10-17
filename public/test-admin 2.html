@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест админ панели WeShow</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        h1 {
+            color: #1e293b;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 10px 10px 0;
+            transition: background 0.2s;
+        }
+        .test-button:hover {
+            background: #2563eb;
+        }
+        .test-button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success {
+            background: #dcfce7;
+            border: 1px solid #16a34a;
+            color: #166534;
+        }
+        .error {
+            background: #fef2f2;
+            border: 1px solid #dc2626;
+            color: #991b1b;
+        }
+        .info {
+            background: #dbeafe;
+            border: 1px solid #2563eb;
+            color: #1e40af;
+        }
+        .credentials {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Тест админ панели WeShow</h1>
+        
+        <div class="credentials">
+            <h3>📋 Тестовые учетные данные:</h3>
+            <p><strong>Администратор:</strong> admin@weshow.ru / password</p>
+            <p><strong>Менеджер:</strong> manager@weshow.ru / password</p>
+        </div>
+
+        <div class="test-section">
+            <h3>🌐 Проверка доступности админ панели</h3>
+            <button class="test-button" onclick="testAdminAccess()">Проверить доступность</button>
+            <div id="accessResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Тест аутентификации</h3>
+            <button class="test-button" onclick="testAuth()">Тест входа в админ панель</button>
+            <div id="authResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Тест дашборда</h3>
+            <button class="test-button" onclick="testDashboard()">Проверить дашборд</button>
+            <div id="dashboardResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Открыть админ панель</h3>
+            <button class="test-button" onclick="openAdminPanel()">Открыть в новом окне</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8082';
+        
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = `result ${type}`;
+            element.textContent = message;
+        }
+
+        async function testAdminAccess() {
+            showResult('accessResult', 'Проверяем доступность админ панели...', 'info');
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin`);
+                const status = response.status;
+                
+                if (status === 200) {
+                    showResult('accessResult', `✅ Админ панель доступна!\nСтатус: ${status}\nURL: ${API_BASE}/admin`, 'success');
+                } else {
+                    showResult('accessResult', `❌ Ошибка доступа!\nСтатус: ${status}`, 'error');
+                }
+            } catch (error) {
+                showResult('accessResult', `❌ Ошибка подключения: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAuth() {
+            showResult('authResult', 'Тестируем аутентификацию...', 'info');
+            
+            try {
+                // Тестируем страницу входа
+                const loginResponse = await fetch(`${API_BASE}/admin/login`);
+                const loginStatus = loginResponse.status;
+                
+                if (loginStatus === 200) {
+                    showResult('authResult', `✅ Страница входа доступна!\nСтатус: ${loginStatus}\n\nТеперь можно протестировать вход с тестовыми данными.`, 'success');
+                } else {
+                    showResult('authResult', `❌ Страница входа недоступна!\nСтатус: ${loginStatus}`, 'error');
+                }
+            } catch (error) {
+                showResult('authResult', `❌ Ошибка подключения: ${error.message}`, 'error');
+            }
+        }
+
+        async function testDashboard() {
+            showResult('dashboardResult', 'Проверяем дашборд...', 'info');
+            
+            try {
+                // Проверяем доступность дашборда (должен перенаправлять на логин)
+                const dashboardResponse = await fetch(`${API_BASE}/admin/dashboard`);
+                const dashboardStatus = dashboardResponse.status;
+                
+                if (dashboardStatus === 200 || dashboardStatus === 302) {
+                    showResult('dashboardResult', `✅ Дашборд доступен!\nСтатус: ${dashboardStatus}\n(Перенаправление на логин - это нормально)`, 'success');
+                } else {
+                    showResult('dashboardResult', `❌ Дашборд недоступен!\nСтатус: ${dashboardStatus}`, 'error');
+                }
+            } catch (error) {
+                showResult('dashboardResult', `❌ Ошибка подключения: ${error.message}`, 'error');
+            }
+        }
+
+        function openAdminPanel() {
+            window.open(`${API_BASE}/admin`, '_blank');
+        }
+
+        // Автоматически запускаем базовую проверку при загрузке
+        window.addEventListener('load', () => {
+            testAdminAccess();
+        });
+    </script>
+</body>
+</html>
