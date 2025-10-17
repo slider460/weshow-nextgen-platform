@@ -36,8 +36,108 @@ type LogosAction =
   | { type: 'REORDER_LOGOS'; payload: { fromIndex: number; toIndex: number } }
   | { type: 'TOGGLE_LOGO_ACTIVE'; payload: string };
 
+// Тестовые логотипы для демонстрации
+const getDefaultLogos = (): Logo[] => [
+  {
+    id: '1',
+    name: 'Sberbank',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Sberbank_Logo_2020.svg/200px-Sberbank_Logo_2020.svg.png',
+    website: 'https://sberbank.ru',
+    description: 'Крупнейший банк России',
+    category: 'banking',
+    isActive: true,
+    order: 1,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: '2',
+    name: 'Gazprom',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Gazprom_logo.svg/200px-Gazprom_logo.svg.png',
+    website: 'https://gazprom.ru',
+    description: 'Российская энергетическая компания',
+    category: 'energy',
+    isActive: true,
+    order: 2,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: '3',
+    name: 'MTS',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/MTS_logo.svg/200px-MTS_logo.svg.png',
+    website: 'https://mts.ru',
+    description: 'Мобильный оператор',
+    category: 'telecom',
+    isActive: true,
+    order: 3,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: '4',
+    name: 'Yandex',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Yandex_icon.svg/200px-Yandex_icon.svg.png',
+    website: 'https://yandex.ru',
+    description: 'Российская IT-компания',
+    category: 'tech',
+    isActive: true,
+    order: 4,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: '5',
+    name: 'Aeroflot',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Aeroflot_logo.svg/200px-Aeroflot_logo.svg.png',
+    website: 'https://aeroflot.ru',
+    description: 'Российская авиакомпания',
+    category: 'aviation',
+    isActive: true,
+    order: 5,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: '6',
+    name: 'Lukoil',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Lukoil_logo.svg/200px-Lukoil_logo.svg.png',
+    website: 'https://lukoil.ru',
+    description: 'Нефтяная компания',
+    category: 'energy',
+    isActive: true,
+    order: 6,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: '7',
+    name: 'VTB',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/VTB_Bank_logo.svg/200px-VTB_Bank_logo.svg.png',
+    website: 'https://vtb.ru',
+    description: 'Банк ВТБ',
+    category: 'banking',
+    isActive: true,
+    order: 7,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: '8',
+    name: 'Megafon',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Megafon_logo.svg/200px-Megafon_logo.svg.png',
+    website: 'https://megafon.ru',
+    description: 'Мобильный оператор',
+    category: 'telecom',
+    isActive: true,
+    order: 8,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }
+];
+
 const initialState: LogosState = {
-  logos: [],
+  logos: getDefaultLogos(),
   isLoading: false,
   error: null,
   selectedLogo: null,
