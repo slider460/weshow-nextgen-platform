@@ -1,4 +1,5 @@
 import React from 'react'
+import VideoPlayer from '../components/VideoPlayer'
 
 const SamsungNewYearCase = () => {
 
@@ -34,8 +35,9 @@ const SamsungNewYearCase = () => {
     results: {
       title: "Результат",
       video: {
-        src: "/videos/samsung-new-year-2020.mp4",
-        poster: "/images/cases/samsung/event-hall-wide.jpg"
+        src: "https://www.dropbox.com/s/your-video-id/samsung-new-year-2020.mp4?dl=1", // Замените на вашу ссылку Dropbox
+        poster: "/images/cases/samsung/event-hall-wide.jpg",
+        title: "Samsung New Year 2020 - Результат мероприятия"
       }
     },
     images: {
@@ -181,11 +183,12 @@ const SamsungNewYearCase = () => {
       <section className="py-16 bg-slate-900">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-4xl font-bold mb-10 text-white text-left">Результат</h2>
-          <div className="relative w-full max-w-6xl mx-auto rounded-xl overflow-hidden shadow-2xl aspect-video">
-            <img
-              src={caseData.results.video.poster}
-              alt="Event Result"
-              className="w-full h-full object-cover"
+          <div className="w-full max-w-6xl mx-auto">
+            <VideoPlayer
+              src={caseData.results.video.src}
+              poster={caseData.results.video.poster}
+              title={caseData.results.video.title}
+              className="aspect-video"
             />
           </div>
         </div>
