@@ -50,12 +50,6 @@ const SamsungNewYearCase = () => {
     }
   }
 
-  // Debug: Log video data
-  console.log('🎥 SamsungNewYearCase - Video data:', {
-    src: caseData.results.video.src,
-    poster: caseData.results.video.poster,
-    title: caseData.results.video.title
-  });
 
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans">
@@ -190,14 +184,6 @@ const SamsungNewYearCase = () => {
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-4xl font-bold mb-10 text-white text-left">Результат</h2>
           <div className="w-full max-w-6xl mx-auto">
-            {/* Debug info */}
-            <div className="mb-4 p-4 bg-gray-800 rounded-lg text-white text-sm">
-              <h3 className="font-bold mb-2">🔧 Debug Info:</h3>
-              <p><strong>Video src:</strong> {caseData.results.video.src}</p>
-              <p><strong>Poster:</strong> {caseData.results.video.poster}</p>
-              <p><strong>Title:</strong> {caseData.results.video.title}</p>
-            </div>
-            
             <VideoPlayer
               src={caseData.results.video.src}
               poster={caseData.results.video.poster}
