@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор placeholder изображений для Samsung кейса</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1e293b;
+            color: white;
+        }
+        .placeholder {
+            width: 400px;
+            height: 300px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .placeholder h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+        .placeholder p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        .download-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .download-btn:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <h1>Генератор Placeholder изображений для Samsung кейса</h1>
+    <p>Нажмите на кнопки ниже, чтобы скачать placeholder изображения для тестирования кейса.</p>
+    
+    <div id="placeholders"></div>
+
+    <script>
+        const images = [
+            {
+                name: 'event-hall-wide.jpg',
+                title: 'Общий вид зала',
+                description: 'Проекции зимнего леса'
+            },
+            {
+                name: 'digital-mailbox-1.jpg', 
+                title: 'Digital почтовый ящик',
+                description: 'Снегурочка у киоска'
+            },
+            {
+                name: 'digital-mailbox-2.jpg',
+                title: 'Интеракция',
+                description: 'Гость у почтового ящика'
+            },
+            {
+                name: 'performance-stage.jpg',
+                title: 'Сценическое выступление',
+                description: 'LED экран и артисты'
+            },
+            {
+                name: '3d-projections.jpg',
+                title: '3D проекции',
+                description: 'Новогодние персонажи'
+            },
+            {
+                name: 'guests-interaction.jpg',
+                title: 'Гости и интерактив',
+                description: 'Взаимодействие с зонами'
+            },
+            {
+                name: 'video-poster.jpg',
+                title: 'Постер видео',
+                description: 'Превью ролика'
+            }
+        ];
+
+        function createPlaceholder(name, title, description) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 600;
+            const ctx = canvas.getContext('2d');
+            
+            // Градиентный фон
+            const gradient = ctx.createLinearGradient(0, 0, 800, 600);
+            gradient.addColorStop(0, '#3b82f6');
+            gradient.addColorStop(1, '#1e40af');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 800, 600);
+            
+            // Текст
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 32px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(title, 400, 250);
+            
+            ctx.font = '18px Arial';
+            ctx.fillStyle = 'rgba(255,255,255,0.8)';
+            ctx.fillText(description, 400, 300);
+            
+            ctx.font = '16px Arial';
+            ctx.fillText('Samsung New Year 2020', 400, 350);
+            
+            return canvas;
+        }
+
+        function downloadImage(canvas, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.click();
+        }
+
+        images.forEach(img => {
+            const container = document.createElement('div');
+            container.style.display = 'inline-block';
+            container.style.margin = '10px';
+            
+            const canvas = createPlaceholder(img.name, img.title, img.description);
+            container.appendChild(canvas);
+            
+            const btn = document.createElement('button');
+            btn.className = 'download-btn';
+            btn.textContent = `Скачать ${img.name}`;
+            btn.onclick = () => downloadImage(canvas, img.name);
+            container.appendChild(btn);
+            
+            document.getElementById('placeholders').appendChild(container);
+        });
+    </script>
+</body>
+</html>
