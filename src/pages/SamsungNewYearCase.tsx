@@ -35,7 +35,7 @@ const SamsungNewYearCase = () => {
     results: {
       title: "Результат",
       video: {
-        src: "https://www.dropbox.com/s/your-video-id/samsung-new-year-2020.mp4?dl=1", // Замените на вашу ссылку Dropbox
+        src: "/videos/samsung-new-year-2020.mp4", // Замените на вашу ссылку Dropbox
         poster: "/images/cases/samsung/event-hall-wide.jpg",
         title: "Samsung New Year 2020 - Результат мероприятия"
       }

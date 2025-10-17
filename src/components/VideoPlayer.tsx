@@ -48,6 +48,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration)
+      console.log('✅ Video metadata loaded:', {
+        src,
+        duration: videoRef.current.duration,
+        videoWidth: videoRef.current.videoWidth,
+        videoHeight: videoRef.current.videoHeight
+      })
     }
   }
 
@@ -69,6 +75,18 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     window.open(src, '_blank')
   }
 
+  const handleError = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    const video = e.currentTarget
+    const error = video.error
+    console.error('❌ Video error:', {
+      src,
+      error: error ? {
+        code: error.code,
+        message: error.message
+      } : 'Unknown error'
+    })
+  }
+
   return (
     <div 
       className={`relative group bg-black rounded-xl overflow-hidden shadow-2xl ${className}`}
@@ -83,6 +101,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => setIsPlaying(false)}
+        onError={handleError}
         preload="metadata"
       />
       

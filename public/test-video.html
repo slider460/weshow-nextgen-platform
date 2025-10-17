@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест видео Samsung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .info {
+            margin: 20px 0;
+            padding: 15px;
+            background: #333;
+            border-radius: 8px;
+        }
+        .error {
+            color: #ff6b6b;
+            background: #4a1a1a;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success {
+            color: #51cf66;
+            background: #1a4a1a;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <h1>🎥 Тест видео Samsung New Year 2020</h1>
+        
+        <div class="info">
+            <h3>Информация о файле:</h3>
+            <p><strong>Путь:</strong> /videos/samsung-new-year-2020.mp4</p>
+            <p><strong>Размер:</strong> 36.3MB</p>
+            <p><strong>Тип:</strong> video/mp4</p>
+        </div>
+
+        <div id="status"></div>
+
+        <video 
+            id="testVideo"
+            controls 
+            preload="metadata"
+            poster="/images/cases/samsung/event-hall-wide.jpg"
+        >
+            <source src="/videos/samsung-new-year-2020.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
+
+        <div class="info">
+            <h3>Проверка доступности:</h3>
+            <button onclick="checkVideo()">Проверить видео</button>
+            <div id="checkResult"></div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('testVideo');
+        const status = document.getElementById('status');
+        const checkResult = document.getElementById('checkResult');
+
+        function showStatus(message, type = 'info') {
+            status.innerHTML = `<div class="${type}">${message}</div>`;
+        }
+
+        function showCheckResult(message, type = 'info') {
+            checkResult.innerHTML = `<div class="${type}">${message}</div>`;
+        }
+
+        // События видео
+        video.addEventListener('loadstart', () => {
+            showStatus('🔄 Начинается загрузка видео...', 'info');
+        });
+
+        video.addEventListener('loadedmetadata', () => {
+            showStatus(`✅ Метаданные загружены! Длительность: ${video.duration.toFixed(2)} сек`, 'success');
+        });
+
+        video.addEventListener('canplay', () => {
+            showStatus('✅ Видео готово к воспроизведению!', 'success');
+        });
+
+        video.addEventListener('error', (e) => {
+            const error = video.error;
+            let message = '❌ Ошибка загрузки видео: ';
+            
+            if (error) {
+                switch(error.code) {
+                    case 1:
+                        message += 'Прервано пользователем';
+                        break;
+                    case 2:
+                        message += 'Ошибка сети';
+                        break;
+                    case 3:
+                        message += 'Ошибка декодирования';
+                        break;
+                    case 4:
+                        message += 'Неподдерживаемый формат';
+                        break;
+                    default:
+                        message += `Неизвестная ошибка (код: ${error.code})`;
+                }
+            } else {
+                message += 'Неизвестная ошибка';
+            }
+            
+            showStatus(message, 'error');
+        });
+
+        async function checkVideo() {
+            showCheckResult('🔄 Проверяем доступность видео...', 'info');
+            
+            try {
+                const response = await fetch('/videos/samsung-new-year-2020.mp4', {
+                    method: 'HEAD'
+                });
+                
+                if (response.ok) {
+                    const contentLength = response.headers.get('content-length');
+                    const contentType = response.headers.get('content-type');
+                    
+                    showCheckResult(`
+                        ✅ Видео доступно!<br>
+                        <strong>Размер:</strong> ${(contentLength / 1024 / 1024).toFixed(2)} MB<br>
+                        <strong>Тип:</strong> ${contentType}
+                    `, 'success');
+                } else {
+                    showCheckResult(`❌ Ошибка HTTP: ${response.status} ${response.statusText}`, 'error');
+                }
+            } catch (error) {
+                showCheckResult(`❌ Ошибка сети: ${error.message}`, 'error');
+            }
+        }
+
+        // Автоматическая проверка при загрузке
+        window.addEventListener('load', checkVideo);
+    </script>
+</body>
+</html>
