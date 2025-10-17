@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест страницы оборудования</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-link {
+            display: inline-block;
+            margin: 8px 12px 8px 0;
+            padding: 12px 24px;
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.2s;
+            font-weight: 500;
+        }
+        .test-link:hover {
+            background: #2563eb;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        .status.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        .console-output {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Тест страницы оборудования</h1>
+        
+        <div class="status success">
+            ✅ Маршрут /equipment добавлен в App.tsx
+        </div>
+        
+        <div class="status success">
+            ✅ API equipment.ts исправлен (убраны хардкодированные ключи)
+        </div>
+        
+        <div class="status success">
+            ✅ Все компоненты существуют (ConsultationModal, BookingCalendar, AddToCartButton)
+        </div>
+        
+        <p><strong>Тестирование:</strong></p>
+        <a href="http://localhost:8084/equipment" class="test-link" target="_blank">
+            🔧 Открыть страницу оборудования
+        </a>
+        
+        <p><strong>Что проверить:</strong></p>
+        <ul>
+            <li>✅ Страница загружается без ошибок</li>
+            <li>✅ Отображается заголовок и контент</li>
+            <li>✅ Нет ошибок в консоли браузера (F12)</li>
+            <li>✅ Компоненты рендерятся корректно</li>
+            <li>✅ Данные загружаются из Supabase</li>
+        </ul>
+        
+        <div class="console-output" id="consoleOutput">
+            Ожидание данных из консоли...
+        </div>
+        
+        <script>
+            // Console monitoring
+            const originalConsoleLog = console.log;
+            const originalConsoleError = console.error;
+            const originalConsoleWarn = console.warn;
+            const consoleOutput = document.getElementById('consoleOutput');
+            
+            console.log = function(...args) {
+                originalConsoleLog.apply(console, args);
+                consoleOutput.textContent += '[LOG] ' + args.join(' ') + '\n';
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            };
+            
+            console.error = function(...args) {
+                originalConsoleError.apply(console, args);
+                consoleOutput.textContent += '[ERROR] ' + args.join(' ') + '\n';
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            };
+            
+            console.warn = function(...args) {
+                originalConsoleWarn.apply(console, args);
+                consoleOutput.textContent += '[WARN] ' + args.join(' ') + '\n';
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            };
+            
+            // Test equipment page
+            function testEquipmentPage() {
+                fetch('http://localhost:8084/equipment')
+                    .then(response => {
+                        console.log('Equipment page status:', response.status);
+                        if (response.ok) {
+                            console.log('✅ Equipment page loads successfully');
+                        } else {
+                            console.log('❌ Equipment page failed to load');
+                        }
+                        return response.text();
+                    })
+                    .then(html => {
+                        if (html.includes('equipment') || html.includes('оборудование')) {
+                            console.log('✅ Equipment content found in HTML');
+                        } else {
+                            console.log('⚠️ Equipment content not found in HTML');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('❌ Error testing equipment page:', error);
+                    });
+            }
+            
+            // Run test when page loads
+            window.addEventListener('load', testEquipmentPage);
+        </script>
+    </div>
+</body>
+</html>

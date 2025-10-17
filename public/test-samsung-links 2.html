@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест ссылок на кейс Samsung</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { border: 1px solid #ccc; margin: 20px 0; padding: 20px; border-radius: 8px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        .test-link { 
+            display: inline-block; 
+            padding: 15px 30px; 
+            background: #007bff; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            margin: 10px;
+            font-size: 18px;
+        }
+        .test-link:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Тест ссылок на кейс Samsung</h1>
+    
+    <div class="test-section">
+        <h3>✅ Исправленные ссылки:</h3>
+        <p>Теперь все ссылки ведут на правильную страницу кейса Samsung:</p>
+        
+        <h4>1. Блок "Особенный новый год" на главной странице:</h4>
+        <p>Ссылка: <code>/portfolio/samsung-new-year-2020</code></p>
+        <a href="/portfolio/samsung-new-year-2020" class="test-link" target="_blank">
+            Тест ссылки из блока "Особенный новый год"
+        </a>
+        
+        <h4>2. Блок "Наши проекты" (десктопная версия):</h4>
+        <p>Ссылка: <code>/portfolio/samsung-new-year-2020</code> (для кейса Samsung)</p>
+        <a href="/portfolio/samsung-new-year-2020" class="test-link" target="_blank">
+            Тест ссылки из блока "Наши проекты"
+        </a>
+        
+        <h4>3. Блок "Наши проекты" (мобильная версия):</h4>
+        <p>Ссылка: <code>/portfolio/samsung-new-year-2020</code> (для кейса Samsung)</p>
+        <a href="/portfolio/samsung-new-year-2020" class="test-link" target="_blank">
+            Тест ссылки из мобильной версии
+        </a>
+    </div>
+    
+    <div class="test-section">
+        <h3>🔧 Что было исправлено:</h3>
+        <ul>
+            <li><strong>AdvancedHeroSection.tsx:</strong> Изменена ссылка с <code>/portfolio</code> на <code>/portfolio/samsung-new-year-2020</code></li>
+            <li><strong>ModernPortfolioSection.tsx:</strong> Добавлена логика для кейса Samsung - если название содержит "Samsung", то ссылка ведет на <code>/portfolio/samsung-new-year-2020</code></li>
+            <li><strong>ModernPortfolioMobileSection.tsx:</strong> Добавлена логика для кейса Samsung в мобильной версии</li>
+        </ul>
+    </div>
+    
+    <div class="test-section">
+        <h3>📋 Инструкции по проверке:</h3>
+        <ol>
+            <li>Откройте главную страницу: <a href="/" target="_blank">http://localhost:8082/</a></li>
+            <li>Найдите блок "Особенный новый год Samsung" и кликните на него</li>
+            <li>Проверьте, что открывается страница <code>/portfolio/samsung-new-year-2020</code></li>
+            <li>В блоке "Наши проекты" найдите кейс Samsung и кликните на него</li>
+            <li>Проверьте, что открывается та же страница <code>/portfolio/samsung-new-year-2020</code></li>
+            <li>Проверьте мобильную версию (измените размер окна браузера)</li>
+        </ol>
+    </div>
+    
+    <div class="test-section">
+        <h3>🎯 Ожидаемый результат:</h3>
+        <p>Все ссылки на кейс Samsung теперь ведут на страницу <code>/portfolio/samsung-new-year-2020</code> вместо <code>/case/86d7cfeb-ef9b-49da-b852-ee5d42c1d4b5</code></p>
+    </div>
+</body>
+</html>
