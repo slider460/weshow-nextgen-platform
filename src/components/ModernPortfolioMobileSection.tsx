@@ -53,7 +53,9 @@ const ModernPortfolioMobileSection = ({ onShowShowreel }: ModernPortfolioMobileS
       results: results,
       technologies: caseItem.technologies || [],
       client: caseItem.client || '',
-      link: caseItem.link || '#'
+      link: caseItem.title && caseItem.title.includes('Samsung') 
+        ? '/portfolio/samsung-new-year-2020' 
+        : `/case/${caseItem.id}`
     };
   });
 

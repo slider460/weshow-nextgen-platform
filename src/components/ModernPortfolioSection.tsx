@@ -132,8 +132,13 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
                 whileHover={{ y: -5 }}
                 className="cursor-pointer"
                 onClick={() => {
-                  // Используем window.location для навигации
-                  window.location.href = `/case/${cases[index].id}`;
+                  // Специальная ссылка для кейса Samsung
+                  if (caseItem.title && caseItem.title.includes('Samsung')) {
+                    window.location.href = '/portfolio/samsung-new-year-2020';
+                  } else {
+                    // Используем window.location для навигации
+                    window.location.href = `/case/${cases[index].id}`;
+                  }
                 }}
               >
                 <Card className="group h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden relative hover:scale-105">
