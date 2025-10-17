@@ -48,12 +48,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration)
-      console.log('✅ Video metadata loaded:', {
-        src,
-        duration: videoRef.current.duration,
-        videoWidth: videoRef.current.videoWidth,
-        videoHeight: videoRef.current.videoHeight
-      })
     }
   }
 
@@ -78,13 +72,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const handleError = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
     const video = e.currentTarget
     const error = video.error
-    console.error('❌ Video error:', {
-      src,
-      error: error ? {
-        code: error.code,
-        message: error.message
-      } : 'Unknown error'
-    })
+    // Handle video error silently
   }
 
   return (
