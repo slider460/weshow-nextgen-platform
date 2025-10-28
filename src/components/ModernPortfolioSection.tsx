@@ -25,8 +25,39 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
   const { data: projectsData, isLoading: projectsLoading, error: projectsError } = useProjects();
   const { cases, loading, error } = useCases();
 
+  // Статические проекты как fallback
+  const staticProjects = [
+    {
+      title: "Особенный Новый год Samsung",
+      client: "Samsung Electronics",
+      date: "2020",
+      description: "Комплексное техническое обеспечение новогоднего корпоративного мероприятия Samsung с интерактивными инсталляциями и live-стримингом",
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      results: ["2000+ участников", "99.9% uptime", "Международная трансляция", "15+ интерактивных зон"],
+      tech: ["Live Streaming", "Interactive Installations", "Multi-camera", "LED Screens"]
+    },
+    {
+      title: "ВДНХ - Стенд Самарской области",
+      client: "Правительство Самарской области",
+      date: "2023",
+      description: "Создание интерактивного стенда для выставки достижений народного хозяйства с мультимедийными презентациями и VR-технологиями",
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      results: ["50+ интерактивных экранов", "VR-тур по области", "100K+ посетителей", "Премия за инновации"],
+      tech: ["VR Technology", "Interactive Displays", "Motion Graphics", "Touch Screens"]
+    },
+    {
+      title: "Корпоративная презентация 'Инновации 2024'",
+      client: "IT Корпорация",
+      date: "2024",
+      description: "Комплексное техническое обеспечение корпоративного мероприятия с интерактивными презентациями и live-стримингом",
+      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      results: ["500+ участников", "99.9% uptime", "Международная трансляция"],
+      tech: ["Live Streaming", "Interactive Presentation", "Multi-camera"]
+    }
+  ];
+
   // Преобразуем кейсы из базы данных в формат для отображения
-  const projects = (cases || []).map(caseItem => {
+  const dbProjects = (cases || []).map(caseItem => {
     // Обрабатываем results - может быть строкой JSON, массивом или обычной строкой
     let results = [];
     if (Array.isArray(caseItem.results)) {
@@ -58,6 +89,9 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
     };
   });
 
+  // Используем проекты из БД, если они есть, иначе статические проекты
+  const projects = dbProjects.length > 0 ? dbProjects : staticProjects;
+
   // Функция для загрузки еще проектов
   const loadMoreProjects = () => {
     setVisibleProjects(prev => Math.min(prev + 6, projects.length));
@@ -69,9 +103,13 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
 
   // Отладочная информация
   console.log('ModernPortfolioSection: Загружено кейсов:', cases.length);
-  console.log('ModernPortfolioSection: Обработано проектов:', projects.length);
+  console.log('ModernPortfolioSection: Проектов из БД:', dbProjects.length);
+  console.log('ModernPortfolioSection: Статических проектов:', staticProjects.length);
+  console.log('ModernPortfolioSection: Итоговых проектов:', projects.length);
   console.log('ModernPortfolioSection: Отображается проектов:', displayedProjects.length);
   console.log('ModernPortfolioSection: Есть еще проекты:', hasMoreProjects);
+  console.log('ModernPortfolioSection: Loading:', loading);
+  console.log('ModernPortfolioSection: Error:', error);
 
   return (
     <section className="py-20 relative min-h-screen overflow-hidden">
@@ -105,23 +143,13 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
           </p>
         </div>
 
-        {/* Показываем skeleton loader во время загрузки */}
-        {(projectsLoading || loading) && (
+        {/* Показываем skeleton loader только если нет проектов для отображения */}
+        {(projectsLoading || loading) && projects.length === 0 && (
           <ProjectsGridSkeleton count={6} />
         )}
 
-        {/* Показываем ошибку только если нет fallback данных */}
-        {projectsError && !projectsData && (
-          <div className="text-center py-12">
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
-              <p className="text-red-600">Ошибка загрузки проектов</p>
-              <p className="text-sm text-red-500 mt-2">Используются демонстрационные данные</p>
-            </div>
-          </div>
-        )}
-
-        {/* Показываем проекты если они загружены */}
-        {!projectsLoading && !loading && (
+        {/* Показываем проекты если они есть (из БД или статические) */}
+        {projects.length > 0 && (
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-16">
             {displayedProjects.map((project, index) => (
               <motion.div
@@ -202,7 +230,7 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
         )}
 
         {/* Кнопка "Загрузить еще" */}
-        {!loading && !error && cases.length > 0 && hasMoreProjects && (
+        {projects.length > 0 && hasMoreProjects && (
           <div className="text-center mb-12">
             <Button 
               onClick={loadMoreProjects}

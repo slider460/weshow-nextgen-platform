@@ -87,10 +87,19 @@ const ModernPortfolioMobileSection = ({ onShowShowreel }: ModernPortfolioMobileS
     }
   ];
 
-  // Объединяем проекты из БД и статические
-  const allProjects = [...projects, ...staticProjects];
+  // Используем проекты из БД, если они есть, иначе статические проекты
+  const allProjects = projects.length > 0 ? projects : staticProjects;
 
-  if (loading || projectsLoading) {
+  // Отладочная информация
+  console.log('ModernPortfolioMobileSection: Загружено кейсов:', cases.length);
+  console.log('ModernPortfolioMobileSection: Проектов из БД:', projects.length);
+  console.log('ModernPortfolioMobileSection: Статических проектов:', staticProjects.length);
+  console.log('ModernPortfolioMobileSection: Итоговых проектов:', allProjects.length);
+  console.log('ModernPortfolioMobileSection: Loading:', loading);
+  console.log('ModernPortfolioMobileSection: Error:', error);
+
+  // Показываем skeleton только если нет проектов для отображения
+  if ((loading || projectsLoading) && allProjects.length === 0) {
     return <ProjectsGridSkeleton />;
   }
 
