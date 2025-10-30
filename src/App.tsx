@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { LogosProvider } from './contexts/LogosContext';
 import { AuthProvider } from './contexts/AuthContext';
@@ -39,7 +39,9 @@ const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 const Equipment = React.lazy(() => import('./pages/Equipment'));
 const Team = React.lazy(() => import('./pages/Team'));
 const SamaraStandCase = React.lazy(() => import('./pages/SamaraStandCase'));
+const CaseSamaraStandVDNH = React.lazy(() => import('./pages/CaseSamaraStandVDNH'));
 const SamsungNewYearCase = React.lazy(() => import('./pages/SamsungNewYearCase'));
+const CaseSamaraStandVDNH_Test = React.lazy(() => import('./pages/CaseSamaraStandVDNH_Test'));
 
 // Preload critical components
 const preloadCriticalComponents = () => {
@@ -92,8 +94,10 @@ function App() {
               <Route path="/product/:id" element={<ProductDetailPage />} />
               <Route path="/equipment" element={<Equipment />} />
               <Route path="/team" element={<Team />} />
-              <Route path="/portfolio/samara-stand" element={<SamaraStandCase />} />
+              <Route path="/portfolio/samara-stand" element={<Navigate to="/portfolio/samara-stand-vdnh" replace />} />
+              <Route path="/portfolio/samara-stand-vdnh" element={<CaseSamaraStandVDNH_Test />} />
               <Route path="/portfolio/samsung-new-year-2020" element={<SamsungNewYearCase />} />
+              <Route path="/portfolio/samara-stand-vdnh-test" element={<CaseSamaraStandVDNH_Test />} />
               {/* Fallback route для 404 */}
               <Route path="*" element={
                 <div className="min-h-screen bg-slate-50 flex items-center justify-center">
