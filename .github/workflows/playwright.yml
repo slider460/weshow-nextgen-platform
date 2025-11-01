@@ -1,9 +1,7 @@
 name: Playwright Tests
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  # Отключен автоматический запуск - тесты написаны для Cypress, а не Playwright
+  workflow_dispatch: # Только ручной запуск при необходимости
 jobs:
   test:
     timeout-minutes: 60
