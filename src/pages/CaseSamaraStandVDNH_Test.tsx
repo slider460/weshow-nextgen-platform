@@ -9,6 +9,7 @@ import DarkVeil from "../components/DarkVeil";
 import { Highlighter } from "../components/ui/highlighter";
 import { HeroVideoDialog } from "../components/ui/hero-video-dialog";
 import MagicBento from "../components/MagicBento";
+import SpotlightCard from "../components/SpotlightCard";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../components/ui/carousel";
 
 const CaseSamaraStandVDNH_Test: React.FC = () => {
@@ -342,12 +343,16 @@ const CaseSamaraStandVDNH_Test: React.FC = () => {
                           { n: "3200+", d: "Часов работы" },
                           { n: "2400+", d: "Запусков ракетоносителя \"Союз\"" }
                         ].map((m, i) => (
-                          <div key={i} className="p-4 rounded-xl border border-slate-200 bg-white h-full">
+                          <SpotlightCard
+                            key={i}
+                            className="rounded-xl border border-slate-200 bg-white p-6 h-full"
+                            spotlightColor="rgba(59, 130, 246, 0.2)"
+                          >
                             <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                               {m.n}
                             </div>
                             <div className="text-sm text-slate-600 mt-1">{m.d}</div>
-                          </div>
+                          </SpotlightCard>
                         ))}
                       </div>
                       <div className="w-full h-[220px] sm:h-[300px] md:h-[360px] lg:h-[420px] overflow-hidden rounded-xl">
