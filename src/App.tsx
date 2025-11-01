@@ -39,7 +39,7 @@ const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 const Equipment = React.lazy(() => import('./pages/Equipment'));
 const Team = React.lazy(() => import('./pages/Team'));
 const SamaraStandCase = React.lazy(() => import('./pages/SamaraStandCase'));
-const CaseSamaraStandVDNH = React.lazy(() => import('./pages/CaseSamaraStandVDNH'));
+const CaseSamaraStandVDNH = React.lazy(() => import('./pages/CaseSamaraStandVDNH.tsx'));
 const SamsungNewYearCase = React.lazy(() => import('./pages/SamsungNewYearCase'));
 const CaseSamaraStandVDNH_Test = React.lazy(() => import('./pages/CaseSamaraStandVDNH_Test'));
 
