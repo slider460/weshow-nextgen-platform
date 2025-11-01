@@ -405,7 +405,8 @@ const CaseSamaraStandVDNH_Test: React.FC = () => {
 
                   {/* Слайд 2: структурированные метрики (без ключевых 4 показателей) */}
                   <CarouselItem>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {/* Десктопная версия */}
+                    <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {[
                         { n: "240+ дней", d: "Дней работы стенда" },
                         { n: "700+", d: "Проведённых лекций" },
@@ -425,6 +426,31 @@ const CaseSamaraStandVDNH_Test: React.FC = () => {
                             {m.n}
                           </div>
                           <div className="text-sm text-slate-600 mt-1">{m.d}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Мобильная версия - компактная сетка 2 колонки */}
+                    <div className="md:hidden grid grid-cols-2 gap-2.5">
+                      {[
+                        { n: "240+ дней", d: "Дней работы" },
+                        { n: "700+", d: "Лекций" },
+                        { n: "700+", d: "Викторин" },
+                        { n: "500+", d: "Презентаций" },
+                        { n: "100+", d: "Трансляций" },
+                        { n: "600+", d: "Посетителей МК" },
+                        { n: "200+", d: "Проектов и инноваций" },
+                        { n: "20+", d: "Устройств" },
+                        { n: "600+", d: "Экскурсий" },
+                        { n: "200+", d: "Сотрудников" },
+                        { n: "100+", d: "Специалистов" },
+                        { n: "500+", d: "Видеороликов" }
+                      ].map((m, i) => (
+                        <div key={i} className="p-3 rounded-lg border border-slate-200 bg-white">
+                          <div className="text-lg font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight">
+                            {m.n}
+                          </div>
+                          <div className="text-xs text-slate-600 mt-0.5 leading-tight">{m.d}</div>
                         </div>
                       ))}
                     </div>
