@@ -1,11 +1,8 @@
 name: 🚀 Deploy to Netlify
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch: # Позволяет запускать вручную
+  # Отключен - используем Vercel для деплоя
+  workflow_dispatch: # Только ручной запуск при необходимости
 
 jobs:
   deploy:
