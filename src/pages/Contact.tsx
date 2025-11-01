@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import MapboxMap from "../components/MapboxMap";
+import OpenFreeMap from "../components/OpenFreeMap";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
@@ -257,11 +257,12 @@ const Contact = () => {
               {/* Interactive Map */}
               <div>
                 <h3 className="text-lg font-semibold text-slate-900 mb-4">Наше расположение</h3>
-                <MapboxMap 
+                <OpenFreeMap 
                   address="Москва, ул. Рочдельская, 14А"
                   coordinates={[37.6156, 55.7796]}
                   className="w-full h-80"
                   showAddressInfo={true}
+                  style="liberty"
                 />
               </div>
             </div>
