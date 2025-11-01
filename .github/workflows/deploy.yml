@@ -1,7 +1,8 @@
 name: 🚀 Deploy to Vercel
 
 on:
-  # Отключен автоматический запуск - Vercel деплоит автоматически из GitHub
+  push:
+    branches: [ main ]
   workflow_dispatch: # Только ручной запуск при необходимости
 
 jobs:
