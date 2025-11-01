@@ -335,7 +335,8 @@ const CaseSamaraStandVDNH_Test: React.FC = () => {
                 <CarouselContent>
                   {/* Слайд 1: видео + ключевые результаты */}
                   <CarouselItem>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+                    {/* Десктопная версия */}
+                    <div className="hidden md:grid md:grid-cols-2 gap-4">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {[
                           { n: "16 000 000+", d: "Общее количество посетителей" },
@@ -355,7 +356,7 @@ const CaseSamaraStandVDNH_Test: React.FC = () => {
                           </SpotlightCard>
                         ))}
                       </div>
-                      <div className="w-full h-[220px] sm:h-[300px] md:h-[360px] lg:h-[420px] overflow-hidden rounded-xl">
+                      <div className="w-full h-[360px] lg:h-[420px] overflow-hidden rounded-xl">
                         <HeroVideoDialog
                           animationStyle="from-center"
                           thumbnailSrc="/portfolio/samara-vdnh/video-previews/history-samara-preview.jpg"
@@ -363,6 +364,41 @@ const CaseSamaraStandVDNH_Test: React.FC = () => {
                           videoSrc="https://www.dropbox.com/scl/fi/75fboz3vw5l2na679mdpp/History_Samara.mp4?rlkey=fkznf3px1a3u7zqfu89bho2db&raw=1"
                           useVideoTag
                         />
+                      </div>
+                    </div>
+
+                    {/* Мобильная версия - оптимизированная */}
+                    <div className="md:hidden space-y-4">
+                      {/* Видео сверху */}
+                      <div className="w-full aspect-video overflow-hidden rounded-xl">
+                        <HeroVideoDialog
+                          animationStyle="from-center"
+                          thumbnailSrc="/portfolio/samara-vdnh/video-previews/history-samara-preview.jpg"
+                          thumbnailAlt="Видео о проекте – превью"
+                          videoSrc="https://www.dropbox.com/scl/fi/75fboz3vw5l2na679mdpp/History_Samara.mp4?rlkey=fkznf3px1a3u7zqfu89bho2db&raw=1"
+                          useVideoTag
+                        />
+                      </div>
+                      
+                      {/* Карточки метрик в компактном виде 2x2 */}
+                      <div className="grid grid-cols-2 gap-3">
+                        {[
+                          { n: "16 000 000+", d: "Посетителей" },
+                          { n: "1000+", d: "Мастер-классов" },
+                          { n: "3200+", d: "Часов работы" },
+                          { n: "2400+", d: "Запусков \"Союз\"" }
+                        ].map((m, i) => (
+                          <SpotlightCard
+                            key={i}
+                            className="rounded-lg border border-slate-200 bg-white p-4"
+                            spotlightColor="rgba(59, 130, 246, 0.2)"
+                          >
+                            <div className="text-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight">
+                              {m.n}
+                            </div>
+                            <div className="text-xs text-slate-600 mt-1 leading-tight">{m.d}</div>
+                          </SpotlightCard>
+                        ))}
                       </div>
                     </div>
                   </CarouselItem>
