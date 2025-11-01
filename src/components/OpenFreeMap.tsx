@@ -29,148 +29,195 @@ const OpenFreeMap: React.FC<OpenFreeMapProps> = ({
   const markerRef = useRef<any>(null);
 
   useEffect(() => {
-    const loadMapLibre = async () => {
-      if (!mapContainer.current || isMapLoaded || mapRef.current) return;
+    if (!mapContainer.current || mapRef.current) return;
 
+    let isMounted = true;
+    let linkElement: HTMLLinkElement | null = null;
+    let scriptElement: HTMLScriptElement | null = null;
+
+    const loadMapLibre = async () => {
       try {
         // Проверяем, загружен ли уже MapLibre
         if (window.maplibregl) {
-          initializeMap();
+          if (isMounted) initializeMap();
+          return;
+        }
+
+        // Проверяем, не загружается ли уже скрипт
+        const existingScript = document.querySelector('script[src*="maplibre-gl"]');
+        if (existingScript) {
+          existingScript.addEventListener('load', () => {
+            if (isMounted) initializeMap();
+          });
           return;
         }
 
         // Загружаем MapLibre CSS
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://unpkg.com/maplibre-gl/dist/maplibre-gl.css';
-        link.crossOrigin = 'anonymous';
-        document.head.appendChild(link);
+        linkElement = document.createElement('link');
+        linkElement.rel = 'stylesheet';
+        linkElement.href = 'https://unpkg.com/maplibre-gl/dist/maplibre-gl.css';
+        linkElement.crossOrigin = 'anonymous';
+        document.head.appendChild(linkElement);
 
         // Загружаем MapLibre JS
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/maplibre-gl/dist/maplibre-gl.js';
-        script.crossOrigin = 'anonymous';
+        scriptElement = document.createElement('script');
+        scriptElement.src = 'https://unpkg.com/maplibre-gl/dist/maplibre-gl.js';
+        scriptElement.crossOrigin = 'anonymous';
         
-        script.onload = () => {
-          initializeMap();
+        scriptElement.onload = () => {
+          if (isMounted) initializeMap();
         };
 
-        script.onerror = () => {
+        scriptElement.onerror = () => {
           console.error('Ошибка загрузки MapLibre GL');
-          setIsMapLoaded(true); // Показываем fallback
+          if (isMounted) setIsMapLoaded(true); // Показываем fallback
         };
 
-        document.head.appendChild(script);
+        document.head.appendChild(scriptElement);
       } catch (error) {
         console.error('Ошибка загрузки карты:', error);
-        setIsMapLoaded(true); // Показываем fallback
+        if (isMounted) setIsMapLoaded(true); // Показываем fallback
       }
     };
 
     const initializeMap = () => {
-      if (!mapContainer.current || mapRef.current) return;
+      if (!mapContainer.current || mapRef.current || !isMounted) return;
 
       const maplibregl = window.maplibregl;
-      if (!maplibregl) return;
+      if (!maplibregl) {
+        console.error('MapLibre GL не загружен');
+        setIsMapLoaded(true);
+        return;
+      }
 
-      // Создаем карту с OpenFreeMap стилем
-      const map = new maplibregl.Map({
-        container: mapContainer.current,
-        style: `https://tiles.openfreemap.org/styles/${style}`,
-        center: coordinates, // [longitude, latitude]
-        zoom: 16,
-        attributionControl: true
-      });
+      // Убеждаемся что контейнер имеет размер
+      if (!mapContainer.current.offsetWidth || !mapContainer.current.offsetHeight) {
+        console.warn('Контейнер карты не имеет размера');
+        // Ждем немного и пробуем снова
+        setTimeout(() => {
+          if (isMounted && mapContainer.current) initializeMap();
+        }, 100);
+        return;
+      }
 
-      map.on('load', () => {
-        // Добавляем кастомный маркер
-        const el = document.createElement('div');
-        el.className = 'custom-marker';
-        el.style.cssText = `
-          width: 50px;
-          height: 50px;
-          background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-          border: 3px solid white;
-          cursor: pointer;
-        `;
-        el.innerHTML = `
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-          </svg>
-        `;
-
-        // Создаем маркер
-        markerRef.current = new maplibregl.Marker({
-          element: el,
-          anchor: 'bottom'
-        })
-          .setLngLat(coordinates)
-          .addTo(map);
-
-        // Добавляем popup
-        const popup = new maplibregl.Popup({
-          offset: 25,
-          closeButton: false,
-          className: 'custom-popup'
-        })
-          .setLngLat(coordinates)
-          .setHTML(`
-            <div style="
-              padding: 16px;
-              text-align: center;
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-              min-width: 200px;
-            ">
-              <div style="
-                font-size: 18px;
-                font-weight: 700;
-                color: #1e293b;
-                margin-bottom: 8px;
-              ">WESHOW</div>
-              <div style="
-                font-size: 14px;
-                color: #64748b;
-                margin-bottom: 8px;
-              ">${address}</div>
-              <div style="
-                font-size: 12px;
-                color: #94a3b8;
-              ">Координаты: ${coordinates[1].toFixed(4)}, ${coordinates[0].toFixed(4)}</div>
-            </div>
-          `)
-          .addTo(map);
-
-        // Клик по маркеру показывает popup
-        el.addEventListener('click', () => {
-          popup.addTo(map);
+      try {
+        // Создаем карту с OpenFreeMap стилем
+        const map = new maplibregl.Map({
+          container: mapContainer.current,
+          style: `https://tiles.openfreemap.org/styles/${style}`,
+          center: coordinates, // [longitude, latitude]
+          zoom: 16,
+          attributionControl: true
         });
 
-        // Добавляем навигационные элементы управления
-        map.addControl(new maplibregl.NavigationControl({
-          showCompass: true,
-          showZoom: true,
-          visualizePitch: true
-        }), 'top-right');
+        map.on('load', () => {
+          if (!isMounted) {
+            map.remove();
+            return;
+          }
 
-        setIsMapLoaded(true);
-        mapRef.current = map;
-      });
+          // Добавляем кастомный маркер
+          const el = document.createElement('div');
+          el.className = 'custom-marker';
+          el.style.cssText = `
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            border: 3px solid white;
+            cursor: pointer;
+          `;
+          el.innerHTML = `
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+          `;
 
-      // Обработка ошибок загрузки карты
-      map.on('error', (e: any) => {
-        console.error('Ошибка карты:', e);
-        setIsMapLoaded(true);
-      });
+          // Создаем маркер
+          markerRef.current = new maplibregl.Marker({
+            element: el,
+            anchor: 'bottom'
+          })
+            .setLngLat(coordinates)
+            .addTo(map);
+
+          // Добавляем popup
+          const popup = new maplibregl.Popup({
+            offset: 25,
+            closeButton: false,
+            className: 'custom-popup'
+          })
+            .setLngLat(coordinates)
+            .setHTML(`
+              <div style="
+                padding: 16px;
+                text-align: center;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                min-width: 200px;
+              ">
+                <div style="
+                  font-size: 18px;
+                  font-weight: 700;
+                  color: #1e293b;
+                  margin-bottom: 8px;
+                ">WESHOW</div>
+                <div style="
+                  font-size: 14px;
+                  color: #64748b;
+                  margin-bottom: 8px;
+                ">${address}</div>
+                <div style="
+                  font-size: 12px;
+                  color: #94a3b8;
+                ">Координаты: ${coordinates[1].toFixed(4)}, ${coordinates[0].toFixed(4)}</div>
+              </div>
+            `)
+            .addTo(map);
+
+          // Клик по маркеру показывает popup
+          el.addEventListener('click', () => {
+            popup.addTo(map);
+          });
+
+          // Добавляем навигационные элементы управления
+          map.addControl(new maplibregl.NavigationControl({
+            showCompass: true,
+            showZoom: true,
+            visualizePitch: true
+          }), 'top-right');
+
+          setIsMapLoaded(true);
+          mapRef.current = map;
+        });
+
+        // Обработка ошибок загрузки карты
+        map.on('error', (e: any) => {
+          console.error('Ошибка карты:', e);
+          if (isMounted) setIsMapLoaded(true);
+        });
+
+        map.on('style.load', () => {
+          console.log('Стиль карты загружен');
+        });
+      } catch (error) {
+        console.error('Ошибка инициализации карты:', error);
+        if (isMounted) setIsMapLoaded(true);
+      }
     };
 
-    loadMapLibre();
+    // Задержка для того чтобы контейнер точно был в DOM
+    const timeoutId = setTimeout(() => {
+      loadMapLibre();
+    }, 100);
 
     return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+      
       // Очистка при размонтировании
       if (mapRef.current) {
         mapRef.current.remove();
@@ -181,7 +228,7 @@ const OpenFreeMap: React.FC<OpenFreeMapProps> = ({
         markerRef.current = null;
       }
     };
-  }, [coordinates, style, isMapLoaded]);
+  }, [coordinates, style, address]);
 
   // Добавляем стили для popup и маркера
   useEffect(() => {
@@ -228,9 +275,9 @@ const OpenFreeMap: React.FC<OpenFreeMapProps> = ({
   }, []);
 
   return (
-    <div className={`${className} relative rounded-2xl overflow-hidden`}>
+    <div className={`${className} relative rounded-2xl overflow-hidden`} style={{ minHeight: '300px' }}>
       {/* Интерактивная карта */}
-      <div ref={mapContainer} className="w-full h-full" />
+      <div ref={mapContainer} className="w-full h-full" style={{ minHeight: '300px' }} />
       
       {/* Кнопка "Построить маршрут" */}
       <div className="absolute top-4 right-4 z-[1000]">
@@ -270,8 +317,8 @@ const OpenFreeMap: React.FC<OpenFreeMapProps> = ({
       )}
 
       {/* Fallback если карта не загрузилась */}
-      {!isMapLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+      {!isMapLoaded && mapContainer.current && (
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center z-0">
           <div className="text-center p-8">
             <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
               <MapPin className="h-8 w-8 text-white" />
