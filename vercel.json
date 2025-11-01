@@ -1,15 +1,4 @@
 {
-  "functions": {
-    "api/projects/index.ts": {
-      "runtime": "edge"
-    },
-    "api/equipment/index.ts": {
-      "runtime": "edge"
-    },
-    "api/categories/index.ts": {
-      "runtime": "edge"
-    }
-  },
   "regions": ["iad1", "fra1", "sin1"],
   "framework": "vite",
   "buildCommand": "npm run build",
