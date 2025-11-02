@@ -1,9 +1,9 @@
-import { useLettersCertificates } from '../hooks/useLettersCertificatesNew';
+import { useEdgeCertificates } from '../hooks/useEdgeAPI';
 import { Award, FileText, Trophy, GraduationCap, ExternalLink, Calendar } from 'lucide-react';
 import { Button } from './ui/button';
 
 const LettersCertificatesSection = () => {
-  const { data: letters = [], isLoading: loading, error } = useLettersCertificates();
+  const { certificates, loading, error } = useEdgeCertificates();
   
   // Логирование для отладки (временно отключено)
   // console.log('🔍 LettersCertificatesSection Debug:', { letters, loading, error });
@@ -57,7 +57,7 @@ const LettersCertificatesSection = () => {
   ];
   
   // Используем данные из React Query или fallback данные
-  const displayLetters = letters.length > 0 ? letters : testLetters;
+  const displayLetters = certificates.length > 0 ? certificates : testLetters;
   
   // console.log('🎯 Display letters:', displayLetters);
 

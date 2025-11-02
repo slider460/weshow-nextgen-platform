@@ -570,7 +570,13 @@ const CaseManagement = () => {
                         variant="outline"
                         asChild
                       >
-                        <Link to={`/case/${caseItem.id}`}>
+                        <Link to={
+                          caseItem.title && caseItem.title.includes('Samsung') 
+                            ? '/portfolio/samsung-new-year-2020'
+                            : caseItem.title && (caseItem.title.includes('Самар') || caseItem.title.includes('samara') || caseItem.title.includes('ВДНХ'))
+                            ? '/portfolio/samara-stand-vdnh'
+                            : `/case/${caseItem.id}`
+                        }>
                           <Eye className="w-4 h-4" />
                         </Link>
                       </Button>

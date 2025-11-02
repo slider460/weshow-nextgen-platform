@@ -1,10 +1,10 @@
-import { useLettersCertificates } from '../hooks/useLettersCertificatesNew';
+import { useEdgeCertificates } from '../hooks/useEdgeAPI';
 import { Award, FileText, Trophy, GraduationCap, ExternalLink, Calendar } from 'lucide-react';
 import { Button } from './ui/button';
 import MobileCarousel from './ui/MobileCarousel';
 
 const LettersCertificatesMobileSection = () => {
-  const { data: letters = [], isLoading: loading, error } = useLettersCertificates();
+  const { certificates, loading, error } = useEdgeCertificates();
   
   // Тестовые данные для демонстрации (только если нет данных из базы)
   const testLetters = [
@@ -54,8 +54,8 @@ const LettersCertificatesMobileSection = () => {
     }
   ];
   
-  // Используем данные из React Query или fallback данные
-  const displayLetters = letters.length > 0 ? letters : testLetters;
+  // Используем данные из Edge API или fallback данные
+  const displayLetters = certificates && certificates.length > 0 ? certificates : testLetters;
 
   // Иконки для разных типов документов
   const getTypeIcon = (type: string) => {

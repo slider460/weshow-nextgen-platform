@@ -78,7 +78,7 @@ const PortfolioSection = () => {
                 </div>
                 
                 <Button variant="outline" className="w-full group" asChild>
-                  <Link to={index === 1 ? "/portfolio/samara-stand" : "/portfolio"}>
+                  <Link to={project.title && (project.title.includes('ВДНХ') || project.title.includes('Самар') || project.title.includes('Интерактивный стенд')) ? "/portfolio/samara-stand-vdnh" : "/portfolio"}>
                     Подробнее о проекте
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Link>

@@ -4,12 +4,12 @@ import { Button } from "../components/ui/button";
 import { ArrowRight, Sparkles, Monitor, Smartphone, Users, Palette, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import ConsultationModal from "./ConsultationModal";
-import { useServices } from "../hooks/useServices";
+import { useEdgeServices } from "../hooks/useEdgeAPI";
 import { ServicesGridSkeleton } from "./ui/skeletons/ServiceSkeleton";
 
 const ModernServicesSection = () => {
   const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
-  const { data: dbServices, isLoading, error } = useServices();
+  const { services, loading, error } = useEdgeServices();
 
   // Fallback сервисы для случаев ошибок
   const fallbackServices = [
@@ -56,17 +56,17 @@ const ModernServicesSection = () => {
   ];
 
   // Используем данные из БД или fallback
-  const services = dbServices && dbServices.length > 0 ? dbServices.map((dbService, index) => ({
+  const processedServices = services && services.length > 0 ? services.map((service, index) => ({
     icon: fallbackServices[index % fallbackServices.length]?.icon || Monitor,
-    title: dbService.name,
-    description: dbService.description,
-    features: fallbackServices[index % fallbackServices.length]?.features || [],
+    title: service.name,
+    description: service.description,
+    features: service.features || fallbackServices[index % fallbackServices.length]?.features || [],
     color: fallbackServices[index % fallbackServices.length]?.color || "from-blue-500 to-cyan-500",
-    link: fallbackServices[index % fallbackServices.length]?.link || "service"
+    link: service.slug || fallbackServices[index % fallbackServices.length]?.link || "service"
   })) : fallbackServices;
 
   // Показываем skeleton во время загрузки
-  if (isLoading) {
+  if (loading) {
     return (
       <section className="py-24 bg-slate-50 relative overflow-hidden">
         <div className="container mx-auto px-6 lg:px-8 relative">
@@ -108,7 +108,7 @@ const ModernServicesSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {services.map((service, index) => (
+          {processedServices.map((service, index) => (
             <div 
               key={index} 
               className="group relative bg-white rounded-2xl p-8 border border-slate-200/50 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden"

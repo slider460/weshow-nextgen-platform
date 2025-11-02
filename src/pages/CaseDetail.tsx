@@ -52,17 +52,29 @@ const CaseDetail = () => {
       setLoading(true);
       setError(null);
 
+      console.log('🔍 Загружаем кейс с ID:', id);
+
       const { data, error: fetchError } = await supabase
         .from('cases')
         .select('*')
         .eq('id', id)
         .single();
 
+      console.log('📊 Результат запроса:', { data, error: fetchError });
+
       if (fetchError) {
-        console.error('Ошибка загрузки кейса:', fetchError);
+        console.error('❌ Ошибка загрузки кейса:', fetchError);
         setError('Кейс не найден');
         return;
       }
+
+      if (!data) {
+        console.error('❌ Данные не получены');
+        setError('Кейс не найден');
+        return;
+      }
+
+      console.log('✅ Кейс найден:', data.title);
 
       // Обрабатываем results
       let results = [];
@@ -86,7 +98,7 @@ const CaseDetail = () => {
         results
       });
     } catch (err) {
-      console.error('Ошибка загрузки кейса:', err);
+      console.error('❌ Ошибка загрузки кейса:', err);
       setError('Произошла ошибка при загрузке кейса');
     } finally {
       setLoading(false);

@@ -17,15 +17,14 @@ const SamaraStandCase = () => {
     year: 2024,
     description: 'Создание интерактивного стенда Самарской области на крупнейшей выставке-форуме «Россия» в ВДНХ с использованием современных мультимедийных технологий',
     detailed_description: 'Проект включал в себя создание полноценного интерактивного стенда площадью 200 кв.м для представления Самарской области на выставке-форуме «Россия» в ВДНХ. Стенд был оснащен интерактивными панелями, LED-экранами, проекционными системами и инновационными технологиями для демонстрации достижений региона.',
-    image_url: '/portfolio/samara-stand-main.jpg',
+    image_url: '/portfolio/samara-interactive.jpg',
     gallery_images: [
-      '/portfolio/samara-stand-main.jpg',
-      '/portfolio/samara-stand-main 2.jpg',
       '/portfolio/samara-interactive.jpg',
       '/portfolio/samara-exhibition-1.jpg',
       '/portfolio/samara-booth.jpg',
       '/portfolio/russia-exhibition.jpg',
-      '/portfolio/regions-presentation.jpg'
+      '/portfolio/regions-presentation.jpg',
+      '/portfolio/auto-exhibition.jpg'
     ],
     results: [
       'Более 50,000 посетителей за время выставки',

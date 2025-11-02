@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 import vdnhStand from "../assets/office-building.jpg";
 import ProjectOrderModal from "./ProjectOrderModal";
 import useCases from "../hooks/useCases";
-import { useProjects } from "../hooks/useProjects";
 import { ProjectsGridSkeleton } from "./ui/skeletons/ProjectSkeleton";
 import LightRays from "./LightRays";
 
@@ -21,76 +20,40 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [visibleProjects, setVisibleProjects] = useState(6);
   
-  // Загружаем проекты из базы данных с React Query
-  const { data: projectsData, isLoading: projectsLoading, error: projectsError } = useProjects();
+  // Загружаем проекты через Edge API
   const { cases, loading, error } = useCases();
 
-  // Статические проекты как fallback
-  const staticProjects = [
-    {
-      title: "Особенный Новый год Samsung",
-      client: "Samsung Electronics",
-      date: "2020",
-      description: "Комплексное техническое обеспечение новогоднего корпоративного мероприятия Samsung с интерактивными инсталляциями и live-стримингом",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      results: ["2000+ участников", "99.9% uptime", "Международная трансляция", "15+ интерактивных зон"],
-      tech: ["Live Streaming", "Interactive Installations", "Multi-camera", "LED Screens"]
-    },
-    {
-      title: "ВДНХ - Стенд Самарской области",
-      client: "Правительство Самарской области",
-      date: "2023",
-      description: "Создание интерактивного стенда для выставки достижений народного хозяйства с мультимедийными презентациями и VR-технологиями",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      results: ["50+ интерактивных экранов", "VR-тур по области", "100K+ посетителей", "Премия за инновации"],
-      tech: ["VR Technology", "Interactive Displays", "Motion Graphics", "Touch Screens"]
-    },
-    {
-      title: "Корпоративная презентация 'Инновации 2024'",
-      client: "IT Корпорация",
-      date: "2024",
-      description: "Комплексное техническое обеспечение корпоративного мероприятия с интерактивными презентациями и live-стримингом",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      results: ["500+ участников", "99.9% uptime", "Международная трансляция"],
-      tech: ["Live Streaming", "Interactive Presentation", "Multi-camera"]
-    }
-  ];
-
-  // Преобразуем кейсы из базы данных в формат для отображения
-  const dbProjects = (cases || []).map(caseItem => {
-    // Обрабатываем results - может быть строкой JSON, массивом или обычной строкой
+  // Преобразуем кейсы в формат проектов
+  const projects = cases.map(caseItem => {
     let results = [];
     if (Array.isArray(caseItem.results)) {
       results = caseItem.results;
     } else if (typeof caseItem.results === 'string' && caseItem.results.trim()) {
       try {
-        // Пытаемся распарсить как JSON массив
         const parsed = JSON.parse(caseItem.results);
         if (Array.isArray(parsed)) {
           results = parsed;
         } else {
-          // Если не массив, разбиваем по переносам строк или запятым
           results = caseItem.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
         }
       } catch {
-        // Если не JSON, разбиваем по переносам строк или запятым
         results = caseItem.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
       }
     }
-    
+
     return {
+      id: caseItem.id,
       title: caseItem.title,
-      client: caseItem.client || 'Клиент не указан',
-      date: caseItem.year?.toString() || 'Год не указан',
+      client: caseItem.client || "Клиент не указан",
+      date: caseItem.year?.toString() || "Год не указан",
       description: caseItem.description,
       image: caseItem.image_url || "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      results: results,
-      tech: [] // В таблице нет поля technologies
+      results,
+      tech: caseItem.technologies || [],
+      video_url: caseItem.video_url,
+      sort_order: caseItem.sort_order
     };
   });
-
-  // Используем проекты из БД, если они есть, иначе статические проекты
-  const projects = dbProjects.length > 0 ? dbProjects : staticProjects;
 
   // Функция для загрузки еще проектов
   const loadMoreProjects = () => {
@@ -102,14 +65,12 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
   const hasMoreProjects = visibleProjects < projects.length;
 
   // Отладочная информация
-  console.log('ModernPortfolioSection: Загружено кейсов:', cases.length);
-  console.log('ModernPortfolioSection: Проектов из БД:', dbProjects.length);
-  console.log('ModernPortfolioSection: Статических проектов:', staticProjects.length);
-  console.log('ModernPortfolioSection: Итоговых проектов:', projects.length);
-  console.log('ModernPortfolioSection: Отображается проектов:', displayedProjects.length);
-  console.log('ModernPortfolioSection: Есть еще проекты:', hasMoreProjects);
-  console.log('ModernPortfolioSection: Loading:', loading);
-  console.log('ModernPortfolioSection: Error:', error);
+  console.log('🔍 ModernPortfolioSection: Загружено кейсов:', cases.length);
+  console.log('🔍 ModernPortfolioSection: Обработано проектов:', projects.length);
+  console.log('🔍 ModernPortfolioSection: Отображается проектов:', displayedProjects.length);
+  console.log('🔍 ModernPortfolioSection: Есть еще проекты:', hasMoreProjects);
+  console.log('🔍 ModernPortfolioSection: Loading:', loading);
+  console.log('🔍 ModernPortfolioSection: Error:', error);
 
   return (
     <section className="py-20 relative min-h-screen overflow-hidden">
@@ -144,11 +105,11 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
         </div>
 
         {/* Показываем skeleton loader только если нет проектов для отображения */}
-        {(projectsLoading || loading) && projects.length === 0 && (
+        {loading && projects.length === 0 && (
           <ProjectsGridSkeleton count={6} />
         )}
 
-        {/* Показываем проекты если они есть (из БД или статические) */}
+        {/* Показываем проекты если они есть */}
         {projects.length > 0 && (
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-16">
             {displayedProjects.map((project, index) => (
@@ -163,9 +124,12 @@ const ModernPortfolioSection = ({ onShowShowreel }: ModernPortfolioSectionProps)
                   // Специальная ссылка для кейса Samsung
                   if (project.title && project.title.includes('Samsung')) {
                     window.location.href = '/portfolio/samsung-new-year-2020';
+                } else if (project.title && (project.title.includes('Самар') || project.title.includes('samara') || project.title.includes('ВДНХ'))) {
+                  // Специальная ссылка для проекта Самарской области
+                  window.location.href = '/portfolio/samara-stand-vdnh';
                   } else {
                     // Используем window.location для навигации
-                    window.location.href = `/case/${cases[index].id}`;
+                    window.location.href = `/case/${project.id}`;
                   }
                 }}
               >

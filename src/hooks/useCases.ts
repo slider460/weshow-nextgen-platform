@@ -89,6 +89,16 @@ export const useCases = () => {
       console.log('✅ useCases: Кейсы загружены:', data);
       console.log('✅ useCases: Количество записей:', data?.length || 0);
       
+      // Проверяем, есть ли проект Самарской области
+      const samaraProject = data?.find((caseItem: any) => 
+        caseItem.title?.includes('Самар') || caseItem.title?.includes('samara')
+      );
+      if (samaraProject) {
+        console.log('✅ useCases: Проект Самарской области найден:', samaraProject.title);
+      } else {
+        console.log('❌ useCases: Проект Самарской области НЕ найден');
+      }
+      
       setCases(data || []);
     } catch (err) {
       console.error('❌ useCases: Ошибка загрузки кейсов:', err);

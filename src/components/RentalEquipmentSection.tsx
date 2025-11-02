@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { ArrowRight, Monitor, Speaker, Eye, Projector, Gamepad, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useEquipment } from "../hooks/useEquipment";
+import { useEdgeEquipment } from "../hooks/useEdgeAPI";
 import { LazyLoadWrapper } from "./LazyLoadWrapper";
 
 const RentalEquipmentSection = () => {
   const [showAll, setShowAll] = useState(false);
   
-  // Используем React Query хук для оборудования
-  const { data: equipmentData = [], isLoading, error } = useEquipment();
+  // Используем Edge API хук для оборудования
+  const { equipment, loading, error } = useEdgeEquipment();
   const [equipmentItems, setEquipmentItems] = useState<any[]>([]);
 
   // Иконки для маппинга
@@ -22,11 +22,13 @@ const RentalEquipmentSection = () => {
     Zap: Zap
   };
 
-  // Обрабатываем данные из React Query
+  // Обрабатываем данные из Edge API
   useEffect(() => {
-    if (equipmentData && equipmentData.length > 0) {
+    console.log('🔧 Оборудование из хука:', equipment);
+    
+    if (equipment && equipment.length > 0) {
       // Преобразуем данные из базы в формат компонента
-      const formattedItems = equipmentData.slice(0, 6).map((item, index) => {
+      const formattedItems = equipment.slice(0, 6).map((item, index) => {
         // Определяем иконку на основе названия оборудования
         let IconComponent = Monitor;
         if (item.name?.toLowerCase().includes('звук') || item.name?.toLowerCase().includes('аудио')) {
@@ -58,8 +60,10 @@ const RentalEquipmentSection = () => {
       });
 
       setEquipmentItems(formattedItems);
+      console.log('✅ Используем данные из Edge API:', formattedItems.length, 'элементов');
     } else {
       // Fallback к статическим данным если нет данных из БД
+      console.log('⚠️ Нет данных из Edge API, используем fallback');
       setEquipmentItems([
         {
           id: 1,
@@ -111,11 +115,11 @@ const RentalEquipmentSection = () => {
         }
       ]);
     }
-  }, [equipmentData]);
+  }, [equipment]);
 
   const visibleItems = showAll ? equipmentItems : equipmentItems.slice(0, 6);
 
-  if (isLoading) {
+  if (loading) {
     return (
       <section className="py-12 lg:py-24 bg-slate-50 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">

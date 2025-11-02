@@ -204,7 +204,7 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
 
                 {/* VDNKh card */}
                 <Link 
-                  to="/portfolio/samara-stand"
+                  to="/portfolio/samara-stand-vdnh"
                   className="gradient-card-cyan rounded-3xl p-8 flex items-center justify-between cursor-pointer hover:scale-105 transition-all duration-500 group"
                 >
                   <div>
@@ -270,7 +270,7 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
 
                 {/* VDNKh card */}
                 <Link 
-                  to="/portfolio/samara-stand"
+                  to="/portfolio/samara-stand-vdnh"
                   className="gradient-card-cyan rounded-3xl p-8 flex flex-col cursor-pointer hover:scale-105 transition-all duration-500 group z-30"
                 >
                   <h3 className="text-3xl font-bold text-white mb-3 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">ВДНХ</h3>

@@ -59,7 +59,7 @@ const BentoGridSection = () => {
       size: "medium",
       gradient: "from-primary/20 to-primary/5",
       image: "/src/assets/hero-bg.jpg",
-      action: () => navigate("/portfolio/samara-stand")
+      action: () => navigate("/portfolio/samara-stand-vdnh")
     }
   ];
 

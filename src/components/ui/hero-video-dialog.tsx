@@ -142,13 +142,13 @@ export function HeroVideoDialog({
                     className="size-full rounded-2xl bg-black object-contain"
                   />
                 ) : (
-                  <iframe
-                    src={videoSrc}
-                    title="Hero Video player"
-                    className="size-full rounded-2xl"
-                    allowFullScreen
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  ></iframe>
+                <iframe
+                  src={videoSrc}
+                  title="Hero Video player"
+                  className="size-full rounded-2xl"
+                  allowFullScreen
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                ></iframe>
                 )}
               </div>
             </motion.div>

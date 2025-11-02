@@ -1,119 +1,120 @@
+import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
 import { ArrowRight, Play, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import ShowreelModal from "../components/ShowreelModal";
-import ClickableKeyword from "../components/ClickableKeyword";
-import useCases from "../hooks/useCases";
-
 import { useState } from "react";
+import useCases from "../hooks/useCases";
 
 const Portfolio = () => {
   const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
   
-  // Загружаем кейсы из базы данных
+  // Загружаем проекты из базы данных через Edge API
   const { cases, loading, error } = useCases();
   
   const staticProjects = [
     {
+      id: "static-1",
       title: "Интерактивная выставка 'Цифровое будущее'",
       category: "3D Mapping / Interactive",
       description: "Создание иммерсивного пространства с использованием 3D-проекций, интерактивных стен и VR-зоны для выставки технологий будущего",
       image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      year: "2024",
+      date: "2024",
       results: ["15,000+ посетителей", "95% положительных отзывов", "Увеличение времени пребывания на 40%"],
       tech: ["3D-маппинг", "Интерактивные стены", "VR-гарнитуры", "Проекционные экраны"]
     },
     {
+      id: "static-2",
       title: "Корпоративное мероприятие 'Инновации 2024'",
       category: "LED Solutions / Corporate",
       description: "Масштабная LED-инсталляция для презентации новых продуктов с интерактивными зонами и 3D-визуализацией",
       image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
-      year: "2024",
+      date: "2024",
       results: ["500+ участников", "100% выполнение технических требований", "Высокая оценка от руководства"],
       tech: ["LED-видеостены", "Интерактивные панели", "3D-проекции", "Звуковые системы"]
     },
     {
+      id: "static-3",
       title: "Музейная экспозиция 'История технологий'",
       category: "Interactive / Museums",
       description: "Интерактивные столы, AR-приложения и голографические дисплеи для современного музея технологий",
       image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      year: "2023",
+      date: "2023",
       results: ["Увеличение посещаемости на 60%", "Среднее время пребывания 2.5 часа", "Высокая вовлеченность детей"],
       tech: ["Интерактивные столы", "AR-приложения", "Голографические дисплеи", "Сенсорные экраны"]
     },
     {
+      id: "static-4",
       title: "Торговый центр 'Метрополис'",
       category: "Digital Signage / Retail",
       description: "Система цифровых вывесок, интерактивной навигации и информационных киосков для современного ТЦ",
       image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
-      year: "2023",
+      date: "2023",
       results: ["Улучшение навигации на 80%", "Сокращение времени поиска товаров", "Увеличение продаж на 25%"],
       tech: ["Цифровые вывески", "Интерактивная навигация", "Информационные киоски", "Система управления"]
     },
     {
+      id: "static-5",
       title: "Концертная площадка 'Звездный зал'",
       category: "Stage Design / Entertainment",
       description: "Мультимедийное оформление сцены с проекционными экранами, световыми эффектами и интерактивными элементами",
       image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      year: "2023",
+      date: "2023",
       results: ["50+ успешных концертов", "Восторженные отзывы артистов", "Увеличение продаж билетов"],
       tech: ["Проекционные экраны", "Световые эффекты", "Интерактивные элементы", "Звуковые системы"]
     },
     {
+      id: "static-6",
       title: "Образовательный центр 'ТехноШкола'",
       category: "EdTech / Education",
       description: "Интерактивные классы с 3D-проекциями, VR-лабораториями и умными досками для современного обучения",
       image: "/lovable-uploads/53f0f373-e1ea-40ea-8a8a-573832a7506b.png",
-      year: "2022",
+      date: "2022",
       results: ["Улучшение усвоения материала на 45%", "Повышение интереса к учебе", "100% положительных отзывов"],
       tech: ["3D-проекции", "VR-лаборатории", "Интерактивные доски", "Умные системы"]
     }
   ];
 
-  // Преобразуем кейсы из базы данных в формат для отображения
-  const dbProjects = cases.map(caseItem => {
-    // Обрабатываем results - может быть строкой JSON, массивом или обычной строкой
+  // Преобразуем кейсы в формат проектов
+  const projects = cases.map(caseItem => {
     let results = [];
     if (Array.isArray(caseItem.results)) {
       results = caseItem.results;
     } else if (typeof caseItem.results === 'string' && caseItem.results.trim()) {
       try {
-        // Пытаемся распарсить как JSON массив
         const parsed = JSON.parse(caseItem.results);
         if (Array.isArray(parsed)) {
           results = parsed;
         } else {
-          // Если не массив, разбиваем по переносам строк или запятым
           results = caseItem.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
         }
       } catch {
-        // Если не JSON, разбиваем по переносам строк или запятым
         results = caseItem.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
       }
     }
-    
-    // Обрабатываем technologies - в таблице нет этого поля, используем пустой массив
-    let technologies = [];
-    
+
     return {
+      id: caseItem.id,
       title: caseItem.title,
-      category: "Наши проекты",
+      client: caseItem.client || "Клиент не указан",
+      date: caseItem.year?.toString() || "Год не указан",
       description: caseItem.description,
       image: caseItem.image_url || "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      year: caseItem.year,
-      results: results,
-      tech: technologies
+      results,
+      tech: caseItem.technologies || [],
+      video_url: caseItem.video_url,
+      sort_order: caseItem.sort_order
     };
   });
-
-  // Используем кейсы из базы данных, если они есть, иначе статические проекты
-  const extendedProjects = dbProjects.length > 0 ? dbProjects : staticProjects;
   
+  // Используем проекты из базы данных, если они есть, иначе статические проекты
+  const extendedProjects = projects.length > 0 ? projects : staticProjects;
+
   // Отладочная информация
   console.log('Portfolio: Загружено кейсов:', cases.length);
-  console.log('Portfolio: Обработано проектов:', dbProjects.length);
+  console.log('Portfolio: Обработано проектов:', projects.length);
   console.log('Portfolio: Статических проектов:', staticProjects.length);
   console.log('Portfolio: Итоговых проектов:', extendedProjects.length);
   console.log('Portfolio: Loading:', loading);
@@ -128,7 +129,6 @@ const Portfolio = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-50/30 to-purple-50/30"></div>
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-5"></div>
         
-
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-700 rounded-full text-sm font-medium mb-8 backdrop-blur-sm border border-blue-300/30">
@@ -168,12 +168,12 @@ const Portfolio = () => {
             <div className="text-center py-12">
               <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
                 <p className="text-red-600">Ошибка загрузки проектов: {error}</p>
-                <p className="text-sm text-red-500 mt-2">Обратитесь к администратору</p>
+                <p className="text-sm text-red-500 mt-2">Показываем статические проекты</p>
               </div>
             </div>
           )}
 
-          {!loading && !error && extendedProjects.length === 0 && (
+          {!loading && extendedProjects.length === 0 && (
             <div className="text-center py-12">
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 max-w-md mx-auto">
                 <p className="text-blue-600">Проекты будут добавлены в ближайшее время</p>
@@ -182,10 +182,21 @@ const Portfolio = () => {
             </div>
           )}
 
-          {!loading && !error && extendedProjects.length > 0 && (
+          {extendedProjects.length > 0 && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {extendedProjects.map((project: any, index: number) => {
-              const card = (
+            {extendedProjects.map((project: any, index: number) => (
+              <Link 
+                key={project.id || index} 
+                to={
+                  project.title && project.title.includes('Samsung') 
+                    ? '/portfolio/samsung-new-year-2020'
+                    : project.title && (project.title.includes('Самар') || project.title.includes('samara') || project.title.includes('ВДНХ'))
+                    ? '/portfolio/samara-stand-vdnh'
+                    : `/case/${project.id}`
+                } 
+                className="group cursor-pointer block" 
+                aria-label={`${project.title} — подробнее`}
+              >
                 <div className="group bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative">
                   <div className="aspect-video bg-gradient-to-br from-slate-100 to-slate-200 relative overflow-hidden">
                     <img
@@ -197,7 +208,7 @@ const Portfolio = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="absolute top-4 right-4">
                       <div className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-slate-700">
-                        {project.year}
+                        {project.date}
                       </div>
                     </div>
                   </div>
@@ -210,9 +221,9 @@ const Portfolio = () => {
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs text-blue-500 font-medium tracking-wide uppercase">
-                        {project.category}
+                        {project.category || "Наши проекты"}
                       </span>
-                      <span className="text-xs text-slate-600">{project.year}</span>
+                      <span className="text-xs text-slate-600">{project.date}</span>
                     </div>
                     <h3 className="text-xl font-semibold text-slate-900 mb-2 group-hover:text-blue-500 transition-colors">
                       {project.title}
@@ -221,8 +232,7 @@ const Portfolio = () => {
                       {project.description}
                     </p>
                     
-                    {/* Results and Technologies */}
-                    {project.results && (
+                    {project.results && project.results.length > 0 && (
                       <div className="mb-4">
                         <h4 className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">Результаты:</h4>
                         <div className="space-y-1">
@@ -236,7 +246,7 @@ const Portfolio = () => {
                       </div>
                     )}
                     
-                    {project.tech && (
+                    {project.tech && project.tech.length > 0 && (
                       <div>
                         <h4 className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">Технологии:</h4>
                         <div className="flex flex-wrap gap-1">
@@ -255,21 +265,8 @@ const Portfolio = () => {
                     )}
                   </div>
                 </div>
-              );
-
-              return (
-                <Link 
-                  key={index} 
-                  to={project.title && project.title.includes('Samsung') 
-                    ? '/portfolio/samsung-new-year-2020' 
-                    : `/case/${cases[index].id}`} 
-                  className="group cursor-pointer block" 
-                  aria-label={`${project.title} — подробнее`}
-                >
-                  {card}
-                </Link>
-              );
-            })}
+              </Link>
+            ))}
             </div>
           )}
         </div>
@@ -310,7 +307,6 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Showreel Modal */}
       <ShowreelModal 
         isOpen={isShowreelModalOpen}
         onClose={() => setIsShowreelModalOpen(false)}

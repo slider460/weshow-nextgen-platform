@@ -6,7 +6,6 @@ import { ExternalLink, ArrowRight, Play } from "lucide-react";
 import { motion } from "framer-motion";
 import ProjectOrderModal from "./ProjectOrderModal";
 import useCases from "../hooks/useCases";
-import { useProjects } from "../hooks/useProjects";
 import { ProjectsGridSkeleton } from "./ui/skeletons/ProjectSkeleton";
 import MobileCarousel from "./ui/MobileCarousel";
 
@@ -17,95 +16,73 @@ interface ModernPortfolioMobileSectionProps {
 const ModernPortfolioMobileSection = ({ onShowShowreel }: ModernPortfolioMobileSectionProps) => {
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   
-  // Загружаем проекты из базы данных с React Query
-  const { data: projectsData, isLoading: projectsLoading, error: projectsError } = useProjects();
+  // Загружаем проекты через Edge API
   const { cases, loading, error } = useCases();
 
-  // Преобразуем кейсы из базы данных в формат для отображения
-  const projects = (cases || []).map(caseItem => {
-    // Обрабатываем results - может быть строкой JSON, массивом или обычной строкой
+  // Преобразуем кейсы в формат проектов
+  const projects = cases.map(caseItem => {
     let results = [];
     if (Array.isArray(caseItem.results)) {
       results = caseItem.results;
     } else if (typeof caseItem.results === 'string' && caseItem.results.trim()) {
       try {
-        // Пытаемся распарсить как JSON массив
         const parsed = JSON.parse(caseItem.results);
         if (Array.isArray(parsed)) {
           results = parsed;
         } else {
-          // Если не массив, разбиваем по переносам строк или запятым
           results = caseItem.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
         }
       } catch {
-        // Если не JSON, разбиваем по переносам строк или запятым
         results = caseItem.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
       }
     }
-    
+
     return {
       id: caseItem.id,
       title: caseItem.title,
-      category: caseItem.category || 'Проект',
+      client: caseItem.client || "Клиент не указан",
+      date: caseItem.year?.toString() || "Год не указан",
       description: caseItem.description,
-      image: caseItem.image_url || '/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png',
-      year: caseItem.year || '2024',
-      results: results,
-      technologies: caseItem.technologies || [],
-      client: caseItem.client || '',
-      link: caseItem.title && caseItem.title.includes('Samsung') 
-        ? '/portfolio/samsung-new-year-2020' 
-        : `/case/${caseItem.id}`
+      image: caseItem.image_url || "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
+      results,
+      tech: caseItem.technologies || [],
+      video_url: caseItem.video_url,
+      sort_order: caseItem.sort_order
     };
   });
-
-  // Статические проекты как fallback
-  const staticProjects = [
-    {
-      id: 'static-1',
-      title: "Интерактивная выставка 'Цифровое будущее'",
-      category: "3D Mapping / Interactive",
-      description: "Создание иммерсивного пространства с использованием 3D-проекций, интерактивных стен и VR-зоны для выставки технологий будущего",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      year: "2024",
-      results: ["15,000+ посетителей", "95% положительных отзывов", "3 награды на выставке"],
-      technologies: ["3D Mapping", "VR", "Interactive Design"],
-      client: "Технологический музей",
-      link: "#"
-    },
-    {
-      id: 'static-2',
-      title: "Корпоративная презентация 'Инновации 2024'",
-      category: "Presentation / Event",
-      description: "Комплексное техническое обеспечение корпоративного мероприятия с интерактивными презентациями и live-стримингом",
-      image: "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-      year: "2024",
-      results: ["500+ участников", "99.9% uptime", "Международная трансляция"],
-      technologies: ["Live Streaming", "Interactive Presentation", "Multi-camera"],
-      client: "IT Корпорация",
-      link: "#"
-    }
-  ];
-
-  // Используем проекты из БД, если они есть, иначе статические проекты
-  const allProjects = projects.length > 0 ? projects : staticProjects;
-
+  
   // Отладочная информация
-  console.log('ModernPortfolioMobileSection: Загружено кейсов:', cases.length);
-  console.log('ModernPortfolioMobileSection: Проектов из БД:', projects.length);
-  console.log('ModernPortfolioMobileSection: Статических проектов:', staticProjects.length);
-  console.log('ModernPortfolioMobileSection: Итоговых проектов:', allProjects.length);
-  console.log('ModernPortfolioMobileSection: Loading:', loading);
-  console.log('ModernPortfolioMobileSection: Error:', error);
+  console.log('📱 ModernPortfolioMobileSection: Загружено кейсов:', cases.length);
+  console.log('📱 ModernPortfolioMobileSection: Обработано проектов:', projects.length);
+  console.log('📱 ModernPortfolioMobileSection: Loading:', loading);
+  console.log('📱 ModernPortfolioMobileSection: Error:', error);
 
   // Показываем skeleton только если нет проектов для отображения
-  if ((loading || projectsLoading) && allProjects.length === 0) {
+  if (loading && projects.length === 0) {
     return <ProjectsGridSkeleton />;
   }
 
-  if (error || projectsError) {
-    console.error('Error loading projects:', error || projectsError);
+  if (error) {
+    console.error('Error loading projects:', error);
   }
+
+  // Преобразуем проекты в формат для мобильного отображения
+  const mobileProjects = projects.map(project => ({
+    id: project.id,
+    title: project.title,
+    category: 'Проект',
+    description: project.description,
+    image: project.image,
+    year: project.date,
+    results: project.results,
+    technologies: project.tech,
+    client: project.client,
+    link: project.title && project.title.includes('Samsung') 
+      ? '/portfolio/samsung-new-year-2020' 
+      : project.title && (project.title.includes('Самар') || project.title.includes('samara') || project.title.includes('ВДНХ'))
+      ? '/portfolio/samara-stand-vdnh'
+      : `/case/${project.id}`
+  }));
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
@@ -154,7 +131,7 @@ const ModernPortfolioMobileSection = ({ onShowShowreel }: ModernPortfolioMobileS
 
         {/* Desktop Grid */}
         <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {allProjects.slice(0, 6).map((project, index) => (
+          {mobileProjects.slice(0, 6).map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
@@ -165,6 +142,9 @@ const ModernPortfolioMobileSection = ({ onShowShowreel }: ModernPortfolioMobileS
                 // Специальная ссылка для кейса Samsung
                 if (project.title && project.title.includes('Samsung')) {
                   window.location.href = '/portfolio/samsung-new-year-2020';
+                } else if (project.title && (project.title.includes('Самар') || project.title.includes('samara') || project.title.includes('ВДНХ'))) {
+                  // Специальная ссылка для проекта Самарской области
+                  window.location.href = '/portfolio/samara-stand-vdnh';
                 } else {
                   // Используем window.location для навигации
                   window.location.href = `/case/${project.id}`;
@@ -241,7 +221,7 @@ const ModernPortfolioMobileSection = ({ onShowShowreel }: ModernPortfolioMobileS
 
         {/* Mobile Carousel */}
         <MobileCarousel showOnMobile={true} showOnDesktop={false}>
-          {allProjects.slice(0, 6).map((project, index) => (
+          {mobileProjects.slice(0, 6).map((project, index) => (
             <div 
               key={project.id} 
               className="cursor-pointer"
@@ -249,6 +229,9 @@ const ModernPortfolioMobileSection = ({ onShowShowreel }: ModernPortfolioMobileS
                 // Специальная ссылка для кейса Samsung
                 if (project.title && project.title.includes('Samsung')) {
                   window.location.href = '/portfolio/samsung-new-year-2020';
+                } else if (project.title && (project.title.includes('Самар') || project.title.includes('samara') || project.title.includes('ВДНХ'))) {
+                  // Специальная ссылка для проекта Самарской области
+                  window.location.href = '/portfolio/samara-stand-vdnh';
                 } else {
                   // Используем window.location для навигации
                   window.location.href = `/case/${project.id}`;

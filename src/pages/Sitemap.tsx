@@ -40,7 +40,7 @@ const Sitemap = () => {
     ],
     portfolio: [
       { name: "Портфолио", href: "/portfolio", icon: Briefcase, description: "Обзор выполненных проектов и кейсов" },
-      { name: "Стенд Самарской области", href: "/portfolio/samara-stand", icon: MapPin, description: "Детальный кейс проекта для ВДНХ" }
+      { name: "Стенд Самарской области", href: "/portfolio/samara-stand-vdnh", icon: MapPin, description: "Детальный кейс проекта для ВДНХ" }
     ],
     content: [
       { name: "Блог", href: "/blog", icon: BookOpen, description: "Полезные статьи и экспертные мнения" },
