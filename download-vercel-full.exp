@@ -1,0 +1,53 @@
+#!/usr/bin/expect -f
+
+# Автоматический скрипт для скачивания deployment с Vercel
+set timeout 600
+set send_slow {0.3 0.1}
+
+spawn vercel-sdl --token 4mpfMdimmpBB2iFU5e2afioI --target production --limit 1
+
+expect {
+    -re "Select a deployment.*:" {
+        sleep 1
+        send "\r"
+        exp_continue
+    }
+    -re "Download source files\\?.*\\(y/n\\):" {
+        sleep 1
+        send "y\r"
+        exp_continue
+    }
+    -re "Enter directory name.*:" {
+        sleep 1
+        send "\r"
+        exp_continue
+    }
+    -re "Downloading" {
+        puts "\n📥 Скачивание началось..."
+        exp_continue
+    }
+    -re "Downloaded" {
+        puts "\n✅ Скачивание завершено!"
+        exp_continue
+    }
+    -re "Download complete" {
+        puts "\n✅ Скачивание завершено успешно!"
+        exp_continue
+    }
+    -re "Files downloaded to" {
+        puts "\n✅ Файлы скачаны!"
+        exp_continue
+    }
+    -re "✓" {
+        exp_continue
+    }
+    timeout {
+        puts "\n⏱ Таймаут ожидания"
+        exit 1
+    }
+    eof {
+        puts "\n✅ Процесс завершен"
+    }
+}
+
+wait

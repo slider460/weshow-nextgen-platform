@@ -1,0 +1,110 @@
+<svg width="400" height="565" viewBox="0 0 400 565" xmlns="http://www.w3.org/2000/svg">
+  <!-- Orange border with pattern -->
+  <defs>
+    <pattern id="borderPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1" fill="#ff8c00" opacity="0.3"/>
+      <rect x="8" y="8" width="4" height="4" fill="#ff8c00" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <!-- Orange border -->
+  <rect x="0" y="0" width="400" height="565" fill="#ff8c00"/>
+  
+  <!-- White content area with curved top -->
+  <path d="M 0 50 Q 200 20 400 50 L 400 565 L 0 565 Z" fill="white"/>
+  
+  <!-- Header section -->
+  <!-- Left emblem (simplified deer/crown) -->
+  <g transform="translate(30, 70)">
+    <circle cx="20" cy="20" r="18" fill="#1e40af" stroke="#1e3a8a" stroke-width="2"/>
+    <path d="M 10 15 L 20 8 L 30 15 L 25 25 L 15 25 Z" fill="white"/>
+    <circle cx="20" cy="18" r="3" fill="#1e40af"/>
+  </g>
+  
+  <!-- Ministry title left -->
+  <text x="60" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">
+    МИНИСТЕРСТВО ТУРИЗМА
+  </text>
+  <text x="60" y="100" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">
+    САМАРСКОЙ ОБЛАСТИ
+  </text>
+  
+  <!-- Right logo (simplified S/wave) -->
+  <g transform="translate(320, 70)">
+    <circle cx="20" cy="20" r="18" fill="#10b981" stroke="#059669" stroke-width="2"/>
+    <path d="M 8 12 Q 20 8 32 12 Q 20 20 8 28 Q 20 32 32 28" stroke="white" stroke-width="3" fill="none"/>
+  </g>
+  
+  <!-- Samara Region text right -->
+  <text x="280" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">
+    САМАРСКАЯ
+  </text>
+  <text x="280" y="100" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">
+    область
+  </text>
+  
+  <!-- Main title -->
+  <text x="200" y="180" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#374151" text-anchor="middle">
+    БЛАГОДАРСТВЕННОЕ ПИСЬМО
+  </text>
+  
+  <!-- Reason text -->
+  <text x="200" y="220" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#374151" text-anchor="middle">
+    ЗА ВЫСОКИЙ ПРОФЕССИОНАЛИЗМ,
+  </text>
+  <text x="200" y="240" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#374151" text-anchor="middle">
+    ЛИЧНЫЙ ВКЛАД
+  </text>
+  <text x="200" y="260" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#374151" text-anchor="middle">
+    В ПОДГОТОВКУ И ПРОВЕДЕНИЕ
+  </text>
+  <text x="200" y="280" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#374151" text-anchor="middle">
+    РЕГИОНАЛЬНОЙ ВЫСТАВКИ «САМАРА»
+  </text>
+  
+  <!-- Recipient -->
+  <text x="200" y="320" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#374151" text-anchor="middle">
+    Коммуникационная группа
+  </text>
+  <text x="200" y="340" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#374151" text-anchor="middle">
+    Триплан
+  </text>
+  
+  <!-- Bottom section -->
+  <!-- Minister signature left -->
+  <text x="50" y="450" font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    Министр туризма
+  </text>
+  <text x="50" y="465" font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    Самарской области
+  </text>
+  <text x="50" y="480" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">
+    Матвеева Е.А.
+  </text>
+  
+  <!-- Signature and seal right -->
+  <g transform="translate(280, 420)">
+    <!-- Handwritten signature (simplified) -->
+    <path d="M 0 20 Q 10 10 20 20 Q 30 15 40 25" stroke="#374151" stroke-width="2" fill="none"/>
+    <text x="0" y="45" font-family="Arial, sans-serif" font-size="10" fill="#374151">Sam</text>
+    
+    <!-- Official seal -->
+    <circle cx="60" cy="30" r="25" fill="#1e40af" stroke="#1e3a8a" stroke-width="2"/>
+    <circle cx="60" cy="30" r="20" fill="white"/>
+    <!-- Double-headed eagle (simplified) -->
+    <path d="M 50 25 L 60 20 L 70 25 L 65 35 L 55 35 Z" fill="#1e40af"/>
+    <path d="M 50 35 L 60 30 L 70 35 L 65 40 L 55 40 Z" fill="#1e40af"/>
+    <!-- Seal text -->
+    <text x="60" y="50" font-family="Arial, sans-serif" font-size="6" fill="#1e40af" text-anchor="middle">
+      МИНИСТЕРСТВО ТУРИЗМА
+    </text>
+    <text x="60" y="58" font-family="Arial, sans-serif" font-size="6" fill="#1e40af" text-anchor="middle">
+      САМАРСКОЙ ОБЛАСТИ
+    </text>
+  </g>
+  
+  <!-- Year -->
+  <text x="200" y="520" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#374151" text-anchor="middle">
+    2025
+  </text>
+</svg>

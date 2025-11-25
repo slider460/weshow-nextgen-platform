@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест кейсов из базы данных</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .case { border: 1px solid #ccc; margin: 10px 0; padding: 15px; border-radius: 8px; }
+        .case h3 { color: #333; margin-top: 0; }
+        .case p { color: #666; }
+        .error { color: red; background: #ffe6e6; padding: 10px; border-radius: 5px; }
+        .success { color: green; background: #e6ffe6; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Тест кейсов из базы данных</h1>
+    <div id="loading">Загрузка...</div>
+    <div id="results"></div>
+
+    <script>
+        async function loadCases() {
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            
+            try {
+                loading.textContent = 'Загружаем кейсы...';
+                
+                const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
+                const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE';
+                
+                const url = `${SUPABASE_URL}/rest/v1/cases?select=*&is_visible=eq.true&order=sort_order.asc`;
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+                }
+
+                const data = await response.json();
+                
+                loading.innerHTML = `<div class="success">Загружено кейсов: ${data.length}</div>`;
+                
+                if (data.length === 0) {
+                    results.innerHTML = '<div class="error">Кейсы не найдены в базе данных</div>';
+                    return;
+                }
+                
+                let html = '<h2>Найденные кейсы:</h2>';
+                data.forEach((caseItem, index) => {
+                    html += `
+                        <div class="case">
+                            <h3>${caseItem.title || 'Без названия'}</h3>
+                            <p><strong>ID:</strong> ${caseItem.id}</p>
+                            <p><strong>Клиент:</strong> ${caseItem.client || 'Не указан'}</p>
+                            <p><strong>Год:</strong> ${caseItem.year || 'Не указан'}</p>
+                            <p><strong>Описание:</strong> ${caseItem.description || 'Нет описания'}</p>
+                            <p><strong>Видимый:</strong> ${caseItem.is_visible ? 'Да' : 'Нет'}</p>
+                            <p><strong>Порядок:</strong> ${caseItem.sort_order || 0}</p>
+                            <p><strong>Ссылка:</strong> <a href="/case/${caseItem.id}" target="_blank">/case/${caseItem.id}</a></p>
+                        </div>
+                    `;
+                });
+                
+                results.innerHTML = html;
+                
+            } catch (error) {
+                loading.innerHTML = `<div class="error">Ошибка: ${error.message}</div>`;
+                console.error('Ошибка загрузки кейсов:', error);
+            }
+        }
+        
+        // Загружаем кейсы при загрузке страницы
+        loadCases();
+    </script>
+</body>
+</html>

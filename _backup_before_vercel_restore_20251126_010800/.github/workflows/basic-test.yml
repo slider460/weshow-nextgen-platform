@@ -1,0 +1,15 @@
+name: 🧪 Basic Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Hello World
+        run: |
+          echo "🎉 GitHub Actions работает!"
+          echo "📅 Время: $(date)"
+          echo "🖥️ Система: $(uname -a)"

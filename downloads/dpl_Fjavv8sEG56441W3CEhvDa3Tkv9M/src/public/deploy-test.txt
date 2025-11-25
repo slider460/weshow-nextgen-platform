@@ -1,0 +1,10 @@
+Deploy Test File
+================
+
+Timestamp: 2025-10-14 12:10:00
+Commit: 96051298
+Branch: main
+
+This file should be automatically deployed when pushed to GitHub.
+
+If you can see this file, auto-deploy is working correctly!

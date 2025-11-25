@@ -1,0 +1,112 @@
+// Новые карточки проектов - готовы к заполнению контентом
+export interface Project {
+  id: string;
+  title: string;
+  client: string;
+  year: string;
+  description: string;
+  image: string;
+  link: string;
+  results?: string[];
+}
+
+export const projects: Project[] = [
+  {
+    id: 'samara-stand-vdnh',
+    title: 'Стенд Самарской области',
+    client: 'Правительство Самарской области',
+    year: '2023-2024',
+    description: 'Стенд Самарской области был представлен на международной выставке‑форуме «Россия» в Москве (ВДНХ), проходившей с 4 ноября 2023 по 8 июля 2024 года и привлекшей более 18 миллионов посетителей. Главная задача — демонстрация культурных, экономических и инновационных достижений региона через современную экспозицию в виде ладьи, символизирующей историческое наследие Самарской области.',
+    image: '/portfolio/samara-vdnh/Card_Samara_stend.jpg',
+    link: '/portfolio/samara-stand-vdnh',
+    results: [
+      'Более 18 миллионов посетителей',
+      'Специальный приз оргкомитета',
+      'Один из самых посещаемых стендов'
+    ]
+  },
+  {
+    id: 'project-2',
+    title: 'Особенный новый год',
+    client: 'Samsung',
+    year: '2020',
+    description: 'Используя современные мультимедийные решения, мы погрузили участников в атмосферу новогодней сказки.',
+    image: '/images/cases/samsung/performance-stage.jpg',
+    link: '/portfolio/samsung-new-year-2020',
+    results: [
+      '3D mapping декорации',
+      'Digital интерактивные зоны',
+      'Масштабное новогоднее мероприятие'
+    ]
+  },
+  {
+    id: 'stavropol-3d-mapping',
+    title: '3D Mapping шоу Ставрополь',
+    client: 'Администрация города Ставрополь',
+    year: '2019',
+    description: 'Организовать масштабное 3D mapping show на открытии новогодних мероприятий в городе Ставрополь, которое бы обеспечило комфортное пребывание зрителей при огромном скоплении публики и создало максимальный WOW-эффект. Проект охватил более 25,000 человек на центральной площади города.',
+    image: '/portfolio/Stavropol-3d/video-previews/Cadr_Stavropol.jpg',
+    link: '/portfolio/stavropol-3d-mapping',
+    results: [
+      '25,000+ зрителей',
+      '27 лазерных проекторов',
+      'AR мобильное приложение',
+      'Лазерные лучи до 4 км'
+    ]
+  },
+  {
+    id: 'samara-exhibition',
+    title: 'Выставка Самара',
+    client: 'Министерство туризма Самарской области',
+    year: '2024-2025',
+    description: 'Выставка «Самара» – это продолжение масштабного проекта «Россия» с ВДНХ в Москве. Она знакомит жителей и туристов с историей, достижениями, современным развитием и перспективными проектами Самарской области через современные интерактивные технологии.',
+    image: '/portfolio/samara-exhibition/video-previews/Cadr_vistavca_Samara.jpg',
+    link: '/portfolio/samara-exhibition',
+    results: [
+      '3 месяца работы',
+      '5 тематических зон',
+      '5 комплектов VR',
+      'Благодарственное письмо'
+    ]
+  },
+  {
+    id: 'project-5',
+    title: 'Заголовок проекта 5',
+    client: 'Клиент',
+    year: '2024',
+    description: 'Описание проекта будет добавлено',
+    image: '/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png',
+    link: '/portfolio/project-5',
+    results: []
+  },
+  {
+    id: 'project-6',
+    title: 'Заголовок проекта 6',
+    client: 'Клиент',
+    year: '2024',
+    description: 'Описание проекта будет добавлено',
+    image: '/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png',
+    link: '/portfolio/project-6',
+    results: []
+  },
+  {
+    id: 'project-7',
+    title: 'Заголовок проекта 7',
+    client: 'Клиент',
+    year: '2024',
+    description: 'Описание проекта будет добавлено',
+    image: '/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png',
+    link: '/portfolio/project-7',
+    results: []
+  },
+  {
+    id: 'project-8',
+    title: 'Заголовок проекта 8',
+    client: 'Клиент',
+    year: '2024',
+    description: 'Описание проекта будет добавлено',
+    image: '/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png',
+    link: '/portfolio/project-8',
+    results: []
+  }
+];

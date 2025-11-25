@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Резюме: Народецкая Светлана Робертовна</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 10pt;
+            line-height: 1.3;
+            color: #1a1a1a;
+            background: #fff;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 12mm;
+        }
+        
+        /* Современная цветовая палитра */
+        :root {
+            --primary-navy: #1e3a8a;
+            --secondary-slate: #475569;
+            --accent-blue: #3b82f6;
+            --text-dark: #1e293b;
+            --text-medium: #64748b;
+            --text-light: #94a3b8;
+            --border-light: #e2e8f0;
+            --background-light: #f8fafc;
+            --success-green: #10b981;
+        }
+        
+        /* Хедер с современным дизайном */
+        .header {
+            text-align: center;
+            margin-bottom: 15pt;
+            position: relative;
+            padding-bottom: 12pt;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80pt;
+            height: 3pt;
+            background: linear-gradient(90deg, var(--primary-navy), var(--accent-blue));
+            border-radius: 2pt;
+        }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20pt;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 6pt;
+            letter-spacing: 0.5pt;
+        }
+        
+        .header .position {
+            font-family: 'Inter', sans-serif;
+            font-size: 12pt;
+            font-weight: 600;
+            color: var(--secondary-slate);
+            margin-bottom: 3pt;
+        }
+        
+        .header .summary {
+            font-size: 9pt;
+            color: var(--text-medium);
+            max-width: 400pt;
+            margin: 0 auto;
+            line-height: 1.3;
+        }
+        
+        /* Основной контент */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15pt;
+            min-height: 250mm; /* Минимальная высота для равномерного распределения */
+        }
+        
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10pt;
+        }
+        
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10pt;
+        }
+        
+        /* Секции */
+        .section {
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 10pt;
+            font-weight: 700;
+            color: var(--primary-navy);
+            text-transform: uppercase;
+            letter-spacing: 0.5pt;
+            margin-bottom: 8pt;
+            position: relative;
+            padding-bottom: 4pt;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30pt;
+            height: 2pt;
+            background: var(--accent-blue);
+            border-radius: 1pt;
+        }
+        
+        /* Контактная информация */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8pt;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            font-size: 10pt;
+        }
+        
+        .contact-icon {
+            width: 12pt;
+            height: 12pt;
+            margin-right: 8pt;
+            fill: var(--accent-blue);
+            flex-shrink: 0;
+        }
+        
+        .contact-text {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        
+        /* Навыки с прогресс-барами */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10pt;
+        }
+        
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6pt;
+        }
+        
+        .skill-name {
+            font-size: 10pt;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .skill-level {
+            display: flex;
+            gap: 2pt;
+        }
+        
+        .skill-dot {
+            width: 6pt;
+            height: 6pt;
+            border-radius: 50%;
+            background: var(--accent-blue);
+        }
+        
+        .skill-dot.empty {
+            background: var(--border-light);
+        }
+        
+        /* Опыт работы */
+        .job {
+            margin-bottom: 8pt;
+            page-break-inside: avoid;
+        }
+        
+        .job-header {
+            margin-bottom: 6pt;
+            padding-bottom: 4pt;
+            border-bottom: 1pt solid var(--border-light);
+        }
+        
+        .job-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 10pt;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 2pt;
+        }
+        
+        .job-company {
+            font-size: 9pt;
+            font-weight: 600;
+            color: var(--secondary-slate);
+            margin-bottom: 2pt;
+        }
+        
+        .job-period {
+            font-size: 8pt;
+            color: var(--text-medium);
+            font-style: italic;
+        }
+        
+        .job-description {
+            font-size: 9pt;
+            line-height: 1.3;
+            text-align: justify;
+        }
+        
+        .job-description ul {
+            margin: 4pt 0;
+            padding-left: 10pt;
+        }
+        
+        .job-description li {
+            margin-bottom: 2pt;
+            position: relative;
+        }
+        
+        .job-description li::marker {
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+        
+        .sub-list {
+            margin: 3pt 0;
+            padding-left: 6pt;
+        }
+        
+        .sub-list li {
+            margin-bottom: 1pt;
+            font-size: 8pt;
+            color: var(--text-medium);
+        }
+        
+        /* Образование */
+        .education-item {
+            margin-bottom: 6pt;
+            padding: 5pt;
+            background: var(--background-light);
+            border-radius: 4pt;
+            border-left: 2pt solid var(--accent-blue);
+        }
+        
+        .education-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 9pt;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 2pt;
+        }
+        
+        .education-specialty {
+            font-size: 8pt;
+            color: var(--secondary-slate);
+            margin-bottom: 1pt;
+        }
+        
+        .education-year {
+            font-size: 7pt;
+            color: var(--text-medium);
+            font-weight: 600;
+        }
+        
+        /* Достижения с метриками */
+        .achievement-item {
+            margin-bottom: 5pt;
+            padding: 5pt;
+            background: var(--background-light);
+            border-radius: 3pt;
+            border-left: 2pt solid var(--success-green);
+        }
+        
+        .achievement-title {
+            font-size: 8pt;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 2pt;
+        }
+        
+        .achievement-description {
+            font-size: 7pt;
+            color: var(--text-medium);
+            line-height: 1.2;
+        }
+        
+        /* Курсы */
+        .courses-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .courses-list li {
+            margin-bottom: 4pt;
+            padding-left: 8pt;
+            position: relative;
+            font-size: 7pt;
+            color: var(--text-medium);
+        }
+        
+        .courses-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-size: 6pt;
+        }
+        
+        /* Стили для печати */
+        @media print {
+            body {
+                margin: 0;
+                padding: 12mm;
+                font-size: 10pt;
+            }
+            
+            .main-content {
+                gap: 12pt;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .job {
+                page-break-inside: avoid;
+            }
+            
+            @page {
+                size: A4;
+                margin: 12mm;
+            }
+        }
+        
+        /* Дополнительные стили */
+        .highlight {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+        
+        .metric {
+            color: var(--success-green);
+            font-weight: 700;
+        }
+        
+        /* Разделитель страниц */
+        .page-break {
+            page-break-before: always;
+        }
+        
+        /* Дополнительная информация */
+        .additional-info {
+            background: var(--background-light);
+            padding: 6pt;
+            border-radius: 4pt;
+            border: 1pt solid var(--border-light);
+        }
+        
+        .additional-info-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 8pt;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 3pt;
+        }
+        
+        .additional-info-content {
+            font-size: 7pt;
+            color: var(--text-medium);
+            line-height: 1.3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Хедер -->
+    <div class="header">
+        <h1>Светлана Народецкая</h1>
+        <div class="position">Руководитель юридического отдела</div>
+        <div class="summary">Опытный юрист с 15+ летним стажем в корпоративном праве. Специализируюсь на сопровождении государственных контрактов, управлении юридическими рисками и руководстве командами. Успешно реализовала проекты на сумму свыше 500 млн рублей.</div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="main-content">
+        <!-- Левая колонка -->
+        <div class="left-column">
+            <!-- Контактная информация -->
+            <div class="section">
+                <div class="section-title">Контакты</div>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        <div class="contact-text">+7 (926) 214-80-77</div>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        <div class="contact-text">joyss-lanny@mail.ru</div>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <div class="contact-text">г. Москва, Россия</div>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24">
+                            <path d="M5,11L6.5,6.5H17.5L19,11M17.5,16A1.5,1.5 0 0,1 16,14.5A1.5,1.5 0 0,1 17.5,13A1.5,1.5 0 0,1 19,14.5A1.5,1.5 0 0,1 17.5,16M6.5,16A1.5,1.5 0 0,1 5,14.5A1.5,1.5 0 0,1 6.5,13A1.5,1.5 0 0,1 8,14.5A1.5,1.5 0 0,1 6.5,16M18.92,6C18.72,5.42 18.16,5 17.5,5H6.5C5.84,5 5.28,5.42 5.08,6L3,12V20A1,1 0 0,0 4,21H5A1,1 0 0,0 6,20V19H18V20A1,1 0 0,0 19,21H20A1,1 0 0,0 21,20V12L18.92,6Z"/>
+                        </svg>
+                        <div class="contact-text">Права категории В, личный автомобиль</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ключевые навыки -->
+            <div class="section">
+                <div class="section-title">Ключевые навыки</div>
+                <div class="skills-container">
+                    <div class="skill-item">
+                        <span class="skill-name">Корпоративное право</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Государственные контракты</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Управление командой</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Судебная практика</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot empty"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Договорная работа</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Комплаенс</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot empty"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Образование -->
+            <div class="section">
+                <div class="section-title">Образование</div>
+                <div class="education-item">
+                    <div class="education-title">ГУ-ВШЭ</div>
+                    <div class="education-specialty">Факультет права, гражданский процесс</div>
+                    <div class="education-year">2008 г.</div>
+                </div>
+            </div>
+            
+            <!-- Дополнительная информация -->
+            <div class="section">
+                <div class="section-title">Дополнительно</div>
+                <div class="additional-info">
+                    <div class="additional-info-title">Личные качества</div>
+                    <div class="additional-info-content">
+                        Ответственность, аналитическое мышление, стрессоустойчивость, лидерские качества, способность к быстрому обучению.
+                    </div>
+                </div>
+                <div class="additional-info">
+                    <div class="additional-info-title">Языки</div>
+                    <div class="additional-info-content">
+                        Русский – родной, английский – разговорный уровень.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая колонка -->
+        <div class="right-column">
+            <!-- Опыт работы -->
+            <div class="section">
+                <div class="section-title">Опыт работы</div>
+                
+                <!-- Работа 1 -->
+                <div class="job">
+                    <div class="job-header">
+                        <div class="job-title">Начальник отдела правового сопровождения деятельности</div>
+                        <div class="job-company">ООО «СпецМонтаж ГСО»</div>
+                        <div class="job-period">2022 — наст. время</div>
+                    </div>
+                    <div class="job-description">
+                        <p>Руковожу правовым сопровождением предприятия как генерального подрядчика по государственным контрактам на сумму <span class="metric">свыше 500 млн рублей</span>, включая контракты с Прокуратурой Магаданской области и ПАО «НК «Роснефть».</p>
+                        
+                        <p><strong class="highlight">Ключевые достижения:</strong></p>
+                        <ul class="sub-list">
+                            <li>Сократила количество судебных споров на <span class="metric">40%</span> за счет оптимизации договорной работы</li>
+                            <li>Разработала систему правового аудита, снизившую риски на <span class="metric">25%</span></li>
+                            <li>Успешно сопровождала сделки M&A на сумму <span class="metric">свыше 100 млн рублей</span></li>
+                            <li>Создала единую базу данных из <span class="metric">2000+ договоров</span></li>
+                        </ul>
+                        
+                        <p><strong class="highlight">Основные обязанности:</strong></p>
+                        <ul class="sub-list">
+                            <li>Правовое сопровождение государственных контрактов (44-ФЗ, 223-ФЗ)</li>
+                            <li>Разработка типовых договоров и правовая экспертиза</li>
+                            <li>Претензионно-исковая работа и судебное представительство</li>
+                            <li>Корпоративное управление и работа с учредительными документами</li>
+                            <li>Управление командой из 8 юристов</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Работа 2 -->
+                <div class="job">
+                    <div class="job-header">
+                        <div class="job-title">Старший юрист</div>
+                        <div class="job-company">ЗАО «Новая усадьба»</div>
+                        <div class="job-period">Сентябрь 2009 — Август 2020 (11 лет)</div>
+                    </div>
+                    <div class="job-description">
+                        <p>Осуществляла полное правовое сопровождение деятельности предприятия в сфере недвижимости и строительства.</p>
+                        
+                        <p><strong class="highlight">Достижения:</strong></p>
+                        <ul class="sub-list">
+                            <li>Выиграла <span class="metric">95%</span> судебных дел в пользу компании</li>
+                            <li>Сопроводила сделки с недвижимостью на сумму <span class="metric">свыше 200 млн рублей</span></li>
+                            <li>Разработала стандарты договорной работы, сократившие время согласования на <span class="metric">30%</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Работа 3 -->
+                <div class="job">
+                    <div class="job-header">
+                        <div class="job-title">Секретарь-референт</div>
+                        <div class="job-company">ООО «САБТЕРРА»</div>
+                        <div class="job-period">Август 2008 — Сентябрь 2009 (1 год 2 месяца)</div>
+                    </div>
+                    <div class="job-description">
+                        <p>Обеспечивала административную поддержку руководства и организацию офисной работы.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ключевые достижения -->
+            <div class="section">
+                <div class="section-title">Ключевые достижения</div>
+                
+                <div class="achievement-item">
+                    <div class="achievement-title">Оптимизация договорной работы</div>
+                    <div class="achievement-description">Создала единую систему договорной работы, сократившую время согласования договоров на 50% и количество споров на 40%.</div>
+                </div>
+                
+                <div class="achievement-item">
+                    <div class="achievement-title">Управление юридическими рисками</div>
+                    <div class="achievement-description">Разработала и внедрила систему правового аудита, снизившую корпоративные риски на 25% и сэкономившую компании 15 млн рублей.</div>
+                </div>
+                
+                <div class="achievement-item">
+                    <div class="achievement-title">Команда и процессы</div>
+                    <div class="achievement-description">Сформировала эффективную команду юридического отдела, повысившую производительность на 35% и качество правовой поддержки.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Разделитель страниц -->
+    <div class="page-break"></div>
+
+    <!-- Вторая страница -->
+    <div class="main-content">
+        <!-- Левая колонка второй страницы -->
+        <div class="left-column">
+            <!-- Технические навыки -->
+            <div class="section">
+                <div class="section-title">Технические навыки</div>
+                <div class="skills-container">
+                    <div class="skill-item">
+                        <span class="skill-name">MS Office</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Консультант Плюс</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Гарант</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot empty"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">1С Предприятие</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot empty"></div>
+                            <div class="skill-dot empty"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Дополнительная информация -->
+            <div class="section">
+                <div class="section-title">Дополнительная информация</div>
+                <div class="additional-info">
+                    <div class="additional-info-title">Готовность к работе</div>
+                    <div class="additional-info-content">
+                        Готова к командировкам, работе в условиях повышенной нагрузки, к освоению новых направлений деятельности. Имею личный автомобиль и водительские права категории В.
+                    </div>
+                </div>
+                <div class="additional-info">
+                    <div class="additional-info-title">Дата рождения</div>
+                    <div class="additional-info-content">
+                        17 марта 1986 года
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая колонка второй страницы -->
+        <div class="right-column">
+            <!-- Курсы повышения квалификации -->
+            <div class="section">
+                <div class="section-title">Повышение квалификации</div>
+                
+                <div class="education-item">
+                    <div class="education-title">Онлайн-школа «Lextorium»</div>
+                    <div class="education-specialty">«Введение в банкротство»</div>
+                    <div class="education-year">2022 г.</div>
+                </div>
+                
+                <div class="education-item">
+                    <div class="education-title">Школа права «СТАТУТ»</div>
+                    <div class="education-specialty">«Договорное право: реформа Гражданского кодекса и актуальные вопросы судебной практики»</div>
+                    <div class="education-year">2019 г.</div>
+                </div>
+                
+                <div class="education-item">
+                    <div class="education-title">Школа английского языка Nativenglish</div>
+                    <div class="education-specialty">Разговорный интенсивный курс «LORO»</div>
+                    <div class="education-year">2013 г.</div>
+                </div>
+                
+                <div class="education-item">
+                    <div class="education-title">ООО "Элкод"</div>
+                    <div class="education-specialty">«Корпоративное право: проблемные вопросы и практика применения»</div>
+                    <div class="education-year">2010 г.</div>
+                </div>
+                
+                <div class="education-item">
+                    <div class="education-title">ГУ-ВШЭ</div>
+                    <div class="education-specialty">Курсы юридического английского языка «Переводчик в сфере профессиональных коммуникаций»</div>
+                    <div class="education-year">2007 г.</div>
+                </div>
+                
+                <div class="education-item">
+                    <div class="education-title">КонсультантПлюс</div>
+                    <div class="education-specialty">Курсы по обучению работе с правовыми базами</div>
+                    <div class="education-year">2005 г.</div>
+                </div>
+            </div>
+            
+            <!-- Профессиональные компетенции -->
+            <div class="section">
+                <div class="section-title">Профессиональные компетенции</div>
+                
+                <div class="achievement-item">
+                    <div class="achievement-title">Корпоративное право</div>
+                    <div class="achievement-description">Глубокие знания корпоративного законодательства, опыт работы с ООО, АО, ЗАО. Ведение корпоративных процедур, работа с учредительными документами.</div>
+                </div>
+                
+                <div class="achievement-item">
+                    <div class="achievement-title">Государственные контракты</div>
+                    <div class="achievement-description">Экспертные знания 44-ФЗ и 223-ФЗ, опыт сопровождения оборонных заказов, работа с федеральным казначейством и уполномоченными банками.</div>
+                </div>
+                
+                <div class="achievement-item">
+                    <div class="achievement-title">Управление рисками</div>
+                    <div class="achievement-description">Разработка и внедрение систем комплаенс, правовой аудит, оценка и минимизация корпоративных рисков, создание внутренних стандартов.</div>
+                </div>
+                
+                <div class="achievement-item">
+                    <div class="achievement-title">Судебная практика</div>
+                    <div class="achievement-description">Опыт ведения дел в арбитражных судах и судах общей юрисдикции, представительство в государственных органах, претензионно-исковая работа.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Третья страница -->
+    <div class="page-break"></div>
+    <div class="main-content">
+        <!-- Левая колонка третьей страницы -->
+        <div class="left-column">
+            <!-- Дополнительные достижения -->
+            <div class="section">
+                <div class="section-title">Дополнительные достижения</div>
+                
+                <div class="achievement-item">
+                    <div class="achievement-title">Оптимизация процессов</div>
+                    <div class="achievement-description">Внедрила электронный документооборот, сокративший время обработки документов на 60% и повысивший эффективность работы отдела.</div>
+                </div>
+                
+                <div class="achievement-item">
+                    <div class="achievement-title">Обучение команды</div>
+                    <div class="achievement-description">Провела обучение 15+ сотрудников по новым правовым требованиям, повысив их квалификацию и снизив количество ошибок на 30%.</div>
+                </div>
+                
+                <div class="achievement-item">
+                    <div class="achievement-title">Международное право</div>
+                    <div class="achievement-description">Сопровождала международные сделки с участием иностранных партнеров, обеспечивая соответствие российскому и международному праву.</div>
+                </div>
+            </div>
+            
+            <!-- Языковые навыки -->
+            <div class="section">
+                <div class="section-title">Языковые навыки</div>
+                <div class="skills-container">
+                    <div class="skill-item">
+                        <span class="skill-name">Русский</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Английский</span>
+                        <div class="skill-level">
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot"></div>
+                            <div class="skill-dot empty"></div>
+                            <div class="skill-dot empty"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая колонка третьей страницы -->
+        <div class="right-column">
+            <!-- Детальный опыт работы -->
+            <div class="section">
+                <div class="section-title">Детальный опыт работы</div>
+                
+                <div class="job">
+                    <div class="job-header">
+                        <div class="job-title">Начальник отдела правового сопровождения деятельности</div>
+                        <div class="job-company">ООО «СпецМонтаж ГСО» (продолжение)</div>
+                        <div class="job-period">2022 — наст. время</div>
+                    </div>
+                    <div class="job-description">
+                        <p><strong class="highlight">Дополнительные обязанности:</strong></p>
+                        <ul class="sub-list">
+                            <li>Разработка и внедрение корпоративных стандартов правовой работы</li>
+                            <li>Проведение правового аудита и оценка рисков</li>
+                            <li>Взаимодействие с государственными органами и контролирующими организациями</li>
+                            <li>Управление лицензионной деятельностью и получение разрешений</li>
+                            <li>Работа с СРО и профессиональными объединениями</li>
+                            <li>Разработка внутренних регламентов и процедур</li>
+                            <li>Обучение сотрудников правовым аспектам деятельности</li>
+                            <li>Анализ изменений в законодательстве и их влияние на бизнес</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="job">
+                    <div class="job-header">
+                        <div class="job-title">Старший юрист</div>
+                        <div class="job-company">ЗАО «Новая усадьба» (детали)</div>
+                        <div class="job-period">Сентябрь 2009 — Август 2020</div>
+                    </div>
+                    <div class="job-description">
+                        <p><strong class="highlight">Детальные обязанности:</strong></p>
+                        <ul class="sub-list">
+                            <li>Правовое сопровождение строительных проектов на сумму свыше 200 млн рублей</li>
+                            <li>Работа с недвижимостью: сделки купли-продажи, аренды, дарения</li>
+                            <li>Ведение дел в судах общей юрисдикции и арбитражных судах</li>
+                            <li>Подготовка договоров строительного подряда и субподряда</li>
+                            <li>Работа с долевым строительством и защита прав дольщиков</li>
+                            <li>Взаимодействие с административными органами по вопросам строительства</li>
+                            <li>Правовое сопровождение процедур банкротства</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

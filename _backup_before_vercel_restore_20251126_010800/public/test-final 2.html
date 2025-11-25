@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финальный тест WESHOW</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .nav-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .nav-links a {
+            padding: 10px;
+            background: #e3f2fd;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #1976d2;
+            text-align: center;
+            transition: background 0.3s;
+        }
+        .nav-links a:hover {
+            background: #bbdefb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Финальный тест WESHOW</h1>
+        
+        <div class="status success">
+            <strong>✅ Статус:</strong> Приложение восстановлено с безопасными контекстами
+        </div>
+        
+        <div class="status info">
+            <strong>🔧 Исправления:</strong>
+            <ul>
+                <li>Создан безопасный LogosProvider без Supabase зависимостей</li>
+                <li>Добавлена обработка ошибок в main.tsx</li>
+                <li>Восстановлены все маршруты в App.tsx</li>
+            </ul>
+        </div>
+        
+        <h2>Главная страница:</h2>
+        <iframe src="http://localhost:8085" title="Main App" id="mainFrame"></iframe>
+        
+        <h2>Тестирование навигации:</h2>
+        <div class="nav-links">
+            <a href="http://localhost:8085/portfolio" target="_blank">Портфолио</a>
+            <a href="http://localhost:8085/news" target="_blank">Новости</a>
+            <a href="http://localhost:8085/blog" target="_blank">Блог</a>
+            <a href="http://localhost:8085/contact" target="_blank">Контакты</a>
+            <a href="http://localhost:8085/services" target="_blank">Услуги</a>
+            <a href="http://localhost:8085/team" target="_blank">Команда</a>
+            <a href="http://localhost:8085/test" target="_blank">Тест</a>
+        </div>
+        
+        <div class="status warning">
+            <strong>⚠️ Важно:</strong>
+            <ul>
+                <li>Если главная страница загружается - проблема решена!</li>
+                <li>Если все еще белый экран - проверьте консоль браузера (F12)</li>
+                <li>Все ссылки навигации должны работать</li>
+            </ul>
+        </div>
+        
+        <div class="status info">
+            <strong>📊 Результат тестирования:</strong>
+            <div id="testResults">
+                <p>Проверьте загрузку главной страницы выше ⬆️</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Проверяем загрузку iframe
+        document.getElementById('mainFrame').onload = function() {
+            document.getElementById('testResults').innerHTML = 
+                '<p style="color: green;">✅ Главная страница загрузилась успешно!</p>';
+        };
+        
+        document.getElementById('mainFrame').onerror = function() {
+            document.getElementById('testResults').innerHTML = 
+                '<p style="color: red;">❌ Ошибка загрузки главной страницы</p>';
+        };
+    </script>
+</body>
+</html>
+
+

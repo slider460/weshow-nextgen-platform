@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест загрузки кейсов</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .log { background: #f8f9fa; padding: 10px; margin: 5px 0; border-radius: 5px; font-family: monospace; }
+        .error { background: #ffe6e6; color: red; }
+        .success { background: #e6ffe6; color: green; }
+        .info { background: #e6f3ff; color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Тест загрузки кейсов</h1>
+    <div id="logs"></div>
+    <div id="results"></div>
+
+    <script>
+        function log(message, type = 'info') {
+            const logs = document.getElementById('logs');
+            const logDiv = document.createElement('div');
+            logDiv.className = `log ${type}`;
+            logDiv.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logs.appendChild(logDiv);
+            console.log(message);
+        }
+
+        async function testCasesLoading() {
+            log('Начинаем тест загрузки кейсов...', 'info');
+            
+            try {
+                const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
+                const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE';
+                
+                const url = `${SUPABASE_URL}/rest/v1/cases?select=*&is_visible=eq.true&order=sort_order.asc`;
+                
+                log(`Делаем запрос к: ${url}`, 'info');
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                log(`Ответ получен, статус: ${response.status}`, response.ok ? 'success' : 'error');
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    log(`Ошибка HTTP: ${response.status} - ${errorText}`, 'error');
+                    return;
+                }
+
+                const data = await response.json();
+                log(`Загружено кейсов: ${data.length}`, 'success');
+                
+                // Ищем кейс Samsung
+                const samsungCase = data.find(caseItem => 
+                    caseItem.title && caseItem.title.includes('Samsung')
+                );
+                
+                if (samsungCase) {
+                    log(`✅ Найден кейс Samsung: ${samsungCase.title}`, 'success');
+                    log(`ID: ${samsungCase.id}`, 'info');
+                    log(`Клиент: ${samsungCase.client}`, 'info');
+                    log(`Год: ${samsungCase.year}`, 'info');
+                    
+                    // Проверяем ссылку
+                    const caseUrl = `/case/${samsungCase.id}`;
+                    log(`Ссылка на кейс: ${caseUrl}`, 'info');
+                    
+                    // Тестируем ссылку
+                    try {
+                        const caseResponse = await fetch(caseUrl);
+                        log(`Тест ссылки на кейс: ${caseResponse.status}`, caseResponse.ok ? 'success' : 'error');
+                    } catch (e) {
+                        log(`Ошибка при тестировании ссылки: ${e.message}`, 'error');
+                    }
+                } else {
+                    log('❌ Кейс Samsung не найден!', 'error');
+                }
+                
+                // Показываем все кейсы
+                const results = document.getElementById('results');
+                let html = '<h3>Все кейсы:</h3>';
+                data.forEach((caseItem, index) => {
+                    const isSamsung = caseItem.title && caseItem.title.includes('Samsung');
+                    html += `
+                        <div style="border: 1px solid #ccc; margin: 10px 0; padding: 15px; border-radius: 8px; ${isSamsung ? 'border: 3px solid #ff6b6b; background: #fff5f5;' : ''}">
+                            <h4>${caseItem.title || 'Без названия'}</h4>
+                            <p><strong>ID:</strong> ${caseItem.id}</p>
+                            <p><strong>Клиент:</strong> ${caseItem.client || 'Не указан'}</p>
+                            <p><strong>Год:</strong> ${caseItem.year || 'Не указан'}</p>
+                            <p><strong>Ссылка:</strong> <a href="${caseUrl}" target="_blank">${caseUrl}</a></p>
+                            ${isSamsung ? '<p style="color: red; font-weight: bold;">🎯 ЭТО КЕЙС SAMSUNG!</p>' : ''}
+                        </div>
+                    `;
+                });
+                results.innerHTML = html;
+                
+            } catch (error) {
+                log(`Ошибка: ${error.message}`, 'error');
+                console.error('Ошибка загрузки кейсов:', error);
+            }
+        }
+        
+        // Запускаем тест
+        testCasesLoading();
+    </script>
+</body>
+</html>

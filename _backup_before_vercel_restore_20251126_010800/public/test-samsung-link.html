@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест ссылки на кейс Samsung</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-link { 
+            display: inline-block; 
+            padding: 15px 30px; 
+            background: #007bff; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            margin: 10px;
+            font-size: 18px;
+        }
+        .test-link:hover { background: #0056b3; }
+        .info { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Тест ссылки на кейс Samsung</h1>
+    
+    <div class="info">
+        <h3>Информация о кейсе Samsung:</h3>
+        <p><strong>ID:</strong> 86d7cfeb-ef9b-49da-b852-ee5d42c1d4b5</p>
+        <p><strong>Название:</strong> «Особенный Новый год Samsung»</p>
+        <p><strong>Клиент:</strong> Samsung</p>
+        <p><strong>Год:</strong> 2021</p>
+    </div>
+    
+    <h3>Тестовые ссылки:</h3>
+    
+    <a href="/case/86d7cfeb-ef9b-49da-b852-ee5d42c1d4b5" class="test-link" target="_blank">
+        Перейти к кейсу Samsung (ID)
+    </a>
+    
+    <a href="/portfolio/samsung-new-year-2020" class="test-link" target="_blank">
+        Перейти к кейсу Samsung (slug)
+    </a>
+    
+    <a href="/" class="test-link" target="_blank">
+        Главная страница (проверить портфолио)
+    </a>
+    
+    <div class="info">
+        <h3>Ожидаемое поведение:</h3>
+        <p>1. Первая ссылка должна вести на страницу кейса Samsung через ID</p>
+        <p>2. Вторая ссылка должна вести на страницу кейса Samsung через slug</p>
+        <p>3. На главной странице в блоке "Наши проекты" должен отображаться кейс Samsung</p>
+    </div>
+    
+    <script>
+        // Проверяем, что ссылки работают
+        document.querySelectorAll('.test-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                console.log('Кликнули по ссылке:', this.href);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Резюме - Народецкая Светлана Робертовна</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.4;
+            color: #000;
+            background: #fff;
+            padding: 20mm;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20pt;
+            border-bottom: 2pt solid #000;
+            padding-bottom: 10pt;
+        }
+
+        .header h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-bottom: 5pt;
+            text-transform: uppercase;
+        }
+
+        .header .position {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 10pt;
+        }
+
+        .header .birth-date {
+            font-size: 11pt;
+            margin-bottom: 5pt;
+        }
+
+        .section {
+            margin-bottom: 15pt;
+        }
+
+        .section-title {
+            font-size: 12pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 8pt;
+            border-bottom: 1pt solid #000;
+            padding-bottom: 2pt;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10pt;
+            margin-bottom: 15pt;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5pt;
+        }
+
+        .contact-label {
+            font-weight: bold;
+            min-width: 80pt;
+        }
+
+        .skills-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .skills-list li {
+            margin-bottom: 3pt;
+            padding-left: 10pt;
+            position: relative;
+        }
+
+        .skills-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .pc-skills {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10pt;
+            margin-bottom: 15pt;
+        }
+
+        .pc-skill {
+            background: #f5f5f5;
+            padding: 5pt;
+            text-align: center;
+            border: 1pt solid #ddd;
+        }
+
+        .job {
+            margin-bottom: 15pt;
+            page-break-inside: avoid;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5pt;
+            padding-bottom: 3pt;
+            border-bottom: 1pt solid #eee;
+        }
+
+        .job-title {
+            font-weight: bold;
+            font-size: 12pt;
+        }
+
+        .job-company {
+            font-style: italic;
+            color: #333;
+        }
+
+        .job-period {
+            font-size: 10pt;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .job-description {
+            margin-top: 5pt;
+        }
+
+        .job-description p {
+            margin-bottom: 5pt;
+            text-align: justify;
+        }
+
+        .job-description ul {
+            margin: 5pt 0;
+            padding-left: 15pt;
+        }
+
+        .job-description li {
+            margin-bottom: 2pt;
+        }
+
+        .sub-list {
+            margin: 3pt 0;
+            padding-left: 10pt;
+        }
+
+        .sub-list li {
+            margin-bottom: 1pt;
+            font-size: 11pt;
+        }
+
+        .education {
+            margin-bottom: 15pt;
+        }
+
+        .education-item {
+            margin-bottom: 10pt;
+            padding: 5pt;
+            background: #f9f9f9;
+            border-left: 3pt solid #000;
+        }
+
+        .education-title {
+            font-weight: bold;
+            font-size: 12pt;
+        }
+
+        .education-specialty {
+            font-style: italic;
+            margin: 2pt 0;
+        }
+
+        .education-year {
+            font-size: 10pt;
+            color: #666;
+        }
+
+        .courses {
+            margin-bottom: 15pt;
+        }
+
+        .course-item {
+            margin-bottom: 5pt;
+            padding: 3pt;
+            background: #f5f5f5;
+            border-radius: 2pt;
+        }
+
+        .course-title {
+            font-weight: bold;
+            font-size: 11pt;
+        }
+
+        .course-description {
+            font-size: 10pt;
+            color: #333;
+        }
+
+        .course-year {
+            font-size: 9pt;
+            color: #666;
+            float: right;
+        }
+
+        .additional-info {
+            background: #f9f9f9;
+            padding: 8pt;
+            border-left: 3pt solid #000;
+            margin-bottom: 10pt;
+        }
+
+        .additional-info p {
+            margin: 0;
+            font-size: 11pt;
+        }
+
+        @media print {
+            body {
+                padding: 15mm;
+                font-size: 11pt;
+            }
+            
+            .header h1 {
+                font-size: 16pt;
+            }
+            
+            .header .position {
+                font-size: 12pt;
+            }
+            
+            .section-title {
+                font-size: 11pt;
+            }
+            
+            .job-title {
+                font-size: 11pt;
+            }
+            
+            .job-period {
+                font-size: 9pt;
+            }
+            
+            .job-description {
+                font-size: 10pt;
+            }
+            
+            .sub-list li {
+                font-size: 10pt;
+            }
+            
+            .education-title {
+                font-size: 11pt;
+            }
+            
+            .course-title {
+                font-size: 10pt;
+            }
+            
+            .course-description {
+                font-size: 9pt;
+            }
+            
+            .course-year {
+                font-size: 8pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Народецкая Светлана Робертовна</h1>
+        <div class="position">Начальник отдела правового сопровождения деятельности</div>
+        <div class="birth-date">Дата рождения: 17.03.1986</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Контактная информация</div>
+        <div class="contact-info">
+            <div class="contact-item">
+                <span class="contact-label">Телефон:</span>
+                <span>+7 (926) 214-80-77</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">Email:</span>
+                <span>joyss-lanny@mail.ru</span>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">Местоположение:</span>
+                <span>г. Москва, Россия</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Ключевые навыки</div>
+        <ul class="skills-list">
+            <li>Дисциплинированность, аккуратность, способность взять на себя ответственность в принятии решений по сложным вопросам, самостоятельность и оперативность при решении вопросов, умение находить нестандартные подходы при решении поставленных задач.</li>
+            <li>Работоспособность, совершенствование личной профессиональной подготовки, овладение новыми правовыми знаниями, старательность, разумная инициатива.</li>
+            <li>Оперативное и доходчивое доведение до сведения заинтересованных сторон соответствующей информации. Методами коммуникации и обработки правовой информации, в т.ч. документированной, владею свободно.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Владение ПК</div>
+        <div class="pc-skills">
+            <div class="pc-skill">MS Word</div>
+            <div class="pc-skill">MS Excel</div>
+            <div class="pc-skill">PowerPoint</div>
+            <div class="pc-skill">Outlook</div>
+            <div class="pc-skill">Консультант Плюс</div>
+            <div class="pc-skill">Гарант</div>
+            <div class="pc-skill">1С Предприятие</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Опыт работы</div>
+        
+        <div class="job">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Начальник отдела правового сопровождения деятельности</div>
+                    <div class="job-company">ООО «СпецМонтаж ГСО»</div>
+                </div>
+                <div class="job-period">2022 — наст. время</div>
+            </div>
+            <div class="job-description">
+                <p>Правовое сопровождение предприятия как генерального подрядчика по государственным контрактам, заключенным в том числе в целях реализации государственного заказа (государственные заказчики – Прокуратура Магаданской области), контрактам на выполнение строительно-монтажных работ, заказчиком которых выступает хозяйственное общество ПАО «НК «Роснефть» (ООО «РН-Аэро»), а также иных контрактов и договоров по которым предприятие выступает в качестве субподрядчика.</p>
+                
+                <p><strong>1.1. Организация и ведение договорной работы на предприятии:</strong></p>
+                <ul class="sub-list">
+                    <li>правовое сопровождение государственных контрактов и договоров, заключенных в рамках исполнения государственных оборонных заказов. Знание положений 44-ФЗ, 223-ФЗ, а также осуществления расчетов между участниками кооперации с использованием счетов, открытых в уполномоченных банках, органах федерального казначейства и др.;</li>
+                    <li>разработка типовых проектов договоров (поставки‚ строительного подряда‚ купли-продажи‚ перевозки‚ услуг‚ страхования, аренды, финансовой аренды (лизинга) и др.), а также разработка сделок любого типа сложности;</li>
+                    <li>анализ и подготовка юридических заключений представленных контрагентами договоров;</li>
+                    <li>подготовка и согласование итоговых редакций договоров предприятия, а также протоколов разногласий, дополнительных соглашений к договорам;</li>
+                    <li>оперативное внесение изменений в типовые формы договоров предприятия;</li>
+                    <li>ведение преддоговорных переговоров и разрешение преддоговорных споров;</li>
+                    <li>консультирование сотрудников предприятия по вопросам заключения, исполнения и расторжения договоров;</li>
+                    <li>создание единой системы базы данных договоров‚ системы их учёта и визирования, контроль исполнения финансовых и иных обязательств по договорам;</li>
+                    <li>правовая экспертиза банковских гарантий, договоров поручительства, залога и т.п., а также подготовка требований по банковским гарантиям.</li>
+                </ul>
+
+                <p><strong>1.2. Претензионно-исковая работа:</strong></p>
+                <ul class="sub-list">
+                    <li>выработка позиции предприятия по всем возникшим спорам;</li>
+                    <li>подготовка претензий (ответов на претензии), исков, возражений, апелляционных и кассационных жалоб, а также иных процессуальных документов;</li>
+                    <li>участие в досудебных мероприятиях по разрешению и урегулированию спора.</li>
+                </ul>
+
+                <p><strong>1.3. Корпоративная работа:</strong></p>
+                <ul class="sub-list">
+                    <li>анализ и разработка корпоративных документов (приказов, директив, инструкций, распоряжений и др.);</li>
+                    <li>внесение изменений в учредительные документы предприятия;</li>
+                    <li>работа с нотариусами;</li>
+                    <li>юридическая экспертиза внутренних документов предприятия;</li>
+                    <li>осуществление регулярного ознакомления работников предприятия с нормативными правовыми актами;</li>
+                    <li>регистрация/прекращение деятельности филиалов и обособленных подразделений;</li>
+                    <li>участие в разработке стратегии развития предприятия, анализ бизнес-процессов;</li>
+                    <li>ведение деловой переписки;</li>
+                    <li>разработка и методическое руководство правовой работой на предприятии;</li>
+                    <li>осуществление правового сопровождения деятельности в части получения, продления лицензий (в том числе лицензии на выполнение работ, составляющих государственную тайну и лицензии МЧС);</li>
+                    <li>взаимодействие с СРО;</li>
+                </ul>
+
+                <p><strong>1.4. Работа с государственными органами.</strong></p>
+                <p><strong>1.5. Имущественные отношения.</strong></p>
+                <p><strong>1.6. Правовое сопровождение закупочной деятельности предприятия.</strong></p>
+
+                <p><strong>1.7. Управленческие функции:</strong></p>
+                <ul class="sub-list">
+                    <li>формирование штата работников отдела;</li>
+                    <li>координация и распределение полномочий между работниками отдела;</li>
+                    <li>организация взаимоотношений и связей между работниками предприятия;</li>
+                    <li>контроль за надлежащим и своевременным исполнением поставленных задач;</li>
+                    <li>представление отчетов о деятельности отдела руководству предприятия.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Старший юрист</div>
+                    <div class="job-company">ЗАО «Новая усадьба»</div>
+                </div>
+                <div class="job-period">Сентябрь 2009 — Август 2020 (11 лет)</div>
+            </div>
+            <div class="job-description">
+                <p><strong>1.1. Организация и ведение договорной работы на предприятии.</strong></p>
+                <p><strong>1.2. Претензионно-исковая работа.</strong></p>
+                <p><strong>1.3. Корпоративная работа.</strong></p>
+                <p><strong>1.4. Работа с государственными органами.</strong></p>
+                <p><strong>1.5. Имущественные отношения.</strong></p>
+            </div>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Секретарь-референт</div>
+                    <div class="job-company">ООО «САБТЕРРА»</div>
+                </div>
+                <div class="job-period">Август 2008 — Сентябрь 2009 (1 год 2 месяца)</div>
+            </div>
+            <div class="job-description">
+                <p>Полное обеспечение жизнедеятельности офиса.</p>
+                <ul class="sub-list">
+                    <li>Прием, распределение телефонных звонков.</li>
+                    <li>Регистрация входящей и исходящей документации, организация делопроизводства.</li>
+                    <li>Ведение распорядка дня руководства, работа в программах Ms Office, Outlook, 1С Предприятие.</li>
+                    <li>Подготовка документов по просьбе руководства (письма, акты и т.д.).</li>
+                    <li>Визовая поддержка.</li>
+                    <li>Организация корпоративных мероприятий.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Дополнительная информация</div>
+        <div class="additional-info">
+            <p><strong>Водительские права:</strong> категория В, личный автомобиль</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Образование и курсы</div>
+        
+        <div class="education">
+            <div class="education-item">
+                <div class="education-title">Государственный Университет – Высшая школа экономики</div>
+                <div class="education-specialty">Факультет права, специализация – гражданский процесс</div>
+                <div class="education-year">2008 г.</div>
+            </div>
+        </div>
+
+        <div class="courses">
+            <div class="course-item">
+                <div class="course-title">Онлайн-школа «Lextorium»</div>
+                <div class="course-description">«Введение в банкротство»</div>
+                <div class="course-year">2022 г.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">Школа права «СТАТУТ»</div>
+                <div class="course-description">«Договорное право: реформа Гражданского кодекса и актуальные вопросы судебной практики»</div>
+                <div class="course-year">2019 г.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">Школа английского языка Nativenglish</div>
+                <div class="course-description">Разговорный интенсивный курс «LORO»</div>
+                <div class="course-year">2013 г.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">ООО "Элкод"</div>
+                <div class="course-description">«Корпоративное право: проблемные вопросы и практика применения»</div>
+                <div class="course-year">2010 г.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">ГУ-ВШЭ</div>
+                <div class="course-description">Курсы юридического английского языка «Переводчик в сфере профессиональных коммуникаций»</div>
+                <div class="course-year">2007 г.</div>
+            </div>
+            
+            <div class="course-item">
+                <div class="course-title">КонсультантПлюс</div>
+                <div class="course-description">Курсы по обучению работе с правовыми базами</div>
+                <div class="course-year">2005 г.</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

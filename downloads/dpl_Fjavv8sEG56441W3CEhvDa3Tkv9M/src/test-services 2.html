@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест сервисов</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Тест загрузки сервисов</h1>
+    <div id="result"></div>
+    
+    <script>
+        const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        async function testServices() {
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                console.log('🔄 Загружаем сервисы...');
+                
+                const { data, error } = await supabase
+                    .from('services')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    console.error('❌ Ошибка:', error);
+                    resultDiv.innerHTML = `
+                        <h2 style="color: red;">Ошибка загрузки сервисов:</h2>
+                        <p>${error.message}</p>
+                        <p><strong>Детали:</strong> ${JSON.stringify(error, null, 2)}</p>
+                    `;
+                    return;
+                }
+                
+                console.log('✅ Сервисы загружены:', data);
+                
+                if (!data || data.length === 0) {
+                    resultDiv.innerHTML = `
+                        <h2 style="color: orange;">Сервисы не найдены</h2>
+                        <p>Таблица services пуста или не существует.</p>
+                        <p>Используются fallback данные.</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <h2 style="color: green;">Сервисы загружены успешно!</h2>
+                        <p>Найдено сервисов: ${data.length}</p>
+                        <ul>
+                            ${data.map(service => `
+                                <li>
+                                    <strong>${service.name}</strong><br>
+                                    <small>${service.description}</small>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    `;
+                }
+                
+            } catch (err) {
+                console.error('❌ Критическая ошибка:', err);
+                resultDiv.innerHTML = `
+                    <h2 style="color: red;">Критическая ошибка:</h2>
+                    <p>${err.message}</p>
+                `;
+            }
+        }
+        
+        // Запускаем тест при загрузке страницы
+        testServices();
+    </script>
+</body>
+</html>

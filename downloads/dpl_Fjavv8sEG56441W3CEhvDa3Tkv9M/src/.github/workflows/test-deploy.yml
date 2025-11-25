@@ -1,0 +1,59 @@
+name: 🧪 Test Deploy
+
+on:
+  workflow_dispatch: # Только ручной запуск для тестирования
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: 📚 Install dependencies
+        run: npm ci
+        
+      - name: 🔨 Build project
+        run: npm run build
+        
+      - name: 🔍 Check secrets
+        run: |
+          echo "Checking secrets..."
+          if [ -n "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "✅ VERCEL_TOKEN is set"
+          else
+            echo "❌ VERCEL_TOKEN is missing"
+          fi
+          
+          if [ -n "${{ secrets.VERCEL_ORG_ID }}" ]; then
+            echo "✅ VERCEL_ORG_ID is set"
+          else
+            echo "❌ VERCEL_ORG_ID is missing"
+          fi
+          
+          if [ -n "${{ secrets.VERCEL_PROJECT_ID }}" ]; then
+            echo "✅ VERCEL_PROJECT_ID is set"
+          else
+            echo "❌ VERCEL_PROJECT_ID is missing"
+          fi
+          
+      - name: 🚀 Test Vercel Deploy
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          
+      - name: ✅ Success
+        if: success()
+        run: |
+          echo "🎉 Деплой успешен!"
+          echo "🌐 Сайт: https://www.weshow.su"

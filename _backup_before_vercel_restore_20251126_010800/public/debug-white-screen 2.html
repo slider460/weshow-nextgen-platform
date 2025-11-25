@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug White Screen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .debug-info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .error {
+            background: #fee;
+            border-left: 4px solid #f44;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #efe;
+            border-left: 4px solid #4f4;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .test-link {
+            display: block;
+            margin: 10px 0;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .test-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Диагностика белого экрана</h1>
+    
+    <div class="debug-info">
+        <h2>📊 Статус проверки</h2>
+        <div id="status">Проверяем...</div>
+        
+        <h3>🔗 Тестовые ссылки:</h3>
+        <a href="http://localhost:8082" class="test-link">→ Основной сайт</a>
+        <a href="http://localhost:8082/test" class="test-link">→ Тестовая страница</a>
+        <a href="http://localhost:8082/portfolio" class="test-link">→ Портфолио</a>
+        
+        <h3>🛠️ Тестовые кнопки:</h3>
+        <button onclick="testMainSite()">Проверить основной сайт</button>
+        <button onclick="checkConsoleErrors()">Проверить ошибки консоли</button>
+        <button onclick="testReactComponents()">Тест React компонентов</button>
+    </div>
+
+    <div class="debug-info">
+        <h2>📋 Результаты диагностики</h2>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function addResult(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = type;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            results.appendChild(div);
+        }
+
+        function testMainSite() {
+            addResult('Проверяем основной сайт...', 'info');
+            
+            fetch('http://localhost:8082')
+                .then(response => {
+                    if (response.ok) {
+                        addResult('✅ Основной сайт отвечает (HTTP ' + response.status + ')', 'success');
+                        return response.text();
+                    } else {
+                        addResult('❌ Основной сайт не отвечает (HTTP ' + response.status + ')', 'error');
+                        throw new Error('HTTP ' + response.status);
+                    }
+                })
+                .then(html => {
+                    if (html.includes('root')) {
+                        addResult('✅ HTML содержит div#root', 'success');
+                    } else {
+                        addResult('❌ HTML не содержит div#root', 'error');
+                    }
+                    
+                    if (html.includes('react')) {
+                        addResult('✅ React загружен', 'success');
+                    } else {
+                        addResult('❌ React не найден', 'error');
+                    }
+                })
+                .catch(error => {
+                    addResult('❌ Ошибка при проверке основного сайта: ' + error.message, 'error');
+                });
+        }
+
+        function checkConsoleErrors() {
+            addResult('Проверяем консоль браузера...', 'info');
+            addResult('⚠️ Откройте Developer Tools (F12) и проверьте вкладку Console на наличие ошибок', 'error');
+            addResult('🔍 Ищите ошибки типа: "Cannot read property", "undefined", "import", "export"', 'error');
+        }
+
+        function testReactComponents() {
+            addResult('Тестируем React компоненты...', 'info');
+            
+            // Попробуем открыть тестовую страницу
+            fetch('http://localhost:8082/test')
+                .then(response => {
+                    if (response.ok) {
+                        addResult('✅ Тестовая страница отвечает', 'success');
+                    } else {
+                        addResult('❌ Тестовая страница не отвечает (HTTP ' + response.status + ')', 'error');
+                    }
+                })
+                .catch(error => {
+                    addResult('❌ Ошибка при проверке тестовой страницы: ' + error.message, 'error');
+                });
+        }
+
+        // Автоматическая проверка при загрузке
+        window.addEventListener('load', () => {
+            addResult('🔍 Диагностическая страница загружена', 'success');
+            addResult('💡 Нажмите кнопки выше для диагностики', 'info');
+            
+            // Автоматически проверяем основной сайт
+            setTimeout(testMainSite, 1000);
+        });
+
+        // Проверяем каждые 30 секунд
+        setInterval(() => {
+            fetch('http://localhost:8082')
+                .then(response => {
+                    if (response.ok) {
+                        addResult('🟢 Сайт работает (автопроверка)', 'success');
+                    } else {
+                        addResult('🔴 Сайт не отвечает (автопроверка)', 'error');
+                    }
+                })
+                .catch(error => {
+                    addResult('🔴 Ошибка соединения (автопроверка)', 'error');
+                });
+        }, 30000);
+    </script>
+</body>
+</html>
