@@ -1,145 +1,71 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "../components/ui/button";
-import { ArrowRight, Monitor, Speaker, Eye, Projector, Gamepad, Zap } from "lucide-react";
+import { ArrowRight, Monitor, Speaker, Eye, Projector, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useEdgeEquipment } from "../hooks/useEdgeAPI";
-import { LazyLoadWrapper } from "./LazyLoadWrapper";
 
 const RentalEquipmentSection = () => {
   const [showAll, setShowAll] = useState(false);
-  
-  // Используем Edge API хук для оборудования
-  const { equipment, loading, error } = useEdgeEquipment();
-  const [equipmentItems, setEquipmentItems] = useState<any[]>([]);
 
-  // Иконки для маппинга
-  const iconMap = {
-    Monitor: Monitor,
-    Speaker: Speaker,
-    Eye: Eye,
-    Projector: Projector,
-    Gamepad: Gamepad,
-    Zap: Zap
-  };
-
-  // Обрабатываем данные из Edge API
-  useEffect(() => {
-    console.log('🔧 Оборудование из хука:', equipment);
-    
-    if (equipment && equipment.length > 0) {
-      // Преобразуем данные из базы в формат компонента
-      const formattedItems = equipment.slice(0, 6).map((item, index) => {
-        // Определяем иконку на основе названия оборудования
-        let IconComponent = Monitor;
-        if (item.name?.toLowerCase().includes('звук') || item.name?.toLowerCase().includes('аудио')) {
-          IconComponent = Speaker;
-        } else if (item.name?.toLowerCase().includes('свет') || item.name?.toLowerCase().includes('освещение')) {
-          IconComponent = Zap;
-        } else if (item.name?.toLowerCase().includes('проектор')) {
-          IconComponent = Projector;
-        }
-
-        // Определяем градиент на основе индекса
-        const gradients = [
-          "gradient-card-purple",
-          "gradient-card-blue", 
-          "gradient-card-cyan",
-          "gradient-card-dark",
-          "gradient-card-green",
-          "gradient-card-orange"
-        ];
-
-        return {
-          id: item.id,
-          title: item.name || `Оборудование ${index + 1}`,
-          description: item.description || "Профессиональное оборудование для мероприятий",
-          icon: <IconComponent className="h-6 w-6 lg:h-8 lg:w-8" />,
-          gradient: gradients[index % gradients.length],
-          link: `/equipment/${item.id}`
-        };
-      });
-
-      setEquipmentItems(formattedItems);
-      console.log('✅ Используем данные из Edge API:', formattedItems.length, 'элементов');
-    } else {
-      // Fallback к статическим данным если нет данных из БД
-      console.log('⚠️ Нет данных из Edge API, используем fallback');
-      setEquipmentItems([
-        {
-          id: 1,
-          title: "Кинетический экран",
-          description: "Движущиеся интерактивные поверхности",
-          icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
-          gradient: "gradient-card-purple",
-          link: "/services/kinetic-screen"
-        },
-        {
-          id: 2,
-          title: "Матричный экран",
-          description: "Многосегментные LED дисплеи",
-          icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
-          gradient: "gradient-card-blue",
-          link: "/services/matrix-screen"
-        },
-        {
-          id: 3,
-          title: "Прозрачный экран",
-          description: "Полупрозрачные дисплеи",
-          icon: <Eye className="h-6 w-6 lg:h-8 lg:w-8" />,
-          gradient: "gradient-card-cyan",
-          link: "/services/transparent-screen"
-        },
-        {
-          id: 4,
-          title: "Информационные панели",
-          description: "Цифровые вывески",
-          icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
-          gradient: "gradient-card-dark",
-          link: "/services/info-panels"
-        },
-        {
-          id: 5,
-          title: "Проектора (от 10000 люмен)",
-          description: "Высокояркостная проекция",
-          icon: <Projector className="h-6 w-6 lg:h-8 lg:w-8" />,
-          gradient: "gradient-card-purple",
-          link: "/services/projectors"
-        },
-        {
-          id: 6,
-          title: "Гибкий неон",
-          description: "Эластичная LED подсветка",
-          icon: <Zap className="h-6 w-6 lg:h-8 lg:w-8" />,
-          gradient: "gradient-card-blue",
-          link: "/services/flexible-neon"
-        }
-      ]);
+  const equipmentItems = [
+    {
+      id: 1,
+      title: "Кинетический экран",
+      description: "Движущиеся интерактивные поверхности",
+      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
+      gradient: "bg-gradient-to-br from-purple-500 to-pink-500",
+      link: "/equipment/kinetic-screen"
+    },
+    {
+      id: 2,
+      title: "Матричный экран",
+      description: "Многосегментные LED дисплеи",
+      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
+      gradient: "bg-gradient-to-br from-blue-500 to-cyan-500",
+      link: "/equipment/matrix-screen"
+    },
+    {
+      id: 3,
+      title: "Прозрачный экран",
+      description: "Полупрозрачные дисплеи",
+      icon: <Eye className="h-6 w-6 lg:h-8 lg:w-8" />,
+      gradient: "bg-gradient-to-br from-cyan-500 to-teal-500",
+      link: "/equipment/transparent-screen"
+    },
+    {
+      id: 4,
+      title: "Интерактивные панели",
+      description: "Сенсорные информационные системы",
+      icon: <Monitor className="h-6 w-6 lg:h-8 lg:w-8" />,
+      gradient: "bg-gradient-to-br from-slate-700 to-slate-900",
+      link: "/equipment/interactive-panels"
+    },
+    {
+      id: 5,
+      title: "Проекторы (от 10000 люмен)",
+      description: "Высокояркостная проекция",
+      icon: <Projector className="h-6 w-6 lg:h-8 lg:w-8" />,
+      gradient: "bg-gradient-to-br from-purple-500 to-indigo-500",
+      link: "/equipment/projectors"
+    },
+    {
+      id: 6,
+      title: "Гибкий неон",
+      description: "Эластичная LED подсветка",
+      icon: <Zap className="h-6 w-6 lg:h-8 lg:w-8" />,
+      gradient: "bg-gradient-to-br from-blue-500 to-purple-500",
+      link: "/equipment/flexible-neon"
     }
-  }, [equipment]);
+  ];
 
   const visibleItems = showAll ? equipmentItems : equipmentItems.slice(0, 6);
 
-  if (loading) {
-    return (
-      <section className="py-12 lg:py-24 bg-slate-50 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center">
-            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-600">Загрузка оборудования...</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="py-12 lg:py-24 bg-slate-50 relative overflow-hidden">
-      <LazyLoadWrapper>
-        {/* Background elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full blur-3xl opacity-60"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-full blur-3xl opacity-60"></div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+      {/* Background elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full blur-3xl opacity-60"></div>
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-full blur-3xl opacity-60"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
           <div className="inline-flex items-center px-3 py-1 lg:px-4 lg:py-2 rounded-full bg-blue-50 border border-blue-200 text-sm font-medium text-blue-700 mb-4">
@@ -183,17 +109,19 @@ const RentalEquipmentSection = () => {
         </div>
 
         {/* Show More/Less Button */}
-        <div className="text-center">
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => setShowAll(!showAll)}
-            className="px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-300"
-          >
-            {showAll ? "Показать меньше" : "Показать все"}
-            <ArrowRight className={`ml-2 h-4 w-4 lg:h-5 lg:w-5 transition-transform duration-300 ${showAll ? 'rotate-90' : ''}`} />
-          </Button>
-        </div>
+        {equipmentItems.length > 6 && (
+          <div className="text-center">
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => setShowAll(!showAll)}
+              className="px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-all duration-300"
+            >
+              {showAll ? "Показать меньше" : "Показать все"}
+              <ArrowRight className={`ml-2 h-4 w-4 lg:h-5 lg:w-5 transition-transform duration-300 ${showAll ? 'rotate-90' : ''}`} />
+            </Button>
+          </div>
+        )}
 
         {/* CTA Section */}
         <div className="mt-12 lg:mt-16 text-center">
@@ -219,8 +147,7 @@ const RentalEquipmentSection = () => {
             </div>
           </div>
         </div>
-        </div>
-      </LazyLoadWrapper>
+      </div>
     </section>
   );
 };

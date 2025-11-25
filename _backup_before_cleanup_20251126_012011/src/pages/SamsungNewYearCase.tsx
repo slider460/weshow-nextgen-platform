@@ -1,0 +1,246 @@
+import React from 'react'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import { Card, CardContent } from '../components/ui/card'
+import { Calendar, MapPin, Users } from 'lucide-react'
+import DarkVeil from '../components/DarkVeil'
+import { Highlighter } from '../components/ui/highlighter'
+import { HeroVideoDialog } from '../components/ui/hero-video-dialog'
+
+const SamsungNewYearCase = () => {
+  // Данные кейса
+  const caseData = {
+    title: "Особенный Новый год Samsung, 2020",
+    subtitle: "3D mapping декорации, digital зоны",
+    company: {
+      name: "Samsung",
+      description: "SAMSUNG - Транснациональная компания по производству электроники, полупроводников, телекоммуникационного оборудования, чипов памяти, жидкокристаллических дисплеев, мобильных телефонов и мониторов. Основана в 1969 году."
+    },
+    tasks: [
+      "Разработать уникальный контент для поддержки мероприятия и создания новогодней атмосферы.",
+      "Подобрать и инсталлировать мультимедийное оборудование.",
+      "Оказать полное техническое сопровождение всего мероприятия."
+    ],
+    technicalSolution: {
+      title: "Техническое решение",
+      description: [
+        "Панорамные проекционные декорации новогоднего зимнего леса. сказочных персонажей и главного новогоднего символа.",
+        "Проекционные сетки с системой автоматического сброса.",
+        "Digital почтовый ящик для отправки поздравительных открыток в любую точку мира."
+      ]
+    },
+    solutionDescription: [
+      "Используя современные мультимедийные решения, мы погрузили участников в атмосферу новогодней сказки.",
+      "Зимний лес, олени, белки и, конечно. Дед Мороз на санях это малая часть того, что участники наблюдали в течение всего мероприятия."
+    ],
+    digitalMailbox: {
+      title: "Digital почтовый ящик",
+      description: "Зона проекции «Почтовый ящик Деда Мороза» - участники заполняли поздравительные открытки и отправляли их в любую точку мира. При отправке срабатывал датчик, и на проекции появлялась одна из разработанных новогодних графических анимаций. Техническое решение: короткофокусный проектор, спрятанный в декорированном ящике, установленном прямо перед почтовым ящиком. Яркость проектора была настроена под освещение площадки. Сам почтовый ящик был выполнен из прозрачного стекла, в нем был установлен датчик, который при отправке открытки подавал сигнал на смену аудиовизуального контента на сервере."
+    },
+    results: {
+      title: "Результат",
+      video: {
+        src: "https://uc4111aafc024d284864d8722e40.dl.dropboxusercontent.com/cd/0/inline/CzarfPsW2ioRO5GCgEM5BHyiuZ8Rk2IGolW_I0ZaNo_9p7SfCJ_YbQAbp_N7_EMxW17RJqJFWR_GOMfiaJNOFuOkhmiHzO6YPmNPqgch3hqOL4V8-V-l6ym-ix8dtJb6f3eCfWeqA1UB-XGX3zT4XUTn/file?dl=1", // Прямая ссылка на видео
+        poster: "/images/cases/samsung/event-hall-wide.jpg",
+        title: "Samsung New Year 2020 - Результат мероприятия"
+      }
+    },
+    images: {
+      eventHall: "/images/cases/samsung/event-hall-wide.jpg",
+      digitalMailbox: [
+        "/images/cases/samsung/digital-mailbox-1.jpg",
+        "/images/cases/samsung/digital-mailbox-2.jpg"
+      ],
+      performance: "/images/cases/samsung/performance-stage.jpg",
+      celebration: "/images/cases/samsung/celebration-moment.jpg"
+    }
+  }
+
+
+  return (
+    <div className="min-h-screen bg-white text-gray-800 font-sans">
+      <Header />
+      
+      {/* Hero Section - в стиле Самарской области */}
+      <section className="py-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-950/90 px-4 sm:px-8 py-10 sm:py-14">
+            <div className="pointer-events-none absolute inset-0 opacity-70">
+              <DarkVeil speed={0.3} scanlineIntensity={0.08} scanlineFrequency={0.03} noiseIntensity={0.02} />
+            </div>
+            <div className="relative text-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-sm font-medium mb-4">
+                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-white text-[10px]">🎄</span>
+                Проект 2020
+              </div>
+              <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Особенный Новый год Samsung
+                <br />
+                <span className="text-blue-400">{caseData.subtitle}</span>
+              </h1>
+              <div className="flex gap-2 justify-center flex-wrap">
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur border border-white/40 text-slate-700 text-sm">
+                  <Calendar className="w-4 h-4" /> Декабрь 2020
+                </span>
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur border border-white/40 text-slate-700 text-sm">
+                  <MapPin className="w-4 h-4" /> Москва
+                </span>
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur border border-white/40 text-slate-700 text-sm">
+                  <Users className="w-4 h-4" /> Масштабное мероприятие
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* О проекте */}
+      <section className="py-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-slate-900 mb-6">О проекте</h2>
+          <Card className="shadow-lg mb-8">
+            <CardContent className="p-6">
+              <p className="text-slate-700 mb-0">
+                <Highlighter action="highlight" color="#bfdbfe" strokeWidth={2}>Используя современные мультимедийные решения</Highlighter>, мы погрузили участников в <Highlighter action="underline" color="#3b82f6" strokeWidth={2}>атмосферу новогодней сказки</Highlighter>. <Highlighter action="highlight" color="#fde68a" strokeWidth={2}>Панорамные проекционные декорации</Highlighter> новогоднего зимнего леса, сказочных персонажей и главного новогоднего символа создали незабываемое впечатление. <Highlighter action="box" color="#a7f3d0" strokeWidth={2}>Digital почтовый ящик</Highlighter> для отправки поздравительных открыток в любую точку мира стал одной из ключевых интерактивных зон мероприятия.
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* Главное видео */}
+          <Card className="shadow-xl overflow-hidden">
+            <CardContent className="p-0">
+              <div className="aspect-video">
+                <HeroVideoDialog
+                  animationStyle="from-center"
+                  thumbnailSrc={caseData.results.video.poster}
+                  thumbnailAlt={caseData.results.video.title}
+                  videoSrc={caseData.results.video.src}
+                  useVideoTag
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Main Content - Two Column Layout */}
+      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {/* Left Column */}
+        <div className="flex flex-col space-y-12">
+          {/* Tasks Section */}
+          <div className="relative pl-16">
+            <h3 className="absolute left-0 top-0 text-green-500 text-2xl font-bold transform -rotate-90 origin-top-left whitespace-nowrap">
+              Задачи
+            </h3>
+            <ul className="space-y-4 text-lg">
+              {caseData.tasks.map((task, index) => (
+                <li key={index} className="flex items-start">
+                  <span className="text-green-500 mr-3 mt-1">✓</span>
+                  {task}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Technical Solution Section */}
+          <div className="mt-12">
+            <h2 className="text-3xl font-bold mb-6">Техническое решение</h2>
+            <div className="space-y-4 text-lg">
+              {caseData.technicalSolution.description.map((item, index) => (
+                <p key={index}>{item}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="flex flex-col space-y-12">
+          {/* Solution Section */}
+          <div className="relative pr-16">
+            <h3 className="absolute right-0 top-0 text-gray-500 text-2xl font-bold transform rotate-90 origin-top-right whitespace-nowrap">
+              Решение
+            </h3>
+            <div className="space-y-4 text-lg">
+              {caseData.solutionDescription.map((desc, index) => (
+                <p key={index}>{desc}</p>
+              ))}
+            </div>
+          </div>
+
+          {/* Main Event Image */}
+          <div className="mt-12">
+            <img
+              src={caseData.images.eventHall}
+              alt="Event Hall"
+              className="w-full h-auto object-cover rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Digital Mailbox Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6 text-blue-600">{caseData.digitalMailbox.title}</h2>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                {caseData.digitalMailbox.description}
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {caseData.images.digitalMailbox.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Digital Mailbox ${index + 1}`}
+                  className="w-full h-64 object-cover rounded-lg shadow-lg"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Performance Section */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <img
+            src={caseData.images.performance}
+            alt="Performance Stage"
+            className="w-full h-auto object-cover rounded-lg shadow-lg"
+          />
+        </div>
+      </section>
+
+      {/* Celebration Moment Section */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-gray-800">Кульминация праздника</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Момент всеобщего ликования с падающим конфетти, танцами и атмосферой настоящего праздника
+            </p>
+          </div>
+          <div className="relative w-full max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
+            <img
+              src={caseData.images.celebration}
+              alt="Samsung New Year Celebration Moment"
+              className="w-full h-auto object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            <div className="absolute bottom-6 left-6 text-white">
+              <p className="text-lg font-semibold">Samsung New Year 2020</p>
+              <p className="text-sm opacity-90">Праздничная атмосфера мероприятия</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <Footer />
+    </div>
+  )
+}
+
+export default SamsungNewYearCase

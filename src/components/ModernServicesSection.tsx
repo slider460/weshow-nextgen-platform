@@ -1,25 +1,20 @@
-
 import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { ArrowRight, Sparkles, Monitor, Smartphone, Users, Palette, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import ConsultationModal from "./ConsultationModal";
-import { useEdgeServices } from "../hooks/useEdgeAPI";
-import { ServicesGridSkeleton } from "./ui/skeletons/ServiceSkeleton";
 
 const ModernServicesSection = () => {
   const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
-  const { services, loading, error } = useEdgeServices();
 
-  // Fallback сервисы для случаев ошибок
-  const fallbackServices = [
+  const services = [
     {
       icon: Monitor,
       title: "Мультимедийные решения",
       description: "Интерактивные дисплеи, видеостены и проекционные системы для вашего бизнеса",
       features: ["LED-видеостены", "Интерактивные панели", "Проекционные системы"],
       color: "from-blue-500 to-cyan-500",
-      link: "multimedia"
+      link: "multimedia-content"
     },
     {
       icon: Smartphone,
@@ -27,7 +22,7 @@ const ModernServicesSection = () => {
       description: "Создание современных приложений, игр и интерактивных решений",
       features: ["Мобильные приложения", "Интерактивные игры", "AR/VR решения"],
       color: "from-purple-500 to-pink-500",
-      link: "development"
+      link: "software-and-games"
     },
     {
       icon: Users,
@@ -39,11 +34,11 @@ const ModernServicesSection = () => {
     },
     {
       icon: Palette,
-      title: "Брендинг мероприятий",
-      description: "Создание уникального визуального образа для ваших событий",
-      features: ["Визуальная идентичность", "Интерактивные элементы", "Цифровые решения"],
+      title: "Видеопродакшн",
+      description: "Создание уникального визуального контента для ваших проектов",
+      features: ["Съёмка видео", "Монтаж", "Анимация и графика"],
       color: "from-indigo-500 to-purple-500",
-      link: "design"
+      link: "video-production"
     },
     {
       icon: Zap,
@@ -51,41 +46,9 @@ const ModernServicesSection = () => {
       description: "Временное использование профессионального мультимедийного оборудования",
       features: ["Гибкие условия", "Техподдержка", "Быстрая доставка"],
       color: "from-yellow-500 to-orange-500",
-      link: "equipment-rental"
+      link: "rental-multimedia-equipment"
     }
   ];
-
-  // Используем данные из БД или fallback
-  const processedServices = services && services.length > 0 ? services.map((service, index) => ({
-    icon: fallbackServices[index % fallbackServices.length]?.icon || Monitor,
-    title: service.name,
-    description: service.description,
-    features: service.features || fallbackServices[index % fallbackServices.length]?.features || [],
-    color: fallbackServices[index % fallbackServices.length]?.color || "from-blue-500 to-cyan-500",
-    link: service.slug || fallbackServices[index % fallbackServices.length]?.link || "service"
-  })) : fallbackServices;
-
-  // Показываем skeleton во время загрузки
-  if (loading) {
-    return (
-      <section className="py-24 bg-slate-50 relative overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-8 relative">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-purple-50 border border-purple-200 text-sm font-medium text-purple-700 mb-6">
-              🚀 Наши услуги
-            </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-6">
-              Наши
-              <span className="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent block">
-                услуги
-              </span>
-            </h2>
-          </div>
-          <ServicesGridSkeleton count={6} />
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="py-24 bg-slate-50 relative overflow-hidden">
@@ -104,11 +67,10 @@ const ModernServicesSection = () => {
               услуги
             </span>
           </h2>
-
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {processedServices.map((service, index) => (
+          {services.map((service, index) => (
             <div 
               key={index} 
               className="group relative bg-white rounded-2xl p-8 border border-slate-200/50 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden"
@@ -163,9 +125,6 @@ const ModernServicesSection = () => {
         {/* Bottom CTA */}
         <div className="text-center">
           <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-12 relative overflow-hidden">
-            {/* Background pattern */}
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
-            
             <div className="relative z-10">
               <h3 className="text-3xl font-bold text-white mb-4">
                 Нужен индивидуальный подход?

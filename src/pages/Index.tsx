@@ -14,15 +14,11 @@ import LettersCertificatesMobileSection from "../components/LettersCertificatesM
 import Footer from "../components/Footer";
 import ShowreelModal from "../components/ShowreelModal";
 import LogoLoopSection from "../components/LogoLoopSection";
-import { useAutoPrefetch } from "../hooks/usePrefetch";
 
 import { useState } from "react";
 
 const Index = () => {
   const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
-  
-  // Автоматический prefetching критических данных
-  useAutoPrefetch();
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -31,6 +27,7 @@ const Index = () => {
         <AdvancedHeroSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <EquipmentCarouselSection />
         <InteractiveSolutionsSection />
+        
         {/* Desktop Portfolio Section */}
         <div className="hidden md:block">
           <ModernPortfolioSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
