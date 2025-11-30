@@ -53,3 +53,4 @@ node-*/
 .cursor/credentials/
 .cursor/cache/
 
+.vercel/
