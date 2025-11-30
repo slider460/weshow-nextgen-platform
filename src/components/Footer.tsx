@@ -158,6 +158,17 @@ const Footer = () => {
                   Контакты
                 </Link>
               </li>
+              <li>
+                <button
+                  onClick={() => {
+                    const event = new CustomEvent('openTetrisGame');
+                    window.dispatchEvent(event);
+                  }}
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  🎮 Играть в Тетрис
+                </button>
+              </li>
             </ul>
           </div>
 

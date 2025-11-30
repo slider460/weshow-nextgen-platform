@@ -14,11 +14,24 @@ import LettersCertificatesMobileSection from "../components/LettersCertificatesM
 import Footer from "../components/Footer";
 import ShowreelModal from "../components/ShowreelModal";
 import LogoLoopSection from "../components/LogoLoopSection";
+import { BlockGameModal } from "../components/BlockGameModal";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Index = () => {
   const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
+  const [isTetrisGameOpen, setIsTetrisGameOpen] = useState(false);
+
+  useEffect(() => {
+    const handleOpenTetrisGame = () => {
+      setIsTetrisGameOpen(true);
+    };
+
+    window.addEventListener('openTetrisGame', handleOpenTetrisGame);
+    return () => {
+      window.removeEventListener('openTetrisGame', handleOpenTetrisGame);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -77,6 +90,12 @@ const Index = () => {
       <ShowreelModal 
         isOpen={isShowreelModalOpen}
         onClose={() => setIsShowreelModalOpen(false)}
+      />
+      
+      {/* Tetris Game Modal */}
+      <BlockGameModal 
+        isOpen={isTetrisGameOpen}
+        onClose={() => setIsTetrisGameOpen(false)}
       />
     </div>
   );

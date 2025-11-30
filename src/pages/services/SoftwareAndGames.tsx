@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { Button } from "../../components/ui/button";
 import { BentoCard } from "../../components/ui/bento-card";
 import TextType from "../../components/TextType";
+import { BlockGameModal } from "../../components/BlockGameModal";
 import { 
   Gamepad2, 
   Smartphone, 
@@ -191,6 +192,8 @@ const TechLogoCard = ({ tech }: { tech: { name: string; src: string; fallback: s
 };
 
 const SoftwareAndGames = () => {
+  const [isTetrisGameOpen, setIsTetrisGameOpen] = useState(false);
+
   const handleConsultation = () => {
     // Логика открытия модального окна консультации
     console.log("Открыть консультацию");
@@ -313,18 +316,71 @@ const SoftwareAndGames = () => {
                     </p>
                     
                     <div className="grid auto-rows-fr grid-cols-1 gap-4 md:grid-cols-3">
-                      {servicesData.gamification.map((service, index) => (
-                        <BentoCard
-                          key={index}
-                          title={service.title}
-                          description={service.description}
-                          icon={service.icon}
-                          image={service.image}
-                          imageAlt={service.title}
-                          size={service.size}
-                          gradient="from-[#0d7ff2]/10 via-purple-500/5 to-pink-500/5"
-                        />
-                      ))}
+                      {/* Брендированные игры */}
+                      <BentoCard
+                        title={servicesData.gamification[0].title}
+                        description={servicesData.gamification[0].description}
+                        icon={servicesData.gamification[0].icon}
+                        image={servicesData.gamification[0].image}
+                        imageAlt={servicesData.gamification[0].title}
+                        size="default"
+                        gradient="from-[#0d7ff2]/10 via-purple-500/5 to-pink-500/5"
+                      />
+                      
+                      {/* Квизы и Викторины */}
+                      <BentoCard
+                        title={servicesData.gamification[1].title}
+                        description={servicesData.gamification[1].description}
+                        icon={servicesData.gamification[1].icon}
+                        image={servicesData.gamification[1].image}
+                        imageAlt={servicesData.gamification[1].title}
+                        size="default"
+                        gradient="from-[#0d7ff2]/10 via-purple-500/5 to-pink-500/5"
+                      />
+                      
+                      {/* Турниры и Рейтинги */}
+                      <BentoCard
+                        title={servicesData.gamification[3].title}
+                        description={servicesData.gamification[3].description}
+                        icon={servicesData.gamification[3].icon}
+                        image={servicesData.gamification[3].image}
+                        imageAlt={servicesData.gamification[3].title}
+                        size="default"
+                        gradient="from-[#0d7ff2]/10 via-purple-500/5 to-pink-500/5"
+                      />
+                      
+                      {/* Виртуальные квесты (2/3 ширины - 2 колонки) */}
+                      <BentoCard
+                        title={servicesData.gamification[2].title}
+                        description={servicesData.gamification[2].description}
+                        icon={servicesData.gamification[2].icon}
+                        image={servicesData.gamification[2].image}
+                        imageAlt={servicesData.gamification[2].title}
+                        size="wide"
+                        gradient="from-[#0d7ff2]/10 via-purple-500/5 to-pink-500/5"
+                      />
+                      
+                      {/* Карточка с игрой в тетрис (1/3 ширины - 1 колонка) */}
+                      <div
+                        onClick={() => setIsTetrisGameOpen(true)}
+                        className="cursor-pointer group relative flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                      >
+                        <div className="absolute inset-0 z-0 bg-gradient-to-tr from-cyan-500/20 via-blue-500/20 to-purple-500/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                        <div className="relative z-20 flex h-full flex-col p-6">
+                          <div className="relative flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 via-blue-500 to-purple-600 shadow-lg mb-4">
+                            <Puzzle className="h-8 w-8 text-white" />
+                          </div>
+                          <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                            Играть в Тетрис
+                          </h3>
+                          <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
+                            Попробуйте нашу фирменную игру Neon Block Challenge прямо сейчас!
+                          </p>
+                          <div className="mt-auto inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:brightness-110">
+                            🎮 Играть
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -637,6 +693,12 @@ const SoftwareAndGames = () => {
       </div>
 
       <Footer />
+      
+      {/* Tetris Game Modal */}
+      <BlockGameModal 
+        isOpen={isTetrisGameOpen}
+        onClose={() => setIsTetrisGameOpen(false)}
+      />
     </div>
   );
 };

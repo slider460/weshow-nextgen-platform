@@ -53,6 +53,7 @@ const EquipmentRental = React.lazy(() => import('./pages/services/EquipmentRenta
 const ExhibitionStands = React.lazy(() => import('./pages/services/ExhibitionStands.tsx'));
 const VideoProductionTest = React.lazy(() => import('./pages/VideoProductionTest.tsx'));
 const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGames.tsx'));
+const Tetris = React.lazy(() => import('./pages/Tetris.tsx'));
 
 // Preload critical components
 const preloadCriticalComponents = () => {
@@ -116,6 +117,8 @@ function App() {
               <Route path="/equipment/interactive-panels" element={<InteractivePanels />} />
               <Route path="/equipment/projectors" element={<Projectors />} />
               <Route path="/equipment/flexible-neon" element={<FlexibleNeon />} />
+              <Route path="/tetris" element={<Tetris />} />
+              <Route path="/game" element={<Tetris />} />
               {/* Fallback route для 404 */}
               <Route path="*" element={
                 <div className="min-h-screen bg-slate-50 flex items-center justify-center">
