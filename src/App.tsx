@@ -2,8 +2,9 @@ import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { LogosProvider } from './contexts/LogosContext';
-import { AuthProvider } from './contexts/AuthContext';
-import { checkSupabaseEnv } from './utils/envCheck';
+// AuthProvider убран - сайт полностью локальный, БД не используется
+// import { AuthProvider } from './contexts/AuthContext';
+// import { checkSupabaseEnv } from './utils/envCheck';
 import ScrollToTop from './components/ScrollToTop';
 // import { PageLoader } from './components/PageLoader';
 
@@ -26,11 +27,12 @@ const About = React.lazy(() => import('./pages/About.tsx'));
 const Services = React.lazy(() => import('./pages/Services.tsx'));
 const Portfolio = React.lazy(() => import('./pages/Portfolio.tsx'));
 const Contact = React.lazy(() => import('./pages/Contact.tsx'));
-const Blog = React.lazy(() => import('./pages/Blog.tsx'));
-const News = React.lazy(() => import('./pages/News.tsx'));
-const Careers = React.lazy(() => import('./pages/Careers.tsx'));
+// Страницы с БД убраны - сайт полностью локальный
+// const Blog = React.lazy(() => import('./pages/Blog.tsx'));
+// const News = React.lazy(() => import('./pages/News.tsx'));
+// const Careers = React.lazy(() => import('./pages/Careers.tsx'));
 const PrivacyPage = React.lazy(() => import('./pages/PrivacyPage.tsx'));
-const Profile = React.lazy(() => import('./pages/Profile.tsx'));
+// const Profile = React.lazy(() => import('./pages/Profile.tsx'));
 const CaseDetail = React.lazy(() => import('./pages/CaseDetail.tsx'));
 const Team = React.lazy(() => import('./pages/Team.tsx'));
 const SamaraStandCase = React.lazy(() => import('./pages/SamaraStandCase.tsx'));
@@ -60,11 +62,8 @@ const preloadCriticalComponents = () => {
 };
 
 function App() {
-  // Проверяем переменные окружения при запуске
+  // Preload critical components after initial load
   useEffect(() => {
-    checkSupabaseEnv();
-    
-    // Preload critical components after initial load
     const timer = setTimeout(() => {
       preloadCriticalComponents();
     }, 2000); // Preload after 2 seconds
@@ -74,8 +73,7 @@ function App() {
 
   return (
     <LogosProvider>
-      <AuthProvider>
-        <BrowserRouter>
+      <BrowserRouter>
           <ScrollToTop />
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -98,11 +96,12 @@ function App() {
               <Route path="/equipment" element={<Equipment />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/news" element={<News />} />
-              <Route path="/careers" element={<Careers />} />
+              {/* Страницы с БД убраны - сайт полностью локальный */}
+              {/* <Route path="/blog" element={<Blog />} /> */}
+              {/* <Route path="/news" element={<News />} /> */}
+              {/* <Route path="/careers" element={<Careers />} /> */}
               <Route path="/privacy" element={<PrivacyPage />} />
-              <Route path="/profile" element={<Profile />} />
+              {/* <Route path="/profile" element={<Profile />} /> */}
               <Route path="/case/:id" element={<CaseDetail />} />
               <Route path="/team" element={<Team />} />
               <Route path="/portfolio/samara-stand" element={<Navigate to="/portfolio/samara-stand-vdnh" replace />} />
@@ -145,7 +144,6 @@ function App() {
             },
           }}
         />
-      </AuthProvider>
     </LogosProvider>
   );
 }
