@@ -21,42 +21,42 @@ const PageLoader = () => (
 );
 
 // Lazy load components with optimized loading
-const Index = React.lazy(() => import('./pages/Index'));
-const About = React.lazy(() => import('./pages/About'));
-const Services = React.lazy(() => import('./pages/Services'));
-const Portfolio = React.lazy(() => import('./pages/Portfolio'));
-const Contact = React.lazy(() => import('./pages/Contact'));
-const Blog = React.lazy(() => import('./pages/Blog'));
-const News = React.lazy(() => import('./pages/News'));
-const Careers = React.lazy(() => import('./pages/Careers'));
-const PrivacyPage = React.lazy(() => import('./pages/PrivacyPage'));
-const Profile = React.lazy(() => import('./pages/Profile'));
-const CaseDetail = React.lazy(() => import('./pages/CaseDetail'));
-const Team = React.lazy(() => import('./pages/Team'));
-const SamaraStandCase = React.lazy(() => import('./pages/SamaraStandCase'));
-const CaseSamaraStandVDNH = React.lazy(() => import('./pages/CaseSamaraStandVDNH'));
-const SamsungNewYearCase = React.lazy(() => import('./pages/SamsungNewYearCase'));
-const CaseSamaraStandVDNH_Test = React.lazy(() => import('./pages/CaseSamaraStandVDNH_Test'));
-const CaseStavropol3DMapping = React.lazy(() => import('./pages/CaseStavropol3DMapping'));
-const CaseSamaraExhibition = React.lazy(() => import('./pages/CaseSamaraExhibition'));
-const Equipment = React.lazy(() => import('./pages/Equipment'));
-const KineticScreen = React.lazy(() => import('./pages/equipment/KineticScreen'));
-const MatrixScreen = React.lazy(() => import('./pages/equipment/MatrixScreen'));
-const TransparentScreen = React.lazy(() => import('./pages/equipment/TransparentScreen'));
-const InteractivePanels = React.lazy(() => import('./pages/equipment/InteractivePanels'));
-const Projectors = React.lazy(() => import('./pages/equipment/Projectors'));
-const FlexibleNeon = React.lazy(() => import('./pages/equipment/FlexibleNeon'));
-const MultimediaContent = React.lazy(() => import('./pages/services/MultimediaContent'));
-const EquipmentRental = React.lazy(() => import('./pages/services/EquipmentRental'));
-const ExhibitionStands = React.lazy(() => import('./pages/services/ExhibitionStands'));
-const VideoProductionTest = React.lazy(() => import('./pages/VideoProductionTest'));
-const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGames'));
+const Index = React.lazy(() => import('./pages/Index.tsx'));
+const About = React.lazy(() => import('./pages/About.tsx'));
+const Services = React.lazy(() => import('./pages/Services.tsx'));
+const Portfolio = React.lazy(() => import('./pages/Portfolio.tsx'));
+const Contact = React.lazy(() => import('./pages/Contact.tsx'));
+const Blog = React.lazy(() => import('./pages/Blog.tsx'));
+const News = React.lazy(() => import('./pages/News.tsx'));
+const Careers = React.lazy(() => import('./pages/Careers.tsx'));
+const PrivacyPage = React.lazy(() => import('./pages/PrivacyPage.tsx'));
+const Profile = React.lazy(() => import('./pages/Profile.tsx'));
+const CaseDetail = React.lazy(() => import('./pages/CaseDetail.tsx'));
+const Team = React.lazy(() => import('./pages/Team.tsx'));
+const SamaraStandCase = React.lazy(() => import('./pages/SamaraStandCase.tsx'));
+const CaseSamaraStandVDNH = React.lazy(() => import('./pages/CaseSamaraStandVDNH.tsx'));
+const SamsungNewYearCase = React.lazy(() => import('./pages/SamsungNewYearCase.tsx'));
+const CaseSamaraStandVDNH_Test = React.lazy(() => import('./pages/CaseSamaraStandVDNH_Test.tsx'));
+const CaseStavropol3DMapping = React.lazy(() => import('./pages/CaseStavropol3DMapping.tsx'));
+const CaseSamaraExhibition = React.lazy(() => import('./pages/CaseSamaraExhibition.tsx'));
+const Equipment = React.lazy(() => import('./pages/Equipment.tsx'));
+const KineticScreen = React.lazy(() => import('./pages/equipment/KineticScreen.tsx'));
+const MatrixScreen = React.lazy(() => import('./pages/equipment/MatrixScreen.tsx'));
+const TransparentScreen = React.lazy(() => import('./pages/equipment/TransparentScreen.tsx'));
+const InteractivePanels = React.lazy(() => import('./pages/equipment/InteractivePanels.tsx'));
+const Projectors = React.lazy(() => import('./pages/equipment/Projectors.tsx'));
+const FlexibleNeon = React.lazy(() => import('./pages/equipment/FlexibleNeon.tsx'));
+const MultimediaContent = React.lazy(() => import('./pages/services/MultimediaContent.tsx'));
+const EquipmentRental = React.lazy(() => import('./pages/services/EquipmentRental.tsx'));
+const ExhibitionStands = React.lazy(() => import('./pages/services/ExhibitionStands.tsx'));
+const VideoProductionTest = React.lazy(() => import('./pages/VideoProductionTest.tsx'));
+const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGames.tsx'));
 
 // Preload critical components
 const preloadCriticalComponents = () => {
   // Preload About and Services as they're likely to be visited
-  import('./pages/About');
-  import('./pages/Services');
+  import('./pages/About.tsx');
+  import('./pages/Services.tsx');
 };
 
 function App() {
