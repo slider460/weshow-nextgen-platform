@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { isTestUser } from "../utils/adminTestUsers";
+import { isTestUser } from "../utils/adminTestUsers.ts";
 
 type Role = "admin" | "manager" | "client";
 
