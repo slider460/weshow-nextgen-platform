@@ -294,24 +294,45 @@ export const BlockGame = () => {
 
   // Обработка свайпов
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    e.preventDefault();
     const touch = e.touches[0];
-    touchStartX.current = touch.clientX;
-    touchStartY.current = touch.clientY;
-    touchStartTime.current = Date.now();
+    if (touch) {
+      touchStartX.current = touch.clientX;
+      touchStartY.current = touch.clientY;
+      touchStartTime.current = Date.now();
+    }
   }, []);
 
   const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (!touchStartX.current || !touchStartY.current || !touchStartTime.current) return;
-    if (!currentPiece || gameOver || isPaused) return;
+    e.preventDefault();
+    if (!touchStartX.current || !touchStartY.current || !touchStartTime.current) {
+      touchStartX.current = null;
+      touchStartY.current = null;
+      touchStartTime.current = null;
+      return;
+    }
+    if (!currentPiece || gameOver || isPaused) {
+      touchStartX.current = null;
+      touchStartY.current = null;
+      touchStartTime.current = null;
+      return;
+    }
 
     const touch = e.changedTouches[0];
+    if (!touch) {
+      touchStartX.current = null;
+      touchStartY.current = null;
+      touchStartTime.current = null;
+      return;
+    }
+
     const deltaX = touch.clientX - touchStartX.current;
     const deltaY = touch.clientY - touchStartY.current;
     const deltaTime = Date.now() - touchStartTime.current;
 
-    // Минимальное расстояние для свайпа
-    const minSwipeDistance = 30;
-    const maxSwipeTime = 300;
+    // Минимальное расстояние для свайпа (уменьшено для лучшей чувствительности)
+    const minSwipeDistance = 20;
+    const maxSwipeTime = 400;
 
     if (deltaTime > maxSwipeTime) {
       touchStartX.current = null;
@@ -395,65 +416,67 @@ export const BlockGame = () => {
       }
     }
 
-    return displayBoard.map((row, y) => (
-      <div key={`row-${y}`} className="flex">
-        {row.map((cell, x) => (
-          <div
-            key={`cell-${y}-${x}`}
-            className="w-[14px] h-[14px] xs:w-4 xs:h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 border border-white/15 bg-slate-800/80"
-            style={
-              cell
-                ? {
-                    background: `radial-gradient(circle at 30% 30%, ${cell.color}, #0c1a33)`,
-                    boxShadow: `0 0 14px ${cell.color}75`,
-                  }
-                : { background: "linear-gradient(135deg, rgba(37,58,89,0.7), rgba(21,32,55,0.7))" }
-            }
-          />
+    return (
+      <div className="inline-block">
+        {displayBoard.map((row, y) => (
+          <div key={`row-${y}`} className="flex">
+            {row.map((cell, x) => (
+              <div
+                key={`cell-${y}-${x}`}
+                className="w-[12px] h-[12px] min-[375px]:w-[14px] min-[375px]:h-[14px] xs:w-4 xs:h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 border border-white/15 bg-slate-800/80 flex-shrink-0"
+                style={
+                  cell
+                    ? {
+                        background: `radial-gradient(circle at 30% 30%, ${cell.color}, #0c1a33)`,
+                        boxShadow: `0 0 14px ${cell.color}75`,
+                      }
+                    : { background: "linear-gradient(135deg, rgba(37,58,89,0.7), rgba(21,32,55,0.7))" }
+                }
+              />
+            ))}
+          </div>
         ))}
       </div>
-    ));
+    );
   };
 
   return (
-    <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6 text-white">
-      <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+    <div className="space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-4 xl:space-y-6 text-white">
+      <div className="flex flex-col gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 min-w-0">
           <div className="relative flex-shrink-0">
-            <div className="flex h-10 w-10 xs:h-12 xs:w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 text-lg xs:text-xl sm:text-2xl font-black shadow-[0_15px_40px_rgba(14,165,233,0.35)]">
+            <div className="flex h-8 w-8 min-[375px]:h-10 min-[375px]:w-10 xs:h-12 xs:w-12 sm:h-14 sm:w-14 items-center justify-center rounded-lg sm:rounded-xl md:rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 text-base min-[375px]:text-lg xs:text-xl sm:text-2xl font-black shadow-[0_15px_40px_rgba(14,165,233,0.35)]">
               W
             </div>
-            <div className="absolute -inset-1.5 sm:-inset-2 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-400/50 via-purple-500/40 to-blue-600/50 blur-2xl" />
+            <div className="absolute -inset-1 sm:-inset-1.5 md:-inset-2 rounded-lg sm:rounded-2xl md:rounded-3xl bg-gradient-to-br from-cyan-400/50 via-purple-500/40 to-blue-600/50 blur-2xl" />
           </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-[9px] xs:text-[10px] sm:text-xs uppercase tracking-[0.3em] sm:tracking-[0.4em] text-cyan-200/70">WeShow Playlab</p>
-            <h2 className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white leading-tight">
+          <div className="min-w-0 flex-1 overflow-hidden">
+            <p className="text-[8px] min-[375px]:text-[9px] xs:text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] text-cyan-200/70 truncate">WeShow Playlab</p>
+            <h2 className="text-base min-[375px]:text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white leading-tight break-words">
               Neon Block&nbsp;
               <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
                 Challenge
               </span>
             </h2>
-            <p className="text-[10px] xs:text-xs sm:text-sm text-white/70 leading-snug">Фирменная аркада из нашей лаборатории интерактива</p>
+            <p className="text-[9px] min-[375px]:text-[10px] xs:text-xs sm:text-sm text-white/70 leading-snug line-clamp-2">Фирменная аркада из нашей лаборатории интерактива</p>
           </div>
         </div>
-        <div className="hidden lg:block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80 shadow-inner">
+        <div className="hidden lg:block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80 shadow-inner flex-shrink-0">
           Управляйте стрелками, вращайте стрелкой вверх или пробелом, зафиксируйте максимум линий!
         </div>
       </div>
 
       <div className="grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <div 
-          className="flex items-center justify-center rounded-xl sm:rounded-2xl md:rounded-3xl border border-white/10 bg-gradient-to-b from-[#070d1d] via-[#0b152d] to-[#111a33] p-2 sm:p-3 md:p-4 lg:p-6 shadow-[0_20px_60px_rgba(15,23,42,0.8)] touch-none select-none"
+          className="flex items-center justify-center rounded-xl sm:rounded-2xl md:rounded-3xl border border-white/10 bg-gradient-to-b from-[#070d1d] via-[#0b152d] to-[#111a33] p-1.5 sm:p-2 md:p-3 lg:p-6 shadow-[0_20px_60px_rgba(15,23,42,0.8)] touch-none select-none overflow-hidden"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          style={{ touchAction: 'none' }}
+          style={{ touchAction: 'none', WebkitUserSelect: 'none', userSelect: 'none' }}
         >
-          <div className="relative w-full max-w-full">
+          <div className="relative w-full max-w-full flex items-center justify-center">
             <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-cyan-500/10 via-purple-500/5 to-transparent blur-2xl" />
-            <div className="relative rounded-lg sm:rounded-xl md:rounded-[18px] border border-white/15 bg-[#0c1529] p-1.5 sm:p-2 md:p-3 shadow-inner shadow-black/40 backdrop-blur overflow-hidden">
-              <div className="flex justify-center w-full">
-                {renderBoard()}
-              </div>
+            <div className="relative rounded-lg sm:rounded-xl md:rounded-[18px] border border-white/15 bg-[#0c1529] p-1 sm:p-1.5 sm:p-2 md:p-3 shadow-inner shadow-black/40 backdrop-blur overflow-hidden inline-block">
+              {renderBoard()}
             </div>
           </div>
         </div>
@@ -598,17 +621,17 @@ export const BlockGameModal = ({ isOpen, onClose }: BlockGameModalProps) => {
   }
 
   return (
-    <div className="fixed inset-0 z-[120] flex items-center justify-center px-1.5 sm:px-2 md:px-4 py-2 sm:py-4 md:py-8">
+    <div className="fixed inset-0 z-[120] flex items-center justify-center px-1 sm:px-1.5 sm:px-2 md:px-4 py-1 sm:py-2 md:py-4 lg:py-8">
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-[130] w-full max-w-5xl rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[32px] border border-white/10 bg-[#05060d] p-2.5 sm:p-4 md:p-6 lg:p-8 shadow-[0_35px_120px_rgba(15,23,42,0.9)] max-h-[98vh] sm:max-h-[95vh] overflow-y-auto overscroll-contain">
+      <div className="relative z-[130] w-full max-w-5xl rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl xl:rounded-[32px] border border-white/10 bg-[#05060d] p-2 sm:p-2.5 md:p-4 lg:p-6 xl:p-8 shadow-[0_35px_120px_rgba(15,23,42,0.9)] max-h-[100vh] sm:max-h-[98vh] md:max-h-[95vh] overflow-y-auto overscroll-contain">
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-2 top-2 sm:right-3 sm:top-3 md:right-6 md:top-6 inline-flex h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/70 transition hover:bg-white/10 hover:text-white active:scale-95 touch-manipulation z-10"
+          className="absolute right-1.5 top-1.5 sm:right-2 sm:top-2 md:right-3 md:top-3 lg:right-6 lg:top-6 inline-flex h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-10 lg:w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/70 transition hover:bg-white/10 hover:text-white active:scale-95 touch-manipulation z-10"
           aria-label="Закрыть игру"
           style={{ WebkitTapHighlightColor: 'transparent' }}
         >
-          <X className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
+          <X className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 lg:h-5 lg:w-5" />
         </button>
         <BlockGame />
       </div>
