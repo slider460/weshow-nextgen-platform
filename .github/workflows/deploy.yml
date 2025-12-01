@@ -2,8 +2,8 @@ name: 🚀 Deploy to Vercel
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch: # Только ручной запуск при необходимости
+    branches: [main]
+  workflow_dispatch: # Для ручного запуска
 
 jobs:
   deploy:
@@ -25,27 +25,39 @@ jobs:
       - name: 🔨 Build project
         run: npm run build
         
-      - name: 🚀 Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-          working-directory: ./
+      - name: 📦 Install Vercel CLI
+        run: npm install -g vercel@latest
+        
+      - name: 🔗 Link Vercel project
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          echo "🔗 Привязываем проект к Vercel..."
+          mkdir -p .vercel
+          echo "{\"projectId\":\"$VERCEL_PROJECT_ID\",\"orgId\":\"$VERCEL_ORG_ID\",\"projectName\":\"weshow-nextgen-platform\"}" > .vercel/project.json
           
-      - name: 📧 Send notification
+      - name: 🚀 Deploy to Vercel Production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          echo "🚀 Деплоим на Vercel Production..."
+          vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+          vercel build --prod --token=$VERCEL_TOKEN
+          vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+          
+      - name: ✅ Deployment success
         if: success()
         run: |
-          echo "✅ Сайт успешно развернут на Vercel!"
-          echo "🌐 Домен: www.weshow.su"
-          echo "📅 Время: $(date)"
-          echo "🔗 URL: https://www.weshow.su"
+          echo "🎉 Сайт успешно развернут на https://www.weshow.su"
+          echo "📝 Проверьте деплой в Vercel Dashboard"
           
-      - name: 📧 Send failure notification
+      - name: ❌ Deployment failed
         if: failure()
         run: |
-          echo "❌ Ошибка при развертывании!"
-          echo "📅 Время: $(date)"
+          echo "❌ Ошибка при деплое!"
           echo "🔍 Проверьте логи выше для деталей"
-
+          echo "💡 Убедитесь, что все секреты настроены правильно"
