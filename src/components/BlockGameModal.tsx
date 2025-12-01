@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { Button } from "./ui/button";
-import { X } from "lucide-react";
+import { X, ArrowLeft, ArrowRight, ArrowDown, RotateCw } from "lucide-react";
 
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 20;
@@ -112,6 +112,11 @@ export const BlockGame = () => {
   const [gameOver, setGameOver] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  
+  // Для свайпов
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const touchStartTime = useRef<number | null>(null);
 
   const tetrominoKeys = useMemo(() => Object.keys(TETROMINOES) as TetrominoType[], []);
 
@@ -226,6 +231,36 @@ export const BlockGame = () => {
     placePieceOnBoard,
   ]);
 
+  // Функции управления
+  const moveLeft = useCallback(() => {
+    if (!currentPiece || gameOver || isPaused) return;
+    const leftPosition = { ...currentPiece.position, x: currentPiece.position.x - 1 };
+    if (canPlacePiece(currentPiece, leftPosition)) {
+      setCurrentPiece({ ...currentPiece, position: leftPosition });
+    }
+  }, [canPlacePiece, currentPiece, gameOver, isPaused]);
+
+  const moveRight = useCallback(() => {
+    if (!currentPiece || gameOver || isPaused) return;
+    const rightPosition = { ...currentPiece.position, x: currentPiece.position.x + 1 };
+    if (canPlacePiece(currentPiece, rightPosition)) {
+      setCurrentPiece({ ...currentPiece, position: rightPosition });
+    }
+  }, [canPlacePiece, currentPiece, gameOver, isPaused]);
+
+  const moveDown = useCallback(() => {
+    if (!currentPiece || gameOver || isPaused) return;
+    movePieceDown();
+  }, [currentPiece, gameOver, isPaused, movePieceDown]);
+
+  const rotate = useCallback(() => {
+    if (!currentPiece || gameOver || isPaused) return;
+    const rotated = rotatePiece(currentPiece);
+    if (canPlacePiece(rotated, rotated.position)) {
+      setCurrentPiece(rotated);
+    }
+  }, [canPlacePiece, currentPiece, gameOver, isPaused, rotatePiece]);
+
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
       if (!currentPiece || gameOver || isPaused) return;
@@ -233,38 +268,85 @@ export const BlockGame = () => {
       switch (event.key) {
         case "ArrowLeft": {
           event.preventDefault();
-          const leftPosition = { ...currentPiece.position, x: currentPiece.position.x - 1 };
-          if (canPlacePiece(currentPiece, leftPosition)) {
-            setCurrentPiece({ ...currentPiece, position: leftPosition });
-          }
+          moveLeft();
           break;
         }
         case "ArrowRight": {
           event.preventDefault();
-          const rightPosition = { ...currentPiece.position, x: currentPiece.position.x + 1 };
-          if (canPlacePiece(currentPiece, rightPosition)) {
-            setCurrentPiece({ ...currentPiece, position: rightPosition });
-          }
+          moveRight();
           break;
         }
         case "ArrowDown": {
           event.preventDefault();
-          movePieceDown();
+          moveDown();
           break;
         }
         case "ArrowUp":
         case " ": {
           event.preventDefault();
-          const rotated = rotatePiece(currentPiece);
-          if (canPlacePiece(rotated, rotated.position)) {
-            setCurrentPiece(rotated);
-          }
+          rotate();
           break;
         }
       }
     },
-    [canPlacePiece, currentPiece, gameOver, isPaused, movePieceDown, rotatePiece],
+    [currentPiece, gameOver, isPaused, moveLeft, moveRight, moveDown, rotate],
   );
+
+  // Обработка свайпов
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    touchStartX.current = touch.clientX;
+    touchStartY.current = touch.clientY;
+    touchStartTime.current = Date.now();
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStartX.current || !touchStartY.current || !touchStartTime.current) return;
+    if (!currentPiece || gameOver || isPaused) return;
+
+    const touch = e.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX.current;
+    const deltaY = touch.clientY - touchStartY.current;
+    const deltaTime = Date.now() - touchStartTime.current;
+
+    // Минимальное расстояние для свайпа
+    const minSwipeDistance = 30;
+    const maxSwipeTime = 300;
+
+    if (deltaTime > maxSwipeTime) {
+      touchStartX.current = null;
+      touchStartY.current = null;
+      touchStartTime.current = null;
+      return;
+    }
+
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+
+    if (absX > minSwipeDistance || absY > minSwipeDistance) {
+      if (absX > absY) {
+        // Горизонтальный свайп
+        if (deltaX > 0) {
+          moveRight();
+        } else {
+          moveLeft();
+        }
+      } else {
+        // Вертикальный свайп
+        if (deltaY > 0) {
+          // Свайп вниз - ускоренное падение
+          moveDown();
+        } else {
+          // Свайп вверх - вращение
+          rotate();
+        }
+      }
+    }
+
+    touchStartX.current = null;
+    touchStartY.current = null;
+    touchStartTime.current = null;
+  }, [currentPiece, gameOver, isPaused, moveLeft, moveRight, moveDown, rotate]);
 
   useEffect(() => {
     if (!gameStarted || gameOver || isPaused) return;
@@ -318,7 +400,7 @@ export const BlockGame = () => {
         {row.map((cell, x) => (
           <div
             key={`cell-${y}-${x}`}
-            className="w-6 h-6 border border-white/15 bg-slate-800/80"
+            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 border border-white/15 bg-slate-800/80"
             style={
               cell
                 ? {
@@ -334,71 +416,125 @@ export const BlockGame = () => {
   };
 
   return (
-    <div className="space-y-6 text-white">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex items-center gap-4">
+    <div className="space-y-4 sm:space-y-6 text-white">
+      <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex items-center gap-3 sm:gap-4">
           <div className="relative">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 text-2xl font-black shadow-[0_15px_40px_rgba(14,165,233,0.35)]">
+            <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 text-xl sm:text-2xl font-black shadow-[0_15px_40px_rgba(14,165,233,0.35)]">
               W
             </div>
             <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-cyan-400/50 via-purple-500/40 to-blue-600/50 blur-2xl" />
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.4em] text-cyan-200/70">WeShow Playlab</p>
-            <h2 className="text-3xl font-black tracking-tight text-white">
+            <p className="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-cyan-200/70">WeShow Playlab</p>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white">
               Neon Block&nbsp;
               <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
                 Challenge
               </span>
             </h2>
-            <p className="text-sm text-white/70">Фирменная аркада из нашей лаборатории интерактива</p>
+            <p className="text-xs sm:text-sm text-white/70">Фирменная аркада из нашей лаборатории интерактива</p>
           </div>
         </div>
-        <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80 shadow-inner">
+        <div className="hidden lg:block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80 shadow-inner">
           Управляйте стрелками, вращайте стрелкой вверх или пробелом, зафиксируйте максимум линий!
         </div>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-        <div className="flex items-center justify-center rounded-3xl border border-white/10 bg-gradient-to-b from-[#070d1d] via-[#0b152d] to-[#111a33] p-6 shadow-[0_20px_60px_rgba(15,23,42,0.8)]">
-          <div className="relative">
+      <div className="grid gap-4 sm:gap-6 lg:gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <div 
+          className="flex items-center justify-center rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-b from-[#070d1d] via-[#0b152d] to-[#111a33] p-3 sm:p-4 md:p-6 shadow-[0_20px_60px_rgba(15,23,42,0.8)] touch-none"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="relative w-full max-w-full">
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-cyan-500/10 via-purple-500/5 to-transparent blur-2xl" />
-            <div className="relative rounded-[18px] border border-white/15 bg-[#0c1529] p-3 shadow-inner shadow-black/40 backdrop-blur">
-              {renderBoard()}
+            <div className="relative rounded-xl sm:rounded-[18px] border border-white/15 bg-[#0c1529] p-2 sm:p-3 shadow-inner shadow-black/40 backdrop-blur overflow-hidden">
+              <div className="flex justify-center">
+                {renderBoard()}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="grid grid-cols-3 gap-4">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
-              <p className="text-xs uppercase tracking-wide text-white/60">Счёт</p>
-              <p className="text-2xl font-semibold text-white">{score}</p>
+        <div className="space-y-3 sm:space-y-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
+            <div className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4 text-center">
+              <p className="text-[10px] sm:text-xs uppercase tracking-wide text-white/60">Счёт</p>
+              <p className="text-lg sm:text-2xl font-semibold text-white">{score}</p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
-              <p className="text-xs uppercase tracking-wide text-white/60">Уровень</p>
-              <p className="text-2xl font-semibold text-white">{level}</p>
+            <div className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4 text-center">
+              <p className="text-[10px] sm:text-xs uppercase tracking-wide text-white/60">Уровень</p>
+              <p className="text-lg sm:text-2xl font-semibold text-white">{level}</p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
-              <p className="text-xs uppercase tracking-wide text-white/60">Линии</p>
-              <p className="text-2xl font-semibold text-white">{lines}</p>
+            <div className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4 text-center">
+              <p className="text-[10px] sm:text-xs uppercase tracking-wide text-white/60">Линии</p>
+              <p className="text-lg sm:text-2xl font-semibold text-white">{lines}</p>
             </div>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-5 space-y-3">
-            <h3 className="text-sm font-semibold tracking-wide text-white/80 uppercase">Управление</h3>
-            <ul className="space-y-2 text-sm text-white/70">
-              <li>← → — перемещение фигуры</li>
-              <li>↓ — ускоренное падение</li>
-              <li>↑ или Space — вращение</li>
-            </ul>
+          {/* Кнопки управления - видны на всех устройствах, но более заметны на мобильных */}
+          <div className="space-y-3">
+            <div className="rounded-2xl sm:rounded-3xl border border-white/10 bg-white/5 p-3 sm:p-4 lg:p-5">
+              <div className="hidden lg:block mb-3">
+                <h3 className="text-sm font-semibold tracking-wide text-white/80 uppercase">Управление</h3>
+                <ul className="space-y-2 text-sm text-white/70 mt-2">
+                  <li>← → — перемещение фигуры</li>
+                  <li>↓ — ускоренное падение</li>
+                  <li>↑ или Space — вращение</li>
+                </ul>
+              </div>
+              <p className="text-xs sm:text-sm uppercase tracking-wide text-white/60 mb-3 text-center lg:hidden">Управление</p>
+              <div className="grid grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  onClick={moveLeft}
+                  disabled={!gameStarted || gameOver || isPaused}
+                  className="flex items-center justify-center h-10 sm:h-12 lg:h-10 rounded-lg sm:rounded-xl border border-cyan-200/40 bg-white/5 text-white hover:bg-cyan-200/10 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform"
+                  aria-label="Влево"
+                >
+                  <ArrowLeft className="h-5 w-5 sm:h-6 sm:w-6 lg:h-5 lg:w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={rotate}
+                  disabled={!gameStarted || gameOver || isPaused}
+                  className="flex items-center justify-center h-10 sm:h-12 lg:h-10 rounded-lg sm:rounded-xl border border-purple-200/40 bg-white/5 text-white hover:bg-purple-200/10 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform"
+                  aria-label="Вращение"
+                >
+                  <RotateCw className="h-5 w-5 sm:h-6 sm:w-6 lg:h-5 lg:w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={moveRight}
+                  disabled={!gameStarted || gameOver || isPaused}
+                  className="flex items-center justify-center h-10 sm:h-12 lg:h-10 rounded-lg sm:rounded-xl border border-cyan-200/40 bg-white/5 text-white hover:bg-cyan-200/10 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform"
+                  aria-label="Вправо"
+                >
+                  <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 lg:h-5 lg:w-5" />
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={moveDown}
+                disabled={!gameStarted || gameOver || isPaused}
+                className="w-full mt-2 flex items-center justify-center h-10 sm:h-12 lg:h-10 rounded-lg sm:rounded-xl border border-blue-200/40 bg-white/5 text-white hover:bg-blue-200/10 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform"
+                aria-label="Вниз"
+              >
+                <ArrowDown className="h-5 w-5 sm:h-6 sm:w-6 lg:h-5 lg:w-5 mr-2" />
+                <span className="text-xs sm:text-sm lg:text-xs font-medium">Быстро вниз</span>
+              </button>
+              <p className="text-[10px] sm:text-xs text-white/50 text-center mt-2 lg:hidden">
+                Или используйте свайпы на игровом поле
+              </p>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
             <Button
               type="button"
               onClick={startGame}
-              className="h-12 rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 text-base font-semibold text-white hover:from-cyan-400 hover:to-purple-500"
+              className="h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 text-sm sm:text-base font-semibold text-white hover:from-cyan-400 hover:to-purple-500"
             >
               {gameStarted ? "Заново" : "Старт"}
             </Button>
@@ -407,14 +543,14 @@ export const BlockGame = () => {
               onClick={() => setIsPaused((prev) => !prev)}
               disabled={!gameStarted || gameOver}
               variant="ghost"
-              className="h-12 rounded-2xl border border-cyan-200/40 bg-white/5 text-base font-semibold text-white hover:bg-cyan-200/10 disabled:opacity-50"
+              className="h-11 sm:h-12 rounded-xl sm:rounded-2xl border border-cyan-200/40 bg-white/5 text-sm sm:text-base font-semibold text-white hover:bg-cyan-200/10 disabled:opacity-50"
             >
               {isPaused ? "Продолжить" : "Пауза"}
             </Button>
           </div>
 
           {gameOver && (
-            <div className="rounded-3xl border border-red-500/50 bg-red-500/10 p-4 text-center text-sm text-red-200">
+            <div className="rounded-2xl sm:rounded-3xl border border-red-500/50 bg-red-500/10 p-3 sm:p-4 text-center text-xs sm:text-sm text-red-200">
               Игра окончена! Ваш счёт: <span className="font-semibold">{score}</span>
             </div>
           )}
@@ -455,16 +591,16 @@ export const BlockGameModal = ({ isOpen, onClose }: BlockGameModalProps) => {
   }
 
   return (
-    <div className="fixed inset-0 z-[120] flex items-center justify-center px-4 py-8">
+    <div className="fixed inset-0 z-[120] flex items-center justify-center px-2 sm:px-4 py-4 sm:py-8">
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-[130] w-full max-w-5xl rounded-[32px] border border-white/10 bg-[#05060d] p-8 shadow-[0_35px_120px_rgba(15,23,42,0.9)]">
+      <div className="relative z-[130] w-full max-w-5xl rounded-2xl sm:rounded-3xl lg:rounded-[32px] border border-white/10 bg-[#05060d] p-4 sm:p-6 lg:p-8 shadow-[0_35px_120px_rgba(15,23,42,0.9)] max-h-[95vh] overflow-y-auto">
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-6 top-6 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/70 transition hover:bg-white/10 hover:text-white"
+          className="absolute right-3 top-3 sm:right-6 sm:top-6 inline-flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/70 transition hover:bg-white/10 hover:text-white"
           aria-label="Закрыть игру"
         >
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
         <BlockGame />
       </div>
