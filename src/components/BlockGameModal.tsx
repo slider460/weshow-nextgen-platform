@@ -400,7 +400,7 @@ export const BlockGame = () => {
         {row.map((cell, x) => (
           <div
             key={`cell-${y}-${x}`}
-            className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 border border-white/15 bg-slate-800/80"
+            className="w-[14px] h-[14px] xs:w-4 xs:h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 border border-white/15 bg-slate-800/80"
             style={
               cell
                 ? {
@@ -416,24 +416,24 @@ export const BlockGame = () => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6 text-white">
-      <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex items-center gap-3 sm:gap-4">
-          <div className="relative">
-            <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 text-xl sm:text-2xl font-black shadow-[0_15px_40px_rgba(14,165,233,0.35)]">
+    <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6 text-white">
+      <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+          <div className="relative flex-shrink-0">
+            <div className="flex h-10 w-10 xs:h-12 xs:w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 text-lg xs:text-xl sm:text-2xl font-black shadow-[0_15px_40px_rgba(14,165,233,0.35)]">
               W
             </div>
-            <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-cyan-400/50 via-purple-500/40 to-blue-600/50 blur-2xl" />
+            <div className="absolute -inset-1.5 sm:-inset-2 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-400/50 via-purple-500/40 to-blue-600/50 blur-2xl" />
           </div>
-          <div>
-            <p className="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-cyan-200/70">WeShow Playlab</p>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white">
+          <div className="min-w-0 flex-1">
+            <p className="text-[9px] xs:text-[10px] sm:text-xs uppercase tracking-[0.3em] sm:tracking-[0.4em] text-cyan-200/70">WeShow Playlab</p>
+            <h2 className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white leading-tight">
               Neon Block&nbsp;
               <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
                 Challenge
               </span>
             </h2>
-            <p className="text-xs sm:text-sm text-white/70">Фирменная аркада из нашей лаборатории интерактива</p>
+            <p className="text-[10px] xs:text-xs sm:text-sm text-white/70 leading-snug">Фирменная аркада из нашей лаборатории интерактива</p>
           </div>
         </div>
         <div className="hidden lg:block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80 shadow-inner">
@@ -441,41 +441,42 @@ export const BlockGame = () => {
         </div>
       </div>
 
-      <div className="grid gap-4 sm:gap-6 lg:gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+      <div className="grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <div 
-          className="flex items-center justify-center rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-b from-[#070d1d] via-[#0b152d] to-[#111a33] p-3 sm:p-4 md:p-6 shadow-[0_20px_60px_rgba(15,23,42,0.8)] touch-none"
+          className="flex items-center justify-center rounded-xl sm:rounded-2xl md:rounded-3xl border border-white/10 bg-gradient-to-b from-[#070d1d] via-[#0b152d] to-[#111a33] p-2 sm:p-3 md:p-4 lg:p-6 shadow-[0_20px_60px_rgba(15,23,42,0.8)] touch-none select-none"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
+          style={{ touchAction: 'none' }}
         >
           <div className="relative w-full max-w-full">
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-cyan-500/10 via-purple-500/5 to-transparent blur-2xl" />
-            <div className="relative rounded-xl sm:rounded-[18px] border border-white/15 bg-[#0c1529] p-2 sm:p-3 shadow-inner shadow-black/40 backdrop-blur overflow-hidden">
-              <div className="flex justify-center">
+            <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-cyan-500/10 via-purple-500/5 to-transparent blur-2xl" />
+            <div className="relative rounded-lg sm:rounded-xl md:rounded-[18px] border border-white/15 bg-[#0c1529] p-1.5 sm:p-2 md:p-3 shadow-inner shadow-black/40 backdrop-blur overflow-hidden">
+              <div className="flex justify-center w-full">
                 {renderBoard()}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="space-y-3 sm:space-y-4">
-          <div className="grid grid-cols-3 gap-2 sm:gap-4">
-            <div className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4 text-center">
-              <p className="text-[10px] sm:text-xs uppercase tracking-wide text-white/60">Счёт</p>
-              <p className="text-lg sm:text-2xl font-semibold text-white">{score}</p>
+        <div className="space-y-2 sm:space-y-3 md:space-y-4">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2 md:gap-4">
+            <div className="rounded-lg sm:rounded-xl md:rounded-2xl border border-white/10 bg-white/5 p-2 sm:p-3 md:p-4 text-center">
+              <p className="text-[9px] xs:text-[10px] sm:text-xs uppercase tracking-wide text-white/60">Счёт</p>
+              <p className="text-base sm:text-lg md:text-2xl font-semibold text-white mt-0.5 sm:mt-1">{score}</p>
             </div>
-            <div className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4 text-center">
-              <p className="text-[10px] sm:text-xs uppercase tracking-wide text-white/60">Уровень</p>
-              <p className="text-lg sm:text-2xl font-semibold text-white">{level}</p>
+            <div className="rounded-lg sm:rounded-xl md:rounded-2xl border border-white/10 bg-white/5 p-2 sm:p-3 md:p-4 text-center">
+              <p className="text-[9px] xs:text-[10px] sm:text-xs uppercase tracking-wide text-white/60">Уровень</p>
+              <p className="text-base sm:text-lg md:text-2xl font-semibold text-white mt-0.5 sm:mt-1">{level}</p>
             </div>
-            <div className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4 text-center">
-              <p className="text-[10px] sm:text-xs uppercase tracking-wide text-white/60">Линии</p>
-              <p className="text-lg sm:text-2xl font-semibold text-white">{lines}</p>
+            <div className="rounded-lg sm:rounded-xl md:rounded-2xl border border-white/10 bg-white/5 p-2 sm:p-3 md:p-4 text-center">
+              <p className="text-[9px] xs:text-[10px] sm:text-xs uppercase tracking-wide text-white/60">Линии</p>
+              <p className="text-base sm:text-lg md:text-2xl font-semibold text-white mt-0.5 sm:mt-1">{lines}</p>
             </div>
           </div>
 
           {/* Кнопки управления - видны на всех устройствах, но более заметны на мобильных */}
-          <div className="space-y-3">
-            <div className="rounded-2xl sm:rounded-3xl border border-white/10 bg-white/5 p-3 sm:p-4 lg:p-5">
+          <div className="space-y-2 sm:space-y-3">
+            <div className="rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl border border-white/10 bg-white/5 p-2.5 sm:p-3 md:p-4 lg:p-5">
               <div className="hidden lg:block mb-3">
                 <h3 className="text-sm font-semibold tracking-wide text-white/80 uppercase">Управление</h3>
                 <ul className="space-y-2 text-sm text-white/70 mt-2">
@@ -484,57 +485,62 @@ export const BlockGame = () => {
                   <li>↑ или Space — вращение</li>
                 </ul>
               </div>
-              <p className="text-xs sm:text-sm uppercase tracking-wide text-white/60 mb-3 text-center lg:hidden">Управление</p>
-              <div className="grid grid-cols-3 gap-2">
+              <p className="text-[10px] xs:text-xs sm:text-sm uppercase tracking-wide text-white/60 mb-2 sm:mb-3 text-center lg:hidden">Управление</p>
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                 <button
                   type="button"
                   onClick={moveLeft}
                   disabled={!gameStarted || gameOver || isPaused}
-                  className="flex items-center justify-center h-10 sm:h-12 lg:h-10 rounded-lg sm:rounded-xl border border-cyan-200/40 bg-white/5 text-white hover:bg-cyan-200/10 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform"
+                  className="flex items-center justify-center h-11 sm:h-12 md:h-14 lg:h-10 rounded-lg sm:rounded-xl border border-cyan-200/40 bg-white/5 text-white hover:bg-cyan-200/10 active:bg-cyan-200/20 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all touch-manipulation"
                   aria-label="Влево"
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
                 >
-                  <ArrowLeft className="h-5 w-5 sm:h-6 sm:w-6 lg:h-5 lg:w-5" />
+                  <ArrowLeft className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 lg:h-5 lg:w-5" />
                 </button>
                 <button
                   type="button"
                   onClick={rotate}
                   disabled={!gameStarted || gameOver || isPaused}
-                  className="flex items-center justify-center h-10 sm:h-12 lg:h-10 rounded-lg sm:rounded-xl border border-purple-200/40 bg-white/5 text-white hover:bg-purple-200/10 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform"
+                  className="flex items-center justify-center h-11 sm:h-12 md:h-14 lg:h-10 rounded-lg sm:rounded-xl border border-purple-200/40 bg-white/5 text-white hover:bg-purple-200/10 active:bg-purple-200/20 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all touch-manipulation"
                   aria-label="Вращение"
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
                 >
-                  <RotateCw className="h-5 w-5 sm:h-6 sm:w-6 lg:h-5 lg:w-5" />
+                  <RotateCw className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 lg:h-5 lg:w-5" />
                 </button>
                 <button
                   type="button"
                   onClick={moveRight}
                   disabled={!gameStarted || gameOver || isPaused}
-                  className="flex items-center justify-center h-10 sm:h-12 lg:h-10 rounded-lg sm:rounded-xl border border-cyan-200/40 bg-white/5 text-white hover:bg-cyan-200/10 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform"
+                  className="flex items-center justify-center h-11 sm:h-12 md:h-14 lg:h-10 rounded-lg sm:rounded-xl border border-cyan-200/40 bg-white/5 text-white hover:bg-cyan-200/10 active:bg-cyan-200/20 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all touch-manipulation"
                   aria-label="Вправо"
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
                 >
-                  <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 lg:h-5 lg:w-5" />
+                  <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 lg:h-5 lg:w-5" />
                 </button>
               </div>
               <button
                 type="button"
                 onClick={moveDown}
                 disabled={!gameStarted || gameOver || isPaused}
-                className="w-full mt-2 flex items-center justify-center h-10 sm:h-12 lg:h-10 rounded-lg sm:rounded-xl border border-blue-200/40 bg-white/5 text-white hover:bg-blue-200/10 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform"
+                className="w-full mt-1.5 sm:mt-2 flex items-center justify-center h-11 sm:h-12 md:h-14 lg:h-10 rounded-lg sm:rounded-xl border border-blue-200/40 bg-white/5 text-white hover:bg-blue-200/10 active:bg-blue-200/20 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-all touch-manipulation"
                 aria-label="Вниз"
+                style={{ WebkitTapHighlightColor: 'transparent' }}
               >
-                <ArrowDown className="h-5 w-5 sm:h-6 sm:w-6 lg:h-5 lg:w-5 mr-2" />
-                <span className="text-xs sm:text-sm lg:text-xs font-medium">Быстро вниз</span>
+                <ArrowDown className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 lg:h-5 lg:w-5 mr-1.5 sm:mr-2" />
+                <span className="text-[11px] xs:text-xs sm:text-sm lg:text-xs font-medium">Быстро вниз</span>
               </button>
-              <p className="text-[10px] sm:text-xs text-white/50 text-center mt-2 lg:hidden">
+              <p className="text-[9px] xs:text-[10px] sm:text-xs text-white/50 text-center mt-1.5 sm:mt-2 lg:hidden">
                 Или используйте свайпы на игровом поле
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 sm:gap-3">
+          <div className="grid grid-cols-2 gap-1.5 sm:gap-2 md:gap-3">
             <Button
               type="button"
               onClick={startGame}
-              className="h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 text-sm sm:text-base font-semibold text-white hover:from-cyan-400 hover:to-purple-500"
+              className="h-10 sm:h-11 md:h-12 rounded-lg sm:rounded-xl md:rounded-2xl bg-gradient-to-r from-cyan-500 to-purple-600 text-xs sm:text-sm md:text-base font-semibold text-white hover:from-cyan-400 hover:to-purple-500 active:scale-95 transition-transform touch-manipulation"
+              style={{ WebkitTapHighlightColor: 'transparent' }}
             >
               {gameStarted ? "Заново" : "Старт"}
             </Button>
@@ -543,7 +549,8 @@ export const BlockGame = () => {
               onClick={() => setIsPaused((prev) => !prev)}
               disabled={!gameStarted || gameOver}
               variant="ghost"
-              className="h-11 sm:h-12 rounded-xl sm:rounded-2xl border border-cyan-200/40 bg-white/5 text-sm sm:text-base font-semibold text-white hover:bg-cyan-200/10 disabled:opacity-50"
+              className="h-10 sm:h-11 md:h-12 rounded-lg sm:rounded-xl md:rounded-2xl border border-cyan-200/40 bg-white/5 text-xs sm:text-sm md:text-base font-semibold text-white hover:bg-cyan-200/10 active:scale-95 disabled:opacity-50 transition-transform touch-manipulation"
+              style={{ WebkitTapHighlightColor: 'transparent' }}
             >
               {isPaused ? "Продолжить" : "Пауза"}
             </Button>
@@ -591,16 +598,17 @@ export const BlockGameModal = ({ isOpen, onClose }: BlockGameModalProps) => {
   }
 
   return (
-    <div className="fixed inset-0 z-[120] flex items-center justify-center px-2 sm:px-4 py-4 sm:py-8">
+    <div className="fixed inset-0 z-[120] flex items-center justify-center px-1.5 sm:px-2 md:px-4 py-2 sm:py-4 md:py-8">
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-[130] w-full max-w-5xl rounded-2xl sm:rounded-3xl lg:rounded-[32px] border border-white/10 bg-[#05060d] p-4 sm:p-6 lg:p-8 shadow-[0_35px_120px_rgba(15,23,42,0.9)] max-h-[95vh] overflow-y-auto">
+      <div className="relative z-[130] w-full max-w-5xl rounded-xl sm:rounded-2xl md:rounded-3xl lg:rounded-[32px] border border-white/10 bg-[#05060d] p-2.5 sm:p-4 md:p-6 lg:p-8 shadow-[0_35px_120px_rgba(15,23,42,0.9)] max-h-[98vh] sm:max-h-[95vh] overflow-y-auto overscroll-contain">
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-3 top-3 sm:right-6 sm:top-6 inline-flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/70 transition hover:bg-white/10 hover:text-white"
+          className="absolute right-2 top-2 sm:right-3 sm:top-3 md:right-6 md:top-6 inline-flex h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/70 transition hover:bg-white/10 hover:text-white active:scale-95 touch-manipulation z-10"
           aria-label="Закрыть игру"
+          style={{ WebkitTapHighlightColor: 'transparent' }}
         >
-          <X className="h-4 w-4 sm:h-5 sm:w-5" />
+          <X className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5" />
         </button>
         <BlockGame />
       </div>
