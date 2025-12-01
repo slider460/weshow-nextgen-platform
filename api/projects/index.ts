@@ -1,131 +1,12 @@
-import { createClient } from '@supabase/supabase-js';
-import { kv } from '@vercel/kv';
-
-// Используем Supabase вместо Neon для совместимости
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL!,
-  process.env.VITE_SUPABASE_SERVICE_KEY!
-);
-
+// Supabase и Vercel KV удалены - возвращаем статические данные
 // Конфигурация для Vercel Edge Runtime
 export const config = {
   runtime: 'edge',
-  regions: ['iad1', 'fra1', 'sin1']
+  regions: ['iad1']
 };
 
-export default async function handler(req: Request) {
-  try {
-    // Проверяем метод запроса
-    if (req.method !== 'GET') {
-      return new Response('Method not allowed', { status: 405 });
-    }
-
-    const url = new URL(req.url);
-    const limit = parseInt(url.searchParams.get('limit') || '6');
-    const offset = parseInt(url.searchParams.get('offset') || '0');
-    
-    // Ключ для кеша
-    const cacheKey = `projects:${limit}:${offset}`;
-    
-    // Пытаемся получить данные из кеша
-    try {
-      const cached = await kv.get(cacheKey);
-      if (cached) {
-        console.log('✅ Данные получены из кеша');
-        return new Response(JSON.stringify(cached), {
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'public, max-age=300', // 5 минут кеш
-            'X-Cache': 'HIT'
-          }
-        });
-      }
-    } catch (cacheError) {
-      console.warn('⚠️ Ошибка чтения кеша:', cacheError);
-    }
-
-    // Если нет в кеше, загружаем из базы данных
-    console.log('🔄 Загружаем данные из Supabase');
-    
-    const { data: projects, error: dbError } = await supabase
-      .from('cases')
-      .select(`
-        id,
-        title,
-        client,
-        year,
-        description,
-        results,
-        technologies,
-        image_url,
-        video_url,
-        is_visible,
-        sort_order,
-        created_at
-      `)
-      .eq('is_visible', true)
-      .order('sort_order', { ascending: true })
-      .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1);
-
-    if (dbError) {
-      console.error('❌ Ошибка Supabase:', dbError);
-      throw dbError;
-    }
-
-    // Обрабатываем результаты
-    const processedProjects = projects.map(project => {
-      let results = [];
-      if (Array.isArray(project.results)) {
-        results = project.results;
-      } else if (typeof project.results === 'string' && project.results.trim()) {
-        try {
-          const parsed = JSON.parse(project.results);
-          if (Array.isArray(parsed)) {
-            results = parsed;
-          } else {
-            results = project.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
-          }
-        } catch {
-          results = project.results.split(/[\n,;]/).map(r => r.trim()).filter(r => r.length > 0);
-        }
-      }
-
-      return {
-        id: project.id,
-        title: project.title,
-        client: project.client || 'Клиент не указан',
-        date: project.year?.toString() || 'Год не указан',
-        description: project.description,
-        image: project.image_url || "/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png",
-        results: results,
-        tech: project.technologies || [],
-        video_url: project.video_url,
-        sort_order: project.sort_order
-      };
-    });
-
-    // Сохраняем в кеш на 5 минут
-    try {
-      await kv.setex(cacheKey, 300, processedProjects);
-      console.log('💾 Данные сохранены в кеш');
-    } catch (cacheError) {
-      console.warn('⚠️ Ошибка записи в кеш:', cacheError);
-    }
-
-    return new Response(JSON.stringify(processedProjects), {
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=300',
-        'X-Cache': 'MISS'
-      }
-    });
-
-  } catch (error) {
-    console.error('❌ Ошибка API проектов:', error);
-    
-    // Fallback на статические данные
-    const fallbackProjects = [
+// Статические данные проектов (локальные)
+const staticProjects = [
       {
         id: 'static-1',
         title: "Особенный Новый год Samsung",
@@ -214,9 +95,35 @@ export default async function handler(req: Request) {
         tech: ["Проекционные технологии", "Интерактивные элементы", "Звуковое оборудование"],
         sort_order: 8
       }
-    ];
+];
 
-    return new Response(JSON.stringify(fallbackProjects), {
+export default async function handler(req: Request) {
+  // Проверяем метод запроса
+  if (req.method !== 'GET') {
+    return new Response('Method not allowed', { status: 405 });
+  }
+
+  try {
+    const url = new URL(req.url);
+    const limit = parseInt(url.searchParams.get('limit') || '6');
+    const offset = parseInt(url.searchParams.get('offset') || '0');
+    
+    // Возвращаем статические данные с пагинацией
+    const paginatedProjects = staticProjects.slice(offset, offset + limit);
+    
+    return new Response(JSON.stringify(paginatedProjects), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=300',
+        'X-Cache': 'STATIC'
+      }
+    });
+
+  } catch (error) {
+    console.error('❌ Ошибка API проектов:', error);
+    
+    // Fallback на первые 6 проектов
+    return new Response(JSON.stringify(staticProjects.slice(0, 6)), {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'public, max-age=60',
