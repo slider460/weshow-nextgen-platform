@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест React загрузки кейсов</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { border: 1px solid #ccc; margin: 20px 0; padding: 20px; border-radius: 8px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Тест React загрузки кейсов</h1>
+    
+    <div class="test-section">
+        <h3>1. Проверка главной страницы</h3>
+        <p>Откройте главную страницу и проверьте консоль браузера на наличие ошибок:</p>
+        <a href="/" target="_blank" style="display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">Открыть главную страницу</a>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. Проверка кейса Samsung</h3>
+        <p>Проверьте, что кейс Samsung отображается в блоке "Наши проекты":</p>
+        <a href="/case/86d7cfeb-ef9b-49da-b852-ee5d42c1d4b5" target="_blank" style="display: inline-block; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 5px;">Открыть кейс Samsung</a>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. Проверка API кейсов</h3>
+        <p>Проверьте, что API возвращает кейсы:</p>
+        <button onclick="testAPI()" style="padding: 10px 20px; background: #ffc107; color: black; border: none; border-radius: 5px; cursor: pointer;">Тестировать API</button>
+        <div id="api-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>4. Инструкции по проверке</h3>
+        <ol>
+            <li>Откройте главную страницу</li>
+            <li>Проверьте, что в блоке "Наши проекты" отображается кейс "«Особенный Новый год Samsung»"</li>
+            <li>Кликните на кейс Samsung</li>
+            <li>Проверьте, что открывается страница кейса с видео</li>
+            <li>Проверьте консоль браузера на наличие ошибок</li>
+        </ol>
+    </div>
+    
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = '<p class="info">Тестируем API...</p>';
+            
+            try {
+                const SUPABASE_URL = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
+                const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE';
+                
+                const url = `${SUPABASE_URL}/rest/v1/cases?select=*&is_visible=eq.true&order=sort_order.asc`;
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+                }
+
+                const data = await response.json();
+                
+                const samsungCase = data.find(caseItem => 
+                    caseItem.title && caseItem.title.includes('Samsung')
+                );
+                
+                if (samsungCase) {
+                    resultDiv.innerHTML = `
+                        <p class="success">✅ API работает! Найден кейс Samsung:</p>
+                        <p><strong>Название:</strong> ${samsungCase.title}</p>
+                        <p><strong>ID:</strong> ${samsungCase.id}</p>
+                        <p><strong>Клиент:</strong> ${samsungCase.client}</p>
+                        <p><strong>Год:</strong> ${samsungCase.year}</p>
+                        <p><strong>Всего кейсов:</strong> ${data.length}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = '<p class="error">❌ Кейс Samsung не найден в API</p>';
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="error">❌ Ошибка API: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

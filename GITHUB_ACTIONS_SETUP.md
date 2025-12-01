@@ -74,3 +74,5 @@ git push origin main
 
 Но GitHub Actions обеспечит автоматический деплой при каждом push.
 
+
+

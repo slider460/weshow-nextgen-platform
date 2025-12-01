@@ -1,5 +1,5 @@
-// Автономный режим: Supabase опционален, сайт работает без него
-import { createClient } from '@supabase/supabase-js'
+// Supabase полностью удален - сайт работает локально
+// Mock-клиент для совместимости с существующим кодом
 
 // Создаем mock-клиент, который не делает реальных запросов
 const createMockSupabaseClient = () => {
@@ -20,45 +20,7 @@ const createMockSupabaseClient = () => {
   } as any;
 };
 
-// Используем mock-клиент по умолчанию, так как Supabase не используется
-// Реальный клиент создается только если переменные окружения явно заданы
-let supabase: any;
-
-try {
-  // Проверяем, заданы ли переменные окружения (БЕЗ fallback значений)
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-  // Создаем реальный клиент ТОЛЬКО если переменные явно заданы
-  if (supabaseUrl && supabaseAnonKey && supabaseUrl.trim() !== '' && supabaseAnonKey.trim() !== '') {
-    supabase = createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-        detectSessionInUrl: false
-      },
-      realtime: {
-        params: {
-          eventsPerSecond: 10,
-        },
-      },
-      global: {
-        headers: {
-          'X-Client-Info': 'weshow-platform',
-          'x-application-name': 'weshow-platform'
-        }
-      },
-      db: {
-        schema: 'public',
-      },
-    });
-  } else {
-    // Если переменные не заданы - используем mock-клиент
-    supabase = createMockSupabaseClient();
-  }
-} catch (error) {
-  console.log('ℹ️ Supabase не доступен, используется mock-клиент');
-  supabase = createMockSupabaseClient();
-}
+// Всегда используем mock-клиент, так как Supabase не используется
+const supabase = createMockSupabaseClient();
 
 export { supabase }

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест загрузки в Supabase Storage</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .upload-area { border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; }
+        .result { margin: 20px 0; padding: 10px; background: #f5f5f5; border-radius: 5px; }
+        .error { background: #ffebee; color: #c62828; }
+        .success { background: #e8f5e8; color: #2e7d32; }
+        img { max-width: 300px; height: auto; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Тест загрузки в Supabase Storage</h1>
+    
+    <div class="upload-area" id="uploadArea">
+        <p>Перетащите изображение сюда или нажмите для выбора</p>
+        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+    </div>
+    
+    <div id="result"></div>
+    
+    <script>
+        // Конфигурация Supabase
+        const supabaseUrl = 'https://zbykhdjqrtqftfitbvbt.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpieWtoZGpxcnRxZnRmaXRidmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxMzkzMjMsImV4cCI6MjA3NDcxNTMyM30.L9M4qQ_gkoyLj7oOwKZgyOVHoGv4JMJw-8m91IJAZjE';
+        
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const resultDiv = document.getElementById('result');
+        
+        function showResult(message, isError = false) {
+            resultDiv.innerHTML = `<div class="result ${isError ? 'error' : 'success'}">${message}</div>`;
+        }
+        
+        async function uploadFile(file) {
+            try {
+                showResult('Загружаем файл...');
+                
+                // Генерируем уникальное имя файла
+                const timestamp = Date.now();
+                const randomString = Math.random().toString(36).substring(2, 15);
+                const fileExtension = file.name.split('.').pop();
+                const fileName = `${timestamp}_${randomString}.${fileExtension}`;
+                const filePath = `news/${fileName}`;
+                
+                console.log('Загружаем файл:', filePath);
+                
+                // Загружаем файл
+                const { data, error } = await supabase.storage
+                    .from('images')
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+                
+                if (error) {
+                    throw error;
+                }
+                
+                console.log('Файл загружен:', data);
+                
+                // Получаем публичный URL
+                const { data: urlData } = supabase.storage
+                    .from('images')
+                    .getPublicUrl(filePath);
+                
+                const publicUrl = urlData.publicUrl;
+                console.log('Публичный URL:', publicUrl);
+                
+                showResult(`
+                    <h3>✅ Файл успешно загружен!</h3>
+                    <p><strong>Имя файла:</strong> ${fileName}</p>
+                    <p><strong>Путь:</strong> ${filePath}</p>
+                    <p><strong>Публичный URL:</strong> <a href="${publicUrl}" target="_blank">${publicUrl}</a></p>
+                    <img src="${publicUrl}" alt="Загруженное изображение">
+                `);
+                
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+                showResult(`
+                    <h3>❌ Ошибка загрузки</h3>
+                    <p><strong>Ошибка:</strong> ${error.message}</p>
+                    <p><strong>Код:</strong> ${error.statusCode || 'N/A'}</p>
+                `, true);
+            }
+        }
+        
+        // Обработчики событий
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '#f0f0f0';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.backgroundColor = '';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                uploadFile(files[0]);
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            const files = e.target.files;
+            if (files.length > 0) {
+                uploadFile(files[0]);
+            }
+        });
+        
+        // Проверяем подключение при загрузке
+        window.addEventListener('load', async () => {
+            try {
+                const { data, error } = await supabase.storage.listBuckets();
+                if (error) throw error;
+                
+                const imagesBucket = data.find(bucket => bucket.id === 'images');
+                if (imagesBucket) {
+                    showResult('✅ Подключение к Supabase успешно. Bucket "images" найден.');
+                } else {
+                    showResult('⚠️ Bucket "images" не найден. Выполните скрипт setup_images_storage_simple.sql', true);
+                }
+            } catch (error) {
+                showResult(`❌ Ошибка подключения: ${error.message}`, true);
+            }
+        });
+    </script>
+</body>
+</html>
