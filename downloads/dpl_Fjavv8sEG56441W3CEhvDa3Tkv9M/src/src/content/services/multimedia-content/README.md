@@ -1,1 +1,0 @@
-# Контент страницы Multimedia Content

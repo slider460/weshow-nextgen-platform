@@ -50,6 +50,8 @@ const Projectors = React.lazy(() => import('./pages/equipment/Projectors.tsx'));
 const FlexibleNeon = React.lazy(() => import('./pages/equipment/FlexibleNeon.tsx'));
 const MultimediaContent = React.lazy(() => import('./pages/services/MultimediaContent.tsx'));
 const EquipmentRental = React.lazy(() => import('./pages/services/EquipmentRental.tsx'));
+const RentalMultimediaEquipment = React.lazy(() => import('./pages/services/RentalMultimediaEquipment.tsx'));
+const TechnologicalExhibitionStands = React.lazy(() => import('./pages/services/TechnologicalExhibitionStands.tsx'));
 const ExhibitionStands = React.lazy(() => import('./pages/services/ExhibitionStands.tsx'));
 const VideoProductionTest = React.lazy(() => import('./pages/VideoProductionTest.tsx'));
 const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGames.tsx'));
@@ -92,8 +94,8 @@ function App() {
               <Route path="/services/video-production" element={<VideoProductionTest />} />
               <Route path="/services/software-and-games" element={<SoftwareAndGames />} />
               <Route path="/services/multimedia-installations" element={<Services />} />
-              <Route path="/services/rental-multimedia-equipment" element={<EquipmentRental />} />
-              <Route path="/services/technological-exhibition-stands" element={<ExhibitionStands />} />
+              <Route path="/services/rental-multimedia-equipment" element={<RentalMultimediaEquipment />} />
+              <Route path="/services/technological-exhibition-stands" element={<TechnologicalExhibitionStands />} />
               <Route path="/equipment" element={<Equipment />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contact" element={<Contact />} />

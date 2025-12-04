@@ -182,10 +182,10 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                   
                   <div className="relative z-10">
                     <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">
-                      КОМПЛЕКСНАЯ АРЕНДА
+                      Мультимедийные и интерактивные решения
                     </h3>
-                    <p className="text-white/95 text-base leading-relaxed mb-6 drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
-                      Цена аренды включает доставку, монтаж и сопровождение
+                    <p className="text-white/95 text-sm leading-relaxed mb-6 drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
+                      Разработаем концепцию, подберём оборудование, произведём монтаж и обеспечим сопровождение.
                     </p>
                   </div>
                   <div className="self-start border-white/50 text-white group-hover:bg-white/25 bg-white/10 group-hover:border-white/70 transition-all duration-300 drop-shadow-md backdrop-blur-sm relative z-10 px-4 py-2 rounded-full text-sm font-medium group-hover:animate-pulse">
@@ -243,15 +243,14 @@ const AdvancedHeroSection = ({ onShowShowreel }: AdvancedHeroSectionProps) => {
                   
                   <div className="relative z-10">
                     <h3 className="text-3xl font-bold text-white mb-6 drop-shadow-lg group-hover:text-white/90 transition-colors duration-300">
-                      КОМПЛЕКСНАЯ<br />
-                      АРЕНДА<br />
-                      ИНТЕРАКТИВНОГО<br />
-                      ОБОРУДОВАНИЯ
+                      Мультимедийные и<br />
+                      интерактивные<br />
+                      решения
                     </h3>
                     <p className="text-white/95 text-base leading-relaxed mb-8 drop-shadow-md group-hover:text-white/80 transition-colors duration-300">
-                      Цена аренды нашего цифрового оборудования включает в себя 
-                      полный спектр обслуживания: оперативная доставка, 
-                      качественный монтаж и техническое сопровождение.
+                      Разработаем визуальную концепцию и адаптируем ПО под ваши задачи. 
+                      Подберем инновационное оборудование, произведем монтаж и запуск, 
+                      а также обеспечим полное техническое сопровождение на площадке.
                     </p>
                   </div>
                   <div className="self-start border-white/50 text-white group-hover:bg-white/25 bg-white/10 group-hover:border-white/70 transition-all duration-300 drop-shadow-md backdrop-blur-sm relative z-10 px-6 py-3 rounded-full text-sm font-medium group-hover:animate-pulse">

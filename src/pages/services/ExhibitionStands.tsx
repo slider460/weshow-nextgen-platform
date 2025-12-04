@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import { 
   Building, 
   Monitor, 
-  Touchscreen, 
+  Tv2, 
   ArrowRight, 
   CheckCircle, 
   Star,
@@ -34,7 +34,7 @@ const ExhibitionStands = () => {
       features: ["Сенсорные экраны", "VR/AR элементы", "Интерактивные презентации"]
     },
     {
-      icon: Touch,
+      icon: Tv2,
       title: "Мультимедийные стенды",
       description: "Полноценные медиа-инсталляции",
       features: ["LED-видеостены", "3D-маппинг", "Звуковые системы"]

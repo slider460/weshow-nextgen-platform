@@ -13,13 +13,13 @@ const BentoGridSection = () => {
   const bentoItems = [
     {
       id: 1,
-      title: "Комплексная аренда интерактивного оборудования",
-      subtitle: "",
+      title: "Мультимедийные и интерактивные решения",
+      subtitle: "Разработаем визуальную концепцию и адаптируем ПО под ваши задачи. Подберем инновационное оборудование, произведем монтаж и запуск, а также обеспечим полное техническое сопровождение на площадке.",
       buttonText: "Подробнее",
       size: "large", // занимает 2 колонки
       gradient: "from-primary/20 to-primary/5",
       image: "/src/assets/office-building.jpg",
-      action: () => navigate("/contact")
+      action: () => navigate("/equipment")
     },
     {
       id: 2,
@@ -79,9 +79,14 @@ const BentoGridSection = () => {
               <div className={`absolute inset-0 bg-gradient-to-br ${bentoItems[0].gradient} group-hover:opacity-90 transition-all duration-300`} />
               <div className="relative z-10 p-6 flex flex-col justify-between h-full">
                 <div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-4">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3">
                     {bentoItems[0].title}
                   </h3>
+                  {bentoItems[0].subtitle && (
+                    <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-lg">
+                      {bentoItems[0].subtitle}
+                    </p>
+                  )}
                 </div>
                 <Button 
                   variant="outline" 
