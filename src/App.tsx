@@ -4,7 +4,6 @@ import { Toaster } from 'sonner';
 import { LogosProvider } from './contexts/LogosContext';
 // AuthProvider убран - сайт полностью локальный, БД не используется
 // import { AuthProvider } from './contexts/AuthContext';
-// import { checkSupabaseEnv } from './utils/envCheck';
 import ScrollToTop from './components/ScrollToTop';
 // import { PageLoader } from './components/PageLoader';
 
