@@ -213,7 +213,7 @@ export function getDefaultConfig(): APIClientConfig {
  */
 export function getProductionConfig(): APIClientConfig {
   return {
-    baseURL: process.env.REACT_APP_API_URL || 'https://api.weshow.ru',
+    baseURL: process.env.REACT_APP_API_URL || 'https://api.weshow.su',
     timeout: 15000,
     retries: 3,
     retryDelay: 2000

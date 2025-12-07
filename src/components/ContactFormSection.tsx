@@ -183,7 +183,7 @@ const ContactFormSection = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "info@weshow.ru",
+      value: "info@weshow.su",
       description: "Ответим в течение 2 часов"
     },
     {

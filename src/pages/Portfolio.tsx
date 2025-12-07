@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import ShowreelModal from "../components/ShowreelModal";
-import { useState } from "react";
+import { BlockGameModal } from "../components/BlockGameModal";
 import { projects } from "../data/projects";
 
 const Portfolio = () => {
   const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
+  const [isTetrisGameOpen, setIsTetrisGameOpen] = useState(false);
+  
+  // Обработчик события для открытия игры из футера
+  useEffect(() => {
+    const handleOpenTetrisGame = () => {
+      setIsTetrisGameOpen(true);
+    };
+
+    window.addEventListener('openTetrisGame', handleOpenTetrisGame);
+    return () => {
+      window.removeEventListener('openTetrisGame', handleOpenTetrisGame);
+    };
+  }, []);
   
   // Используем новые проекты из локального массива
   const displayedProjects = projects;
@@ -171,6 +184,12 @@ const Portfolio = () => {
       <ShowreelModal 
         isOpen={isShowreelModalOpen}
         onClose={() => setIsShowreelModalOpen(false)}
+      />
+      
+      {/* Tetris Game Modal */}
+      <BlockGameModal 
+        isOpen={isTetrisGameOpen}
+        onClose={() => setIsTetrisGameOpen(false)}
       />
       
       <Footer />

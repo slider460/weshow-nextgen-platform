@@ -502,8 +502,8 @@ const Careers = () => {
               <div className="flex flex-col items-center">
                 <Mail className="h-8 w-8 text-blue-500 mb-4" />
                 <h3 className="font-semibold text-slate-900 mb-2">Email</h3>
-                <a href="mailto:hr@weshow.ru" className="text-blue-600 hover:underline">
-                  hr@weshow.ru
+                <a href="mailto:hr@weshow.su" className="text-blue-600 hover:underline">
+                  hr@weshow.su
                 </a>
               </div>
               <div className="flex flex-col items-center">

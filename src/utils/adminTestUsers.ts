@@ -1,13 +1,13 @@
 export const ADMIN_TEST_USERS = {
   admin: {
-    email: "admin@weshow.ru",
+    email: "admin@weshow.su",
     password: "password",
     role: "admin",
     name: "Администратор",
     company_name: "WeShow",
   },
   manager: {
-    email: "manager@weshow.ru",
+    email: "manager@weshow.su",
     password: "password",
     role: "manager",
     name: "Менеджер",

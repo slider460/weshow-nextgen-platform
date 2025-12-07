@@ -195,10 +195,10 @@ const PrivacyPage: React.FC = () => {
                   </p>
                   <div className="bg-slate-50 rounded-lg p-6">
                     <p className="text-slate-700 mb-2">
-                      <strong>Email:</strong> privacy@weshow.ru
+                      <strong>Email:</strong> privacy@weshow.su
                     </p>
                     <p className="text-slate-700 mb-2">
-                      <strong>Телефон:</strong> +7 (495) 123-45-67
+                      <strong>Телефон:</strong> +7 (495) 580-75-37
                     </p>
                     <p className="text-slate-700">
                       <strong>Адрес:</strong> г. Москва, ул. Примерная, д. 123

@@ -324,7 +324,7 @@ const Equipment = () => {
                 </Button>
                 <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 px-8 py-6 text-lg bg-white/5 backdrop-blur-sm">
                   <Phone className="w-5 h-5 mr-2" />
-                  +7 (495) 605-26-73
+                  +7 (495) 580-75-37
                 </Button>
               </div>
             </AnimatedContent>

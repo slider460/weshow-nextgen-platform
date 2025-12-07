@@ -82,8 +82,8 @@ const Contact = () => {
                     <Mail className="text-[#ee2bee] text-2xl mr-4 mt-1 h-6 w-6 flex-shrink-0" />
                     <div className="text-sm">
                       <p className="text-[#c992c9] font-medium">Email</p>
-                      <a href="mailto:info@weshow.ru" className="text-white hover:text-[#ee2bee] transition-colors">
-                        info@weshow.ru
+                      <a href="mailto:info@weshow.su" className="text-white hover:text-[#ee2bee] transition-colors">
+                        info@weshow.su
                       </a>
                     </div>
                   </div>

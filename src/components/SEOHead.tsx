@@ -78,7 +78,7 @@ const SEOHead = ({
       "logo": `${url}/logo.svg`,
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+7 (495) 123-45-67",
+        "telephone": "+7 (495) 580-75-37",
         "contactType": "customer service",
         "availableLanguage": "Russian"
       },

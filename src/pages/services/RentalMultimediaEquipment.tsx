@@ -1406,9 +1406,9 @@ const RentalMultimediaEquipment = () => {
             
             <AnimatedContent distance={20} delay={0.6}>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-white/90">
-                <a href="tel:+74956052673" className="flex items-center hover:text-white transition-colors">
+                <a href="tel:+74955807537" className="flex items-center hover:text-white transition-colors">
                   <Phone className="w-5 h-5 mr-2" />
-                  +7 (495) 605-26-73
+                  +7 (495) 580-75-37
                 </a>
                 <a href="mailto:info@weshow.su" className="flex items-center hover:text-white transition-colors">
                   <Mail className="w-5 h-5 mr-2" />
