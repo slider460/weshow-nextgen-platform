@@ -69,44 +69,4 @@ export const projects: Project[] = [
       'Благодарственное письмо'
     ]
   },
-  {
-    id: 'project-5',
-    title: 'Заголовок проекта 5',
-    client: 'Клиент',
-    year: '2024',
-    description: 'Описание проекта будет добавлено',
-    image: '/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png',
-    link: '/portfolio/project-5',
-    results: []
-  },
-  {
-    id: 'project-6',
-    title: 'Заголовок проекта 6',
-    client: 'Клиент',
-    year: '2024',
-    description: 'Описание проекта будет добавлено',
-    image: '/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png',
-    link: '/portfolio/project-6',
-    results: []
-  },
-  {
-    id: 'project-7',
-    title: 'Заголовок проекта 7',
-    client: 'Клиент',
-    year: '2024',
-    description: 'Описание проекта будет добавлено',
-    image: '/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png',
-    link: '/portfolio/project-7',
-    results: []
-  },
-  {
-    id: 'project-8',
-    title: 'Заголовок проекта 8',
-    client: 'Клиент',
-    year: '2024',
-    description: 'Описание проекта будет добавлено',
-    image: '/lovable-uploads/01b05963-12d9-42c2-b515-e67dd048540f.png',
-    link: '/portfolio/project-8',
-    results: []
-  }
 ];

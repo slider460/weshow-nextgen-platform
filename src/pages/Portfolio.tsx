@@ -114,6 +114,23 @@ const Portfolio = () => {
                 </div>
               </Link>
             ))}
+            
+            {/* Блок "Новые проекты" - всегда последний */}
+            <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#0A192F] to-[#1E1A34] p-8 border-2 border-dashed border-[#64FFDA]/30 min-h-[320px]">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-[#64FFDA]/10 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-[#64FFDA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-[#64FFDA] mb-3">
+                  Новые проекты
+                </h3>
+                <p className="text-[#E6F1FF]/70 text-sm leading-relaxed max-w-[200px] mx-auto">
+                  Сейчас оформляются новые проекты, следите за обновлением
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
