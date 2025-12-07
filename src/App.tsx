@@ -54,6 +54,7 @@ const TechnologicalExhibitionStands = React.lazy(() => import('./pages/services/
 const ExhibitionStands = React.lazy(() => import('./pages/services/ExhibitionStands.tsx'));
 const VideoProductionTest = React.lazy(() => import('./pages/VideoProductionTest.tsx'));
 const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGames.tsx'));
+const MultimediaInstallations = React.lazy(() => import('./pages/services/MultimediaInstallations.tsx'));
 const Tetris = React.lazy(() => import('./pages/Tetris.tsx'));
 
 // Preload critical components
@@ -92,7 +93,7 @@ function App() {
               <Route path="/services/multimedia-content" element={<MultimediaContent />} />
               <Route path="/services/video-production" element={<VideoProductionTest />} />
               <Route path="/services/software-and-games" element={<SoftwareAndGames />} />
-              <Route path="/services/multimedia-installations" element={<Services />} />
+              <Route path="/services/multimedia-installations" element={<MultimediaInstallations />} />
               <Route path="/services/rental-multimedia-equipment" element={<RentalMultimediaEquipment />} />
               <Route path="/services/technological-exhibition-stands" element={<TechnologicalExhibitionStands />} />
               <Route path="/equipment" element={<Equipment />} />

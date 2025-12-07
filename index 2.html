@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- PERFORMANCE OPTIMIZED: 2025-10-15 17:30 MSK - FALLBACK DATA FIX -->
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+    
+    <!-- Mobile-specific meta tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="theme-color" content="#1e293b" />
+    <meta name="msapplication-TileColor" content="#1e293b" />
+    
+    <title>WESHOW - Комплексные мультимедийные решения для бизнеса [OPTIMIZED 13:10]</title>
+    <meta name="description" content="Профессиональное техническое оснащение, 3D-маппинг, интерактивные инсталляции и организация мероприятий для корпоративных клиентов. 500+ успешных проектов." />
+    <meta name="author" content="WESHOW" />
+    <meta name="keywords" content="мультимедийные технологии, техническая интеграция, AV системы, проекционный маппинг, корпоративные мероприятия" />
+
+    <!-- Favicon - WESHOW с буквой W -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2025-01-08" />
+    <link rel="shortcut icon" href="/favicon.ico?v=2025-01-08" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2025-01-08" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2025-01-08" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph - современные meta-теги -->
+    <meta property="og:title" content="WESHOW - Комплексные мультимедийные решения для бизнеса" />
+    <meta property="og:description" content="Профессиональное техническое оснащение, 3D-маппинг, интерактивные инсталляции и организация мероприятий для корпоративных клиентов" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://weshow.su" />
+    <meta property="og:image" content="https://weshow.su/og-image.png" />
+    <meta property="og:site_name" content="WESHOW" />
+    <meta property="og:locale" content="ru_RU" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="WESHOW - Мультимедийные решения" />
+    <meta name="twitter:description" content="Профессиональное техническое оснащение и организация мероприятий" />
+    <meta name="twitter:image" content="https://weshow.su/twitter-image.png" />
+    
+    <!-- Google Fonts - Асинхронная загрузка для оптимизации -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Отложенная загрузка шрифтов -->
+    <link 
+      rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;700&display=swap" 
+      media="print" 
+      onload="this.media='all'"
+    >
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    </noscript>
+    
+    <!-- Preload критических ресурсов - убран неиспользуемый preload логотипа -->
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Оптимизированная загрузка скриптов - отложенная -->
+    <script defer>
+      // Функция обновления favicon - отложенная загрузка
+      function updateFavicon() {
+        const timestamp = Date.now();
+        const existingFavicons = document.querySelectorAll('link[rel*="icon"]');
+        existingFavicons.forEach(link => link.remove());
+        
+        const link = document.createElement('link');
+        link.rel = 'icon';
+        link.type = 'image/svg+xml';
+        link.href = '/favicon.svg?v=' + timestamp;
+        document.head.appendChild(link);
+      }
+      
+      // Отложенная загрузка после полной загрузки страницы
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateFavicon);
+      } else {
+        // Если DOM уже загружен, выполняем сразу
+        requestIdleCallback ? requestIdleCallback(updateFavicon) : setTimeout(updateFavicon, 1);
+      }
+    </script>
+  </body>
+</html>
