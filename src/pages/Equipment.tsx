@@ -9,13 +9,6 @@ import {
   CheckCircle, 
   Sparkles,
   Phone,
-  Mail,
-  Palette,
-  Layers,
-  Zap,
-  Theater,
-  Bot,
-  Monitor,
   Shirt,
   Tv,
   Projector,
@@ -35,7 +28,6 @@ import { Link } from 'react-router-dom';
 const services = [
   {
     number: "01",
-    icon: Palette,
     title: "Разработка Key Visual и контента",
     description: "Создаем единый визуальный код события. Разрабатываем Key Visual, который связывает смыслы и пространство в одну систему.",
     features: [
@@ -43,11 +35,11 @@ const services = [
       "Видео-арт под реальные масштабы площадки",
       "Единая визуальная экосистема события"
     ],
-    color: "from-violet-500 to-purple-600"
+    color: "from-violet-500 to-purple-600",
+    image: "/equipment/01-key-visual.jpg"
   },
   {
     number: "02",
-    icon: Layers,
     title: "Контент под сложную геометрию",
     description: "Мы знаем физику оборудования и создаем графику специально под носитель. Каждый формат требует уникального подхода.",
     features: [
@@ -56,11 +48,11 @@ const services = [
       "LED-сферы: бесшовное изображение 360°",
       "Кинетика: синхронизация видео с движением"
     ],
-    color: "from-blue-500 to-cyan-500"
+    color: "from-blue-500 to-cyan-500",
+    image: "/equipment/02-complex-geometry.jpg"
   },
   {
     number: "03",
-    icon: Zap,
     title: "Инновационный сетап и интеграция",
     description: "Подбираем оборудование, которое производит впечатление. Грамотно интегрируем решения в существующий сетап площадки.",
     features: [
@@ -68,11 +60,11 @@ const services = [
       "Кинетические системы Scalelike Matrix",
       "Транспарентная LED-ткань"
     ],
-    color: "from-amber-500 to-orange-500"
+    color: "from-amber-500 to-orange-500",
+    image: "/equipment/03-innovative-setup.jpg"
   },
   {
     number: "04",
-    icon: Theater,
     title: "Синхронизированное WOW-шоу",
     description: "Заставляем технологии работать как единый организм. Экраны становятся частью масштабного цифрового перформанса.",
     features: [
@@ -80,11 +72,11 @@ const services = [
       "Связка мультимедиа, света и звука",
       "Медиа-серверы Watchout и Resolume"
     ],
-    color: "from-pink-500 to-rose-500"
+    color: "from-pink-500 to-rose-500",
+    image: "/equipment/04-wow-show.jpg"
   },
   {
     number: "05",
-    icon: Bot,
     title: "Цифровые маскоты и аватары",
     description: "Разрабатываем персонажей, которые живут в цифровой среде ивента. Маскот может вести диалог в реальном времени.",
     features: [
@@ -92,7 +84,8 @@ const services = [
       "Интерактивное взаимодействие с аудиторией",
       "Активное участие в шоу-программе"
     ],
-    color: "from-emerald-500 to-teal-500"
+    color: "from-emerald-500 to-teal-500",
+    image: "/equipment/05-digital-mascots.jpg"
   }
 ];
 
@@ -196,9 +189,6 @@ const Equipment = () => {
                   <Card className="bg-white border-slate-200 hover:border-violet-300 hover:shadow-xl transition-all duration-500 overflow-hidden group">
                     <div className={`grid lg:grid-cols-2 gap-0 ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
                       <div className={`p-8 lg:p-12 flex flex-col justify-center ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
-                        <div className={`text-6xl font-extrabold bg-gradient-to-r ${service.color} bg-clip-text text-transparent opacity-40 leading-none mb-4`}>
-                          {service.number}
-                        </div>
                         <h3 className="text-2xl font-bold mb-4 tracking-tight text-slate-900">{service.title}</h3>
                         <p className="text-slate-600 leading-relaxed mb-6">{service.description}</p>
                         <div className="space-y-3">
@@ -212,10 +202,15 @@ const Equipment = () => {
                           ))}
                         </div>
                       </div>
-                      <div className={`bg-gradient-to-br from-slate-50 to-slate-100 min-h-[300px] lg:min-h-[400px] flex items-center justify-center relative overflow-hidden ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-gradient-to-r ${service.color} opacity-10 rounded-full blur-3xl`}></div>
-                        <div className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${service.color} flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-500 shadow-xl`}>
-                          <service.icon className="w-12 h-12 text-white" />
+                      <div className={`relative min-h-[300px] lg:min-h-[400px] overflow-hidden ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                        <img 
+                          src={service.image} 
+                          alt={service.title}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className={`absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+                        <div className={`absolute top-4 left-4 px-3 py-1.5 rounded-full bg-gradient-to-r ${service.color} text-white text-sm font-semibold shadow-lg`}>
+                          {service.number}
                         </div>
                       </div>
                     </div>

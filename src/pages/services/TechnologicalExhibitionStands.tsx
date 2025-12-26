@@ -351,7 +351,7 @@ const ServiceCard = ({ service }: { service: typeof services[0] }) => (
       <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
         <service.icon className="w-7 h-7 text-white" />
       </div>
-      <CardTitle className="text-xl font-bold text-slate-900">{service.title}</CardTitle>
+      <CardTitle className="text-lg font-bold text-slate-900">{service.title}</CardTitle>
     </CardHeader>
     <CardContent className="space-y-4">
       <p className="text-slate-600 leading-relaxed">{service.description}</p>
@@ -371,7 +371,7 @@ const ServiceCard = ({ service }: { service: typeof services[0] }) => (
         <div className="space-y-3 pt-2">
           {service.subsections.map((sub, idx) => (
             <div key={idx} className="bg-slate-50 rounded-xl p-4">
-              <h4 className="font-semibold text-slate-900 mb-1">{sub.title}</h4>
+              <h4 className="text-lg font-bold text-slate-900 mb-1">{sub.title}</h4>
               <p className="text-sm text-slate-600">{sub.text}</p>
             </div>
           ))}
@@ -452,8 +452,40 @@ const TechnologicalExhibitionStands = () => {
           </div>
         </section>
 
-        {/* КЛЮЧЕВЫЕ ПРЕИМУЩЕСТВА */}
+        {/* VIDEO SHOWREEL */}
         <section className="py-20 bg-white">
+          <div className="container mx-auto px-6 lg:px-8">
+            <AnimatedContent distance={60}>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-slate-900">
+                  Смотрите, как это работает
+                </h2>
+                <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                  Технологичный выставочный стенд в действии
+                </p>
+              </div>
+            </AnimatedContent>
+
+            <AnimatedContent distance={40} delay={0.2}>
+              <div className="max-w-5xl mx-auto">
+                <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl bg-slate-900 group">
+                  <video 
+                    controls 
+                    className="w-full h-full object-cover" 
+                    preload="metadata"
+                    poster="/images/services/tech-stands-video-poster.jpg"
+                  >
+                    <source src="https://www.dropbox.com/scl/fi/44ul6n9h2i7edtwqn1qmg/Samara_all_251225.MP4?rlkey=aaiigv54lfa8o6dwk62y40xwo&st=m10qdpqy&dl=1" type="video/mp4" />
+                    <source src="https://www.dropbox.com/scl/fi/44ul6n9h2i7edtwqn1qmg/Samara_all_251225.MP4?rlkey=aaiigv54lfa8o6dwk62y40xwo&st=m10qdpqy&raw=1" type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+            </AnimatedContent>
+          </div>
+        </section>
+
+        {/* КЛЮЧЕВЫЕ ПРЕИМУЩЕСТВА */}
+        <section className="py-20 bg-gradient-to-br from-slate-50 to-cyan-50/30">
           <div className="container mx-auto px-6 lg:px-8">
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
               {advantages.map((adv, index) => (
@@ -495,7 +527,7 @@ const TechnologicalExhibitionStands = () => {
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                         <feature.icon className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="font-bold text-slate-900 mb-2">{feature.title}</h3>
+                      <h3 className="text-lg font-bold text-slate-900 mb-2">{feature.title}</h3>
                       <p className="text-sm text-slate-600 leading-relaxed">{feature.description}</p>
                     </CardContent>
                   </Card>
@@ -560,7 +592,7 @@ const TechnologicalExhibitionStands = () => {
                         {step.step}
                       </div>
                     </div>
-                    <h3 className="font-bold text-slate-900 mb-2">{step.title}</h3>
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">{step.title}</h3>
                     <p className="text-sm text-slate-600">{step.description}</p>
                   </div>
                 </AnimatedContent>
@@ -591,7 +623,7 @@ const TechnologicalExhibitionStands = () => {
                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${industry.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                         <industry.icon className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="font-bold text-slate-900 mb-3">{industry.title}</h3>
+                      <h3 className="text-lg font-bold text-slate-900 mb-3">{industry.title}</h3>
                       <ul className="space-y-2">
                         {industry.solutions.map((solution, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-xs text-slate-600">
@@ -629,7 +661,7 @@ const TechnologicalExhibitionStands = () => {
                           <HelpCircle className="w-4 h-4 text-cyan-600" />
                         </div>
                         <div>
-                          <h3 className="font-bold text-slate-900 mb-2">{faq.q}</h3>
+                          <h3 className="text-lg font-bold text-slate-900 mb-2">{faq.q}</h3>
                           <p className="text-slate-600 text-sm leading-relaxed">{faq.a}</p>
                         </div>
                       </div>

@@ -40,6 +40,10 @@ const SamsungNewYearCase = React.lazy(() => import('./pages/SamsungNewYearCase.t
 const CaseSamaraStandVDNH_Test = React.lazy(() => import('./pages/CaseSamaraStandVDNH_Test.tsx'));
 const CaseStavropol3DMapping = React.lazy(() => import('./pages/CaseStavropol3DMapping.tsx'));
 const CaseSamaraExhibition = React.lazy(() => import('./pages/CaseSamaraExhibition.tsx'));
+const VivaxCase = React.lazy(() => import('./pages/VivaxCase.tsx'));
+const UazPatriotCase = React.lazy(() => import('./pages/UazPatriotCase.tsx'));
+const SalarisCase = React.lazy(() => import('./pages/SalarisCase.tsx'));
+const SilkWayRallyCase = React.lazy(() => import('./pages/SilkWayRallyCase.tsx'));
 const Equipment = React.lazy(() => import('./pages/Equipment.tsx'));
 const KineticScreen = React.lazy(() => import('./pages/equipment/KineticScreen.tsx'));
 const MatrixScreen = React.lazy(() => import('./pages/equipment/MatrixScreen.tsx'));
@@ -113,6 +117,10 @@ function App() {
               <Route path="/portfolio/samara-stand-vdnh-test" element={<CaseSamaraStandVDNH_Test />} />
               <Route path="/portfolio/stavropol-3d-mapping" element={<CaseStavropol3DMapping />} />
               <Route path="/portfolio/samara-exhibition" element={<CaseSamaraExhibition />} />
+              <Route path="/portfolio/vivax-samburskaya" element={<VivaxCase />} />
+              <Route path="/portfolio/uaz-patriot-eaton" element={<UazPatriotCase />} />
+              <Route path="/portfolio/salaris-presentation" element={<SalarisCase />} />
+              <Route path="/portfolio/silk-way-rally" element={<SilkWayRallyCase />} />
               <Route path="/equipment/kinetic-screen" element={<KineticScreen />} />
               <Route path="/equipment/matrix-screen" element={<MatrixScreen />} />
               <Route path="/equipment/transparent-screen" element={<TransparentScreen />} />

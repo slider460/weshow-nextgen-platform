@@ -28,6 +28,13 @@ const EquipmentCarouselSection = () => {
       image: '/portfolio/samara-vdnh/Matrix_screen.jpg',
       link: '/equipment/matrix-screen'
     },
+    {
+      id: 'multimedia-content',
+      title: 'Мультимедийный контент',
+      description: 'Создаём видеоконтент, 3D-анимацию, motion-графику и интерактивные приложения для LED-экранов, проекций и выставочных стендов',
+      image: '/images/banners/multimedia-content-banner.jpg',
+      link: '/services/multimedia-content'
+    },
   ];
 
   return (

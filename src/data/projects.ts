@@ -69,4 +69,64 @@ export const projects: Project[] = [
       'Благодарственное письмо'
     ]
   },
+  {
+    id: 'vivax-samburskaya',
+    title: 'Вирусный ролик VIVAX',
+    client: 'VIVAX / Академия Научной Красоты',
+    year: '2023',
+    description: 'Креативная концепция вирусного ролика с участием Настасьи Самбурской для продвижения спортивных гелей VIVAX. Юмористический сценарий обеспечил органическое распространение в социальных сетях.',
+    image: '/images/cases/cadr_samburskaya.jpg',
+    link: '/portfolio/vivax-samburskaya',
+    results: [
+      'Вирусный охват',
+      'Настасья Самбурская',
+      'Локация X-FIT',
+      'Комедийный формат'
+    ]
+  },
+  {
+    id: 'uaz-patriot-eaton',
+    title: 'УАЗ Патриот & Eaton',
+    client: 'УАЗ & EATON',
+    year: '2022',
+    description: 'Рекламный ролик для продвижения блокирующего дифференциала. Согласование сценария с двумя компаниями — российской и международной. Реальные испытания на бездорожье.',
+    image: '/images/cases/cadr_yaz.jpg',
+    link: '/portfolio/uaz-patriot-eaton',
+    results: [
+      '3 съёмочных дня',
+      '4 недели постпродакшн',
+      '2 компании-заказчика',
+      'Реальное бездорожье'
+    ]
+  },
+  {
+    id: 'salaris-presentation',
+    title: 'Презентация ТРЦ «Саларис»',
+    client: 'МФК Саларис',
+    year: '2021',
+    description: 'Event-маркетинг для ритейлеров. Презентация одного из крупнейших многофункциональных комплексов в Новой Москве площадью 310 000 кв. м.',
+    image: '/images/cases/cadr_salaris.jpg',
+    link: '/portfolio/salaris-presentation',
+    results: [
+      '200 гостей',
+      'KPI выполнены',
+      'B2B Event',
+      'Центр Москвы'
+    ]
+  },
+  {
+    id: 'silk-way-rally',
+    title: '3D визуализация Silk Way Rally',
+    client: 'Silk Way Rally',
+    year: '2019',
+    description: '3D визуализация маршрута международного ралли-марафона с учётом ландшафта местности. Презентацию провёл Владимир Чагин.',
+    image: '/images/cases/cadr_silkway.jpg',
+    link: '/portfolio/silk-way-rally',
+    results: [
+      '200 гостей',
+      'Google Earth',
+      'Sand Art',
+      'Владимир Чагин'
+    ]
+  },
 ];
