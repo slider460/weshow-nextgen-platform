@@ -33,4 +33,5 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: dist/
-          server-dir: /weshow/weshow/
+          server-dir: /weshow/
+          dangerous-clean-slate: true

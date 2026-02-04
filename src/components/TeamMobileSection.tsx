@@ -18,7 +18,7 @@ const teamMembers: TeamMember[] = [
     title: 'Client Service Director / CEO',
     experience: 'Опыт: Более 10 лет',
     description: 'Руководитель клиентского сервиса и генеральный директор агентства',
-    avatarUrl: '/team/alexander-narodetsky.svg'
+    avatarUrl: '/team/alexander-narodetsky.jpg'
   },
   {
     id: '2',
@@ -26,7 +26,7 @@ const teamMembers: TeamMember[] = [
     title: 'Business Development Director',
     experience: 'Опыт: Более 10 лет',
     description: 'Директор по развитию бизнеса, стратегическое планирование и рост',
-    avatarUrl: '/team/sergey-klichanovsky.svg'
+    avatarUrl: '/team/sergey-klichanovsky.jpg'
   },
   {
     id: '3',
@@ -34,7 +34,7 @@ const teamMembers: TeamMember[] = [
     title: 'Commercial Director',
     experience: 'Опыт: Более 10 лет',
     description: 'Коммерческий директор, отвечает за развитие бизнеса и партнерские отношения',
-    avatarUrl: '/team/edward-semenov.svg'
+    avatarUrl: '/team/edward-semenov.jpg'
   },
   {
     id: '4',
@@ -42,7 +42,7 @@ const teamMembers: TeamMember[] = [
     title: 'Chief Creative Officer',
     experience: 'Опыт: Более 10 лет',
     description: 'Главный креативный директор, создает уникальные творческие решения',
-    avatarUrl: '/team/svyatoslav-dementyev.svg'
+    avatarUrl: '/team/svyatoslav-dementyev.jpg'
   },
   {
     id: '5',
@@ -50,7 +50,7 @@ const teamMembers: TeamMember[] = [
     title: 'Chief Information Officer',
     experience: 'Опыт: Более 10 лет',
     description: 'Главный информационный директор, отвечает за IT-инфраструктуру и технологии',
-    avatarUrl: '/team/alexey-osotov.svg'
+    avatarUrl: '/team/alexey-osotov.jpg'
   }
 ];
 
