@@ -7,6 +7,7 @@ import { Textarea } from "../components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { useToast } from "../hooks/use-toast";
 import { AlertCircle } from "lucide-react";
+import { submitForm } from "../utils/submitForm";
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -35,6 +36,7 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
     message: ""
   });
   const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Валидация email
   const validateEmail = (email: string): boolean => {
@@ -118,7 +120,7 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) {
@@ -130,24 +132,47 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
       return;
     }
 
-    console.log("Consultation form data:", formData);
-    
-    toast({
-      title: "Заявка отправлена!",
-      description: "Мы свяжемся с вами в ближайшее время",
-    });
+    if (isSubmitting) {
+      return;
+    }
 
-    setFormData({
-      name: "",
-      phone: "",
-      email: "",
-      company: "",
-      serviceType: "",
-      message: ""
-    });
-    
-    setErrors({});
-    onClose();
+    setIsSubmitting(true);
+
+    try {
+      await submitForm("Консультация", {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        company: formData.company,
+        serviceType: formData.serviceType,
+        message: formData.message,
+      });
+
+      toast({
+        title: "Заявка отправлена!",
+        description: "Мы свяжемся с вами в ближайшее время",
+      });
+
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        company: "",
+        serviceType: "",
+        message: "",
+      });
+
+      setErrors({});
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Не удалось отправить",
+        description: error instanceof Error ? error.message : "Попробуйте позже",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -197,11 +222,13 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
               <Label htmlFor="name" className="text-sm font-medium text-gray-700">Имя *</Label>
               <Input
                 id="name"
+                name="name"
                 type="text"
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
                 onBlur={() => handleBlur("name")}
                 placeholder="Ваше имя"
+                autoComplete="name"
                 required
                 className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 ${
                   errors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500'
@@ -219,11 +246,13 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
               <Label htmlFor="phone" className="text-sm font-medium text-gray-700">Телефон *</Label>
               <Input
                 id="phone"
+                name="phone"
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleInputChange("phone", e.target.value)}
                 onBlur={() => handleBlur("phone")}
                 placeholder="+7 (___) ___-__-__"
+                autoComplete="tel"
                 required
                 className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 ${
                   errors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500'
@@ -245,11 +274,13 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
             <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email *</Label>
             <Input
               id="email"
+              name="email"
               type="email"
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
               onBlur={() => handleBlur("email")}
               placeholder="your@email.com"
+              autoComplete="email"
               required
               className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 ${
                 errors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500'
@@ -267,10 +298,12 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
             <Label htmlFor="company" className="text-sm font-medium text-gray-700">Компания</Label>
             <Input
               id="company"
+              name="company"
               type="text"
               value={formData.company}
               onChange={(e) => handleInputChange("company", e.target.value)}
               placeholder="Название компании"
+              autoComplete="organization"
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
             />
           </div>
@@ -297,10 +330,12 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
             <Label htmlFor="message" className="text-sm font-medium text-gray-700">Сообщение</Label>
             <Textarea
               id="message"
+              name="message"
               value={formData.message}
               onChange={(e) => handleInputChange("message", e.target.value)}
               placeholder="Опишите ваш проект или задайте вопрос..."
               rows={3}
+              autoComplete="off"
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
             />
           </div>
@@ -308,9 +343,10 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
           <div className="flex gap-3 pt-4">
             <Button 
               type="submit" 
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+              disabled={isSubmitting}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Отправить заявку
+              {isSubmitting ? "Отправка..." : "Отправить заявку"}
             </Button>
             <Button 
               type="button" 

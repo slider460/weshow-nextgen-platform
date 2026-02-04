@@ -4,6 +4,7 @@ import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, AlertCircle, Eye, EyeOff } from "lucide-react";
+import { submitForm } from "../utils/submitForm";
 
 interface FormErrors {
   name?: string;
@@ -25,6 +26,8 @@ const ContactFormSection = () => {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
   // Валидация email
@@ -116,30 +119,51 @@ const ContactFormSection = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) {
       return;
     }
 
-    // Здесь будет логика отправки формы
-    console.log("Form submitted:", formData);
-    setIsSubmitted(true);
-    
-    // Сброс формы через 3 секунды
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        service: "",
-        message: ""
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      await submitForm("Большая форма", {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        service: formData.service,
+        message: formData.message,
       });
-      setErrors({});
-    }, 3000);
+
+      setIsSubmitted(true);
+
+      // Сброс формы через 3 секунды
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          service: "",
+          message: ""
+        });
+        setErrors({});
+        setSubmitError(null);
+      }, 3000);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Ошибка отправки");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (field: string, value: string) => {
@@ -260,15 +284,18 @@ const ContactFormSection = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2" htmlFor="contact-form-name">
                     Имя *
                   </label>
                   <Input
+                    id="contact-form-name"
+                    name="name"
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleChange("name", e.target.value)}
                     onBlur={() => handleBlur("name")}
                     placeholder="Ваше имя"
+                    autoComplete="name"
                     required
                     className={`w-full ${errors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                   />
@@ -280,15 +307,18 @@ const ContactFormSection = () => {
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2" htmlFor="contact-form-email">
                     Email *
                   </label>
                   <Input
+                    id="contact-form-email"
+                    name="email"
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleChange("email", e.target.value)}
                     onBlur={() => handleBlur("email")}
                     placeholder="your@email.com"
+                    autoComplete="email"
                     required
                     className={`w-full ${errors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                   />
@@ -303,15 +333,18 @@ const ContactFormSection = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2" htmlFor="contact-form-phone">
                     Телефон
                   </label>
                   <Input
+                    id="contact-form-phone"
+                    name="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleChange("phone", e.target.value)}
                     onBlur={() => handleBlur("phone")}
                     placeholder="+7 (___) ___-__-__"
+                    autoComplete="tel"
                     className={`w-full ${errors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                   />
                   {errors.phone && (
@@ -325,25 +358,32 @@ const ContactFormSection = () => {
                   </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-2" htmlFor="contact-form-company">
                     Компания
                   </label>
                   <Input
+                    id="contact-form-company"
+                    name="company"
                     type="text"
                     value={formData.company}
                     onChange={(e) => handleChange("company", e.target.value)}
                     placeholder="Название компании"
+                    autoComplete="organization"
                     className="w-full"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2" htmlFor="contact-form-service">
                   Услуга
                 </label>
-                <Select value={formData.service} onValueChange={(value) => handleChange("service", value)}>
-                  <SelectTrigger>
+                <Select
+                  name="service"
+                  value={formData.service}
+                  onValueChange={(value) => handleChange("service", value)}
+                >
+                  <SelectTrigger id="contact-form-service" aria-label="Услуга">
                     <SelectValue placeholder="Выберите услугу" />
                   </SelectTrigger>
                   <SelectContent>
@@ -359,15 +399,18 @@ const ContactFormSection = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2" htmlFor="contact-form-message">
                   Сообщение *
                 </label>
                 <Textarea
+                  id="contact-form-message"
+                  name="message"
                   value={formData.message}
                   onChange={(e) => handleChange("message", e.target.value)}
                   placeholder="Опишите ваш проект или задайте вопрос..."
                   required
                   rows={4}
+                  autoComplete="off"
                   className={`w-full ${errors.message ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
                 />
                 {errors.message && (
@@ -384,11 +427,18 @@ const ContactFormSection = () => {
               <Button 
                 type="submit" 
                 size="lg" 
-                className="w-full px-8 py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                disabled={isSubmitting}
+                className="w-full px-8 py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 <Send className="mr-2 h-5 w-5" />
-                Отправить заявку
+                {isSubmitting ? "Отправка..." : "Отправить заявку"}
               </Button>
+              {submitError && (
+                <div className="flex items-center text-sm text-red-600">
+                  <AlertCircle className="h-4 w-4 mr-1" />
+                  {submitError}
+                </div>
+              )}
             </form>
           </div>
 

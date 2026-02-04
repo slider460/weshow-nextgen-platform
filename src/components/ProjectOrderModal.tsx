@@ -7,6 +7,7 @@ import { Textarea } from "../components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { toast } from "sonner";
 import { AlertCircle } from "lucide-react";
+import { submitForm } from "../utils/submitForm";
 
 interface FormErrors {
   name?: string;
@@ -36,6 +37,7 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
     timeline: ""
   });
   const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Валидация email
   const validateEmail = (email: string): boolean => {
@@ -124,7 +126,7 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) {
@@ -132,23 +134,44 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
       return;
     }
 
-    // Здесь может быть отправка данных на сервер
-    console.log("Form submitted:", formData);
-    toast.success("Заявка отправлена! Мы свяжемся с вами в ближайшее время.");
-    
-    // Сброс формы и закрытие модального окна
-    setFormData({
-      name: "",
-      company: "",
-      phone: "",
-      email: "",
-      serviceType: "",
-      budget: "",
-      description: "",
-      timeline: ""
-    });
-    setErrors({});
-    onClose();
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await submitForm("Бронирование проекта", {
+        name: formData.name,
+        company: formData.company,
+        phone: formData.phone,
+        email: formData.email,
+        serviceType: formData.serviceType,
+        budget: formData.budget,
+        description: formData.description,
+        timeline: formData.timeline,
+      });
+
+      toast.success("Заявка отправлена! Мы свяжемся с вами в ближайшее время.");
+
+      // Сброс формы и закрытие модального окна
+      setFormData({
+        name: "",
+        company: "",
+        phone: "",
+        email: "",
+        serviceType: "",
+        budget: "",
+        description: "",
+        timeline: "",
+      });
+      setErrors({});
+      onClose();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Ошибка отправки");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -343,9 +366,10 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
           <div className="flex gap-3 pt-4">
             <Button 
               type="submit" 
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+              disabled={isSubmitting}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Отправить заявку
+              {isSubmitting ? "Отправка..." : "Отправить заявку"}
             </Button>
             <Button 
               type="button" 

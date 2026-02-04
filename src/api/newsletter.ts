@@ -44,44 +44,31 @@ class NewsletterAPI {
   // Подписка на новости
   async subscribe(subscriber: Omit<NewsletterSubscriber, 'id' | 'subscribedAt' | 'isActive'>): Promise<{ success: boolean; message: string; subscriberId?: string }> {
     try {
-      // Проверка существующей подписки
-      const existingSubscriber = this.subscribers.find(s => s.email === subscriber.email);
-      
-      if (existingSubscriber) {
-        // Обновление существующей подписки
-        existingSubscriber.categories = subscriber.categories;
-        existingSubscriber.language = subscriber.language;
-        existingSubscriber.isActive = true;
-        
+      const response = await fetch('/mail/send.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          form: 'Подписка',
+          email: subscriber.email,
+          language: subscriber.language,
+          categories: subscriber.categories.join(', '),
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
         return {
-          success: true,
-          message: 'Подписка обновлена успешно',
-          subscriberId: existingSubscriber.id
+          success: false,
+          message: result.message || 'Ошибка при оформлении подписки',
         };
       }
 
-      // Создание новой подписки
-      const newSubscriber: NewsletterSubscriber = {
-        ...subscriber,
-        id: `sub_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        subscribedAt: new Date(),
-        isActive: true,
-        preferences: {
-          frequency: 'weekly',
-          topics: subscriber.categories,
-          format: 'html'
-        }
-      };
-
-      this.subscribers.push(newSubscriber);
-
-      // Здесь будет реальная интеграция с CRM
-      // await this.integrateWithCRM(newSubscriber);
-
       return {
         success: true,
-        message: 'Подписка оформлена успешно',
-        subscriberId: newSubscriber.id
+        message: result.message || 'Подписка оформлена успешно',
       };
     } catch (error) {
       console.error('Ошибка при подписке:', error);

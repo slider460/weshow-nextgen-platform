@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { useToast } from "../hooks/use-toast";
 import { MapPin, Phone, Mail } from "lucide-react";
 import mapImage from "../content/services/multimedia-content/temp_map_1762893477095_33ee003kg.jpeg";
+import { submitForm } from "../utils/submitForm";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -21,18 +22,32 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Заявка отправлена",
-      description: "Мы свяжемся с вами в ближайшее время"
-    });
-    
-    setFormData({ name: "", phone: "", email: "", message: "" });
-    setIsSubmitting(false);
+
+    try {
+      await submitForm("Контакты", {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        message: formData.message,
+      });
+
+      toast({
+        title: "Заявка отправлена",
+        description: "Мы свяжемся с вами в ближайшее время",
+      });
+
+      setFormData({ name: "", phone: "", email: "", message: "" });
+    } catch (error) {
+      toast({
+        title: "Не удалось отправить",
+        description: error instanceof Error ? error.message : "Попробуйте позже",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -94,9 +109,11 @@ const Contact = () => {
               <div className="glass-card p-8 rounded-lg">
                 <form onSubmit={handleSubmit} className="space-y-6" method="POST">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <label className="flex flex-col">
+                    <label className="flex flex-col" htmlFor="contact-name">
                       <p className="text-white text-sm font-medium leading-normal pb-2">Ваше имя</p>
                       <input
+                        id="contact-name"
+                        name="name"
                         className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-2 focus:ring-[#ee2bee]/50 border border-[#673267] bg-transparent h-12 p-[15px] text-base font-normal leading-normal transition-all"
                         placeholder="Иван Иванов"
                         type="text"
@@ -105,9 +122,11 @@ const Contact = () => {
                         required
                       />
                     </label>
-                    <label className="flex flex-col">
+                    <label className="flex flex-col" htmlFor="contact-phone">
                       <p className="text-white text-sm font-medium leading-normal pb-2">Телефон</p>
                       <input
+                        id="contact-phone"
+                        name="phone"
                         className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-2 focus:ring-[#ee2bee]/50 border border-[#673267] bg-transparent h-12 p-[15px] text-base font-normal leading-normal transition-all"
                         placeholder="+7 (999) 123-45-67"
                         type="tel"
@@ -117,9 +136,11 @@ const Contact = () => {
                     </label>
                   </div>
 
-                  <label className="flex flex-col">
+                  <label className="flex flex-col" htmlFor="contact-email">
                     <p className="text-white text-sm font-medium leading-normal pb-2">Email</p>
                     <input
+                      id="contact-email"
+                      name="email"
                       className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-2 focus:ring-[#ee2bee]/50 border border-[#673267] bg-transparent h-12 p-[15px] text-base font-normal leading-normal transition-all"
                       placeholder="you@example.com"
                       type="email"
@@ -129,9 +150,11 @@ const Contact = () => {
                     />
                   </label>
 
-                  <label className="flex flex-col">
+                  <label className="flex flex-col" htmlFor="contact-message">
                     <p className="text-white text-sm font-medium leading-normal pb-2">Ваше сообщение</p>
                     <textarea
+                      id="contact-message"
+                      name="message"
                       className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-2 focus:ring-[#ee2bee]/50 border border-[#673267] bg-transparent min-h-36 p-[15px] text-base font-normal leading-normal transition-all"
                       placeholder="Напишите ваше сообщение здесь..."
                       value={formData.message}

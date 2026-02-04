@@ -9,6 +9,7 @@ import {
   Send
 } from "lucide-react";
 import { Button } from "./ui/button";
+import { submitForm } from "../utils/submitForm";
 
 // WhatsApp Icon SVG
 const WhatsAppIcon = ({ className }: { className?: string }) => (
@@ -28,6 +29,7 @@ const Footer = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -38,13 +40,18 @@ const Footer = () => {
     if (!email || isSubmitting) return;
     
     setIsSubmitting(true);
-    // Здесь будет логика отправки подписки
-    setTimeout(() => {
+    setSubmitError(null);
+
+    try {
+      await submitForm("Подписка", { email });
       setSubmitted(true);
-      setIsSubmitting(false);
       setEmail("");
       setTimeout(() => setSubmitted(false), 3000);
-    }, 500);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Ошибка отправки");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const currentYear = new Date().getFullYear();
@@ -159,15 +166,12 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <button
-                  onClick={() => {
-                    const event = new CustomEvent('openTetrisGame');
-                    window.dispatchEvent(event);
-                  }}
+                <Link
+                  to="/tetris"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   🎮 Играть в Тетрис
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -255,11 +259,17 @@ const Footer = () => {
             </p>
             <form onSubmit={handleSubscribe} className="space-y-4">
               <div className="flex flex-col gap-3">
+                <label className="sr-only" htmlFor="footer-email">
+                  Email
+                </label>
                 <input
+                  id="footer-email"
+                  name="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Введите ваш email"
+                  autoComplete="email"
                   className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                   required
                 />
@@ -285,6 +295,11 @@ const Footer = () => {
             {submitted && (
               <p className="text-green-400 text-sm mt-2">
                 Спасибо за подписку! Мы отправим вам письмо с подтверждением.
+              </p>
+            )}
+            {submitError && (
+              <p className="text-red-400 text-sm mt-2">
+                {submitError}
               </p>
             )}
             

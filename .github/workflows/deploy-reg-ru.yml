@@ -34,4 +34,5 @@ jobs:
           password: ${{ secrets.FTP_PASS }}
           local-dir: dist/
           server-dir: /weshow/
-          dangerous-clean-slate: true
+          exclude: |
+            **/mail/config.php

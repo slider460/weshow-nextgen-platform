@@ -27,6 +27,7 @@ import {
   GraduationCap
 } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
+import { submitForm } from "../utils/submitForm";
 
 const Careers = () => {
   const { toast } = useToast();
@@ -55,21 +56,44 @@ const Careers = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    toast({
-      title: "Резюме отправлено!",
-      description: "Мы рассмотрим вашу кандидатуру и свяжемся с вами в ближайшее время"
-    });
-    
-    setFormData({
-      firstName: "", lastName: "", email: "", phone: "", position: "",
-      experience: "", education: "", skills: "", coverLetter: "",
-      portfolio: "", linkedin: "", expectedSalary: "", startDate: "", source: ""
-    });
-    setIsSubmitting(false);
+
+    try {
+      await submitForm("Карьера", {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        position: formData.position,
+        experience: formData.experience,
+        education: formData.education,
+        skills: formData.skills,
+        coverLetter: formData.coverLetter,
+        portfolio: formData.portfolio,
+        linkedin: formData.linkedin,
+        expectedSalary: formData.expectedSalary,
+        startDate: formData.startDate,
+        source: formData.source,
+      });
+
+      toast({
+        title: "Резюме отправлено!",
+        description: "Мы рассмотрим вашу кандидатуру и свяжемся с вами в ближайшее время",
+      });
+
+      setFormData({
+        firstName: "", lastName: "", email: "", phone: "", position: "",
+        experience: "", education: "", skills: "", coverLetter: "",
+        portfolio: "", linkedin: "", expectedSalary: "", startDate: "", source: "",
+      });
+    } catch (error) {
+      toast({
+        title: "Не удалось отправить",
+        description: error instanceof Error ? error.message : "Попробуйте позже",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const benefits = [
