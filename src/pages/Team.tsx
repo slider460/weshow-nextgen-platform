@@ -13,7 +13,7 @@ const Team = () => {
       title: 'Client Service Director / CEO',
       experience: 'Опыт: Более 10 лет',
       description: 'Руководитель клиентского сервиса и генеральный директор агентства',
-      avatarUrl: '/team/alexander-narodetsky.jpg'
+      avatarUrl: '/team/alexander-narodetsky.svg'
     },
     {
       id: '2',
@@ -21,7 +21,7 @@ const Team = () => {
       title: 'Commercial Director',
       experience: 'Опыт: Более 10 лет',
       description: 'Коммерческий директор, отвечает за развитие бизнеса и партнерские отношения',
-      avatarUrl: '/team/edward-semenov.jpg'
+      avatarUrl: '/team/edward-semenov.svg'
     },
     {
       id: '3',
@@ -29,7 +29,7 @@ const Team = () => {
       title: 'Chief Creative Officer',
       experience: 'Опыт: Более 10 лет',
       description: 'Главный креативный директор, создает уникальные творческие решения',
-      avatarUrl: '/team/svyatoslav-dementyev.jpg'
+      avatarUrl: '/team/svyatoslav-dementyev.svg'
     },
     {
       id: '4',
@@ -37,7 +37,7 @@ const Team = () => {
       title: 'Business Development Director',
       experience: 'Опыт: Более 10 лет',
       description: 'Директор по развитию бизнеса, стратегическое планирование и рост',
-      avatarUrl: '/team/sergey-klichanovsky.jpg'
+      avatarUrl: '/team/sergey-klichanovsky.svg'
     },
     {
       id: '5',
@@ -45,7 +45,7 @@ const Team = () => {
       title: 'Chief Information Officer',
       experience: 'Опыт: Более 10 лет',
       description: 'Главный информационный директор, управление IT-инфраструктурой',
-      avatarUrl: '/team/alexey-osotov.jpg'
+      avatarUrl: '/team/alexey-osotov.svg'
     },
     {
       id: '6',
@@ -53,7 +53,7 @@ const Team = () => {
       title: 'Technical Director',
       experience: 'Опыт: Более 10 лет',
       description: 'Технический директор, контроль качества и техническое обеспечение',
-      avatarUrl: '/team/denis-muratov.jpg'
+      avatarUrl: '/team/denis-muratov.svg'
     },
     {
       id: '7',
@@ -61,7 +61,7 @@ const Team = () => {
       title: 'Senior Account Manager',
       experience: 'Опыт: Более 10 лет',
       description: 'Старший менеджер по работе с клиентами, координация проектов',
-      avatarUrl: '/team/ilona-agafonova.jpg'
+      avatarUrl: '/team/ilona-agafonova.svg'
     },
     {
       id: '8',
@@ -69,7 +69,7 @@ const Team = () => {
       title: 'Creative Project Manager',
       experience: 'Опыт: Более 8 лет',
       description: 'Креативный менеджер проектов, координация творческих процессов и клиентских запросов',
-      avatarUrl: '/team/ksenia-inshakova.jpg'
+      avatarUrl: '/team/ksenia-inshakova.svg'
     },
     {
       id: '9',
@@ -77,7 +77,7 @@ const Team = () => {
       title: 'Marketing Communications Specialist',
       experience: 'Опыт: Более 7 лет',
       description: 'Специалист по маркетинговым коммуникациям, развитие бренда и внешних связей',
-      avatarUrl: '/team/maria-ovsyanikova.jpg'
+      avatarUrl: '/team/maria-ovsyanikova.svg'
     }
   ];
 
