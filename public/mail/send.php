@@ -19,6 +19,7 @@ if (!file_exists($configPath)) {
 $config = require $configPath;
 $smtp = $config['smtp'] ?? [];
 $mail = $config['mail'] ?? [];
+$allowInsecure = (bool)($smtp['allow_insecure'] ?? false);
 
 $raw = file_get_contents('php://input');
 $payload = json_decode($raw, true);
@@ -27,7 +28,13 @@ if (!is_array($payload)) {
 }
 
 function sanitize_value($value): string {
-    $value = is_string($value) ? $value : '';
+    if (is_bool($value)) {
+        $value = $value ? 'true' : 'false';
+    } elseif (is_numeric($value)) {
+        $value = (string)$value;
+    } elseif (!is_string($value)) {
+        $value = '';
+    }
     return trim(strip_tags($value));
 }
 
@@ -50,14 +57,35 @@ $lines[] = 'Форма: ' . ($formName !== '' ? $formName : 'Не указано
 $lines[] = 'Время: ' . date('d.m.Y H:i:s');
 $lines[] = '';
 
+$labelMap = [
+    'name' => 'Имя',
+    'phone' => 'Телефон',
+    'email' => 'Email',
+    'company' => 'Компания',
+    'service' => 'Услуга',
+    'serviceType' => 'Тип услуги',
+    'message' => 'Сообщение',
+];
+
+$usedKeys = [];
+foreach ($labelMap as $key => $label) {
+    $value = $payload[$key] ?? '';
+    if (is_array($value)) {
+        $value = implode(', ', $value);
+    }
+    $clean = sanitize_value($value);
+    $lines[] = $label . ': ' . ($clean !== '' ? $clean : '—');
+    $usedKeys[$key] = true;
+}
+
 foreach ($payload as $key => $value) {
-    if ($key === 'form') {
+    if ($key === 'form' || isset($usedKeys[$key])) {
         continue;
     }
     if (is_array($value)) {
         $value = implode(', ', $value);
     }
-    $clean = sanitize_value((string)$value);
+    $clean = sanitize_value($value);
     if ($clean === '') {
         continue;
     }
@@ -108,7 +136,7 @@ function smtp_cmd($socket, string $cmd, $expected, string $context = ''): void {
     smtp_expect($socket, $expected, $context);
 }
 
-function smtp_send_message(array $smtp, array $mail, array $toList, string $fromEmail, string $fromName, string $replyTo, string $subject, string $body): void {
+function smtp_send_message(array $smtp, array $mail, array $toList, string $fromEmail, string $fromName, string $replyTo, string $subject, string $body, bool $allowInsecure): void {
     $host = $smtp['host'] ?? '';
     $port = (int)($smtp['port'] ?? 0);
     $encryption = $smtp['encryption'] ?? '';
@@ -120,7 +148,20 @@ function smtp_send_message(array $smtp, array $mail, array $toList, string $from
     }
 
     $remoteHost = $encryption === 'ssl' ? ('ssl://' . $host) : $host;
-    $socket = fsockopen($remoteHost, $port, $errno, $errstr, 15);
+    $context = null;
+    if ($encryption === 'ssl') {
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => !$allowInsecure,
+                'verify_peer_name' => !$allowInsecure,
+                'allow_self_signed' => $allowInsecure,
+            ],
+        ]);
+    }
+
+    $socket = $context
+        ? stream_socket_client($remoteHost . ':' . $port, $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context)
+        : stream_socket_client($remoteHost . ':' . $port, $errno, $errstr, 15);
     if (!$socket) {
         json_fail('SMTP connection failed: ' . $errstr, 500);
     }
@@ -165,6 +206,16 @@ function smtp_send_message(array $smtp, array $mail, array $toList, string $from
     fclose($socket);
 }
 
-smtp_send_message($smtp, $mail, $toList, $fromEmail, $fromName, $replyTo, $subject, $body);
+$handler = set_error_handler(static function ($severity, $message): bool {
+    throw new RuntimeException($message);
+});
+
+try {
+    smtp_send_message($smtp, $mail, $toList, $fromEmail, $fromName, $replyTo, $subject, $body, $allowInsecure);
+    restore_error_handler();
+} catch (Throwable $error) {
+    restore_error_handler();
+    json_fail('SMTP error: ' . $error->getMessage(), 500);
+}
 
 echo json_encode(['success' => true, 'message' => 'Отправлено']);
