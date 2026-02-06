@@ -36,3 +36,5 @@ jobs:
           server-dir: /weshow/
           exclude: |
             **/mail/config.php
+          state-name: .ftp-deploy-sync-state.json
+          log-level: verbose
