@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { Play, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
+import { defaultSuccessMessage, submitForm } from "@/utils/submitForm";
 
 const PLACEHOLDER_IMAGE = "/images/cases/cadr_shapka_production.jpg";
 
@@ -13,6 +14,9 @@ const VideoProductionTest = () => {
     contact: '',
     comment: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [selectedPresentation, setSelectedPresentation] = useState(0);
   const [videoError, setVideoError] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -68,10 +72,26 @@ const VideoProductionTest = () => {
     { id: 5, title: "Концепция контента для стенда", label: "Видео 5", image: "/images/cases/content_samara.jpg" },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Здесь можно добавить логику отправки формы
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      await submitForm("Видеопродакшн", {
+        name: formData.name,
+        contact: formData.contact,
+        comment: formData.comment,
+      });
+      setIsSuccess(true);
+      setFormData({ name: '', contact: '', comment: '' });
+      setTimeout(() => setIsSuccess(false), 3000);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Ошибка отправки");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -473,10 +493,17 @@ const VideoProductionTest = () => {
                 <button
                   className="flex w-full items-center justify-center overflow-hidden rounded-xl h-14 px-8 bg-gradient-to-r from-[#0d59f2] to-[#007BFF] text-white text-lg font-bold leading-normal tracking-[0.015em] shadow-lg transition-transform active:scale-95"
                   type="submit"
+                  disabled={isSubmitting}
                 >
-                  <span className="truncate">Отправить заявку</span>
+                  <span className="truncate">{isSubmitting ? "Отправка..." : "Отправить заявку"}</span>
                 </button>
               </div>
+              {isSuccess && (
+                <p className="text-sm text-emerald-600 text-center">{defaultSuccessMessage}</p>
+              )}
+              {submitError && (
+                <p className="text-sm text-red-600 text-center">{submitError}</p>
+              )}
             </form>
           </div>
         </section>

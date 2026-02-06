@@ -24,6 +24,7 @@ import {
   Palette
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { defaultSuccessMessage, submitForm } from "../../utils/submitForm";
 
 // Типы для галереи
 type GalleryItem = {
@@ -51,6 +52,8 @@ const KineticScreen: React.FC = () => {
     description: ''
   });
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // Данные галереи
   const galleryItems: GalleryItem[] = [
@@ -146,15 +149,31 @@ const KineticScreen: React.FC = () => {
     setSelectedItem(null);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setIsFormSubmitted(true);
-    
-    setTimeout(() => {
-      setIsFormSubmitted(false);
-      setFormData({ name: '', phone: '', email: '', description: '' });
-    }, 3000);
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      await submitForm("Кинетические экраны", {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        description: formData.description,
+      });
+
+      setIsFormSubmitted(true);
+
+      setTimeout(() => {
+        setIsFormSubmitted(false);
+        setFormData({ name: '', phone: '', email: '', description: '' });
+      }, 3000);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Ошибка отправки");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleFormChange = (field: string, value: string) => {
@@ -180,7 +199,7 @@ const KineticScreen: React.FC = () => {
               Спасибо за заявку!
             </h2>
             <p className="text-lg text-gray-300 mb-6">
-              Мы получили ваше сообщение и свяжемся с вами в ближайшее время.
+              {defaultSuccessMessage}
             </p>
             <Button 
               onClick={() => setIsFormSubmitted(false)}
@@ -805,11 +824,15 @@ const KineticScreen: React.FC = () => {
                 <Button 
                   type="submit" 
                   size="lg" 
+                  disabled={isSubmitting}
                   className="w-full px-8 py-4 text-lg font-semibold bg-gradient-to-r from-[#00F2A9] to-[#007BFF] hover:from-[#00E0A0] hover:to-[#0066CC] text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
                 >
                   <Send className="mr-2 h-5 w-5" />
-                  Отправить заявку
+                  {isSubmitting ? "Отправка..." : "Отправить заявку"}
                 </Button>
+                {submitError && (
+                  <p className="text-sm text-red-400">{submitError}</p>
+                )}
               </form>
             </div>
           </div>
