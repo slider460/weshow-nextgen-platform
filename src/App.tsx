@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Toaster } from 'sonner';
+import { Toaster as SonnerToaster } from 'sonner';
+import { Toaster as ShadcnToaster } from './components/ui/toaster';
 import { LogosProvider } from './contexts/LogosContext';
 // AuthProvider убран - сайт полностью локальный, БД не используется
 // import { AuthProvider } from './contexts/AuthContext';
@@ -144,7 +145,7 @@ function App() {
             </Routes>
           </Suspense>
         </BrowserRouter>
-        <Toaster 
+        <SonnerToaster
           position="bottom-right" 
           richColors 
           toastOptions={{
@@ -157,6 +158,7 @@ function App() {
             },
           }}
         />
+        <ShadcnToaster />
     </LogosProvider>
   );
 }
