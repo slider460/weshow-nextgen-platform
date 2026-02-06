@@ -4,7 +4,7 @@ import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, AlertCircle, Eye, EyeOff } from "lucide-react";
-import { submitForm } from "../utils/submitForm";
+import { defaultSuccessMessage, submitForm } from "../utils/submitForm";
 
 interface FormErrors {
   name?: string;
@@ -236,7 +236,7 @@ const ContactFormSection = () => {
               Спасибо за обращение!
             </h2>
             <p className="text-lg text-slate-600 mb-6">
-              Мы получили ваше сообщение и свяжемся с вами в ближайшее время.
+              {defaultSuccessMessage}
             </p>
             <Button 
               onClick={() => setIsSubmitted(false)}

@@ -7,7 +7,7 @@ import { Textarea } from "../components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { toast } from "sonner";
 import { AlertCircle } from "lucide-react";
-import { submitForm } from "../utils/submitForm";
+import { defaultSuccessMessage, submitForm } from "../utils/submitForm";
 
 interface FormErrors {
   name?: string;
@@ -38,6 +38,7 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   // Валидация email
   const validateEmail = (email: string): boolean => {
@@ -152,8 +153,6 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
         timeline: formData.timeline,
       });
 
-      toast.success("Заявка отправлена! Мы свяжемся с вами в ближайшее время.");
-
       // Сброс формы и закрытие модального окна
       setFormData({
         name: "",
@@ -166,7 +165,11 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
         timeline: "",
       });
       setErrors({});
-      onClose();
+      setIsSuccess(true);
+      setTimeout(() => {
+        setIsSuccess(false);
+        onClose();
+      }, 1500);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Ошибка отправки");
     } finally {
@@ -216,8 +219,12 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
             Забронировать проект
           </DialogTitle>
         </DialogHeader>
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
+        {isSuccess ? (
+          <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700">
+            {defaultSuccessMessage}
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-medium text-gray-700">Имя *</Label>
@@ -381,6 +388,7 @@ const ProjectOrderModal = ({ isOpen, onClose }: ProjectOrderModalProps) => {
             </Button>
           </div>
         </form>
+        )}
       </DialogContent>
     </Dialog>
   );

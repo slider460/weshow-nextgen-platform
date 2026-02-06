@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import { useToast } from "../hooks/use-toast";
 import { MapPin, Phone, Mail } from "lucide-react";
 import mapImage from "../content/services/multimedia-content/temp_map_1762893477095_33ee003kg.jpeg";
-import { submitForm } from "../utils/submitForm";
+import { defaultSuccessMessage, submitForm } from "../utils/submitForm";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -35,7 +35,7 @@ const Contact = () => {
 
       toast({
         title: "Заявка отправлена",
-        description: "Мы свяжемся с вами в ближайшее время",
+        description: defaultSuccessMessage,
       });
 
       setFormData({ name: "", phone: "", email: "", message: "" });

@@ -5,7 +5,17 @@ export interface SubmitResult {
   message?: string;
 }
 
+export const defaultSuccessMessage = "Спасибо за вашу заявку, мы свяжемся с вами в ближайшее время.";
+
 export const submitForm = async (form: string, payload: SubmitPayload): Promise<SubmitResult> => {
+  if (typeof window !== "undefined") {
+    const localHosts = new Set(["localhost", "127.0.0.1"]);
+    if (localHosts.has(window.location.hostname)) {
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      return { success: true, message: defaultSuccessMessage };
+    }
+  }
+
   const response = await fetch('/mail/send.php', {
     method: 'POST',
     headers: {

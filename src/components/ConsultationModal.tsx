@@ -7,7 +7,7 @@ import { Textarea } from "../components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { useToast } from "../hooks/use-toast";
 import { AlertCircle } from "lucide-react";
-import { submitForm } from "../utils/submitForm";
+import { defaultSuccessMessage, submitForm } from "../utils/submitForm";
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -37,6 +37,7 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   // Валидация email
   const validateEmail = (email: string): boolean => {
@@ -148,11 +149,6 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
         message: formData.message,
       });
 
-      toast({
-        title: "Заявка отправлена!",
-        description: "Мы свяжемся с вами в ближайшее время",
-      });
-
       setFormData({
         name: "",
         phone: "",
@@ -163,7 +159,11 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
       });
 
       setErrors({});
-      onClose();
+      setIsSuccess(true);
+      setTimeout(() => {
+        setIsSuccess(false);
+        onClose();
+      }, 1500);
     } catch (error) {
       toast({
         title: "Не удалось отправить",
@@ -215,8 +215,12 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-gray-900">{title}</DialogTitle>
         </DialogHeader>
-        
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {isSuccess ? (
+          <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700">
+            {defaultSuccessMessage}
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-medium text-gray-700">Имя *</Label>
@@ -358,6 +362,7 @@ const ConsultationModal = ({ isOpen, onClose, triggerText = "Получить к
             </Button>
           </div>
         </form>
+        )}
       </DialogContent>
     </Dialog>
   );

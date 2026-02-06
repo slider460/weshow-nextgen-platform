@@ -27,7 +27,7 @@ import {
   GraduationCap
 } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
-import { submitForm } from "../utils/submitForm";
+import { defaultSuccessMessage, submitForm } from "../utils/submitForm";
 
 const Careers = () => {
   const { toast } = useToast();
@@ -77,7 +77,7 @@ const Careers = () => {
 
       toast({
         title: "Резюме отправлено!",
-        description: "Мы рассмотрим вашу кандидатуру и свяжемся с вами в ближайшее время",
+        description: defaultSuccessMessage,
       });
 
       setFormData({

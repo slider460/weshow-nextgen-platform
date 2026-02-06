@@ -7,6 +7,7 @@ import { Badge } from '../components/ui/badge';
 import { Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useNewsletterAPI } from '../api/newsletter';
+import { defaultSuccessMessage } from '../utils/submitForm';
 
 interface NewsletterSubscriptionProps {
   className?: string;
@@ -42,7 +43,7 @@ const NewsletterSubscription = ({ className = '', variant = 'default' }: Newslet
 
       if (result.success) {
         setStatus('success');
-        setMessage(result.message);
+        setMessage(defaultSuccessMessage);
         setEmail('');
         
         // Сброс статуса через 5 секунд

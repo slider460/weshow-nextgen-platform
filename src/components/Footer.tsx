@@ -9,7 +9,7 @@ import {
   Send
 } from "lucide-react";
 import { Button } from "./ui/button";
-import { submitForm } from "../utils/submitForm";
+import { defaultSuccessMessage, submitForm } from "../utils/submitForm";
 
 // WhatsApp Icon SVG
 const WhatsAppIcon = ({ className }: { className?: string }) => (
@@ -294,7 +294,7 @@ const Footer = () => {
             </form>
             {submitted && (
               <p className="text-green-400 text-sm mt-2">
-                Спасибо за подписку! Мы отправим вам письмо с подтверждением.
+                {defaultSuccessMessage}
               </p>
             )}
             {submitError && (
