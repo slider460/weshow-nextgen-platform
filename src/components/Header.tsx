@@ -54,7 +54,7 @@ const Header = () => {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`font-sans fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
           ? "bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-lg" 
           : "bg-white/80 backdrop-blur-md border-b border-slate-200/50"
@@ -62,10 +62,10 @@ const Header = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-20 justify-between">
-          {/* Logo */}
+          {/* Logo — font-sans чтобы на всех страницах был один шрифт (не наследует font-display) */}
           <Link 
             to="/" 
-            className="flex items-center space-x-3 group flex-shrink-0"
+            className="flex items-center space-x-3 group flex-shrink-0 font-sans"
             onClick={closeMenu}
           >
             <div className="w-12 h-12 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
