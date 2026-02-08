@@ -1296,7 +1296,7 @@ const RentalMultimediaEquipment = () => {
                           <service.icon className="w-6 h-6 text-white" />
                         </div>
                         <div>
-                          <h3 className="font-bold text-slate-900 mb-2">{service.title}</h3>
+                          <h3 className="text-sm font-bold text-slate-900 mb-2">{service.title}</h3>
                           <p className="text-slate-600 text-sm">{service.description}</p>
                         </div>
                       </div>
