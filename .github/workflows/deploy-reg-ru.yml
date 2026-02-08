@@ -33,7 +33,8 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: dist/
-          server-dir: /weshow/
+          # Без ведущего слэша: на Reg.ru FTP часто корень — домашняя папка, папка сайта — weshow
+          server-dir: weshow/
           exclude: |
             **/mail/config.php
           state-name: .ftp-deploy-sync-state.json
