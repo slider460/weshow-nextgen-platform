@@ -56,6 +56,7 @@ const MultimediaContent = () => {
       <Header />
 
       <main className="relative z-10">
+        {/* HERO */}
         <section className="mx-auto max-w-6xl px-4 pb-16 pt-28 text-center sm:pt-32">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
             Мультимедийный контент: <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">от идеи до воплощения</span>
@@ -66,6 +67,7 @@ const MultimediaContent = () => {
         </section>
 
         <div className="mx-auto max-w-6xl space-y-20 px-4 pb-12">
+          {/* 1. Графическое оформление */}
           <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">Графическое оформление и заставки для мероприятий</h2>
@@ -86,6 +88,7 @@ const MultimediaContent = () => {
             </div>
           </section>
 
+          {/* 2. 3D-контент и мэппинг - ДВА РОЛИКА */}
           <section className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="grid gap-6 sm:grid-cols-2 order-2 lg:order-1">
               <div className="space-y-3">
@@ -119,6 +122,7 @@ const MultimediaContent = () => {
             </div>
           </section>
 
+          {/* 3. Naked Eye 3D */}
           <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">3D-контент с технологией "Naked Eye"</h2>
@@ -139,6 +143,7 @@ const MultimediaContent = () => {
             </div>
           </section>
 
+          {/* 4. Комплексный брендинг */}
           <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="relative order-2 overflow-hidden rounded-2xl shadow-[0_30px_80px_-30px_rgba(79,70,229,0.55)] lg:order-1">
               <img src={IMAGES.branding} alt="Комплексный брендинг" className="h-full w-full object-cover" />
@@ -151,6 +156,7 @@ const MultimediaContent = () => {
             </div>
           </section>
 
+          {/* 5. VR-контент */}
           <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">VR-контент и иммерсивные среды</h2>
@@ -177,6 +183,7 @@ const MultimediaContent = () => {
             </div>
           </section>
 
+          {/* 6. Контент для информационных панелей */}
           <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="order-2 space-y-3 lg:order-1">
               <button
@@ -197,6 +204,7 @@ const MultimediaContent = () => {
             </div>
           </section>
 
+          {/* 7. Адаптация контента */}
           <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">Адаптация контента под любые поверхности</h2>
@@ -210,6 +218,7 @@ const MultimediaContent = () => {
           </section>
         </div>
 
+        {/* CTA */}
         <section className="mx-auto max-w-5xl px-4 pb-24">
           <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 px-6 py-10 text-center shadow-[0_35px_120px_-30px_rgba(79,70,229,0.55)] sm:px-12 sm:py-16">
             <div className="absolute inset-0 bg-black/35" />
@@ -230,6 +239,7 @@ const MultimediaContent = () => {
         </section>
       </main>
 
+      {/* Модальное окно для видео */}
       <Dialog open={Boolean(activeVideo)} onOpenChange={(open) => !open && setActiveVideo(null)}>
         <DialogContent className="max-w-4xl w-full overflow-hidden border border-white/15 bg-slate-950/90 p-0 shadow-2xl">
           {activeVideo ? (

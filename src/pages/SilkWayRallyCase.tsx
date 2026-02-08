@@ -230,13 +230,13 @@ const SilkWayRallyCase = () => {
           {/* Владимир Чагин */}
           <Card className="shadow-lg bg-gradient-to-br from-amber-500 to-orange-600 text-white">
             <CardContent className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
                   <Users className="w-8 h-8" />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold">{caseData.presenter.name}</h4>
-                  <p className="opacity-90">{caseData.presenter.role}</p>
+                  <h4 className="text-xl font-bold mb-1">Маршрут презентовал Владимир Чагин</h4>
+                  <p className="opacity-90 text-sm leading-relaxed">Владимир Геннадьевич Чагин — российский автогонщик, семикратный победитель «Ралли Дакар» в классе грузовиков.</p>
                 </div>
               </div>
             </CardContent>

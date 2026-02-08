@@ -45,6 +45,7 @@ const VivaxCase = React.lazy(() => import('./pages/VivaxCase.tsx'));
 const UazPatriotCase = React.lazy(() => import('./pages/UazPatriotCase.tsx'));
 const SalarisCase = React.lazy(() => import('./pages/SalarisCase.tsx'));
 const SilkWayRallyCase = React.lazy(() => import('./pages/SilkWayRallyCase.tsx'));
+const CaseStavropolStandVDNH = React.lazy(() => import('./pages/CaseStavropolStandVDNH.tsx'));
 const Equipment = React.lazy(() => import('./pages/Equipment.tsx'));
 const KineticScreen = React.lazy(() => import('./pages/equipment/KineticScreen.tsx'));
 const MatrixScreen = React.lazy(() => import('./pages/equipment/MatrixScreen.tsx'));
@@ -81,7 +82,7 @@ function App() {
 
   return (
     <LogosProvider>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <ScrollToTop />
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -122,6 +123,7 @@ function App() {
               <Route path="/portfolio/uaz-patriot-eaton" element={<UazPatriotCase />} />
               <Route path="/portfolio/salaris-presentation" element={<SalarisCase />} />
               <Route path="/portfolio/silk-way-rally" element={<SilkWayRallyCase />} />
+              <Route path="/portfolio/stavropol-stand-vdnh" element={<CaseStavropolStandVDNH />} />
               <Route path="/equipment/kinetic-screen" element={<KineticScreen />} />
               <Route path="/equipment/matrix-screen" element={<MatrixScreen />} />
               <Route path="/equipment/transparent-screen" element={<TransparentScreen />} />

@@ -129,4 +129,19 @@ export const projects: Project[] = [
       'Владимир Чагин'
     ]
   },
+  {
+    id: 'stavropol-stand-vdnh',
+    title: 'Стенд Ставропольского края на ВДНХ',
+    client: 'Правительство Ставропольского края',
+    year: '2023-2024',
+    description: 'Мультимедийный стенд на выставке «Россия» — Naked Eye 3D LED куб, интерактивный слон, виртуальный терренкур. Приз зрительских симпатий.',
+    image: '/portfolio/stavropol-vdnh-thumb.jpg',
+    link: '/portfolio/stavropol-stand-vdnh',
+    results: [
+      '3+ млн посетителей',
+      'Приз зрительских симпатий',
+      'Naked Eye 3D LED',
+      'Интерактивные инсталляции'
+    ]
+  },
 ];

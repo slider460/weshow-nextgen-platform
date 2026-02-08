@@ -110,8 +110,10 @@ export const AuthModal = ({ isOpen, onClose, initialMode = "signin" }: AuthModal
         <form onSubmit={handleSubmit} className="space-y-4">
           {(mode === "signin" || mode === "signup" || mode === "reset") && (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-600">Email</label>
+              <label className="text-sm font-medium text-slate-600" htmlFor="auth-email">Email</label>
               <input
+                id="auth-email"
+                name="email"
                 type="email"
                 required
                 value={form.email}
@@ -124,8 +126,10 @@ export const AuthModal = ({ isOpen, onClose, initialMode = "signin" }: AuthModal
 
           {(mode === "signin" || mode === "signup") && (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-600">Пароль</label>
+              <label className="text-sm font-medium text-slate-600" htmlFor="auth-password">Пароль</label>
               <input
+                id="auth-password"
+                name="password"
                 type="password"
                 required
                 value={form.password}
@@ -139,8 +143,10 @@ export const AuthModal = ({ isOpen, onClose, initialMode = "signin" }: AuthModal
           {mode === "signup" && (
             <>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-600">Имя</label>
+                <label className="text-sm font-medium text-slate-600" htmlFor="auth-full-name">Имя</label>
                 <input
+                  id="auth-full-name"
+                  name="full_name"
                   type="text"
                   value={form.full_name}
                   onChange={handleChange("full_name")}
@@ -149,8 +155,10 @@ export const AuthModal = ({ isOpen, onClose, initialMode = "signin" }: AuthModal
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-600">Компания</label>
+                <label className="text-sm font-medium text-slate-600" htmlFor="auth-company-name">Компания</label>
                 <input
+                  id="auth-company-name"
+                  name="company_name"
                   type="text"
                   value={form.company_name}
                   onChange={handleChange("company_name")}
@@ -203,6 +211,8 @@ export const AuthModal = ({ isOpen, onClose, initialMode = "signin" }: AuthModal
 };
 
 export default AuthModal;
+
+
 
 
 
