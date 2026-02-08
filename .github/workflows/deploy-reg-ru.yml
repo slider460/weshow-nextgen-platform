@@ -40,7 +40,8 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: dist/
-          server-dir: /weshow/
+          # Заливаем в корень FTP (папка сайта в панели), без подпапки weshow
+          server-dir: ./
           exclude: |
             **/mail/config.php
           state-name: .ftp-deploy-sync-state.json
