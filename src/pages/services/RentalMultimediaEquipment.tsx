@@ -1296,7 +1296,7 @@ const RentalMultimediaEquipment = () => {
                           <service.icon className="w-6 h-6 text-white" />
                         </div>
                         <div>
-                          <h3 className="text-sm font-bold text-slate-900 mb-2">{service.title}</h3>
+                          <h3 className="text-base font-bold text-slate-900 mb-2">{service.title}</h3>
                           <p className="text-slate-600 text-sm">{service.description}</p>
                         </div>
                       </div>
@@ -1331,7 +1331,7 @@ const RentalMultimediaEquipment = () => {
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-4">
                         <item.icon className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="font-bold text-slate-900 mb-3">{item.title}</h3>
+                      <h3 className="text-base font-bold text-slate-900 mb-3">{item.title}</h3>
                       <p className="text-slate-600 text-sm leading-relaxed">{item.text}</p>
                     </CardContent>
                   </Card>
@@ -1362,7 +1362,7 @@ const RentalMultimediaEquipment = () => {
                           <HelpCircle className="w-4 h-4 text-blue-600" />
                         </div>
                         <div>
-                          <h3 className="font-bold text-slate-900 mb-2">{faq.q}</h3>
+                          <h3 className="text-base font-bold text-slate-900 mb-2">{faq.q}</h3>
                           <p className="text-slate-600 text-sm leading-relaxed">{faq.a}</p>
                         </div>
                       </div>
