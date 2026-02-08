@@ -84,7 +84,7 @@ const translations = {
     'subscription.title': 'Подпишитесь на новости',
     'subscription.subtitle': 'Получайте актуальные материалы и эксклюзивные предложения',
     'subscription.placeholder': 'Ваш email',
-    'subscription.success': 'Спасибо за подписку!',
+    'subscription.success': 'Мы не свяжемся с вами по этой заявке. Теперь вы будете получать информацию о новостях, последних технологиях и специальных предложениях.',
     'subscription.error': 'Ошибка при подписке',
   },
   en: {
@@ -157,7 +157,7 @@ const translations = {
     'subscription.title': 'Subscribe to News',
     'subscription.subtitle': 'Get latest materials and exclusive offers',
     'subscription.placeholder': 'Your email',
-    'subscription.success': 'Thank you for subscribing!',
+    'subscription.success': "We won't contact you about this request. You will now receive news, latest tech updates and special offers.",
     'subscription.error': 'Subscription error',
   }
 };

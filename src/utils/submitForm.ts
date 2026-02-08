@@ -7,6 +7,9 @@ export interface SubmitResult {
 
 export const defaultSuccessMessage = "Спасибо за вашу заявку, мы свяжемся с вами в ближайшее время.";
 
+/** Сообщение после успешной подписки на рассылку (не «свяжемся», а «будете получать рассылку») */
+export const subscriptionSuccessMessage = "Мы не свяжемся с вами по этой заявке. Теперь вы будете получать информацию о новостях, последних технологиях и специальных предложениях.";
+
 export const submitForm = async (form: string, payload: SubmitPayload): Promise<SubmitResult> => {
   if (typeof window !== "undefined") {
     const localHosts = new Set(["localhost", "127.0.0.1"]);
