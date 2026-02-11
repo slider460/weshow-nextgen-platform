@@ -147,42 +147,7 @@ const KineticScreen = () => {
           </div>
         </section>
 
-        {/* Examples Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-3xl font-bold mb-8">Примеры использования</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-slate-50 rounded-xl p-6 shadow-lg">
-                <div className="aspect-video bg-gradient-to-br from-blue-200 to-purple-200 rounded-lg mb-4 flex items-center justify-center">
-                  <span className="text-slate-500">Изображение/Видео 1</span>
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Выставки</h3>
-                <p className="text-slate-600">Интерактивные экспозиции с динамической визуализацией и трехмерными эффектами</p>
-              </div>
-              <div className="bg-slate-50 rounded-xl p-6 shadow-lg">
-                <div className="aspect-video bg-gradient-to-br from-purple-200 to-pink-200 rounded-lg mb-4 flex items-center justify-center">
-                  <span className="text-slate-500">Изображение/Видео 2</span>
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Презентации</h3>
-                <p className="text-slate-600">Запоминающиеся корпоративные презентации с живыми визуальными эффектами</p>
-              </div>
-              <div className="bg-slate-50 rounded-xl p-6 shadow-lg">
-                <div className="aspect-video bg-gradient-to-br from-pink-200 to-red-200 rounded-lg mb-4 flex items-center justify-center">
-                  <span className="text-slate-500">Изображение/Видео 3</span>
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Интерактивные инсталляции</h3>
-                <p className="text-slate-600">Уникальные инсталляции, реагирующие на действия посетителей</p>
-              </div>
-              <div className="bg-slate-50 rounded-xl p-6 shadow-lg">
-                <div className="aspect-video bg-gradient-to-br from-blue-200 to-cyan-200 rounded-lg mb-4 flex items-center justify-center">
-                  <span className="text-slate-500">Изображение/Видео 4</span>
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Масштабные мероприятия</h3>
-                <p className="text-slate-600">Создание WOW-эффектов на крупных событиях и церемониях</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Примеры использования — скрыто, пока нет фото */}
 
         {/* CTA Section */}
         <section className="py-16 bg-slate-50">

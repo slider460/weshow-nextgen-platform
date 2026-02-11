@@ -251,21 +251,21 @@ const CaseStavropol3DMapping: React.FC = () => {
           
           <Card className="shadow-lg mb-6">
             <CardHeader>
-              <CardTitle>Основное 3D Mapping шоу</CardTitle>
+              <CardTitle className="text-lg">Основное 3D Mapping шоу</CardTitle>
               <CardDescription>Продолжительность: 8 минут непрерывного 3D маппинга</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-semibold text-slate-900 mb-2">1. Трансформация архитектуры</h3>
+                  <h3 className="text-base font-semibold text-slate-900 mb-2">1. Трансформация архитектуры</h3>
                   <p className="text-slate-700">Здание Парламента преобразилось в мультимедийный экран, демонстрирующий величественные образы Ставропольского края</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900 mb-2">2. Виртуальные символы</h3>
+                  <h3 className="text-base font-semibold text-slate-900 mb-2">2. Виртуальные символы</h3>
                   <p className="text-slate-700">На крыше здания появились виртуальные слоны, символизирующие край Ставропольский</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900 mb-2">3. Финальный эффект</h3>
+                  <h3 className="text-base font-semibold text-slate-900 mb-2">3. Финальный эффект</h3>
                   <p className="text-slate-700">Мощные лазерные лучи концентрировались в четырех точках здания и выстреливали в огромную мультимедийную Новогоднюю Ель, пронизывая небо на высоту до 4 км</p>
                 </div>
               </div>
