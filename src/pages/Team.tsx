@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SEOHead from "../components/SEOHead";
 import { Users } from "lucide-react";
 import { Button } from "../components/ui/button";
 import TeamCard from "../components/TeamCard";
@@ -84,6 +85,11 @@ const Team = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200">
+      <SEOHead
+        title="Команда — WESHOW"
+        description="Команда WESHOW: эксперты в мультимедиа, интерактивных технологиях и организации мероприятий. Опыт 500+ проектов."
+        url="https://weshow.su/team"
+      />
       <Header />
       
       <main className="pt-20">

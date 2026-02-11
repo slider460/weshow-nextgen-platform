@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SEOHead from "../components/SEOHead";
 import { useToast } from "../hooks/use-toast";
 import { MapPin, Phone, Mail } from "lucide-react";
 import mapImage from "../content/services/multimedia-content/temp_map_1762893477095_33ee003kg.jpeg";
@@ -52,6 +53,15 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-[#f8f6f8] dark:bg-[#221022]">
+      <SEOHead
+        title="Контакты — WESHOW"
+        description="Свяжитесь с WESHOW: обсудим ваш проект, техническое оснащение мероприятий, аренду оборудования и мультимедийные решения."
+        url="https://weshow.su/contact"
+        breadcrumbs={[
+          { name: 'Главная', url: 'https://weshow.su/' },
+          { name: 'Контакты', url: 'https://weshow.su/contact' }
+        ]}
+      />
       <Header />
       
       <div className="relative w-full min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 lg:px-8 overflow-hidden pt-32">

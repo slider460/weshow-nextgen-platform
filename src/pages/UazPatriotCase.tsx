@@ -8,6 +8,7 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import SEOHead from '../components/SEOHead'
 import { Card, CardContent } from '../components/ui/card'
 import { Calendar, MapPin, Users, Film, Target, Cog, CheckCircle, Car, Mountain, Clock } from 'lucide-react'
 import DarkVeil from '../components/DarkVeil'
@@ -72,6 +73,11 @@ const UazPatriotCase = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans">
+      <SEOHead
+        title="Рекламный ролик УАЗ Патриот & Eaton — WESHOW"
+        description="Видеопродакшн рекламного ролика УАЗ Патриот и Eaton: блокирующий дифференциал, съёмки в условиях бездорожья. Кейс WESHOW."
+        url="https://weshow.su/portfolio/uaz-patriot-eaton"
+      />
       <Header />
       
       {/* Hero Section */}

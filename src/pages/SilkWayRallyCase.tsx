@@ -8,6 +8,7 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import SEOHead from '../components/SEOHead'
 import { Card, CardContent } from '../components/ui/card'
 import { Calendar, MapPin, Users, Map, Globe, Compass, Mountain, CheckCircle, Target, Layers, Monitor, Palette } from 'lucide-react'
 import DarkVeil from '../components/DarkVeil'
@@ -67,6 +68,11 @@ const SilkWayRallyCase = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans">
+      <SEOHead
+        title="3D визуализация маршрута Silk Way Rally — WESHOW"
+        description="3D визуализация маршрута ралли Silk Way Rally для презентации. Video production и техническая поддержка от WESHOW."
+        url="https://weshow.su/portfolio/silk-way-rally"
+      />
       <Header />
       
       {/* Hero Section */}

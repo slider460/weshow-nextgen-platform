@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Shield, Eye, Lock, Database, Mail } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SEOHead from '../components/SEOHead';
 
 const PrivacyPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50">
+      <SEOHead
+        title="Политика конфиденциальности — WESHOW"
+        description="Политика конфиденциальности WESHOW: обработка персональных данных, использование cookies и защита информации."
+        url="https://weshow.su/privacy"
+      />
       <Header />
       
       <main className="pt-20">

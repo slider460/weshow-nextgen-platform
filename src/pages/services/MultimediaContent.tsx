@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import SEOHead from "../../components/SEOHead";
 import { Link } from "react-router-dom";
 import { Play, ArrowRight } from "lucide-react";
 import { Dialog, DialogContent } from "../../components/ui/dialog";
@@ -52,6 +53,16 @@ const MultimediaContent = () => {
 
   return (
     <div className="min-h-screen bg-[#0c1024] text-white">
+      <SEOHead
+        title="Мультимедийный контент — WESHOW"
+        description="Создание и адаптация мультимедийного контента: 3D mapping, Naked Eye 3D, графика, брендинг, информационные панели. Услуги WESHOW."
+        url="https://weshow.su/services/multimedia-content"
+        breadcrumbs={[
+          { name: 'Главная', url: 'https://weshow.su/' },
+          { name: 'Услуги', url: 'https://weshow.su/services' },
+          { name: 'Мультимедийный контент', url: 'https://weshow.su/services/multimedia-content' }
+        ]}
+      />
       {heroBackground}
       <Header />
 

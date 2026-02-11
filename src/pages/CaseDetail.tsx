@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { localCases, LocalCase } from '../data/cases';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SEOHead from '../components/SEOHead';
 import { Button } from '../components/ui/button';
 import { ArrowLeft, Play, Calendar, Award } from 'lucide-react';
 import { Badge } from '../components/ui/badge';
@@ -54,8 +55,19 @@ const CaseDetail = () => {
     );
   }
 
+  const caseUrl = `https://weshow.su/case/${caseData.id}`;
+  const metaDescription = caseData.description.length > 160
+    ? caseData.description.slice(0, 157) + '...'
+    : caseData.description;
+
   return (
     <div className="min-h-screen bg-slate-50">
+      <SEOHead
+        title={`${caseData.title} — WESHOW`}
+        description={metaDescription}
+        url={caseUrl}
+        image={caseData.image_url ? `https://weshow.su${caseData.image_url.startsWith('/') ? '' : '/'}${caseData.image_url}` : undefined}
+      />
       <Header />
       
       <main className="pt-24">

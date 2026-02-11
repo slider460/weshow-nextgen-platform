@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import SEOHead from '../components/SEOHead'
 import { Card, CardContent } from '../components/ui/card'
 import { Calendar, MapPin, Users } from 'lucide-react'
 import DarkVeil from '../components/DarkVeil'
@@ -59,6 +60,11 @@ const SamsungNewYearCase = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans">
+      <SEOHead
+        title="Особенный Новый год Samsung, 2020 — WESHOW"
+        description="Новогоднее мероприятие Samsung: 3D mapping декорации, проекционные сетки, digital-зоны. Техническое сопровождение от WESHOW."
+        url="https://weshow.su/portfolio/samsung-new-year-2020"
+      />
       <Header />
       
       {/* Hero Section - в стиле Самарской области */}

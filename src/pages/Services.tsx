@@ -1,10 +1,24 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SEOHead from "../components/SEOHead";
 import { Button } from "../components/ui/button";
 import { ArrowRight, Monitor, Code, Settings, Calendar, Package, Palette, Layers, ShoppingCart, Cog, Video, Users, Gamepad2, Smartphone, Globe, Zap, Shield, Wrench, Headphones, Database, Phone, Building2, Hammer, Puzzle, Sparkles, Eye, Projector, Lightbulb, Box, Grid3X3, Move, View, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Services = () => {
+  return (
+    <>
+      <SEOHead
+        title="Услуги — WESHOW"
+        description="Услуги WESHOW: аренда мультимедийного оборудования, разработка ПО и игр, создание контента, техническое сопровождение мероприятий."
+        url="https://weshow.su/services"
+      />
+      <ServicesContent />
+    </>
+  );
+};
+
+const ServicesContent = () => {
   const serviceCategories = [
     {
       title: "Аренда и продажа мультимедийных решений",

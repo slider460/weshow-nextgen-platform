@@ -6,6 +6,7 @@ import { LogosProvider } from './contexts/LogosContext';
 // AuthProvider убран - сайт полностью локальный, БД не используется
 // import { AuthProvider } from './contexts/AuthContext';
 import ScrollToTop from './components/ScrollToTop';
+import SkipToContent from './components/SkipToContent';
 // import { PageLoader } from './components/PageLoader';
 
 const PageLoader = () => (
@@ -63,6 +64,7 @@ const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGa
 const MultimediaInstallations = React.lazy(() => import('./pages/services/MultimediaInstallations.tsx'));
 const Tetris = React.lazy(() => import('./pages/Tetris.tsx'));
 const TestHeaderPage = React.lazy(() => import('./pages/TestHeaderPage.tsx'));
+const NotFound = React.lazy(() => import('./pages/NotFound.tsx'));
 
 // Preload critical components
 const preloadCriticalComponents = () => {
@@ -84,9 +86,11 @@ function App() {
   return (
     <LogosProvider>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <SkipToContent />
           <ScrollToTop />
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
+          <div id="main" tabIndex={-1} className="outline-none">
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/test-header" element={<TestHeaderPage />} />
               <Route path="/about" element={<About />} />
@@ -134,20 +138,10 @@ function App() {
               <Route path="/equipment/flexible-neon" element={<FlexibleNeon />} />
               <Route path="/tetris" element={<Tetris />} />
               <Route path="/game" element={<Tetris />} />
-              {/* Fallback route для 404 */}
-              <Route path="*" element={
-                <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-                  <div className="text-center">
-                    <h1 className="text-6xl font-bold text-slate-900 mb-4">404</h1>
-                    <p className="text-xl text-slate-600 mb-8">Страница не найдена</p>
-                    <a href="/" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-                      Вернуться на главную
-                    </a>
-                  </div>
-                </div>
-              } />
-            </Routes>
-          </Suspense>
+              <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </div>
         </BrowserRouter>
         <SonnerToaster
           position="bottom-right" 

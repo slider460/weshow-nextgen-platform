@@ -1,11 +1,21 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SEOHead from "../components/SEOHead";
 import { Sparkles, Users, TrendingUp } from "lucide-react";
 import teamImage from "../content/services/multimedia-content/2025-11-11 23.35.32.jpg";
 
 const About = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-pink-50/30">
+      <SEOHead
+        title="О компании — WESHOW"
+        description="Креативное агентство мультимедийных решений. Интерактивные инсталляции, 3D-маппинг, техническое оснащение мероприятий и иммерсивный опыт для брендов."
+        url="https://weshow.su/about"
+        breadcrumbs={[
+          { name: 'Главная', url: 'https://weshow.su/' },
+          { name: 'О компании', url: 'https://weshow.su/about' }
+        ]}
+      />
       <Header />
       
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">

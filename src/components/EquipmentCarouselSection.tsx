@@ -66,6 +66,8 @@ const EquipmentCarouselSection = () => {
                           <img 
                             src={item.image} 
                             alt={item.title}
+                            width={1200}
+                            height={514}
                             className="absolute inset-0 w-full h-full object-cover"
                           />
                           {/* Overlay gradient */}
@@ -130,6 +132,8 @@ const EquipmentCarouselSection = () => {
                           <img 
                             src={item.image} 
                             alt={item.title}
+                            width={800}
+                            height={500}
                             className="absolute inset-0 w-full h-full object-cover"
                           />
                           {/* Overlay gradient */}

@@ -8,6 +8,7 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import SEOHead from '../components/SEOHead'
 import { Card, CardContent } from '../components/ui/card'
 import { Calendar, MapPin, Users, Building2, Presentation, Camera, Music, Gift, UtensilsCrossed, CheckCircle, Target, Sparkles } from 'lucide-react'
 import DarkVeil from '../components/DarkVeil'
@@ -63,6 +64,11 @@ const SalarisCase = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans">
+      <SEOHead
+        title="Презентация ТРЦ «Саларис» для ритейлеров — WESHOW"
+        description="Event-маркетинг: презентация МФК Саларис для ритейлеров. Концепция, видеоролик, организация мероприятия. Кейс WESHOW."
+        url="https://weshow.su/portfolio/salaris-presentation"
+      />
       <Header />
       
       {/* Hero Section */}

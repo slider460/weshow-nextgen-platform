@@ -1,5 +1,6 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import SEOHead from "../../components/SEOHead";
 import { Button } from "../../components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -7,6 +8,11 @@ import { Link } from "react-router-dom";
 const FlexibleNeon = () => {
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Гибкий неон — WESHOW"
+        description="Эластичная LED-подсветка для декора, световых скульптур и брендинга. Аренда. WESHOW."
+        url="https://weshow.su/equipment/flexible-neon"
+      />
       <Header />
       <main className="pt-20">
         <section className="relative h-[60vh] min-h-[500px] bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center">

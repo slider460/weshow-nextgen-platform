@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SEOHead from "../components/SEOHead";
 import { Button } from "../components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -30,6 +31,11 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen bg-[#0A192F]">
+      <SEOHead
+        title="Портфолио — WESHOW"
+        description="Примеры работ WESHOW: мультимедийные инсталляции, 3D-маппинг, корпоративные мероприятия, выставки и интерактивные проекты."
+        url="https://weshow.su/portfolio"
+      />
       <Header />
       
       {/* Hero Section */}

@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 
 /**
  * Тестовая страница: шапка с контактами (email, телефон, адрес).
@@ -8,6 +9,7 @@ import Footer from "@/components/Footer";
 const TestHeaderPage = () => {
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead title="Тест шапки — WESHOW" description="Тестовая страница." url="https://weshow.su/test-header" noIndex />
       <Header />
       <main className="pt-32 pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">

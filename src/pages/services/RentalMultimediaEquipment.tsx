@@ -1,5 +1,6 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import SEOHead from "../../components/SEOHead";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "../../components/ui/card";
@@ -871,6 +872,11 @@ const RentalMultimediaEquipment = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Аренда мультимедийного оборудования — WESHOW"
+        description="Аренда LED-экранов, проекторов, медиа-серверов, VR/AR, освещения для мероприятий и выставок. Каталог и заявка. WESHOW."
+        url="https://weshow.su/services/rental-multimedia-equipment"
+      />
       <Header />
       
       <main className="pt-24">

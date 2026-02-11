@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SEOHead from '../components/SEOHead';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -116,6 +117,11 @@ const CaseStavropolStandVDNH = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <SEOHead
+        title="Стенд Ставропольского края на ВДНХ — WESHOW"
+        description="Стенд Ставропольского края на выставке «Россия» на ВДНХ: мультимедийное оснащение, интерактив. Кейс WESHOW 2023–2024."
+        url="https://weshow.su/portfolio/stavropol-stand-vdnh"
+      />
       <Header />
       
       {/* Hero Section */}

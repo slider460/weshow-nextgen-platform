@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import SEOHead from '../../components/SEOHead';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
@@ -156,6 +157,11 @@ const MultimediaInstallations: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Мультимедийные инсталляции — WESHOW"
+        description="Интерактивные и постоянные мультимедийные инсталляции для музеев, офисов, ритейла. Полный цикл: концепция, производство, монтаж. WESHOW."
+        url="https://weshow.su/services/multimedia-installations"
+      />
       <Header />
       
       {/* Hero Section */}

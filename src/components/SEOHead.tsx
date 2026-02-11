@@ -1,29 +1,52 @@
 import { useEffect } from 'react';
 
+const SITE_URL = 'https://weshow.su';
+
+export interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
 interface SEOHeadProps {
   title?: string;
   description?: string;
   keywords?: string;
   image?: string;
   url?: string;
+  canonical?: string;
   type?: string;
   siteName?: string;
   locale?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  noIndex?: boolean;
 }
 
 const SEOHead = ({
-  title = 'WeShow NextGen Platform - Комплексные мультимедийные решения',
-  description = 'Современная веб-платформа мультимедийных решений. Аренда интерактивного оборудования, разработка AR/VR решений, дизайн и техническая поддержка.',
-  keywords = 'мультимедиа, интерактивное оборудование, AR VR, веб-разработка, дизайн, техническая поддержка, аренда оборудования, кинетические экраны, LED панели',
-  image = '/og-image.jpg',
-  url = 'https://weshow.su',
+  title = 'WESHOW — Комплексные мультимедийные решения для бизнеса',
+  description = 'Профессиональное техническое оснащение, 3D-маппинг, интерактивные инсталляции и организация мероприятий для корпоративных клиентов. 500+ успешных проектов.',
+  keywords = 'мультимедийные технологии, техническая интеграция, AV системы, проекционный маппинг, корпоративные мероприятия',
+  image = `${SITE_URL}/images/cases/cadr_shapka_production.jpg`,
+  url = SITE_URL,
+  canonical,
   type = 'website',
-  siteName = 'WeShow NextGen Platform',
-  locale = 'ru_RU'
+  siteName = 'WESHOW',
+  locale = 'ru_RU',
+  breadcrumbs,
+  noIndex = false
 }: SEOHeadProps) => {
+  const canonicalUrl = canonical ?? url;
+
   useEffect(() => {
-    // Обновляем title
     document.title = title;
+
+    // Canonical
+    let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!linkCanonical) {
+      linkCanonical = document.createElement('link');
+      linkCanonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(linkCanonical);
+    }
+    linkCanonical.setAttribute('href', canonicalUrl);
 
     // Функция для обновления мета-тега
     const updateMetaTag = (name: string, content: string, property?: boolean) => {
@@ -46,8 +69,8 @@ const SEOHead = ({
     // Основные мета-теги
     updateMetaTag('description', description);
     updateMetaTag('keywords', keywords);
-    updateMetaTag('robots', 'index, follow');
-    updateMetaTag('viewport', 'width=device-width, initial-scale=1.0');
+    updateMetaTag('robots', noIndex ? 'noindex, follow' : 'index, follow');
+    // viewport не перезаписываем — остаётся из index.html
 
     // Open Graph теги
     updateMetaTag('og:title', title, true);
@@ -65,17 +88,17 @@ const SEOHead = ({
     updateMetaTag('twitter:image', image);
 
     // Дополнительные теги для поисковиков
-    updateMetaTag('author', 'WeShow NextGen Platform');
-    updateMetaTag('theme-color', '#3b82f6');
-    
+    updateMetaTag('author', 'WESHOW');
+    // theme-color не перезаписываем — оставляем из index.html
+
     // Структурированные данные (JSON-LD)
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "WeShow NextGen Platform",
+      "name": siteName,
       "description": description,
       "url": url,
-      "logo": `${url}/logo.svg`,
+      "logo": `${SITE_URL}/logo.svg`,
       "contactPoint": {
         "@type": "ContactPoint",
         "telephone": "+7 (495) 580-75-37",
@@ -95,7 +118,7 @@ const SEOHead = ({
       ]
     };
 
-    // Добавляем или обновляем JSON-LD
+    // JSON-LD Organization
     let jsonLd = document.querySelector('script[type="application/ld+json"]') as HTMLScriptElement;
     if (!jsonLd) {
       jsonLd = document.createElement('script');
@@ -104,7 +127,32 @@ const SEOHead = ({
     }
     jsonLd.textContent = JSON.stringify(structuredData);
 
-  }, [title, description, keywords, image, url, type, siteName, locale]);
+    // JSON-LD BreadcrumbList (если передан breadcrumbs)
+    const breadcrumbId = 'breadcrumb-ld';
+    let breadcrumbScript = document.getElementById(breadcrumbId) as HTMLScriptElement | null;
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      const breadcrumbList = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          item: item.url
+        }))
+      };
+      if (!breadcrumbScript) {
+        breadcrumbScript = document.createElement('script');
+        breadcrumbScript.id = breadcrumbId;
+        breadcrumbScript.type = 'application/ld+json';
+        document.head.appendChild(breadcrumbScript);
+      }
+      breadcrumbScript.textContent = JSON.stringify(breadcrumbList);
+    } else if (breadcrumbScript) {
+      breadcrumbScript.remove();
+    }
+
+  }, [title, description, keywords, image, url, canonicalUrl, type, siteName, locale, breadcrumbs, noIndex]);
 
   return null;
 };

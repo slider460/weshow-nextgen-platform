@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import { Play, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
@@ -114,6 +115,11 @@ const VideoProductionTest = () => {
 
   return (
     <div className="min-h-screen bg-[#f5f6f8] dark:bg-[#101622] text-[#1E1E1E] dark:text-white font-display">
+      <SEOHead
+        title="Видеопродакшн — WESHOW"
+        description="Видеопродакшн рекламных роликов, репортажей и презентаций. Съёмка, монтаж, графика. Услуги WESHOW."
+        url="https://weshow.su/services/video-production"
+      />
       <Header />
 
       <main className="flex-1">

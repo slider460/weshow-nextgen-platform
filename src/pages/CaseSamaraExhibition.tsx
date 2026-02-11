@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SEOHead from "../components/SEOHead";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
@@ -12,6 +13,11 @@ import { HeroVideoDialog } from "../components/ui/hero-video-dialog";
 const CaseSamaraExhibition: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Выставка «Самара» в Музее Алабина — WESHOW"
+        description="Мультимедийное оснащение выставки «Самара» в Музее им. П.В. Алабина. Кейс WESHOW 2024–2025."
+        url="https://weshow.su/portfolio/samara-exhibition"
+      />
       <Header />
 
       <section className="py-10">

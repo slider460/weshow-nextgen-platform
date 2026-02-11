@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import SEOHead from "../../components/SEOHead";
 import { Button } from "../../components/ui/button";
 import { BentoCard } from "../../components/ui/bento-card";
 import TextType from "../../components/TextType";
@@ -201,6 +202,11 @@ const SoftwareAndGames = () => {
 
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark">
+      <SEOHead
+        title="ПО и игры для мероприятий — WESHOW"
+        description="Разработка ПО и игр для мероприятий: брендированные игры, квизы, AR/VR, фотобудки, синхронизация оборудования. Услуги WESHOW."
+        url="https://weshow.su/services/software-and-games"
+      />
       <Header />
       
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">

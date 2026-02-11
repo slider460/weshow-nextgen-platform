@@ -1,5 +1,6 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SEOHead from '../components/SEOHead';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import AnimatedContent from '../components/AnimatedContent';
@@ -113,6 +114,11 @@ const processSteps = [
 const Equipment = () => {
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Оборудование — WESHOW"
+        description="Мультимедийное оборудование WESHOW: кинетические и матричные экраны, проекторы, интерактивные панели, аренда для мероприятий и выставок."
+        url="https://weshow.su/equipment"
+      />
       <Header />
       
       <main className="pt-24">

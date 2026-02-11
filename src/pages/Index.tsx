@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import SEOHead from "../components/SEOHead";
 import AdvancedHeroSection from "../components/AdvancedHeroSection";
 import ModernPortfolioSection from "../components/ModernPortfolioSection";
 import ModernPortfolioMobileSection from "../components/ModernPortfolioMobileSection";
@@ -35,6 +36,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <SEOHead
+        title="WESHOW — Комплексные мультимедийные решения для бизнеса"
+        description="Профессиональное техническое оснащение, 3D-маппинг, интерактивные инсталляции и организация мероприятий для корпоративных клиентов. 500+ успешных проектов."
+        url="https://weshow.su"
+      />
       <Header />
       <main className="space-y-0 overflow-x-hidden">
         <AdvancedHeroSection onShowShowreel={() => setIsShowreelModalOpen(true)} />

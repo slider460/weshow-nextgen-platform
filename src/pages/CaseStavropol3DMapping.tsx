@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SEOHead from "../components/SEOHead";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
@@ -14,6 +15,11 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 const CaseStavropol3DMapping: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="3D Mapping шоу в Ставрополе — WESHOW"
+        description="3D mapping на открытии новогодних мероприятий в Ставрополе: проекционное шоу на фасаде здания. Кейс WESHOW."
+        url="https://weshow.su/portfolio/stavropol-3d-mapping"
+      />
       <Header />
 
       <section className="py-10">

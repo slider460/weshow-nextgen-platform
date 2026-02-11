@@ -1,5 +1,6 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import SEOHead from "../../components/SEOHead";
 import { Button } from "../../components/ui/button";
 import { ArrowLeft, ArrowRight, Monitor, Zap, CheckCircle, Settings, Power } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -7,6 +8,11 @@ import { Link } from "react-router-dom";
 const MatrixScreen = () => {
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Матричный экран Scalelike Matrix — WESHOW"
+        description="Модульная световая матрица Scalelike Matrix: Art-Net, DMX, sACN. Аренда и интеграция. WESHOW."
+        url="https://weshow.su/equipment/matrix-screen"
+      />
       <Header />
       <main className="pt-20">
         {/* Hero Section */}

@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SEOHead from "../components/SEOHead";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
@@ -15,6 +16,16 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 const CaseSamaraStandVDNH_Test: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Стенд Самарской области на ВДНХ — WESHOW"
+        description="Стенд Самарской области на выставке-форуме «Россия» на ВДНХ: мультимедийная экспозиция, Naked Eye 3D, кинетический экран, VR/AR. 18+ млн посетителей."
+        url="https://weshow.su/portfolio/samara-stand-vdnh"
+        breadcrumbs={[
+          { name: 'Главная', url: 'https://weshow.su/' },
+          { name: 'Портфолио', url: 'https://weshow.su/portfolio' },
+          { name: 'Стенд Самарской области на ВДНХ', url: 'https://weshow.su/portfolio/samara-stand-vdnh' }
+        ]}
+      />
       <Header />
 
       <section className="py-10">

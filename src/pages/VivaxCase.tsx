@@ -8,6 +8,7 @@
 import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import SEOHead from '../components/SEOHead'
 import { Card, CardContent } from '../components/ui/card'
 import { Calendar, MapPin, Users, Film, Target, Lightbulb, CheckCircle } from 'lucide-react'
 import DarkVeil from '../components/DarkVeil'
@@ -59,6 +60,11 @@ const VivaxCase = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 font-sans">
+      <SEOHead
+        title="Вирусный ролик VIVAX и Настасья Самбурская — WESHOW"
+        description="Видеопродакшн рекламного ролика VIVAX с Настасьей Самбурской. Креатив и съёмка от WESHOW."
+        url="https://weshow.su/portfolio/vivax-samburskaya"
+      />
       <Header />
       
       {/* Hero Section */}

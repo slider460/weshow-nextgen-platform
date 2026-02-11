@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import SEOHead from "../../components/SEOHead";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
@@ -396,8 +398,40 @@ const ServiceCard = ({ service }: { service: typeof services[0] }) => (
 
 // Основной компонент
 const TechnologicalExhibitionStands = () => {
+  // FAQ JSON-LD для расширенных сниппетов в поиске
+  useEffect(() => {
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.a
+        }
+      }))
+    };
+    let script = document.getElementById("faq-schema") as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement("script");
+      script.id = "faq-schema";
+      script.type = "application/ld+json";
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(faqSchema);
+    return () => {
+      script?.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Технологичные выставочные стенды — WESHOW"
+        description="Проектирование и производство технологичных выставочных стендов: мультимедиа, интерактив, полный цикл. WESHOW."
+        url="https://weshow.su/services/technological-exhibition-stands"
+      />
       <Header />
       
       <main className="pt-24">

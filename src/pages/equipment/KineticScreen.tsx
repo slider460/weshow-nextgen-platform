@@ -1,5 +1,6 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import SEOHead from "../../components/SEOHead";
 import { Button } from "../../components/ui/button";
 import { ArrowLeft, ArrowRight, Monitor, Zap, CheckCircle, Settings, Power, Move } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -7,6 +8,16 @@ import { Link } from "react-router-dom";
 const KineticScreen = () => {
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="Кинетический экран — WESHOW"
+        description="Кинетический экран: движущиеся пиксели до 20 см, 3D-визуализация и интерактив. Аренда и интеграция. WESHOW."
+        url="https://weshow.su/equipment/kinetic-screen"
+        breadcrumbs={[
+          { name: 'Главная', url: 'https://weshow.su/' },
+          { name: 'Оборудование', url: 'https://weshow.su/equipment' },
+          { name: 'Кинетический экран', url: 'https://weshow.su/equipment/kinetic-screen' }
+        ]}
+      />
       <Header />
       <main className="pt-20">
         {/* Hero Section */}
