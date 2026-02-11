@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import AnimatedButton from "./AnimatedButton";
-import { Menu, X, ChevronDown, Zap } from "lucide-react";
-import ConsultationModal from "./ConsultationModal";
+import { Menu, X, ChevronDown, Mail, Phone, MapPin } from "lucide-react";
+
+const HEADER_CONTACT = {
+  email: "info@weshow.su",
+  phone: "+7 (495) 580-75-37",
+  phoneHref: "tel:+74955807537",
+  address: "Москва, ул. Рочдельская, 14А",
+};
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -43,11 +47,6 @@ const Header = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
-  };
-
-  const openConsultModal = () => {
-    setIsConsultModalOpen(true);
-    closeMenu();
   };
 
   const isActive = (path: string) => location.pathname === path;
@@ -213,18 +212,36 @@ const Header = () => {
             </Link>
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden lg:flex items-center space-x-3 flex-shrink-0">
-            <AnimatedButton 
-              variant="gradient"
-              hoverEffect="lift"
-              glow={true}
-              icon={<Zap className="w-4 h-4" />}
-              onClick={openConsultModal}
-              className="text-white px-3 py-2 text-sm"
-            >
-              Получить консультацию
-            </AnimatedButton>
+          {/* Контакты в шапке — десктоп (столбиком в правом углу) */}
+          <div className="hidden lg:flex flex-col items-end justify-center gap-0.5 flex-shrink-0 text-sm text-slate-600">
+            <a href={`mailto:${HEADER_CONTACT.email}`} className="flex items-center gap-1.5 hover:text-blue-600 transition-colors truncate max-w-[220px]" title="Email">
+              <Mail className="h-4 w-4 flex-shrink-0" />
+              <span className="truncate">{HEADER_CONTACT.email}</span>
+            </a>
+            <a href={HEADER_CONTACT.phoneHref} className="flex items-center gap-1.5 hover:text-blue-600 transition-colors whitespace-nowrap" title="Телефон">
+              <Phone className="h-4 w-4 flex-shrink-0" />
+              <span>{HEADER_CONTACT.phone}</span>
+            </a>
+            <span className="flex items-center gap-1.5 whitespace-nowrap" title="Адрес">
+              <MapPin className="h-4 w-4 flex-shrink-0 text-slate-500" />
+              <span>{HEADER_CONTACT.address}</span>
+            </span>
+          </div>
+
+          {/* Контакты в шапке — мобильная версия (столбиком в правом углу) */}
+          <div className="lg:hidden flex flex-col items-end justify-center gap-0.5 flex-shrink-0 text-slate-600 text-[11px] leading-tight">
+            <a href={`mailto:${HEADER_CONTACT.email}`} className="flex items-center gap-1 hover:text-blue-600 transition-colors truncate max-w-[140px] sm:max-w-[180px]" title={HEADER_CONTACT.email} aria-label="Email">
+              <Mail className="h-3 w-3 flex-shrink-0" />
+              <span className="truncate">{HEADER_CONTACT.email}</span>
+            </a>
+            <a href={HEADER_CONTACT.phoneHref} className="flex items-center gap-1 hover:text-blue-600 transition-colors whitespace-nowrap" title={HEADER_CONTACT.phone} aria-label="Телефон">
+              <Phone className="h-3 w-3 flex-shrink-0" />
+              <span>{HEADER_CONTACT.phone}</span>
+            </a>
+            <span className="flex items-center gap-1 whitespace-nowrap" title={HEADER_CONTACT.address} aria-label="Адрес">
+              <MapPin className="h-3 w-3 flex-shrink-0 text-slate-500" />
+              <span>{HEADER_CONTACT.address}</span>
+            </span>
           </div>
 
           {/* Mobile Menu Button */}
@@ -357,31 +374,25 @@ const Header = () => {
                 Контакты
               </Link>
               
-              {/* Mobile CTA */}
-              <div className="pt-4">
-                <AnimatedButton 
-                  variant="gradient"
-                  hoverEffect="scale"
-                  glow={true}
-                  icon={<Zap className="w-4 h-4" />}
-                  onClick={openConsultModal}
-                  className="w-full text-white"
-                >
-                  Получить консультацию
-                </AnimatedButton>
+              {/* Контакты в мобильном меню */}
+              <div className="pt-4 mt-4 border-t border-slate-200 space-y-2">
+                <a href={`mailto:${HEADER_CONTACT.email}`} className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-blue-600">
+                  <Mail className="h-4 w-4" />
+                  {HEADER_CONTACT.email}
+                </a>
+                <a href={HEADER_CONTACT.phoneHref} className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-blue-600">
+                  <Phone className="h-4 w-4" />
+                  {HEADER_CONTACT.phone}
+                </a>
+                <div className="flex items-center gap-2 px-4 py-2 text-slate-600">
+                  <MapPin className="h-4 w-4 flex-shrink-0" />
+                  <span>{HEADER_CONTACT.address}</span>
+                </div>
               </div>
             </nav>
           </div>
         </div>
       </div>
-
-      {/* Consultation Modal */}
-      <ConsultationModal 
-        isOpen={isConsultModalOpen}
-        onClose={() => setIsConsultModalOpen(false)}
-        title="Получить консультацию"
-        triggerText="Получить консультацию"
-      />
     </header>
   );
 };

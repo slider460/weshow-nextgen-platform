@@ -62,6 +62,7 @@ const VideoProductionTest = React.lazy(() => import('./pages/VideoProductionTest
 const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGames.tsx'));
 const MultimediaInstallations = React.lazy(() => import('./pages/services/MultimediaInstallations.tsx'));
 const Tetris = React.lazy(() => import('./pages/Tetris.tsx'));
+const TestHeaderPage = React.lazy(() => import('./pages/TestHeaderPage.tsx'));
 
 // Preload critical components
 const preloadCriticalComponents = () => {
@@ -87,6 +88,7 @@ function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/test-header" element={<TestHeaderPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
               <Route path="/services/multimedia" element={<Services />} />

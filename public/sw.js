@@ -117,7 +117,6 @@ function isMediaFile(request) {
 function isAPIRequest(request) {
   const url = new URL(request.url);
   return url.pathname.startsWith('/api/') ||
-         url.pathname.includes('vercel') ||
          url.pathname.includes('cdn');
 }
 

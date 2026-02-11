@@ -7,7 +7,7 @@ import fs from 'fs'
 // Без этих копий /portfolio/ и т.п. дают 403, если .htaccess не обрабатывается.
 const SPA_ROUTE_DIRS = [
   'about', 'contact', 'portfolio', 'team', 'services', 'equipment', 'privacy', 'tetris', 'game',
-  'case',
+  'case', 'test-header',
 ]
 
 function copyIndexIntoRouteDirs() {
@@ -43,8 +43,24 @@ function copyIndexIntoRouteDirs() {
   }
 }
 
+// В dev при прямом заходе на /test-header и др. отдаём index.html (SPA)
+function spaFallback() {
+  return {
+    name: 'spa-fallback',
+    configureServer(server: import('vite').ViteDevServer) {
+      server.middlewares.use((req, res, next) => {
+        const url = req.url?.split('?')[0] ?? ''
+        if (url !== '/' && !url.startsWith('/@') && !url.includes('.')) {
+          req.url = '/index.html'
+        }
+        next()
+      })
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), copyIndexIntoRouteDirs()],
+  plugins: [react(), copyIndexIntoRouteDirs(), spaFallback()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

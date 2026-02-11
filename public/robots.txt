@@ -1,3 +1,9 @@
+# Яндекс (рекомендации: https://yandex.ru/support/webmaster/)
+User-agent: Yandex
+Allow: /
+Disallow: /mail/
+Sitemap: https://weshow.su/sitemap.xml
+
 User-agent: Googlebot
 Allow: /
 
@@ -12,3 +18,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /mail/
+Sitemap: https://weshow.su/sitemap.xml
