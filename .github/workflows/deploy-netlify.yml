@@ -1,7 +1,7 @@
 name: 🚀 Deploy to Netlify
 
 on:
-  # Отключен - используем Vercel для деплоя
+  # Отключен - деплой выполняется напрямую на Reg.ru через deploy-reg-ru.yml
   workflow_dispatch: # Только ручной запуск при необходимости
 
 jobs:
