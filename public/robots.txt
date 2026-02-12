@@ -2,13 +2,25 @@
 User-agent: Yandex
 Allow: /
 Disallow: /mail/
+Disallow: /test-header
+Disallow: /tetris
+Disallow: /game
+Disallow: /portfolio/samara-stand-vdnh-test
 Sitemap: https://weshow.su/sitemap.xml
 
 User-agent: Googlebot
 Allow: /
+Disallow: /mail/
+Disallow: /test-header
+Disallow: /tetris
+Disallow: /game
+Disallow: /portfolio/samara-stand-vdnh-test
 
 User-agent: Bingbot
 Allow: /
+Disallow: /test-header
+Disallow: /tetris
+Disallow: /game
 
 User-agent: Twitterbot
 Allow: /
@@ -19,4 +31,8 @@ Allow: /
 User-agent: *
 Allow: /
 Disallow: /mail/
+Disallow: /test-header
+Disallow: /tetris
+Disallow: /game
+Disallow: /portfolio/samara-stand-vdnh-test
 Sitemap: https://weshow.su/sitemap.xml
