@@ -1,10 +1,13 @@
-import { useState } from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import SEOHead from "../../components/SEOHead";
-import { Link } from "react-router-dom";
-import { Play, ArrowRight } from "lucide-react";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Sparkles, Layers, Box, Monitor, ArrowRight, Play, CheckCircle2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import { Dialog, DialogContent } from "../../components/ui/dialog";
+
+// Content Imports
 import grafFrame from "../../content/services/multimedia-content/Graf_oformlenie.jpg";
 import mappingArchitecturePoster from "../../content/services/multimedia-content/cadr_3dmapping.jpg";
 import mappingCurvedPoster from "../../content/services/multimedia-content/cadr_ecran.jpg";
@@ -32,236 +35,343 @@ const VIDEO_LINKS = {
   infoPanels: "https://www.dropbox.com/scl/fi/d9jnc8iox0628vrfodcav/5_.mp4?rlkey=jua2l5gl13zlpcl8xfm83qtxy&raw=1",
 };
 
-const heroBackground = (
-  <div className="absolute top-0 left-0 h-full w-full -z-10 overflow-hidden">
-    <div className="absolute -top-40 -left-32 h-[520px] w-[520px] rounded-full bg-indigo-500/20 blur-3xl" />
-    <div className="absolute top-20 -right-40 h-[640px] w-[640px] rounded-full bg-purple-500/20 blur-3xl" />
-    <div className="absolute top-1/2 left-[20%] h-[420px] w-[420px] -translate-y-1/2 rounded-full bg-teal-400/10 blur-[160px]" />
+const PlayOverlay = () => (
+  <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors duration-300">
+    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/30 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+      <Play className="h-6 w-6 text-white fill-white" />
+    </div>
   </div>
 );
 
-const PlayOverlay = () => (
-  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
-      <Play className="h-6 w-6 text-white" />
+const ServiceSection = ({
+  title,
+  description,
+  video,
+  image,
+  reverse = false,
+  onPlay
+}: {
+  title: string,
+  description: React.ReactNode,
+  video?: { src: string, title: string },
+  image: string,
+  reverse?: boolean,
+  onPlay?: (video: { src: string, title: string }) => void
+}) => (
+  <motion.section
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-100px" }}
+    className={`grid lg:grid-cols-2 gap-12 items-center py-20 ${reverse ? 'lg:direction-rtl' : ''}`}
+  >
+    <div className={`space-y-6 ${reverse ? 'lg:order-2' : ''}`}>
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+        {title}
+      </h2>
+      <div className="text-lg text-gray-600 leading-relaxed space-y-4">
+        {description}
+      </div>
+      {video && (
+        <Button
+          variant="ghost"
+          className="group text-blue-600 hover:text-blue-700 hover:bg-blue-50 pl-0"
+          onClick={() => onPlay && onPlay(video)}
+        >
+          <Play className="mr-2 w-4 h-4 fill-current group-hover:scale-110 transition-transform" />
+          <span>Смотреть пример</span>
+        </Button>
+      )}
     </div>
-  </div>
+
+    <div className={`relative ${reverse ? 'lg:order-1' : ''}`}>
+      <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-3xl blur-2xl opacity-70" />
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-200 group cursor-pointer aspect-video bg-white"
+        onClick={() => video && onPlay && onPlay(video)}>
+        <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        {video && <PlayOverlay />}
+      </div>
+    </div>
+  </motion.section>
+);
+
+const ServiceCard = ({ icon: Icon, title, description, delay }: { icon: any, title: string, description: string, delay: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay }}
+    className="group relative p-8 rounded-3xl bg-white shadow-lg shadow-gray-100 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 border border-gray-100 overflow-hidden"
+  >
+    <div className="relative z-10">
+      <div className="w-14 h-14 mb-6 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+        <Icon size={28} />
+      </div>
+      <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-blue-600 transition-colors">
+        {title}
+      </h3>
+      <p className="text-gray-500 leading-relaxed mb-6">
+        {description}
+      </p>
+      <div className="flex items-center text-sm font-medium text-blue-600 group-hover:translate-x-1 transition-transform">
+        Подробнее <ArrowRight className="ml-2 w-4 h-4" />
+      </div>
+    </div>
+  </motion.div>
 );
 
 const MultimediaContent = () => {
   const [activeVideo, setActiveVideo] = useState<{ src: string; title: string } | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#0c1024] text-white">
-      <SEOHead
-        title="Мультимедийный контент — WESHOW"
-        description="Создание и адаптация мультимедийного контента: 3D mapping, Naked Eye 3D, графика, брендинг, информационные панели. Услуги WESHOW."
-        url="https://weshow.su/services/multimedia-content"
-        breadcrumbs={[
-          { name: 'Главная', url: 'https://weshow.su/' },
-          { name: 'Услуги', url: 'https://weshow.su/services' },
-          { name: 'Мультимедийный контент', url: 'https://weshow.su/services/multimedia-content' }
-        ]}
-      />
-      {heroBackground}
+    <div className="min-h-screen bg-white text-gray-900 selection:bg-blue-100 overflow-x-hidden">
       <Header />
 
-      <main className="relative z-10">
-        {/* HERO */}
-        <section className="mx-auto max-w-6xl px-4 pb-16 pt-28 text-center sm:pt-32">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
-            Мультимедийный контент: <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">от идеи до воплощения</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-lg text-slate-200/85">
-            Мы создаем высококачественный мультимедийный контент, который оживляет ваши идеи и эффективно доносит их до аудитории, используя передовые технологии и креативные подходы.
-          </p>
-        </section>
+      {/* Background Ambience */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute -top-[20%] -right-[10%] w-[800px] h-[800px] bg-gradient-to-br from-blue-50 to-purple-50 rounded-full blur-[120px] opacity-60" />
+        <div className="absolute top-[20%] -left-[10%] w-[600px] h-[600px] bg-gradient-to-tr from-indigo-50 to-blue-50 rounded-full blur-[100px] opacity-60" />
+      </div>
 
-        <div className="mx-auto max-w-6xl space-y-20 px-4 pb-12">
-          {/* 1. Графическое оформление */}
-          <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">Графическое оформление и заставки для мероприятий</h2>
-              <p className="text-slate-200">
-                Создаем яркие и динамичные заставки, титры и графическое оформление для экранов любых размеров, которые задают тон вашему мероприятию и подчеркивают его статус.
-              </p>
-            </div>
-            <div className="space-y-3">
-              <button
-                type="button"
-                onClick={() => setActiveVideo({ src: VIDEO_LINKS.graphics, title: "Графическое оформление и заставки" })}
-                className="relative block overflow-hidden rounded-2xl shadow-[0_30px_80px_-30px_rgba(79,70,229,0.55)] transition duration-300 hover:scale-[1.01]"
-              >
-                <img src={IMAGES.broadcast} alt="Графическое оформление" className="h-full w-full object-cover" />
-                <PlayOverlay />
-              </button>
-              <p className="text-sm text-slate-200/80">Пример заставок и графики для мероприятий</p>
-            </div>
-          </section>
+      {/* Hero Section */}
+      <section className="relative pt-40 pb-24 px-6 container mx-auto z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium mb-8"
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>Новое поколение визуальных решений</span>
+          </motion.div>
 
-          {/* 2. 3D-контент и мэппинг - ДВА РОЛИКА */}
-          <section className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="grid gap-6 sm:grid-cols-2 order-2 lg:order-1">
-              <div className="space-y-3">
-                <button
-                  type="button"
-                  onClick={() => setActiveVideo({ src: VIDEO_LINKS.mappingArchitecture, title: "Пример мэппинга на архитектуре" })}
-                  className="relative block w-full aspect-video overflow-hidden rounded-2xl shadow-[0_24px_60px_-25px_rgba(79,70,229,0.55)] transition duration-300 hover:scale-[1.01]"
-                >
-                  <img src={IMAGES.mappingArchitecture} alt="Пример мэппинга на архитектуре" className="h-full w-full object-cover" />
-                  <PlayOverlay />
-                </button>
-                <p className="text-sm text-slate-200/80">Пример мэппинга на архитектуре</p>
-              </div>
-              <div className="space-y-3">
-                <button
-                  type="button"
-                  onClick={() => setActiveVideo({ src: VIDEO_LINKS.mappingCurved, title: "3D-контент для изогнутого экрана" })}
-                  className="relative block w-full aspect-video overflow-hidden rounded-2xl shadow-[0_24px_60px_-25px_rgba(79,70,229,0.55)] transition duration-300 hover:scale-[1.01]"
-                >
-                  <img src={IMAGES.mappingCurved} alt="3D-контент для изогнутого экрана" className="h-full w-full object-cover" />
-                  <PlayOverlay />
-                </button>
-                <p className="text-sm text-slate-200/80">3D-контент для изогнутого экрана</p>
-              </div>
-            </div>
-            <div className="space-y-4 order-1 lg:order-2">
-              <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">3D-контент и мэппинг для сложных поверхностей</h2>
-              <p className="text-slate-200">
-                Создание 3D-контент для изогнутых экранов, нестандартных конструкций и архитектурных поверхностей с расчетом "пиксель в пиксель".
-              </p>
-            </div>
-          </section>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-tight text-gray-900"
+          >
+            Мультимедийный контент: <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+              От идеи до воплощения
+            </span>
+          </motion.h1>
 
-          {/* 3. Naked Eye 3D */}
-          <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">3D-контент с технологией "Naked Eye"</h2>
-              <p className="text-slate-200">
-                Создаем впечатляющий 3D-контент для экранов с технологией "Naked Eye", который позволяет зрителям видеть объемное изображение без использования специальных очков.
-              </p>
-            </div>
-            <div className="space-y-3">
-              <button
-                type="button"
-                onClick={() => setActiveVideo({ src: VIDEO_LINKS.nakedEye, title: "3D-контент с технологией 'Naked Eye'" })}
-                className="relative block w-full overflow-hidden rounded-2xl shadow-[0_30px_80px_-30px_rgba(79,70,229,0.55)] transition duration-300 hover:scale-[1.01]"
-              >
-                <img src={IMAGES.nakedEye} alt="Naked Eye контент" className="h-full w-full object-cover" />
-                <PlayOverlay />
-              </button>
-              <p className="text-sm text-slate-200/80">Пример 3D-контент с технологией "Naked Eye"</p>
-            </div>
-          </section>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto"
+          >
+            Мы создаем цифровые миры, которые оживляют ваши идеи. Передовые технологии и креативный подход для создания незабываемых впечатлений.
+          </motion.p>
 
-          {/* 4. Комплексный брендинг */}
-          <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="relative order-2 overflow-hidden rounded-2xl shadow-[0_30px_80px_-30px_rgba(79,70,229,0.55)] lg:order-1">
-              <img src={IMAGES.branding} alt="Комплексный брендинг" className="h-full w-full object-cover" />
-            </div>
-            <div className="order-1 space-y-4 lg:order-2">
-              <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">Комплексный брендинг мероприятий</h2>
-              <p className="text-slate-200">
-                Разрабатываем единый визуальный стиль: Key Vision, контент для всех мультимедиа и брендирование физических поверхностей.
-              </p>
-            </div>
-          </section>
-
-          {/* 5. VR-контент */}
-          <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">VR-контент и иммерсивные среды</h2>
-              <p className="text-slate-200">
-                Погружаем пользователей в виртуальную реальность с помощью интерактивных VR-проектов, создавая уникальный опыт и новые возможности для взаимодействия с вашим брендом.
-              </p>
-              <ul className="space-y-3 text-slate-200/90">
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2.5 w-2.5 rounded-full bg-indigo-400" />
-                  Персонализированные VR-среды: интерактивные миры и симуляции.
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2.5 w-2.5 rounded-full bg-indigo-400" />
-                  Производство 360° видео: съемка, постпродакшн и подбор оборудования.
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2.5 w-2.5 rounded-full bg-indigo-400" />
-                  VR-кинотеатры: уникальный формат демонстрации вашего контента.
-                </li>
-              </ul>
-            </div>
-            <div className="relative overflow-hidden rounded-2xl shadow-[0_30px_80px_-30px_rgba(79,70,229,0.55)]">
-              <img src={IMAGES.vr} alt="VR контент" className="h-full w-full object-cover" />
-            </div>
-          </section>
-
-          {/* 6. Контент для информационных панелей */}
-          <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="order-2 space-y-3 lg:order-1">
-              <button
-                type="button"
-                onClick={() => setActiveVideo({ src: VIDEO_LINKS.infoPanels, title: "Контент для информационных панелей" })}
-                className="relative block w-full overflow-hidden rounded-2xl shadow-[0_30px_80px_-30px_rgba(79,70,229,0.55)] transition duration-300 hover:scale-[1.01]"
-              >
-                <img src={IMAGES.infoPanels} alt="Контент для инфо-панелей" className="h-full w-full object-cover" />
-                <PlayOverlay />
-              </button>
-              <p className="text-sm text-slate-200/80">Пример контента для информационных панелей</p>
-            </div>
-            <div className="order-1 space-y-4 lg:order-2">
-              <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">Контент для информационных панелей</h2>
-              <p className="text-slate-200">
-                Разрабатываем информативный и привлекательный контент для тач-панелей, интерактивных столов и киосков, делая навигацию и получение информации удобными и интуитивно понятными.
-              </p>
-            </div>
-          </section>
-
-          {/* 7. Адаптация контента */}
-          <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold text-slate-100 sm:text-4xl">Адаптация контента под любые поверхности</h2>
-              <p className="text-slate-200">
-                Профессионально адаптируем существующий контент под любые форматы: архитектурные фасады, сложные LED-инсталляции, изогнутые экраны и интерактивные поверхности.
-              </p>
-            </div>
-            <div className="relative overflow-hidden rounded-2xl shadow-[0_30px_80px_-30px_rgba(79,70,229,0.55)]">
-              <img src={IMAGES.adaptation} alt="Адаптация контента" className="h-full w-full object-cover" />
-            </div>
-          </section>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white h-14 px-8 rounded-full text-lg shadow-lg shadow-blue-600/20">
+              Обсудить проект
+            </Button>
+            <Button size="lg" variant="outline" className="h-14 px-8 rounded-full text-lg border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+              <Play className="mr-2 w-5 h-5 fill-current" />
+              Смотреть шоурил
+            </Button>
+          </motion.div>
         </div>
+      </section>
 
-        {/* CTA */}
-        <section className="mx-auto max-w-5xl px-4 pb-24">
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 px-6 py-10 text-center shadow-[0_35px_120px_-30px_rgba(79,70,229,0.55)] sm:px-12 sm:py-16">
-            <div className="absolute inset-0 bg-black/35" />
-            <div className="relative z-10 space-y-6">
-              <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Готовы воплотить вашу идею в жизнь?</h2>
-              <p className="mx-auto max-w-2xl text-base text-slate-200/80 sm:text-lg">
-                Свяжитесь с нами, чтобы обсудить ваш проект. Мы поможем создать незабываемый интерактивный опыт для вашей аудитории.
-              </p>
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center rounded-xl bg-[#6366f1] px-8 py-3 text-base font-semibold text-white shadow-[0_18px_45px_rgba(79,70,229,0.45)] transition duration-300 hover:scale-105 hover:bg-[#4f46e5]"
-              >
-                Запросить консультацию
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+      {/* Services Grid */}
+      <section className="py-12 px-6 container mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <ServiceCard
+            icon={Monitor}
+            title="Графическое оформление"
+            description="Яркие и динамичные заставки, титры и оформление для экранов любых размеров. Задаем тон вашему мероприятию."
+            delay={0.1}
+          />
+          <ServiceCard
+            icon={Layers}
+            title="3D-контент и мэппинг"
+            description="Создание контента для сложных поверхностей, изогнутых экранов и архитектурных форм с точностью до пикселя."
+            delay={0.2}
+          />
+          <ServiceCard
+            icon={Box}
+            title="Naked Eye 3D"
+            description="Впечатляющий объемный контент, который зрители видят без специальных очков. Эффект выхода за рамки экрана."
+            delay={0.3}
+          />
+          <ServiceCard
+            icon={Sparkles}
+            title="Брендинг мероприятий"
+            description="Комплексная разработка визуального стиля: Key Vision, мультимедиа контент и брендирование физических поверхностей."
+            delay={0.4}
+          />
+        </motion.div>
+      </section>
+
+      {/* Content Sections */}
+      <main className="container mx-auto px-6 relative z-10 space-y-12 pb-32">
+
+        {/* 1. Графическое оформление */}
+        <ServiceSection
+          title="Графическое оформление и заставки"
+          description="Создаем яркие и динамичные заставки, титры и графическое оформление для экранов любых размеров, которые задают тон вашему мероприятию и подчеркивают его статус."
+          image={IMAGES.broadcast}
+          video={{ src: VIDEO_LINKS.graphics, title: "Графическое оформление" }}
+          onPlay={setActiveVideo}
+        />
+
+        {/* 2. 3D-контент и мэппинг */}
+        <section className="grid lg:grid-cols-2 gap-12 items-center py-20">
+          <div className="order-2 lg:order-1 grid gap-6 sm:grid-cols-2">
+            <div className="space-y-3 cursor-pointer group" onClick={() => setActiveVideo({ src: VIDEO_LINKS.mappingArchitecture, title: "Архитектурный мэппинг" })}>
+              <div className="relative rounded-2xl overflow-hidden shadow-lg shadow-gray-200 aspect-video bg-gray-100">
+                <img src={IMAGES.mappingArchitecture} alt="Архитектурный мэппинг" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <PlayOverlay />
+              </div>
+              <p className="text-sm font-medium text-gray-600 group-hover:text-blue-600 transition-colors">Мэппинг на архитектуре</p>
+            </div>
+            <div className="space-y-3 cursor-pointer group" onClick={() => setActiveVideo({ src: VIDEO_LINKS.mappingCurved, title: "Изогнутые экраны" })}>
+              <div className="relative rounded-2xl overflow-hidden shadow-lg shadow-gray-200 aspect-video bg-gray-100">
+                <img src={IMAGES.mappingCurved} alt="Изогнутые экраны" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <PlayOverlay />
+              </div>
+              <p className="text-sm font-medium text-gray-600 group-hover:text-blue-600 transition-colors">Контент для изогнутых экранов</p>
             </div>
           </div>
+          <div className="order-1 lg:order-2 space-y-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              3D-контент и мэппинг
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              Создание 3D-контента для изогнутых экранов, нестандартных конструкций и архитектурных поверхностей с расчетом "пиксель в пиксель". Мы учитываем геометрию каждой поверхности для создания идеальной оптической иллюзии.
+            </p>
+          </div>
         </section>
+
+        {/* 3. Naked Eye 3D */}
+        <ServiceSection
+          title="Naked Eye 3D Технологии"
+          description="Создаем впечатляющий 3D-контент для экранов с технологией 'Naked Eye', который позволяет зрителям видеть объемное изображение без использования специальных очков. Эффект выхода изображения за рамки экрана гарантирует вау-эффект."
+          image={IMAGES.nakedEye}
+          video={{ src: VIDEO_LINKS.nakedEye, title: "Naked Eye 3D" }}
+          onPlay={setActiveVideo}
+          reverse
+        />
+
+        {/* 4. Комплексный брендинг */}
+        <ServiceSection
+          title="Комплексный брендинг мероприятий"
+          description="Разрабатываем единый визуальный стиль: Key Vision, контент для всех мультимедиа носителей и брендирование физических поверхностей. Целостный подход обеспечивает максимальное погружение аудитории в атмосферу бренда."
+          image={IMAGES.branding}
+        />
+
+        {/* 5. VR-контент */}
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="grid lg:grid-cols-2 gap-12 items-center py-20"
+        >
+          <div className="space-y-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              VR-контент и иммерсивные среды
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              Погружаем пользователей в виртуальную реальность с помощью интерактивных VR-проектов.
+            </p>
+            <ul className="space-y-4 text-gray-600">
+              {[
+                "Персонализированные VR-среды и симуляции",
+                "Производство 360° видео: съемка и постпродакшн",
+                "VR-кинотеатры для коллективного опыта"
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3">
+                  <div className="h-2 w-2 rounded-full bg-blue-600 shadow-sm" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-3xl blur-2xl opacity-70" />
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-200 aspect-video bg-white">
+              <img src={IMAGES.vr} alt="VR контент" className="w-full h-full object-cover" />
+            </div>
+          </div>
+        </motion.section>
+
+        {/* 6. Инфопанели */}
+        <ServiceSection
+          title="Контент для инфо-панелей"
+          description="Разрабатываем информативный и привлекательный контент для тач-панелей, интерактивных столов и киосков. Делаем навигацию удобной, а получение информации — интуитивно понятным и увлекательным процессом."
+          image={IMAGES.infoPanels}
+          video={{ src: VIDEO_LINKS.infoPanels, title: "Инфопанели" }}
+          onPlay={setActiveVideo}
+          reverse
+        />
+
+        {/* 7. Адаптация */}
+        <ServiceSection
+          title="Адаптация контента"
+          description="Профессионально адаптируем существующий контент под любые форматы: архитектурные фасады, сложные LED-инсталляции, изогнутые экраны и интерактивные поверхности."
+          image={IMAGES.adaptation}
+        />
+
+        {/* CTA Section */}
+        <section className="relative py-24">
+          <div className="container mx-auto relative z-10 px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gray-900 rounded-[2.5rem] p-12 md:p-20 text-center overflow-hidden relative"
+            >
+              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[100px]" />
+              <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[100px]" />
+
+              <div className="relative z-10 max-w-3xl mx-auto space-y-8">
+                <h2 className="text-3xl md:text-5xl font-bold text-white">
+                  Готовы воплотить вашу идею?
+                </h2>
+                <p className="text-xl text-gray-300">
+                  Свяжитесь с нами, чтобы обсудить ваш проект. Мы поможем создать незабываемый интерактивный опыт для вашей аудитории.
+                </p>
+                <Button size="lg" asChild className="bg-white text-gray-900 hover:bg-gray-100 h-14 px-10 rounded-full text-lg font-bold shadow-lg">
+                  <Link to="/contact">
+                    Запросить консультацию
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Link>
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
       </main>
 
-      {/* Модальное окно для видео */}
+      {/* Video Modal */}
       <Dialog open={Boolean(activeVideo)} onOpenChange={(open) => !open && setActiveVideo(null)}>
-        <DialogContent className="max-w-4xl w-full overflow-hidden border border-white/15 bg-slate-950/90 p-0 shadow-2xl">
-          {activeVideo ? (
-            <video
-              key={activeVideo.src}
-              controls
-              autoPlay
-              className="h-full w-full object-contain"
-              src={activeVideo.src}
-            />
-          ) : null}
+        <DialogContent className="max-w-5xl w-full p-0 overflow-hidden bg-black border border-white/10 rounded-2xl">
+          {activeVideo && (
+            <div className="relative aspect-video">
+              <video
+                src={activeVideo.src}
+                controls
+                autoPlay
+                className="w-full h-full object-contain"
+              />
+            </div>
+          )}
         </DialogContent>
       </Dialog>
 

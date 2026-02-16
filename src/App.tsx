@@ -64,7 +64,7 @@ const VideoProductionTest = React.lazy(() => import('./pages/VideoProductionTest
 const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGames.tsx'));
 const MultimediaInstallations = React.lazy(() => import('./pages/services/MultimediaInstallations.tsx'));
 const Tetris = React.lazy(() => import('./pages/Tetris.tsx'));
-const MultimediaContentTest = React.lazy(() => import('./pages/services/MultimediaContentTest.tsx'));
+
 const PersonalDataAgreement = React.lazy(() => import('./pages/PersonalDataAgreement.tsx'));
 const TestHeaderPage = React.lazy(() => import('./pages/TestHeaderPage.tsx'));
 const NotFound = React.lazy(() => import('./pages/NotFound.tsx'));
@@ -107,7 +107,7 @@ function App() {
               <Route path="/services/complex-solutions" element={<Services />} />
               <Route path="/services/technical-support" element={<Services />} />
               <Route path="/services/multimedia-content" element={<MultimediaContent />} />
-              <Route path="/services/multimedia-content-test" element={<MultimediaContentTest />} />
+
               <Route path="/services/video-production" element={<VideoProductionTest />} />
               <Route path="/services/software-and-games" element={<SoftwareAndGames />} />
               <Route path="/services/multimedia-installations" element={<MultimediaInstallations />} />
