@@ -61,7 +61,6 @@ const RentalMultimediaEquipment = React.lazy(() => import('./pages/services/Rent
 const TechnologicalExhibitionStands = React.lazy(() => import('./pages/services/TechnologicalExhibitionStands.tsx'));
 const ExhibitionStands = React.lazy(() => import('./pages/services/ExhibitionStands.tsx'));
 const VideoProduction = React.lazy(() => import('./pages/VideoProduction.tsx'));
-const IndexTest = React.lazy(() => import('./pages/IndexTest.tsx'));
 const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGames.tsx'));
 const MultimediaInstallations = React.lazy(() => import('./pages/services/MultimediaInstallations.tsx'));
 const Tetris = React.lazy(() => import('./pages/Tetris.tsx'));
@@ -140,7 +139,6 @@ function App() {
               <Route path="/equipment/kinetic-screen" element={<KineticScreen />} />
               <Route path="/equipment/matrix-screen" element={<MatrixScreen />} />
 
-              <Route path="/index-test" element={<IndexTest />} />
               <Route path="/equipment/transparent-screen" element={<TransparentScreen />} />
               <Route path="/equipment/interactive-panels" element={<InteractivePanels />} />
               <Route path="/equipment/projectors" element={<Projectors />} />

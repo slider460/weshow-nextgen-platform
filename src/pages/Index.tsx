@@ -4,7 +4,7 @@ import AdvancedHeroSection from "../components/AdvancedHeroSection";
 import ModernPortfolioSection from "../components/ModernPortfolioSection";
 import ModernPortfolioMobileSection from "../components/ModernPortfolioMobileSection";
 import EquipmentCarouselSection from "../components/EquipmentCarouselSection";
-import InteractiveSolutionsSection from "../components/InteractiveSolutionsSection";
+import RedesignedServicesSection from "../components/RedesignedServicesSection";
 import WorkflowRoadmapSection from "../components/WorkflowRoadmapSection";
 import WorkflowMobileSection from "../components/WorkflowMobileSection";
 import ContactFormSection from "../components/ContactFormSection";
@@ -45,61 +45,61 @@ const Index = () => {
       <main className="space-y-0 overflow-x-hidden">
         <AdvancedHeroSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         <EquipmentCarouselSection />
-        <InteractiveSolutionsSection />
-        
+        <RedesignedServicesSection />
+
         {/* Desktop Portfolio Section */}
         <div className="hidden md:block">
           <ModernPortfolioSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         </div>
-        
+
         {/* Mobile Portfolio Section */}
         <div className="block md:hidden">
           <ModernPortfolioMobileSection onShowShowreel={() => setIsShowreelModalOpen(true)} />
         </div>
-        
+
         {/* Desktop Team Section */}
         <div className="hidden md:block">
           <TeamSection />
         </div>
-        
+
         {/* Mobile Team Section */}
         <div className="block md:hidden">
           <TeamMobileSection />
         </div>
-        
+
         {/* Desktop Letters & Certificates Section */}
         <div className="hidden md:block">
           <LettersCertificatesSection />
         </div>
-        
+
         {/* Mobile Letters & Certificates Section */}
         <div className="block md:hidden">
           <LettersCertificatesMobileSection />
         </div>
-        
+
         {/* Desktop Workflow Section */}
         <div className="hidden md:block">
           <WorkflowRoadmapSection />
         </div>
-        
+
         {/* Mobile Workflow Section */}
         <div className="block md:hidden">
           <WorkflowMobileSection />
         </div>
-        
+
         <LogoLoopSection />
         <ContactFormSection />
       </main>
       <Footer />
-      
+
       {/* Showreel Modal */}
-      <ShowreelModal 
+      <ShowreelModal
         isOpen={isShowreelModalOpen}
         onClose={() => setIsShowreelModalOpen(false)}
       />
-      
+
       {/* Tetris Game Modal */}
-      <BlockGameModal 
+      <BlockGameModal
         isOpen={isTetrisGameOpen}
         onClose={() => setIsTetrisGameOpen(false)}
       />

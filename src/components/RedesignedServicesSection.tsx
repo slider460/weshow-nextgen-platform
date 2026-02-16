@@ -102,6 +102,21 @@ const RedesignedServicesSection = () => {
                     />
 
                 </div>
+
+                {/* Tetris Game Button */}
+                <div className="mt-16 flex justify-center relative z-10">
+                    <button
+                        onClick={() => {
+                            const event = new CustomEvent('openTetrisGame');
+                            window.dispatchEvent(event);
+                        }}
+                        className="group relative inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2"
+                    >
+                        <span className="text-2xl">🎮</span>
+                        <span>Играть в Тетрис</span>
+                        <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-50"></span>
+                    </button>
+                </div>
             </div>
         </section>
     );
