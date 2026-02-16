@@ -7,13 +7,14 @@ import { LogosProvider } from './contexts/LogosContext';
 // import { AuthProvider } from './contexts/AuthContext';
 import ScrollToTop from './components/ScrollToTop';
 import SkipToContent from './components/SkipToContent';
+import CookieConsent from './components/CookieConsent';
 // import { PageLoader } from './components/PageLoader';
 
 const PageLoader = () => (
-  <div style={{ 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+  <div style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     height: '100vh',
     fontSize: '1.5rem',
     color: '#3b82f6'
@@ -63,6 +64,8 @@ const VideoProductionTest = React.lazy(() => import('./pages/VideoProductionTest
 const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGames.tsx'));
 const MultimediaInstallations = React.lazy(() => import('./pages/services/MultimediaInstallations.tsx'));
 const Tetris = React.lazy(() => import('./pages/Tetris.tsx'));
+const MultimediaContentTest = React.lazy(() => import('./pages/services/MultimediaContentTest.tsx'));
+const PersonalDataAgreement = React.lazy(() => import('./pages/PersonalDataAgreement.tsx'));
 const TestHeaderPage = React.lazy(() => import('./pages/TestHeaderPage.tsx'));
 const NotFound = React.lazy(() => import('./pages/NotFound.tsx'));
 
@@ -79,18 +82,19 @@ function App() {
     const timer = setTimeout(() => {
       preloadCriticalComponents();
     }, 2000); // Preload after 2 seconds
-    
+
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <LogosProvider>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-          <SkipToContent />
-          <ScrollToTop />
-          <div id="main" tabIndex={-1} className="outline-none">
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
+        <SkipToContent />
+        <ScrollToTop />
+        <CookieConsent />
+        <div id="main" tabIndex={-1} className="outline-none">
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/test-header" element={<TestHeaderPage />} />
               <Route path="/about" element={<About />} />
@@ -103,6 +107,7 @@ function App() {
               <Route path="/services/complex-solutions" element={<Services />} />
               <Route path="/services/technical-support" element={<Services />} />
               <Route path="/services/multimedia-content" element={<MultimediaContent />} />
+              <Route path="/services/multimedia-content-test" element={<MultimediaContentTest />} />
               <Route path="/services/video-production" element={<VideoProductionTest />} />
               <Route path="/services/software-and-games" element={<SoftwareAndGames />} />
               <Route path="/services/multimedia-installations" element={<MultimediaInstallations />} />
@@ -116,6 +121,7 @@ function App() {
               {/* <Route path="/news" element={<News />} /> */}
               {/* <Route path="/careers" element={<Careers />} /> */}
               <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/agreement" element={<PersonalDataAgreement />} />
               {/* <Route path="/profile" element={<Profile />} /> */}
               <Route path="/case/:id" element={<CaseDetail />} />
               <Route path="/team" element={<Team />} />
@@ -139,24 +145,24 @@ function App() {
               <Route path="/tetris" element={<Tetris />} />
               <Route path="/game" element={<Tetris />} />
               <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </div>
-        </BrowserRouter>
-        <SonnerToaster
-          position="bottom-right" 
-          richColors 
-          toastOptions={{
-            style: {
-              background: 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: '12px',
-              boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
-            },
-          }}
-        />
-        <ShadcnToaster />
+            </Routes>
+          </Suspense>
+        </div>
+      </BrowserRouter>
+      <SonnerToaster
+        position="bottom-right"
+        richColors
+        toastOptions={{
+          style: {
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            borderRadius: '12px',
+            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
+          },
+        }}
+      />
+      <ShadcnToaster />
     </LogosProvider>
   );
 }

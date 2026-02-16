@@ -63,7 +63,7 @@ const Contact = () => {
         ]}
       />
       <Header />
-      
+
       <div className="relative w-full min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 lg:px-8 overflow-hidden pt-32">
         {/* Background effects */}
         <div className="absolute inset-0 z-0">
@@ -173,6 +173,21 @@ const Contact = () => {
                     ></textarea>
                   </label>
 
+                  <div className="flex items-start space-x-3 pt-2">
+                    <input
+                      type="checkbox"
+                      id="contact-consent"
+                      required
+                      className="mt-1 h-4 w-4 rounded border-[#673267] bg-transparent text-[#ee2bee] focus:ring-[#ee2bee] focus:ring-offset-[#221022]"
+                    />
+                    <label
+                      htmlFor="contact-consent"
+                      className="text-sm text-[#c992c9] leading-tight"
+                    >
+                      Я согласен на обработку <a href="/agreement" className="text-white hover:text-[#ee2bee] hover:underline" target="_blank" rel="noopener noreferrer">персональных данных</a>
+                    </label>
+                  </div>
+
                   <div>
                     <button
                       className="w-full text-center items-center justify-center rounded-xl px-6 py-3.5 text-base font-bold text-white shadow-lg transition-all duration-300 ease-in-out bg-gradient-to-r from-[#ee2bee] to-purple-600 hover:shadow-[#ee2bee]/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
@@ -188,9 +203,9 @@ const Contact = () => {
 
             {/* Right Column - Map */}
             <div className="rounded-lg overflow-hidden h-64 md:h-auto flex-grow">
-              <img 
-                className="w-full h-full object-cover" 
-                alt="Карта расположения офиса" 
+              <img
+                className="w-full h-full object-cover"
+                alt="Карта расположения офиса"
                 src={mapImage}
               />
             </div>

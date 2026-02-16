@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
@@ -40,7 +41,7 @@ const ContactFormSection = () => {
   const validatePhone = (phone: string): boolean => {
     // Убираем все нецифровые символы
     const cleanPhone = phone.replace(/\D/g, '');
-    
+
     // Проверяем длину в зависимости от префикса
     if (cleanPhone.startsWith('7') || cleanPhone.startsWith('8')) {
       // Для номеров, начинающихся с 7 или 8, проверяем 11 цифр (с кодом страны)
@@ -54,9 +55,9 @@ const ContactFormSection = () => {
   // Форматирование телефона при вводе
   const formatPhone = (value: string): string => {
     const cleanValue = value.replace(/\D/g, '');
-    
+
     if (cleanValue.length === 0) return '';
-    
+
     // Если номер начинается с 7, добавляем +7
     if (cleanValue.startsWith('7')) {
       if (cleanValue.length === 1) return `+7`;
@@ -65,7 +66,7 @@ const ContactFormSection = () => {
       if (cleanValue.length <= 9) return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}`;
       return `+7 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}-${cleanValue.slice(9, 11)}`;
     }
-    
+
     // Если номер начинается с 8, не добавляем код страны
     if (cleanValue.startsWith('8')) {
       if (cleanValue.length === 1) return `8`;
@@ -74,7 +75,7 @@ const ContactFormSection = () => {
       if (cleanValue.length <= 9) return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}`;
       return `8 (${cleanValue.slice(1, 4)}) ${cleanValue.slice(4, 7)}-${cleanValue.slice(7, 9)}-${cleanValue.slice(9, 11)}`;
     }
-    
+
     // Для других номеров (начинающихся с 9) добавляем +7
     if (cleanValue.length === 1) return `+7 (${cleanValue}`;
     if (cleanValue.length <= 4) return `+7 (${cleanValue.slice(0, 3)}`;
@@ -121,7 +122,7 @@ const ContactFormSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -168,14 +169,14 @@ const ContactFormSection = () => {
 
   const handleChange = (field: string, value: string) => {
     let processedValue = value;
-    
+
     // Специальная обработка для телефона
     if (field === "phone") {
       processedValue = formatPhone(value);
     }
 
     setFormData(prev => ({ ...prev, [field]: processedValue }));
-    
+
     // Очищаем ошибку при вводе
     if (errors[field as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
@@ -189,7 +190,7 @@ const ContactFormSection = () => {
         setErrors(prev => ({ ...prev, email: "Введите корректный email адрес" }));
       }
     }
-    
+
     if (field === "phone" && formData.phone) {
       if (!validatePhone(formData.phone)) {
         setErrors(prev => ({ ...prev, phone: "Введите корректный номер телефона" }));
@@ -238,7 +239,7 @@ const ContactFormSection = () => {
             <p className="text-lg text-slate-600 mb-6">
               {defaultSuccessMessage}
             </p>
-            <Button 
+            <Button
               onClick={() => setIsSubmitted(false)}
               className="px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
             >
@@ -255,7 +256,7 @@ const ContactFormSection = () => {
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-40"></div>
       <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-full blur-3xl opacity-40"></div>
-      
+
       <div className="container mx-auto px-6 lg:px-8 relative">
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-sm font-medium text-blue-700 mb-6">
@@ -268,19 +269,19 @@ const ContactFormSection = () => {
             </span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Оставьте заявку, и мы свяжемся с вами для бесплатной консультации. 
+            Оставьте заявку, и мы свяжемся с вами для бесплатной консультации.
             Наши эксперты помогут реализовать любые идеи!
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          
+
           {/* Contact Form */}
           <div className="bg-white rounded-2xl p-8 border border-slate-200/50 shadow-sm">
             <h3 className="text-2xl font-bold text-slate-900 mb-6">
               Отправить заявку
             </h3>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -424,9 +425,24 @@ const ContactFormSection = () => {
                 </p>
               </div>
 
-              <Button 
-                type="submit" 
-                size="lg" 
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="contact-form-consent"
+                  required
+                  className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="contact-form-consent"
+                  className="text-sm text-slate-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Я согласен на обработку <Link to="/agreement" className="text-blue-600 hover:underline" target="_blank">персональных данных</Link>
+                </label>
+              </div>
+
+              <Button
+                type="submit"
+                size="lg"
                 disabled={isSubmitting}
                 className="w-full px-8 py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-60 disabled:cursor-not-allowed"
               >
@@ -449,7 +465,7 @@ const ContactFormSection = () => {
                 Контактная информация
               </h3>
               <p className="text-slate-600 leading-relaxed mb-8">
-                Мы всегда на связи и готовы ответить на ваши вопросы. 
+                Мы всегда на связи и готовы ответить на ваши вопросы.
                 Свяжитесь с нами любым удобным способом.
               </p>
             </div>
@@ -481,7 +497,7 @@ const ContactFormSection = () => {
                 🎯 Быстрый старт
               </h4>
               <p className="text-slate-600 text-sm leading-relaxed">
-                Оставьте заявку прямо сейчас и получите бесплатную консультацию 
+                Оставьте заявку прямо сейчас и получите бесплатную консультацию
                 от наших экспертов в течение 2 часов!
               </p>
             </div>
