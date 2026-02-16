@@ -9,7 +9,7 @@ import { defaultSuccessMessage, submitForm } from "@/utils/submitForm";
 
 const PLACEHOLDER_IMAGE = "/images/cases/cadr_shapka_production.jpg";
 
-const VideoProductionTest = () => {
+const VideoProduction = () => {
   const [formData, setFormData] = useState({
     name: '',
     contact: '',
@@ -106,8 +106,8 @@ const VideoProductionTest = () => {
     if (carouselRef.current) {
       const scrollAmount = 300; // Ширина одного элемента + отступ
       const currentScroll = carouselRef.current.scrollLeft;
-      const newScroll = direction === 'left' 
-        ? currentScroll - scrollAmount 
+      const newScroll = direction === 'left'
+        ? currentScroll - scrollAmount
         : currentScroll + scrollAmount;
       carouselRef.current.scrollTo({ left: newScroll, behavior: 'smooth' });
     }
@@ -130,11 +130,10 @@ const VideoProductionTest = () => {
             <img
               src={PLACEHOLDER_IMAGE}
               alt="Видеопродакшн"
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-                videoLoaded && !videoError ? 'opacity-0' : 'opacity-100'
-              }`}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${videoLoaded && !videoError ? 'opacity-0' : 'opacity-100'
+                }`}
               loading="eager"
-              style={{ 
+              style={{
                 minWidth: '100%',
                 minHeight: '100%',
                 objectFit: 'cover',
@@ -148,7 +147,7 @@ const VideoProductionTest = () => {
               }}
             />
           </div>
-          
+
           {!videoError ? (
             <video
               ref={videoRef}
@@ -157,9 +156,8 @@ const VideoProductionTest = () => {
               muted
               playsInline
               preload="auto"
-              className={`absolute inset-0 z-0 w-full h-full object-cover transition-opacity duration-700 ${
-                videoLoaded ? 'opacity-100' : 'opacity-0'
-              }`}
+              className={`absolute inset-0 z-0 w-full h-full object-cover transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
               style={{
                 minWidth: '100%',
                 minHeight: '100%',
@@ -383,7 +381,7 @@ const VideoProductionTest = () => {
                   className="h-full"
                 />
               </div>
-              
+
               {/* Carousel with Thumbnails */}
               <div className="mt-6 relative">
                 <button
@@ -393,7 +391,7 @@ const VideoProductionTest = () => {
                 >
                   <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                 </button>
-                
+
                 <div
                   ref={carouselRef}
                   className="flex space-x-4 overflow-x-auto scrollbar-hide px-12"
@@ -405,38 +403,35 @@ const VideoProductionTest = () => {
                       className="flex-shrink-0 w-[280px] group"
                     >
                       <div
-                        className={`relative aspect-video rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
-                          selectedPresentation === index
-                            ? "border-[#0d59f2] shadow-lg shadow-[#0d59f2]/30"
-                            : "border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600"
-                        }`}
+                        className={`relative aspect-video rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${selectedPresentation === index
+                          ? "border-[#0d59f2] shadow-lg shadow-[#0d59f2]/30"
+                          : "border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600"
+                          }`}
                         onClick={() => setSelectedPresentation(index)}
                       >
                         <div
                           className="w-full h-full bg-cover bg-center"
                           style={{ backgroundImage: `url("${presentation.image}")` }}
                         >
-                          <div className={`absolute inset-0 transition-opacity ${
-                            selectedPresentation === index
-                              ? "bg-black/20"
-                              : "bg-black/0 group-hover:bg-black/10"
-                          }`}></div>
+                          <div className={`absolute inset-0 transition-opacity ${selectedPresentation === index
+                            ? "bg-black/20"
+                            : "bg-black/0 group-hover:bg-black/10"
+                            }`}></div>
                         </div>
                         {selectedPresentation === index && (
                           <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#0d59f2] z-10"></div>
                         )}
                       </div>
-                      <p className={`mt-2 text-sm font-bold text-center transition-colors ${
-                        selectedPresentation === index
-                          ? "text-[#0d59f2] dark:text-white"
-                          : "text-gray-800 dark:text-gray-200"
-                      }`}>
+                      <p className={`mt-2 text-sm font-bold text-center transition-colors ${selectedPresentation === index
+                        ? "text-[#0d59f2] dark:text-white"
+                        : "text-gray-800 dark:text-gray-200"
+                        }`}>
                         {presentation.title}
                       </p>
                     </div>
                   ))}
                 </div>
-                
+
                 <button
                   onClick={() => scrollCarousel('right')}
                   className="absolute right-0 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
@@ -521,4 +516,4 @@ const VideoProductionTest = () => {
   );
 };
 
-export default VideoProductionTest;
+export default VideoProduction;

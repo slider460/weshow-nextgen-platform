@@ -40,7 +40,7 @@ const Team = React.lazy(() => import('./pages/Team.tsx'));
 const SamaraStandCase = React.lazy(() => import('./pages/SamaraStandCase.tsx'));
 const CaseSamaraStandVDNH = React.lazy(() => import('./pages/CaseSamaraStandVDNH.tsx'));
 const SamsungNewYearCase = React.lazy(() => import('./pages/SamsungNewYearCase.tsx'));
-const CaseSamaraStandVDNH_Test = React.lazy(() => import('./pages/CaseSamaraStandVDNH_Test.tsx'));
+
 const CaseStavropol3DMapping = React.lazy(() => import('./pages/CaseStavropol3DMapping.tsx'));
 const CaseSamaraExhibition = React.lazy(() => import('./pages/CaseSamaraExhibition.tsx'));
 const VivaxCase = React.lazy(() => import('./pages/VivaxCase.tsx'));
@@ -60,13 +60,13 @@ const EquipmentRental = React.lazy(() => import('./pages/services/EquipmentRenta
 const RentalMultimediaEquipment = React.lazy(() => import('./pages/services/RentalMultimediaEquipment.tsx'));
 const TechnologicalExhibitionStands = React.lazy(() => import('./pages/services/TechnologicalExhibitionStands.tsx'));
 const ExhibitionStands = React.lazy(() => import('./pages/services/ExhibitionStands.tsx'));
-const VideoProductionTest = React.lazy(() => import('./pages/VideoProductionTest.tsx'));
+const VideoProduction = React.lazy(() => import('./pages/VideoProduction.tsx'));
 const SoftwareAndGames = React.lazy(() => import('./pages/services/SoftwareAndGames.tsx'));
 const MultimediaInstallations = React.lazy(() => import('./pages/services/MultimediaInstallations.tsx'));
 const Tetris = React.lazy(() => import('./pages/Tetris.tsx'));
 
 const PersonalDataAgreement = React.lazy(() => import('./pages/PersonalDataAgreement.tsx'));
-const TestHeaderPage = React.lazy(() => import('./pages/TestHeaderPage.tsx'));
+
 const NotFound = React.lazy(() => import('./pages/NotFound.tsx'));
 
 // Preload critical components
@@ -96,7 +96,7 @@ function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/test-header" element={<TestHeaderPage />} />
+
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
               <Route path="/services/multimedia" element={<Services />} />
@@ -108,7 +108,7 @@ function App() {
               <Route path="/services/technical-support" element={<Services />} />
               <Route path="/services/multimedia-content" element={<MultimediaContent />} />
 
-              <Route path="/services/video-production" element={<VideoProductionTest />} />
+              <Route path="/services/video-production" element={<VideoProduction />} />
               <Route path="/services/software-and-games" element={<SoftwareAndGames />} />
               <Route path="/services/multimedia-installations" element={<MultimediaInstallations />} />
               <Route path="/services/rental-multimedia-equipment" element={<RentalMultimediaEquipment />} />
@@ -126,9 +126,9 @@ function App() {
               <Route path="/case/:id" element={<CaseDetail />} />
               <Route path="/team" element={<Team />} />
               <Route path="/portfolio/samara-stand" element={<Navigate to="/portfolio/samara-stand-vdnh" replace />} />
-              <Route path="/portfolio/samara-stand-vdnh" element={<CaseSamaraStandVDNH_Test />} />
+              <Route path="/portfolio/samara-stand-vdnh" element={<CaseSamaraStandVDNH />} />
               <Route path="/portfolio/samsung-new-year-2020" element={<SamsungNewYearCase />} />
-              <Route path="/portfolio/samara-stand-vdnh-test" element={<CaseSamaraStandVDNH_Test />} />
+
               <Route path="/portfolio/stavropol-3d-mapping" element={<CaseStavropol3DMapping />} />
               <Route path="/portfolio/samara-exhibition" element={<CaseSamaraExhibition />} />
               <Route path="/portfolio/vivax-samburskaya" element={<VivaxCase />} />
