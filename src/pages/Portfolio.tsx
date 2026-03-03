@@ -12,7 +12,7 @@ import { projects } from "../data/projects";
 const Portfolio = () => {
   const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
   const [isTetrisGameOpen, setIsTetrisGameOpen] = useState(false);
-  
+
   // Обработчик события для открытия игры из футера
   useEffect(() => {
     const handleOpenTetrisGame = () => {
@@ -24,10 +24,10 @@ const Portfolio = () => {
       window.removeEventListener('openTetrisGame', handleOpenTetrisGame);
     };
   }, []);
-  
+
   // Используем новые проекты из локального массива
   const displayedProjects = projects;
-  
+
 
   return (
     <div className="min-h-screen bg-[#0A192F]">
@@ -37,7 +37,7 @@ const Portfolio = () => {
         url="https://weshow.su/portfolio"
       />
       <Header />
-      
+
       {/* Hero Section */}
       <section className="pt-32 pb-20 relative overflow-hidden bg-[#0A192F]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -52,8 +52,8 @@ const Portfolio = () => {
             <p className="text-xl text-[#E6F1FF]/80 leading-relaxed mb-10 max-w-3xl mx-auto">
               Примеры наших работ и реализованных проектов в области мультимедиа и интерактивных технологий
             </p>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-[#64FFDA] text-[#0A192F] hover:bg-[#64FFDA]/90 border-0 shadow-lg shadow-[#64FFDA]/25 hover:shadow-xl transition-all duration-300 hover:scale-105 px-8 py-4 text-lg font-semibold group"
               onClick={() => setIsShowreelModalOpen(true)}
             >
@@ -69,17 +69,17 @@ const Portfolio = () => {
         <div className="container mx-auto px-4 relative">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {displayedProjects.map((project, index) => (
-              <Link 
-                key={project.id} 
+              <Link
+                key={project.id}
                 to={project.link}
                 className="group relative flex h-full flex-col overflow-hidden rounded-xl bg-gradient-to-br from-[#0A192F] to-[#1E1A34] p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#64FFDA]/10"
                 aria-label={`${project.title} — подробнее`}
               >
                 <div className="flex-grow">
                   <div className="mb-6">
-                    <div 
+                    <div
                       className="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg p-1 transition-shadow duration-300"
-                      style={{ 
+                      style={{
                         boxShadow: '0 0 16px rgba(100, 255, 218, 0.3), inset 0 0 8px rgba(100, 255, 218, 0.2)'
                       }}
                     >
@@ -98,12 +98,12 @@ const Portfolio = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-col gap-3">
                     <p className="text-sm font-normal leading-normal text-[#E6F1FF]/70">
                       {project.client} — {project.year}
                     </p>
-                    <h3 
+                    <h3
                       className="text-2xl font-bold leading-tight tracking-tight text-[#64FFDA] transition-colors group-hover:text-[#64FFDA]/80"
                       style={{ textShadow: '0 0 8px rgba(100, 255, 218, 0.4)' }}
                     >
@@ -114,7 +114,7 @@ const Portfolio = () => {
                     </p>
                   </div>
                 </div>
-                
+
                 {project.results && project.results.length > 0 && (
                   <footer className="mt-6 flex flex-wrap items-center gap-2">
                     {project.results.slice(0, 3).map((result: string, resultIndex: number) => (
@@ -127,13 +127,13 @@ const Portfolio = () => {
                     ))}
                   </footer>
                 )}
-                
+
                 <div className="absolute bottom-6 right-6 text-[#64FFDA] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <ArrowRight className="h-6 w-6" />
                 </div>
               </Link>
             ))}
-            
+
             {/* Блок "Новые проекты" - всегда последний */}
             <div className="relative flex h-full flex-col items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#0A192F] to-[#1E1A34] p-8 border-2 border-dashed border-[#64FFDA]/30 min-h-[320px]">
               <div className="text-center">
@@ -165,15 +165,18 @@ const Portfolio = () => {
               Начните свой проект с нами уже сегодня и создайте что-то удивительное
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
+                asChild
                 className="bg-[#64FFDA] text-[#0A192F] hover:bg-[#64FFDA]/90 shadow-xl hover:shadow-2xl hover:shadow-[#64FFDA]/30 transition-all duration-500 hover:scale-105 px-8 py-4 text-lg font-semibold"
               >
-                Обсудить проект
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                <Link to="/contact">
+                  Обсудить проект
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 inline" />
+                </Link>
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="lg"
                 className="border-[#64FFDA]/50 text-[#64FFDA] hover:bg-[#64FFDA]/10 transition-all duration-500 hover:scale-105 px-8 py-4 text-lg backdrop-blur-sm bg-[#64FFDA]/5"
                 asChild
@@ -187,17 +190,17 @@ const Portfolio = () => {
         </div>
       </section>
 
-      <ShowreelModal 
+      <ShowreelModal
         isOpen={isShowreelModalOpen}
         onClose={() => setIsShowreelModalOpen(false)}
       />
-      
+
       {/* Tetris Game Modal */}
-      <BlockGameModal 
+      <BlockGameModal
         isOpen={isTetrisGameOpen}
         onClose={() => setIsTetrisGameOpen(false)}
       />
-      
+
       <Footer />
     </div>
   );

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Dialog, DialogContent } from "../../components/ui/dialog";
+import ShowreelModal from "../../components/ShowreelModal";
 
 // Content Imports
 import grafFrame from "../../content/services/multimedia-content/Graf_oformlenie.jpg";
@@ -123,6 +124,7 @@ const ServiceCard = ({ icon: Icon, title, description, delay }: { icon: any, tit
 const MultimediaContent = () => {
   const [activeVideo, setActiveVideo] = useState<{ src: string; title: string } | null>(null);
   const [isAdaptationVideoPlaying, setIsAdaptationVideoPlaying] = useState(false);
+  const [isShowreelModalOpen, setIsShowreelModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-white text-gray-900 selection:bg-blue-100 overflow-x-hidden">
@@ -174,10 +176,12 @@ const MultimediaContent = () => {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white h-14 px-8 rounded-full text-lg shadow-lg shadow-blue-600/20">
-              Обсудить проект
+            <Button size="lg" asChild className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white h-14 px-8 rounded-full text-lg shadow-lg shadow-blue-600/20">
+              <Link to="/contact">
+                Обсудить проект
+              </Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-14 px-8 rounded-full text-lg border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+            <Button size="lg" variant="outline" onClick={() => setIsShowreelModalOpen(true)} className="h-14 px-8 rounded-full text-lg border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-gray-900">
               <Play className="mr-2 w-5 h-5 fill-current" />
               Смотреть шоурил
             </Button>
@@ -423,8 +427,12 @@ const MultimediaContent = () => {
       </Dialog>
 
       <Footer />
+
+      <ShowreelModal
+        isOpen={isShowreelModalOpen}
+        onClose={() => setIsShowreelModalOpen(false)}
+      />
     </div>
   );
 };
-
 export default MultimediaContent;
