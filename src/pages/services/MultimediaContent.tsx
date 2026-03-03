@@ -343,13 +343,15 @@ const MultimediaContent = () => {
             <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-3xl blur-2xl opacity-70" />
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-200 aspect-video bg-gray-900 flex items-center justify-center">
               <video
-                src="/videos/content-adaptation.mp4"
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-cover"
-              />
+                preload="auto"
+                className="w-full h-full object-cover pointer-events-none"
+              >
+                <source src="/videos/content-adaptation.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
         </motion.section>
@@ -373,10 +375,10 @@ const MultimediaContent = () => {
                 <p className="text-xl text-gray-300">
                   Свяжитесь с нами, чтобы обсудить ваш проект. Мы поможем создать незабываемый интерактивный опыт для вашей аудитории.
                 </p>
-                <Button size="lg" asChild className="bg-white text-gray-900 hover:bg-gray-100 h-14 px-10 rounded-full text-lg font-bold shadow-lg">
-                  <Link to="/contact">
+                <Button size="lg" asChild className="bg-white text-gray-900 hover:bg-gray-100 h-auto min-h-14 py-3 md:py-4 px-6 md:px-10 rounded-full text-base md:text-lg font-bold shadow-lg w-full sm:w-auto whitespace-normal">
+                  <Link to="/contact" className="flex items-center justify-center gap-2">
                     Запросить консультацию
-                    <ArrowRight className="ml-2 w-5 h-5" />
+                    <ArrowRight className="w-5 h-5 flex-shrink-0" />
                   </Link>
                 </Button>
               </div>
