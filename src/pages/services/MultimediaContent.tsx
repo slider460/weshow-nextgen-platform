@@ -122,6 +122,7 @@ const ServiceCard = ({ icon: Icon, title, description, delay }: { icon: any, tit
 
 const MultimediaContent = () => {
   const [activeVideo, setActiveVideo] = useState<{ src: string; title: string } | null>(null);
+  const [isAdaptationVideoPlaying, setIsAdaptationVideoPlaying] = useState(false);
 
   return (
     <div className="min-h-screen bg-white text-gray-900 selection:bg-blue-100 overflow-x-hidden">
@@ -342,23 +343,32 @@ const MultimediaContent = () => {
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-3xl blur-2xl opacity-70" />
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-200 aspect-video bg-gray-900 flex items-center justify-center">
+              {/* Fallback image wrapper - explicitly layered above the video until it plays */}
+              <img
+                src={IMAGES.adaptation}
+                alt="Адаптация контента"
+                className={`absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-700 ease-out pointer-events-none ${isAdaptationVideoPlaying ? 'opacity-0' : 'opacity-100'}`}
+              />
               <video
                 ref={(el) => {
                   if (el && el.paused) {
-                    // iOS sometimes ignores React declarative attributes; force imperative setup
                     el.muted = true;
                     el.setAttribute('playsinline', '');
-                    el.play().catch(e => console.warn("Autoplay failed:", e));
+                    const playPromise = el.play();
+                    if (playPromise !== undefined) {
+                      playPromise.catch(e => console.warn("Autoplay still blocked on iOS:", e));
+                    }
                   }
                 }}
+                onPlaying={() => setIsAdaptationVideoPlaying(true)}
+                onPause={() => setIsAdaptationVideoPlaying(false)}
                 src="/videos/content-adaptation.mp4"
                 poster={IMAGES.adaptation}
                 autoPlay
                 loop
                 muted
                 playsInline
-                preload="auto"
-                className="w-full h-full object-cover pointer-events-none"
+                className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
               />
             </div>
           </div>
