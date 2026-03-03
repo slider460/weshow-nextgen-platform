@@ -49,14 +49,18 @@ const ServiceSection = ({
   video,
   image,
   reverse = false,
-  onPlay
+  onPlay,
+  imageClassName = "object-cover",
+  imageContainerClassName = "aspect-video"
 }: {
   title: string,
   description: React.ReactNode,
   video?: { src: string, title: string },
   image: string,
   reverse?: boolean,
-  onPlay?: (video: { src: string, title: string }) => void
+  onPlay?: (video: { src: string, title: string }) => void,
+  imageClassName?: string,
+  imageContainerClassName?: string
 }) => (
   <motion.section
     initial={{ opacity: 0, y: 50 }}
@@ -85,9 +89,9 @@ const ServiceSection = ({
 
     <div className={`relative ${reverse ? 'lg:order-1' : ''}`}>
       <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-3xl blur-2xl opacity-70" />
-      <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-200 group cursor-pointer aspect-video bg-white"
+      <div className={`relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-200 group cursor-pointer bg-white ${imageContainerClassName}`}
         onClick={() => video && onPlay && onPlay(video)}>
-        <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <img src={image} alt={title} className={`w-full h-full transition-transform duration-700 group-hover:scale-105 ${imageClassName}`} />
         {video && <PlayOverlay />}
       </div>
     </div>
@@ -109,12 +113,9 @@ const ServiceCard = ({ icon: Icon, title, description, delay }: { icon: any, tit
       <h3 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-blue-600 transition-colors">
         {title}
       </h3>
-      <p className="text-gray-500 leading-relaxed mb-6">
+      <p className="text-gray-500 leading-relaxed">
         {description}
       </p>
-      <div className="flex items-center text-sm font-medium text-blue-600 group-hover:translate-x-1 transition-transform">
-        Подробнее <ArrowRight className="ml-2 w-4 h-4" />
-      </div>
     </div>
   </motion.div>
 );
@@ -273,6 +274,8 @@ const MultimediaContent = () => {
           title="Комплексный брендинг мероприятий"
           description="Разрабатываем единый визуальный стиль: Key Vision, контент для всех мультимедиа носителей и брендирование физических поверхностей. Целостный подход обеспечивает максимальное погружение аудитории в атмосферу бренда."
           image={IMAGES.branding}
+          imageClassName="object-contain"
+          imageContainerClassName="aspect-auto bg-gray-50/50 p-4"
         />
 
         {/* 5. VR-контент */}
@@ -321,11 +324,35 @@ const MultimediaContent = () => {
         />
 
         {/* 7. Адаптация */}
-        <ServiceSection
-          title="Адаптация контента"
-          description="Профессионально адаптируем существующий контент под любые форматы: архитектурные фасады, сложные LED-инсталляции, изогнутые экраны и интерактивные поверхности."
-          image={IMAGES.adaptation}
-        />
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid lg:grid-cols-2 gap-12 items-center py-20"
+        >
+          <div className="space-y-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              Адаптация контента
+            </h2>
+            <div className="text-lg text-gray-600 leading-relaxed space-y-4">
+              Профессионально адаптируем существующий контент под любые форматы: архитектурные фасады, сложные LED-инсталляции, изогнутые экраны и интерактивные поверхности.
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-3xl blur-2xl opacity-70" />
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-200 aspect-video bg-gray-900 flex items-center justify-center">
+              <video
+                src="/videos/content-adaptation.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </motion.section>
 
         {/* CTA Section */}
         <section className="relative py-24">

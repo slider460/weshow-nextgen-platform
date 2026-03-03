@@ -9,6 +9,12 @@
             "env": {
                 "STITCH_API_KEY": "AQ.Ab8RN6I8AbWbNzVgnY1f5_8-QPv5kbPlSvIXPKVuQZ0WAWmGDQ"
             }
+        },
+        "cinema4d": {
+            "command": "/Users/aleksandrnarodetskii/.gemini/antigravity/mcp_servers/cinema4d-mcp/venv/bin/python",
+            "args": [
+                "/Users/aleksandrnarodetskii/.gemini/antigravity/mcp_servers/cinema4d-mcp/main.py"
+            ]
         }
     }
 }
