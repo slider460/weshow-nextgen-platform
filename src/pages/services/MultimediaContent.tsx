@@ -352,6 +352,7 @@ const MultimediaContent = () => {
                   }
                 }}
                 src="/videos/content-adaptation.mp4"
+                poster={IMAGES.adaptation}
                 autoPlay
                 loop
                 muted
