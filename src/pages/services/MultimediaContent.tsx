@@ -343,15 +343,22 @@ const MultimediaContent = () => {
             <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-3xl blur-2xl opacity-70" />
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-200 aspect-video bg-gray-900 flex items-center justify-center">
               <video
+                ref={(el) => {
+                  if (el && el.paused) {
+                    // iOS sometimes ignores React declarative attributes; force imperative setup
+                    el.muted = true;
+                    el.setAttribute('playsinline', '');
+                    el.play().catch(e => console.warn("Autoplay failed:", e));
+                  }
+                }}
+                src="/videos/content-adaptation.mp4"
                 autoPlay
                 loop
                 muted
                 playsInline
                 preload="auto"
                 className="w-full h-full object-cover pointer-events-none"
-              >
-                <source src="/videos/content-adaptation.mp4" type="video/mp4" />
-              </video>
+              />
             </div>
           </div>
         </motion.section>
