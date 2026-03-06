@@ -41,7 +41,7 @@ const SamsungNewYearCase = () => {
     results: {
       title: "Результат",
       video: {
-        src: "https://uc4111aafc024d284864d8722e40.dl.dropboxusercontent.com/cd/0/inline/CzarfPsW2ioRO5GCgEM5BHyiuZ8Rk2IGolW_I0ZaNo_9p7SfCJ_YbQAbp_N7_EMxW17RJqJFWR_GOMfiaJNOFuOkhmiHzO6YPmNPqgch3hqOL4V8-V-l6ym-ix8dtJb6f3eCfWeqA1UB-XGX3zT4XUTn/file?dl=1", // Прямая ссылка на видео
+        src: "/videos/samsung-new-year-2020.mp4", // Локальная ссылка на видео
         poster: "/images/cases/samsung/event-hall-wide.jpg",
         title: "Samsung New Year 2020 - Результат мероприятия"
       }
@@ -66,7 +66,7 @@ const SamsungNewYearCase = () => {
         url="https://weshow.su/portfolio/samsung-new-year-2020"
       />
       <Header />
-      
+
       {/* Hero Section - в стиле Самарской области */}
       <section className="py-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -243,7 +243,7 @@ const SamsungNewYearCase = () => {
         </div>
       </section>
 
-      
+
       <Footer />
     </div>
   )

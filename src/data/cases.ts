@@ -57,6 +57,7 @@ export const localCases: LocalCase[] = [
       'Осветительные системы'
     ],
     image_url: '/images/cases/samsung/event-hall-wide.jpg',
+    video_url: '/videos/samsung-new-year-2020.mp4',
     is_visible: true,
     sort_order: 2
   }
